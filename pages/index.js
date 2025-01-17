@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import Header from "../components/Header";
 import ServiceCard from "../components/ServiceCard";
 import Socials from "../components/Socials";
@@ -21,6 +21,19 @@ export default function Home() {
   const textTwo = useRef();
   const textThree = useRef();
   const textFour = useRef();
+
+  const [rowHeights, setRowHeights] = useState([]);
+
+  const handleImageLoad = (index, height) => {
+    setRowHeights((prev) => {
+      const newHeights = [...prev];
+      const rowIndex = Math.floor(index / 2);
+
+      newHeights[rowIndex] = Math.max(newHeights[rowIndex] || 0, height);
+      return newHeights;
+    });
+  };
+
 
   // Handling Scroll
   const handleWorkScroll = () => {
@@ -70,7 +83,7 @@ export default function Home() {
           <div className="mt-5">
             <h1
               ref={textOne}
-              className="text-3xl tablet:text-6xl laptop:text-6xl laptopl:text-8xl p-1 tablet:p-2 text-bold w-4/5 mob:w-full laptop:w-4/5"
+              className="text-2xl tablet:text-4xl laptop:text-4xl laptopl:text-6xl p-1 tablet:p-2 w-full laptop:w-4/5"
             >
               {data.headerTaglineOne}
             </h1>
@@ -82,13 +95,13 @@ export default function Home() {
             </h1>
             <h1
               ref={textThree}
-              className="text-3xl tablet:text-6xl laptop:text-6xl laptopl:text-8xl p-1 tablet:p-2 text-bold w-full laptop:w-4/5"
+              className="text-2xl tablet:text-4xl laptop:text-4xl laptopl:text-6xl p-1 tablet:p-2 w-full laptop:w-4/5"
             >
               {data.headerTaglineThree}
             </h1>
             <h1
               ref={textFour}
-              className="text-3xl tablet:text-6xl laptop:text-6xl laptopl:text-8xl p-1 tablet:p-2 text-bold w-full laptop:w-4/5"
+              className="text-2xl tablet:text-4xl laptop:text-4xl laptopl:text-6xl p-1 tablet:p-2 w-full laptop:w-4/5"
             >
               {data.headerTaglineFour}
             </h1>
@@ -97,15 +110,17 @@ export default function Home() {
           <Socials className="mt-2 laptop:mt-5" />
         </div>
         <div className="mt-10 laptop:mt-30 p-2 laptop:p-0" ref={workRef}>
-          <h1 className="text-2xl text-bold">Work.</h1>
+          <h1 className="text-2xl text-bold">Projects</h1>
           <div className="mt-5 laptop:mt-10 grid grid-cols-1 tablet:grid-cols-2 gap-4">
-            {data.projects.map((project) => (
+            {data.projects.map((project, index) => (
               <WorkCard
                 key={project.id}
                 img={project.imageSrc}
                 name={project.title}
                 description={project.description}
                 onClick={() => window.open(project.url)}
+                rowHeight={rowHeights[Math.floor(index / 2)] || "auto"}
+                onImageLoad={(height) => handleImageLoad(index, height)}
               />
             ))}
           </div>
