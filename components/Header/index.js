@@ -47,7 +47,7 @@ const Header = ({ handleWorkScroll, handleAboutScroll, isBlog }) => {
                                     <Button
                                         onClick={() =>
                                             window.open(
-                                                "mailto:hello@chetanverma.com"
+                                                "mailto:c.tao@nyu.edu"
                                             )
                                         }
                                     >
@@ -72,7 +72,7 @@ const Header = ({ handleWorkScroll, handleAboutScroll, isBlog }) => {
                                     <Button
                                         onClick={() =>
                                             window.open(
-                                                "mailto:hello@chetanverma.com"
+                                                "mailto:c.tao@nyu.edu"
                                             )
                                         }
                                     >
@@ -102,7 +102,7 @@ const Header = ({ handleWorkScroll, handleAboutScroll, isBlog }) => {
                         )}
                         <Button
                             onClick={() =>
-                                window.open("mailto:hello@chetanverma.com")
+                                window.open("mailto:c.tao@nyu.edu")
                             }
                         >
                             Contact
@@ -118,7 +118,7 @@ const Header = ({ handleWorkScroll, handleAboutScroll, isBlog }) => {
                         )}
                         <Button
                             onClick={() =>
-                                window.open("mailto:hello@chetanverma.com")
+                                window.open("mailto:c.tao@nyu.edu")
                             }
                         >
                             Contact
