@@ -26,7 +26,7 @@
     {
       "id": "1",
       "title": "AI Editor-in-Chief and Virtual News Presenter",
-      "description": "An Artificial Intelligence-Based Pipeline for Automated News Production in Taiwanese Mandarin \\n A project aimed to catch teenagers’ attention and refocus on critical societal issues with AI-driven Natural Language Processing technologies.",
+      "description": "[An Artificial Intelligence-Based Pipeline for Automated News Production in Taiwanese Mandarin] A project aimed to catch teenagers’ attention and refocus on critical societal issues with AI-driven Natural Language Processing technologies.",
       "imageSrc": "https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/image/AI%20Editor-in-Chief%20and%20Virtual%20News%20Presenter.png",
       "url": "https://github.com/iridiumtao/Virtual-to-News-Public"
     },
@@ -39,8 +39,8 @@
     },
     {
       "id": "3",
-      "title": " Retailpia, Winner of Better Retail, Level-Up Society Hackathon, organized by ShowCode",
-      "description": "Developed a city-building game that also included the additional feature of being an account book app and a points collector with students from four universities within 48 hours.",
+      "title": " Retailpia",
+      "description": "[Winner of Better Retail, Level-Up Society Hackathon, organized by ShowCode] Developed a city-building game that also included the additional feature of being an account book app and a points collector with students from four universities within 48 hours.",
       "imageSrc": "https://github.com/iridiumtao/Retailpia/assets/43561001/8d1d5603-e090-4694-9eea-562258a6c361",
       "url": "https://github.com/iridiumtao/Retailpia"
     },
@@ -74,19 +74,9 @@
       "id": "3",
       "title": "Software Engineering Intern, Mindtronic AI",
       "description": "Developed a back-end server with Golang and PostgreSQL, handling 480k+ weekly entries. Added React-based dashboard features and built real-time ARM-device apps for fleet driving analytics."
-    },
-    {
-      "id": "4",
-      "title": "3D Design",
-      "description": "We combine creative design and technical skills to build striking 3D visualisations that bring your project to life."
-    },
-    {
-      "id": "05f6299a-ebed-4bc2-b5ab-584ebd8787cc",
-      "title": "New Service",
-      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
     }
   ],
-  "aboutpara": "Chun-Ju Tao is a Computer Engineering master’s student at NYU with a 3.78 GPA and a solid foundation in software development, DevOps, and AI applications. Proficient in Python, JavaScript, C#, Go, and \nPostgreSQL, he has successfully delivered impactful projects across diverse industries. Notable accomplishments include optimizing microservices with Docker and AWS ECS, creating a material management system for a government organization, and developing AI-driven solutions like an NLP-based news presenter. Chun-Ju has demonstrated leadership by implementing Agile practices, enhancing team efficiency during rapid growth, and winning multiple awards for technical innovation. His achievements reflect a commitment to driving operational excellence and delivering scalable, modern solutions.",
+  "aboutpara": "Chun-Ju Tao is a Computer Engineering master’s student at NYU with a 3.78 GPA and a solid foundation in software development, DevOps, and AI applications. Proficient in Python, JavaScript, C#, Go, and PostgreSQL, he has successfully delivered impactful projects across diverse industries. \n\nNotable accomplishments include optimizing microservices with Docker and AWS ECS, creating a material management system for a government organization, and developing AI-driven solutions like an NLP-based news presenter. \n\nChun-Ju has demonstrated leadership by implementing Agile practices, enhancing team efficiency during rapid growth, and winning multiple awards for technical innovation. His achievements reflect a commitment to driving operational excellence and delivering scalable, modern solutions.",
   "resume": {
     "tagline": "👋  I'm a software engineer, product designer.",
     "description": "I have delivered world-class user experiences to millions of people. Well-versed with React, Javascript, and most of the Web frameworks.",

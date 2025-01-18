@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import {useState, useRef, Fragment} from "react";
 import Header from "../components/Header";
 import ServiceCard from "../components/ServiceCard";
 import Socials from "../components/Socials";
@@ -146,7 +146,12 @@ export default function Home() {
         <div className="mt-10 laptop:mt-40 p-2 laptop:p-0" ref={aboutRef}>
           <h1 className="tablet:m-10 text-2xl text-bold">About</h1>
           <p className="tablet:m-10 mt-2 text-lg laptop:text-2xl w-full laptop:w-4/5">
-            {data.aboutpara}
+            {data.aboutpara.split('\n').map((line, index) => (
+                <Fragment key={index}>
+                  {line}
+                  <br />
+                </Fragment>
+            ))}
           </p>
         </div>
         <Footer />
