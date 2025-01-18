@@ -1,6 +1,6 @@
 {
   "name": "Chun-Ju (Iridium)",
-  "headerTaglineOne": "Hi there👋",
+  "headerTaglineOne": "Hi there 👋",
   "headerTaglineTwo": "I'm Chun-Ju Tao,",
   "headerTaglineThree": "Computer Engineering MS student at NYU",
   "headerTaglineFour": "Passionate about creating innovative and scalable solutions",
@@ -55,25 +55,25 @@
       "id": "5",
       "title": "iOS Development",
       "description": "During the summer vacation of my second year of University, I participated in the summer iOS development practical training, cultivating skills in mobile development through hands-on experience with UI components and design patterns in the Intelligent Mobile Application Club (I.M.A.C) laboratory on campus.",
-      "imageSrc": "https://images.unsplash.com/photo-1534239143101-1b1c627395c5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxzZWFyY2h8NzZ8fHBhc3RlbHxlbnwwfHwwfA%3D%3D&auto=format&fit=crop&w=400&q=60",
+      "imageSrc": "https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/image/iOS%20Development.png",
       "url": "https://github.com/jerry960331/iOS_practice_SwiftUIWeatherApp"
     }
   ],
   "services": [
     {
       "id": "1",
-      "title": "Art Direction",
-      "description": "We help with the creation and development of online advertising ideas, with particular focus on their visual appearance."
+      "title": "Software Developer, CARITY AI",
+      "description": "Developed a DevOps workflow with Docker and AWS ECS, optimizing deployment and reducing costs by 40%. Researched Agentic RAG, improving token efficiency fivefold for complex question-answering capabilities."
     },
     {
       "id": "2",
-      "title": "Branding",
-      "description": "We design key brand elements such as the logo, color scheme, typography, and other design components that makes your brand stand out from competitors."
+      "title": "Software Engineering Intern, MoBagel",
+      "description": "Built a full-stack material management system automating budgeting and inventory for Taiwan Water Corporation. Led GitFlow and Agile adoption, boosting efficiency during a 300% team expansion."
     },
     {
       "id": "3",
-      "title": "Web Design",
-      "description": "We build and optimize your online presence.  Website is the digital entry point into your business and a powerful revenue channel."
+      "title": "Software Engineering Intern, Mindtronic AI",
+      "description": "Developed a back-end server with Golang and PostgreSQL, handling 480k+ weekly entries. Added React-based dashboard features and built real-time ARM-device apps for fleet driving analytics."
     },
     {
       "id": "4",
