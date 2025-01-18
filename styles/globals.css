@@ -1,11 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Hind:wght@400;500;700&display=swap");
+@import "./markdown.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "./markdown.css";
 
 * {
-  font-family: "Hind";
+  font-family: "Hind", sans-serif;
 }
 
 body {
@@ -16,30 +17,63 @@ body {
   position: absolute;
   pointer-events: none;
   z-index: 100;
-  top: -30px;
-  height: 40px;
+  top: -60px;
+  height: 80px;
   width: 100vw;
-  opacity: 0.5;
+  opacity: 0.8;
   filter: blur(40px);
   background: radial-gradient(
     circle,
-    rgba(248, 107, 223, 1) 0%,
-    rgba(107, 107, 248, 0.8) 100%
+    rgba(253, 233, 222, 0.6) 0%,
+    rgb(245, 224, 224) 100%
   );
 }
+
+.gradient-circle-dark {
+  position: absolute;
+  pointer-events: none;
+  z-index: 100;
+  top: -60px;
+  height: 80px;
+  width: 100vw;
+  opacity: 0.8;
+  filter: blur(40px);
+  background: radial-gradient(
+      circle,
+      rgba(199, 169, 149) 0%,
+      rgba(43, 29, 23) 100%
+  );
+}
+
 .gradient-circle-bottom {
   position: absolute;
   pointer-events: none;
   z-index: 100;
-  bottom: -20px;
-  height: 30px;
+  bottom: -40px;
+  height: 60px;
   width: 100vw;
-  opacity: 0.5;
+  opacity: 0.8;
   filter: blur(40px);
   background: radial-gradient(
     circle,
-    rgba(248, 107, 223, 1) 0%,
-    rgba(107, 107, 248, 0.8) 100%
+    rgba(253, 233, 222, 0.6) 0%,
+    rgb(245, 224, 224) 100%
+  );
+}
+
+.gradient-circle-bottom-dark {
+  position: absolute;
+  pointer-events: none;
+  z-index: 100;
+  bottom: -40px;
+  height: 60px;
+  width: 100vw;
+  opacity: 0.8;
+  filter: blur(40px);
+  background: radial-gradient(
+    circle,
+    rgba(199, 169, 149) 0%,
+    rgba(43, 29, 23) 100%
   );
 }
 

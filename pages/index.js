@@ -10,6 +10,8 @@ import Head from "next/head";
 import Button from "../components/Button";
 import Link from "next/link";
 import Cursor from "../components/Cursor";
+import { useTheme } from "next-themes";
+
 
 // Local Data
 import data from "../data/portfolio.json";
@@ -22,6 +24,7 @@ export default function Home() {
   const textTwo = useRef();
   const textThree = useRef();
   const textFour = useRef();
+  const { theme } = useTheme();
 
   const [rowHeights, setRowHeights] = useState([]);
 
@@ -68,8 +71,8 @@ export default function Home() {
         <title>{data.name}</title>
       </Head>
 
-      <div className="gradient-circle"></div>
-      <div className="gradient-circle-bottom"></div>
+      <div className={`${theme === "dark" ? "gradient-circle-dark" : "gradient-circle"}`}></div>
+      <div className={`${theme === "dark" ? "gradient-circle-bottom-dark" : "gradient-circle-bottom"}`}></div>
 
       <div className="container mx-auto mb-10">
         <Header
