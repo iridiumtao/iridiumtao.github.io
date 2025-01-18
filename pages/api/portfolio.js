@@ -7,7 +7,7 @@ export default function handler(req, res) {
     if (req.method === "POST") {
       fs.writeFileSync(
         portfolioData,
-        JSON.stringify(req.body, null, 2),
+        JSON.stringify(req.body),
         "utf-8",
         (err) => console.log(err)
       );

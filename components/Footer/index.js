@@ -1,6 +1,5 @@
 import React from "react";
 import Socials from "../Socials";
-import Link from "next/link";
 
 const Footer = () => {
     return (
