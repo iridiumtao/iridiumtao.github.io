@@ -2,10 +2,11 @@
 
 let basePath = "";
 let assetPrefix = "";
+const isDev = process.env.NODE_ENV === "development";
 
 const nextConfig = {
   reactStrictMode: true,
-  output: "export",
+  output: isDev ? undefined : "export",
   basePath,
   assetPrefix,
   images: {

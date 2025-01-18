@@ -1,1 +1,132 @@
-{"name":"Chun-Ju (Iridium)","headerTaglineOne":"Hi there👋","headerTaglineTwo":"I'm Chun-Ju Tao,","headerTaglineThree":"Computer Engineering MS student at NYU","headerTaglineFour":"Passionate about creating innovative and scalable solutions","showCursor":false,"showBlog":true,"darkMode":true,"showResume":true,"socials":[{"title":"Github","link":"https://github.com/iridiumtao"},{"title":"LinkedIn","link":"https://linkedin.com/in/chun-ju-tao-3b1485254/"},{"title":"Email","link":"mailto:c.tao@nyu.edu"}],"projects":[{"id":"1","title":"AI Editor-in-Chief and Virtual News Presenter","description":"An Artificial Intelligence-Based Pipeline for Automated News Production in Taiwanese Mandarin \\n A project aimed to catch teenagers’ attention and refocus on critical societal issues with AI-driven Natural Language Processing technologies.","imageSrc":"https://file.notion.so/f/f/3614ca3e-6f8c-46c5-b9dc-7f03473e51f1/5793772c-8f6a-482b-8af8-cc8f966cbca4/截圖_2022-12-26_21.47.12.png?table=block&id=1b46aa70-12e8-4402-a895-b55bcb5fcd1f&spaceId=3614ca3e-6f8c-46c5-b9dc-7f03473e51f1&expirationTimestamp=1737172800000&signature=MMc32kfqSdSgWTVm6uILAlRQ6xaYi62RcukpQTAaktY&downloadName=截圖+2022-12-26+21.47.12.png","url":"https://github.com/iridiumtao/Virtual-to-News-Public"},{"id":"2","title":"RISC-V-Simulator","description":"A 5-stage pipelined RISC-V Simulator written in Python.","imageSrc":"https://raw.githubusercontent.com/iridiumtao/RISC-V-Simulator/refs/heads/master/docs/Schematic%20RISCV%20Project%20Five%20Stage.png","url":"https://github.com/iridiumtao/RISC-V-Simulator"},{"id":"3","title":" Retailpia, Winner of Better Retail, Level-Up Society Hackathon, organized by ShowCode","description":"Developed a city-building game that also included the additional feature of being an account book app and a points collector with students from four universities within 48 hours.","imageSrc":"https://github.com/iridiumtao/Retailpia/assets/43561001/8d1d5603-e090-4694-9eea-562258a6c361","url":"https://github.com/iridiumtao/Retailpia"},{"id":"4","title":"TW-COVID-Bot (Telegram Bot)","description":"During the COVID-19 pandemic in Taiwan, I assisted social media influencers in automatically posting daily outbreak information for easy access to up-to-date information.","imageSrc":"https://github.com/lhsueh1/TW-covid-Bot/blob/main/src/README/img1.png?raw=true","url":"https://github.com/lhsueh1/TW-covid-Bot"},{"id":"5","title":"iOS Development","description":"During the summer vacation of my second year of University, I participated in the summer iOS development practical training, cultivating skills in mobile development through hands-on experience with UI components and design patterns in the Intelligent Mobile Application Club (I.M.A.C) laboratory on campus.","imageSrc":"https://images.unsplash.com/photo-1534239143101-1b1c627395c5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxzZWFyY2h8NzZ8fHBhc3RlbHxlbnwwfHwwfA%3D%3D&auto=format&fit=crop&w=400&q=60","url":"https://github.com/jerry960331/iOS_practice_SwiftUIWeatherApp"}],"services":[{"id":"1","title":"Art Direction","description":"We help with the creation and development of online advertising ideas, with particular focus on their visual appearance."},{"id":"2","title":"Branding","description":"We design key brand elements such as the logo, color scheme, typography, and other design components that makes your brand stand out from competitors."},{"id":"3","title":"Web Design","description":"We build and optimize your online presence.  Website is the digital entry point into your business and a powerful revenue channel."},{"id":"4","title":"3D Design","description":"We combine creative design and technical skills to build striking 3D visualisations that bring your project to life."},{"id":"05f6299a-ebed-4bc2-b5ab-584ebd8787cc","title":"New Service","description":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. "}],"aboutpara":"Chun-Ju Tao is a Computer Engineering master’s student at NYU with a 3.78 GPA and a solid foundation in software development, DevOps, and AI applications. Proficient in Python, JavaScript, C#, Go, and \nPostgreSQL, he has successfully delivered impactful projects across diverse industries. Notable accomplishments include optimizing microservices with Docker and AWS ECS, creating a material management system for a government organization, and developing AI-driven solutions like an NLP-based news presenter. Chun-Ju has demonstrated leadership by implementing Agile practices, enhancing team efficiency during rapid growth, and winning multiple awards for technical innovation. His achievements reflect a commitment to driving operational excellence and delivering scalable, modern solutions.","resume":{"tagline":"👋  I'm a software engineer, product designer.","description":"I have delivered world-class user experiences to millions of people. Well-versed with React, Javascript, and most of the Web frameworks.","experiences":[{"id":"1","dates":"March 2022 - Present","type":"Full Time","position":"Frontend Engineer at X","bullets":"Bullet One, Bullet Two"},{"id":"d495c23b-4f65-479a-9b8a-cfbc1c089725","dates":"July 2020 - March 2022","type":"Full Time","position":"Frontend Engineer at X","bullets":"Worked on the frontend of a React application, Worked on the frontend of a React application"}],"education":{"universityName":"University X","universityDate":"2016-2020","universityPara":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"},"languages":["Javascript","HTML5","CSS","Python","Go"],"frameworks":["React","Typescript","NodeJs"],"others":["Figma","AdobeXD","AWS"]}}
+{
+  "name": "Chun-Ju (Iridium)",
+  "headerTaglineOne": "Hi there👋",
+  "headerTaglineTwo": "I'm Chun-Ju Tao,",
+  "headerTaglineThree": "Computer Engineering MS student at NYU",
+  "headerTaglineFour": "Passionate about creating innovative and scalable solutions",
+  "showCursor": false,
+  "showBlog": true,
+  "darkMode": true,
+  "showResume": true,
+  "socials": [
+    {
+      "title": "Github",
+      "link": "https://github.com/iridiumtao"
+    },
+    {
+      "title": "LinkedIn",
+      "link": "https://linkedin.com/in/chun-ju-tao-3b1485254/"
+    },
+    {
+      "title": "Email",
+      "link": "mailto:c.tao@nyu.edu"
+    }
+  ],
+  "projects": [
+    {
+      "id": "1",
+      "title": "AI Editor-in-Chief and Virtual News Presenter",
+      "description": "An Artificial Intelligence-Based Pipeline for Automated News Production in Taiwanese Mandarin \\n A project aimed to catch teenagers’ attention and refocus on critical societal issues with AI-driven Natural Language Processing technologies.",
+      "imageSrc": "https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/image/AI%20Editor-in-Chief%20and%20Virtual%20News%20Presenter.png",
+      "url": "https://github.com/iridiumtao/Virtual-to-News-Public"
+    },
+    {
+      "id": "2",
+      "title": "RISC-V-Simulator",
+      "description": "A 5-stage pipelined RISC-V Simulator written in Python.",
+      "imageSrc": "https://raw.githubusercontent.com/iridiumtao/RISC-V-Simulator/refs/heads/master/docs/Schematic%20RISCV%20Project%20Five%20Stage.png",
+      "url": "https://github.com/iridiumtao/RISC-V-Simulator"
+    },
+    {
+      "id": "3",
+      "title": " Retailpia, Winner of Better Retail, Level-Up Society Hackathon, organized by ShowCode",
+      "description": "Developed a city-building game that also included the additional feature of being an account book app and a points collector with students from four universities within 48 hours.",
+      "imageSrc": "https://github.com/iridiumtao/Retailpia/assets/43561001/8d1d5603-e090-4694-9eea-562258a6c361",
+      "url": "https://github.com/iridiumtao/Retailpia"
+    },
+    {
+      "id": "4",
+      "title": "TW-COVID-Bot (Telegram Bot)",
+      "description": "During the COVID-19 pandemic in Taiwan, I assisted social media influencers in automatically posting daily outbreak information for easy access to up-to-date information.",
+      "imageSrc": "https://github.com/lhsueh1/TW-covid-Bot/blob/main/src/README/img1.png?raw=true",
+      "url": "https://github.com/lhsueh1/TW-covid-Bot"
+    },
+    {
+      "id": "5",
+      "title": "iOS Development",
+      "description": "During the summer vacation of my second year of University, I participated in the summer iOS development practical training, cultivating skills in mobile development through hands-on experience with UI components and design patterns in the Intelligent Mobile Application Club (I.M.A.C) laboratory on campus.",
+      "imageSrc": "https://images.unsplash.com/photo-1534239143101-1b1c627395c5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxzZWFyY2h8NzZ8fHBhc3RlbHxlbnwwfHwwfA%3D%3D&auto=format&fit=crop&w=400&q=60",
+      "url": "https://github.com/jerry960331/iOS_practice_SwiftUIWeatherApp"
+    }
+  ],
+  "services": [
+    {
+      "id": "1",
+      "title": "Art Direction",
+      "description": "We help with the creation and development of online advertising ideas, with particular focus on their visual appearance."
+    },
+    {
+      "id": "2",
+      "title": "Branding",
+      "description": "We design key brand elements such as the logo, color scheme, typography, and other design components that makes your brand stand out from competitors."
+    },
+    {
+      "id": "3",
+      "title": "Web Design",
+      "description": "We build and optimize your online presence.  Website is the digital entry point into your business and a powerful revenue channel."
+    },
+    {
+      "id": "4",
+      "title": "3D Design",
+      "description": "We combine creative design and technical skills to build striking 3D visualisations that bring your project to life."
+    },
+    {
+      "id": "05f6299a-ebed-4bc2-b5ab-584ebd8787cc",
+      "title": "New Service",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
+    }
+  ],
+  "aboutpara": "Chun-Ju Tao is a Computer Engineering master’s student at NYU with a 3.78 GPA and a solid foundation in software development, DevOps, and AI applications. Proficient in Python, JavaScript, C#, Go, and \nPostgreSQL, he has successfully delivered impactful projects across diverse industries. Notable accomplishments include optimizing microservices with Docker and AWS ECS, creating a material management system for a government organization, and developing AI-driven solutions like an NLP-based news presenter. Chun-Ju has demonstrated leadership by implementing Agile practices, enhancing team efficiency during rapid growth, and winning multiple awards for technical innovation. His achievements reflect a commitment to driving operational excellence and delivering scalable, modern solutions.",
+  "resume": {
+    "tagline": "👋  I'm a software engineer, product designer.",
+    "description": "I have delivered world-class user experiences to millions of people. Well-versed with React, Javascript, and most of the Web frameworks.",
+    "experiences": [
+      {
+        "id": "1",
+        "dates": "March 2022 - Present",
+        "type": "Full Time",
+        "position": "Frontend Engineer at X",
+        "bullets": "Bullet One, Bullet Two"
+      },
+      {
+        "id": "d495c23b-4f65-479a-9b8a-cfbc1c089725",
+        "dates": "July 2020 - March 2022",
+        "type": "Full Time",
+        "position": "Frontend Engineer at X",
+        "bullets": "Worked on the frontend of a React application, Worked on the frontend of a React application"
+      }
+    ],
+    "education": {
+      "universityName": "University X",
+      "universityDate": "2016-2020",
+      "universityPara": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+    },
+    "languages": [
+      "Javascript",
+      "HTML5",
+      "CSS",
+      "Python",
+      "Go"
+    ],
+    "frameworks": [
+      "React",
+      "Typescript",
+      "NodeJs"
+    ],
+    "others": [
+      "Figma",
+      "AdobeXD",
+      "AWS"
+    ]
+  }
+}
