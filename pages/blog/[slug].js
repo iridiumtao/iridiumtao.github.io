@@ -38,7 +38,7 @@ const BlogPost = ({ post }) => {
         <Header isBlog={true} />
         <div className="mt-10 flex flex-col">
           <img
-            className="w-full h-96 rounded-lg shadow-lg object-cover"
+            className="w-full rounded-lg shadow-lg object-cover"
             src={post.image}
             alt={post.title}
           ></img>
@@ -54,8 +54,24 @@ const BlogPost = ({ post }) => {
           >
             {post.tagline}
           </h2>
+          <div className={`flex flex-wrap mob:flex-nowrap link`}>
+            {post.links.map((link, index) => (
+                <Button key={index} onClick={() => window.open(link.url)}>
+                  {`${link.name} Link 🔗`}
+                </Button>
+            ))}
+          </div>
+
         </div>
+
         <ContentSection content={post.content}></ContentSection>
+        <div className={`flex flex-wrap mob:flex-nowrap link`}>
+          {post.links.map((link, index) => (
+              <Button key={index} onClick={() => window.open(link.url)}>
+                {`${link.name} Link 🔗`}
+              </Button>
+          ))}
+        </div>
         <Footer />
       </div>
       {process.env.NODE_ENV === "development" && (
@@ -86,6 +102,7 @@ export async function getStaticProps({ params }) {
     "tagline",
     "preview",
     "image",
+    "links",
     "content",
   ]);
 

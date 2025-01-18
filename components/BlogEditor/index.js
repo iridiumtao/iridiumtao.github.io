@@ -16,6 +16,7 @@ const BlogEditor = ({ post, close, refresh }) => {
     tagline: post.tagline,
     preview: post.preview,
     image: post.image,
+    links: post.links,
   });
 
   const savePost = async () => {

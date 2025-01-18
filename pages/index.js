@@ -118,7 +118,6 @@ export default function Home() {
                 img={project.imageSrc}
                 name={project.title}
                 description={project.description}
-                onClick={() => window.open(project.url)}
                 rowHeight={rowHeights[Math.floor(index / 2)] || "auto"}
                 onImageLoad={(height) => handleImageLoad(index, height)}
               />

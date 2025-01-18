@@ -3,7 +3,7 @@
 /* Markdown Container */
 
 .markdown-class {
-  @apply mt-5 p-5;
+  @apply p-5;
 }
 
 /* Headings */
@@ -78,5 +78,5 @@
 /* Image */
 
 .markdown-class img {
-  @apply max-h-96 w-full my-5 object-cover rounded-lg shadow-lg;
+  @apply w-full my-5 object-cover rounded-lg shadow-lg;
 }

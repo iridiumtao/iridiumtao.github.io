@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
+import {useRouter} from "next/router";
 
-const WorkCard = ({ img, name, description, rowHeight, onImageLoad, onClick }) => {
+const WorkCard = ({ img, name, description, rowHeight, onImageLoad }) => {
+    const router = useRouter();
     const [imageLoaded, setImageLoaded] = useState(false);
     const imgRef = useRef(null);
 
@@ -19,17 +21,17 @@ const WorkCard = ({ img, name, description, rowHeight, onImageLoad, onClick }) =
 
     return (
         <div
-            className="overflow-hidden cursor-pointer rounded-lg p-2 laptop:p-4 first:ml-0"
-            onClick={onClick}
+            className="overflow-hidden rounded-lg p-2 laptop:p-4 first:ml-0"
         >
             <div
-                className={`overflow-hidden transition-all ease-out duration-300 hover:scale-95 h-48 mob:h-auto flex items-center justify-center ${
+                className={`overflow-hidden transition-all cursor-pointer ease-out duration-300 hover:scale-95 h-48 mob:h-auto flex items-center justify-center ${
                     !imageLoaded ? 'bg-gray-100' : ''
                 }`}
                 style={{
                     height: imageLoaded ? rowHeight : 'auto',
                     minHeight: '200px'
                 }}
+                onClick={() => router.push(`/blog/${name}`)}
             >
                 <img
                     ref={imgRef}
