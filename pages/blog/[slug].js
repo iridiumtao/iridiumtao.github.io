@@ -55,22 +55,26 @@ const BlogPost = ({ post }) => {
             {post.tagline}
           </h2>
           <div className={`flex flex-wrap mob:flex-nowrap link`}>
-            {post.links.map((link, index) => (
-                <Button key={index} onClick={() => window.open(link.url)}>
-                  {`${link.name} Link 🔗`}
-                </Button>
-            ))}
+            {Array.isArray(post.links) && post.links.length > 0 &&
+                post.links.map((link, index) => (
+                    <Button key={index} onClick={() => window.open(link.url)}>
+                      {`${link.name} Link 🔗`}
+                    </Button>
+                ))
+            }
           </div>
 
         </div>
 
         <ContentSection content={post.content}></ContentSection>
         <div className={`flex flex-wrap mob:flex-nowrap link`}>
-          {post.links.map((link, index) => (
-              <Button key={index} onClick={() => window.open(link.url)}>
-                {`${link.name} Link 🔗`}
-              </Button>
-          ))}
+          {Array.isArray(post.links) && post.links.length > 0 &&
+              post.links.map((link, index) => (
+                  <Button key={index} onClick={() => window.open(link.url)}>
+                    {`${link.name} Link 🔗`}
+                  </Button>
+              ))
+          }
         </div>
         <Footer />
       </div>
