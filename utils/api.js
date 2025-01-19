@@ -36,6 +36,7 @@ export function getAllPosts(fields = []) {
 
             return items;
         })
+        .filter((post) => post.title && post.title.trim() !== '')
         .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
 
     return allPosts;
