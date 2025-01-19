@@ -9,7 +9,7 @@ image: >-
     https://github.com/iridiumtao/Retailpia/assets/43561001/8d1d5603-e090-4694-9eea-562258a6c361
 links: [
   {name: GitHub, url: https://github.com/iridiumtao/Retailpia}, 
-  {name: Devpost, url: https://devpost.com/software/retailpia}
+  {name: Devpost, url: https://devpost.com/software/retailpia},
   {name: YouTube, url: https://www.youtube.com/watch?v=dIgbv_VPiqI}
 ]
 ---
