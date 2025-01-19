@@ -25,9 +25,9 @@ const CodeBlock = {
 
 const ContentSection = ({ content }) => {
   return (
-      <div className="markdown-class">
-        <div dangerouslySetInnerHTML={{ __html: content }} />
-      </div>
+    <ReactMarkdown components={CodeBlock} className="markdown-class">
+      {content}
+    </ReactMarkdown>
   );
 };
 
