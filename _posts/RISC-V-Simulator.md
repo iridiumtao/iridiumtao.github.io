@@ -7,7 +7,7 @@ preview: >-
   A project aimed to catch teenagers’ attention and refocus on critical societal
   issues with AI-driven Natural Language Processing technologies.
 image: >-
-  https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/image/AI%20Editor-in-Chief%20and%20Virtual%20News%20Presenter.png
+  https://github.com/iridiumtao/RISC-V-Simulator/blob/master/docs/Schematic%20RISCV%20Project%20Five%20Stage.png?raw=true
 links: [
   {name: GitHub, url: https://github.com/iridiumtao/RISC-V-Simulator}, 
 ]
