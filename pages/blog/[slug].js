@@ -98,7 +98,7 @@ const BlogPost = ({ post }) => {
 };
 
 export async function getStaticProps({ params }) {
-  const post = getPostBySlug(params.slug, [
+  const post = await getPostBySlug(params.slug, [
     "date",
     "slug",
     "preview",
@@ -120,17 +120,20 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPosts(["slug"]);
+  // Get all posts but only request the slug field
+  const posts = getAllPosts(['slug']);
+
+  // Map the posts to the required format for paths
+  const paths = posts.map((post) => ({
+    params: {
+      slug: post.slug,
+    },
+  }));
 
   return {
-    paths: posts.map((post) => {
-      return {
-        params: {
-          slug: post.slug,
-        },
-      };
-    }),
+    paths,
     fallback: false,
   };
 }
+
 export default BlogPost;

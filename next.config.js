@@ -6,7 +6,7 @@ const isDev = process.env.NODE_ENV === "development";
 
 const nextConfig = {
   reactStrictMode: true,
-  output: isDev ? undefined : "export",
+  output: "export",
   basePath,
   assetPrefix,
   images: {
@@ -14,13 +14,4 @@ const nextConfig = {
   },
 };
 
-module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: '/blog/:slug',
-        destination: '/blog/[slug]',
-      },
-    ];
-  },
-};
+module.exports = nextConfig;
