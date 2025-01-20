@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
-const ServiceCard = ({ name, description }) => {
+const WorkCard = ({ name, description }) => {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState();
 
@@ -24,4 +24,4 @@ const ServiceCard = ({ name, description }) => {
   );
 };
 
-export default ServiceCard;
+export default WorkCard;
