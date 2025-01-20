@@ -12,7 +12,7 @@ import {useTheme} from "next-themes";
 import Footer from "../../components/Footer";
 
 const Blog = ({posts}) => {
-  const theme = useTheme().theme;
+  const theme = useTheme();
   const showBlog = useRef(data.showBlog);
   const text = useRef();
   const router = useRouter();

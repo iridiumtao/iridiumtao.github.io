@@ -24,8 +24,8 @@ body {
   filter: blur(40px);
   background: radial-gradient(
     circle,
-    rgba(253, 233, 222, 0.6) 0%,
-    rgb(245, 224, 224) 100%
+    #E8E4DE 0%,
+    #D4C5B9 100%
   );
 }
 
@@ -40,8 +40,8 @@ body {
   filter: blur(40px);
   background: radial-gradient(
       circle,
-      rgba(199, 169, 149) 0%,
-      rgba(43, 29, 23) 100%
+      #6B5B4E 0%,
+      #4A4036 100%
   );
 }
 
@@ -56,8 +56,8 @@ body {
   filter: blur(40px);
   background: radial-gradient(
     circle,
-    rgba(253, 233, 222, 0.6) 0%,
-    rgb(245, 224, 224) 100%
+    #E8E4DE 0%,
+    #D4C5B9 100%
   );
 }
 
@@ -72,8 +72,8 @@ body {
   filter: blur(40px);
   background: radial-gradient(
     circle,
-    rgba(199, 169, 149) 0%,
-    rgba(43, 29, 23) 100%
+    #6B5B4E 0%,
+    #4A4036 100%
   );
 }
 

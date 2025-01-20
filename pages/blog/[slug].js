@@ -15,7 +15,7 @@ import {useTheme} from "next-themes";
 
 
 const BlogPost = ({post}) => {
-  const theme = useTheme().theme;
+  const theme = useTheme();
   const [showEditor, setShowEditor] = useState(false);
   const textOne = useRef();
   const textTwo = useRef();

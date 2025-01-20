@@ -27,6 +27,16 @@ module.exports = {
           accent: {
             light: '#D4C5B9',
             dark: '#6B5B4E'
+          },
+          gradient: {
+            light: {
+              from: '#E8E4DE',
+              to: '#D4C5B9'
+            },
+            dark: {
+              from: '#6B5B4E',
+              to: '#4A4036'
+            }
           }
         }
       }

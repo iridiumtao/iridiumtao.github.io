@@ -14,7 +14,7 @@ import data from "../data/portfolio.json";
 
 
 const Resume = () => {
-  const theme = useTheme().theme;
+  const theme = useTheme();
   // Refs for animation
   const eduRef = useRef(null);
   const expRef = useRef(null);
