@@ -5,7 +5,7 @@
   "headerTaglineThree": "Computer Engineering MS student at NYU",
   "headerTaglineFour": "Passionate about creating innovative and scalable solutions",
   "showCursor": false,
-  "showBlog": true,
+  "showBlog": false,
   "darkMode": true,
   "showResume": true,
   "socials": [
@@ -20,6 +20,10 @@
     {
       "title": "Email",
       "link": "mailto:c.tao@nyu.edu"
+    },
+    {
+      "title": "Resume",
+      "link": "/resume"
     }
   ],
   "projects": [
