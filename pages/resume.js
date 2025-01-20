@@ -211,7 +211,7 @@ const Resume = () => {
                   )}
                 </div>
                 <ul className="list-disc list-inside mt-2">
-                  {project.details.map((detail, idx) => (
+                  {project.details && project.details.map((detail, idx) => (
                     <li
                       key={idx}
                       className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed"

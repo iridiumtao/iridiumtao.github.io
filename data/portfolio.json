@@ -171,33 +171,51 @@
     },
     "projects": [
       {
+        "title": "RISC-V-Simulator",
+        "organization": "NYU",
+        "location": "New York, NY",
+        "dates": "October 2024 - December 2024"
+      },
+      {
         "title": "AI Editor-in-Chief and Virtual News Presenter",
         "organization": "Natural Language Process Lab, NTCUST",
         "location": "Taichung, Taiwan",
         "dates": "September 2021 - July 2023",
         "details": [
-          "Utilized Google Trends and NLP techniques (CKIP Transformers, TextRank, TF-IDF, BERT) to identify weekly trending topics.",
-          "Designed a pipeline with Docker and Flask to integrate multiple open-source repos for system infrastructure and data efficiency."
+          "Leveraged Google Trends and natural language processing (CKIP Transformers, TextRank, TF-IDF, BERT) to find the trending topic for the week and researched and designed the approach for compiling news articles.",
+          "Developed the system infrastructure and designed a pipeline with Docker and Flask for integrating five open-sourced repos into work for project integrity, data transferring efficiency, and future development possibilities."
         ]
       },
       {
-        "title": "RISC-V-Simulator",
-        "organization": "Computer Architecture Lab, NTCUST",
-        "location": "Taichung, Taiwan",
-        "dates": "September 2021 - July 2023",
+        "title": "TW-COVID-Bot (Telegram Bot)",
+        "organization": "Spontaneous Study",
+        "location": "Taipei, Taiwan",
+        "dates": "August 2020 - November 2022",
         "details": [
-          "Developed a 5-stage pipelined RISC-V Simulator in Python, supporting RV32I base instructions and hazard detection.",
-          "Implemented a GUI with Tkinter for user-friendly interaction and debugging."
+          "During the COVID-19 pandemic in Taiwan, I assisted social media influencers in automatically posting daily outbreak information for easy access to up-to-date information.",
+          "Volunteered to organize developers to set up a server and developed a bot that utilized web crawling, image generating, and data analysis.",
+          "Automatically graphing daily COVID-19 cases from 200 countries to track the level of spread."
+        ]
+      },
+      {
+        "title": "iOS Developer",
+        "organization": "I.M.A.C. Lab, NTCUST",
+        "location": "Taichung, Taiwan",
+        "dates": "June 2020 - October 2020",
+        "details": [
+          "Designed a weather app with MVVM, implementing weather API, Realm Database, and MapKit.",
+          "Designed a bank app with MVC, implementing biometric authenticating, notification broadcasting, and real-time currency displaying.",
+          "Utilized Swift UI layout systems such as Storyboards and SwiftUI with Swift5."
         ]
       },
       {
         "title": "Retailpia",
         "organization": "Level-Up Society Hackathon",
-        "location": "Online",
+        "location": "UK",
         "dates": "September 2021",
         "details": [
-          "Led a team of 4 students from 4 universities to develop a city-building game with an account book app and points collector.",
-          "Integrated Firebase for real-time data synchronization and user authentication."
+          "Led a team of 4 students from 4 universities to develop a city-building game with an account book app and points collector within 48 hours.",
+          "Winner of Better Retail, Level-Up Society Hackathon, organized by ShowCode."
         ]
       }
     ],
