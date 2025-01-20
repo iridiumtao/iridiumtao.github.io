@@ -2,7 +2,7 @@ import {useState, useRef, Fragment} from "react";
 import Header from "../components/Header";
 import ServiceCard from "../components/ServiceCard";
 import Socials from "../components/Socials";
-import WorkCard from "../components/WorkCard";
+import ProjectCard from "../components/ProjectCard";
 import { useIsomorphicLayoutEffect } from "../utils";
 import { stagger } from "../animations";
 import Footer from "../components/Footer";
@@ -18,6 +18,7 @@ import data from "../data/portfolio.json";
 
 export default function Home() {
   // Ref
+  const projectRef = useRef();
   const workRef = useRef();
   const aboutRef = useRef();
   const textOne = useRef();
@@ -40,6 +41,14 @@ export default function Home() {
 
 
   // Handling Scroll
+  const handleProjectScroll = () => {
+    window.scrollTo({
+      top: projectRef.current.offsetTop,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
+
   const handleWorkScroll = () => {
     window.scrollTo({
       top: workRef.current.offsetTop,
@@ -76,6 +85,7 @@ export default function Home() {
 
       <div className="container mx-auto mb-10">
         <Header
+          handleProjectScroll={handleProjectScroll}
           handleWorkScroll={handleWorkScroll}
           handleAboutScroll={handleAboutScroll}
         />
@@ -109,11 +119,11 @@ export default function Home() {
 
           <Socials className="mt-2 laptop:mt-5" />
         </div>
-        <div className="mt-10 laptop:mt-30 p-2 laptop:p-0" ref={workRef}>
+        <div className="mt-10 laptop:mt-30 p-2 laptop:p-0" ref={projectRef}>
           <h1 className="text-2xl text-bold">Project Experiences</h1>
           <div className="mt-5 laptop:mt-10 grid grid-cols-1 tablet:grid-cols-2 gap-4">
             {data.projects.map((project, index) => (
-              <WorkCard
+              <ProjectCard
                 key={project.id}
                 img={project.imageSrc}
                 name={project.title}
@@ -125,7 +135,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-10 laptop:mt-30 p-2 laptop:p-0">
+        <div className="mt-10 laptop:mt-30 p-2 laptop:p-0" ref={workRef}>
           <h1 className="tablet:m-10 text-2xl text-bold">Professional Experiences</h1>
           <div className="mt-5 tablet:m-10 grid grid-cols-1 laptop:grid-cols-2 gap-6">
             {data.services.map((service, index) => (

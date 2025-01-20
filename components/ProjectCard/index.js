@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import {useRouter} from "next/router";
 
-const WorkCard = ({ img, name, description, rowHeight, onImageLoad }) => {
+const ProjectCard = ({ img, name, description, rowHeight, onImageLoad }) => {
     const router = useRouter();
     const [imageLoaded, setImageLoaded] = useState(false);
     const imgRef = useRef(null);
@@ -51,4 +51,4 @@ const WorkCard = ({ img, name, description, rowHeight, onImageLoad }) => {
     );
 };
 
-export default WorkCard;
+export default ProjectCard;
