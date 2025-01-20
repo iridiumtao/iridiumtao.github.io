@@ -78,45 +78,147 @@
   ],
   "aboutpara": "Chun-Ju Tao is a Computer Engineering master’s student at NYU with a 3.78 GPA and a solid foundation in software development, DevOps, and AI applications. Proficient in Python, JavaScript, C#, Go, and PostgreSQL, he has successfully delivered impactful projects across diverse industries. \n\nNotable accomplishments include optimizing microservices with Docker and AWS ECS, creating a material management system for a government organization, and developing AI-driven solutions like an NLP-based news presenter. \n\nChun-Ju has demonstrated leadership by implementing Agile practices, enhancing team efficiency during rapid growth, and winning multiple awards for technical innovation. His achievements reflect a commitment to driving operational excellence and delivering scalable, modern solutions.",
   "resume": {
-    "tagline": "👋  I'm a software engineer, product designer.",
-    "description": "I have delivered world-class user experiences to millions of people. Well-versed with React, Javascript, and most of the Web frameworks.",
+    "tagline": "Chun-Ju Tao",
+    "description": "Computer Engineering master’s student at NYU with extensive experience in software development, DevOps, and AI applications. Proven success in optimizing processes, leading collaborative projects, and delivering innovative solutions across multiple industries.",
     "experiences": [
       {
         "id": "1",
-        "dates": "March 2022 - Present",
-        "type": "Full Time",
-        "position": "Frontend Engineer at X",
-        "bullets": "Bullet One, Bullet Two"
+        "dates": "May 2024 - August 2024",
+        "type": "Internship",
+        "position": "Software Developer at CARITY AI",
+        "location": "Ontario, Canada",
+        "bullets": [
+          "Containerized 4 microservices of an LLM pipeline and developed a DevOps workflow using Docker, GitHub Actions, and AWS ECS, reducing operational costs by 40%.",
+          "Researched and implemented Agentic RAG with LlamaIndex, reducing token usage up to 5 times and enabling complex question-answering capabilities."
+        ]
       },
       {
-        "id": "d495c23b-4f65-479a-9b8a-cfbc1c089725",
-        "dates": "July 2020 - March 2022",
-        "type": "Full Time",
-        "position": "Frontend Engineer at X",
-        "bullets": "Worked on the frontend of a React application, Worked on the frontend of a React application"
+        "id": "2",
+        "dates": "January 2023 - July 2023",
+        "type": "Internship",
+        "position": "Software Engineering Intern at MoBagel",
+        "location": "Taichung, Taiwan",
+        "bullets": [
+          "Developed a full-stack material management system for Taiwan Water Corporation, automating budgeting and inventory control for assets worth trillions.",
+          "Established GitFlow and Agile-like development model, improving team efficiency during a 300% team expansion.",
+          "Migrated a legacy system to .NET framework using C#, Microsoft SQL, and Vue.js, enhancing scalability and user experience."
+        ]
+      },
+      {
+        "id": "3",
+        "dates": "June 2022 - September 2022",
+        "type": "Internship",
+        "position": "Software Engineering Intern at Mindtronic AI",
+        "location": "Taipei, Taiwan",
+        "bullets": [
+          "Developed a back-end server with Golang, Python, and PostgreSQL for processing over 480,000 weekly data entries.",
+          "Added data visualization and real-time video streaming features to a React-based project.",
+          "Built a real-time uploading application for ARM-based devices for fleet management."
+        ]
       }
     ],
-    "education": {
-      "universityName": "University X",
-      "universityDate": "2016-2020",
-      "universityPara": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+    "education": [
+      {
+        "id": "1",
+        "universityName": "New York University",
+        "universityDate": "May 2026",
+        "location": "New York, NY",
+        "degree": "MS in Computer Engineering",
+        "gpa": "3.78",
+        "relevantCoursework": [
+          "Internet Architecture & Protocol",
+          "Computing Systems Architecture",
+          "Machine Learning"
+        ]
+      },
+      {
+        "id": "2",
+        "universityName": "National Taichung University of Science and Technology (NTCUST)",
+        "universityDate": "June 2023",
+        "location": "Taichung, Taiwan",
+        "degree": "BEng in Computer Science and Information Engineering (CSIE)",
+        "gpa": "3.79",
+        "relevantCoursework": [
+          "Software Engineering",
+          "Electronic Commerce Security",
+          "Algorithms",
+          "Data Structures"
+        ]
+      }
+    ],
+    "skills": {
+      "languages": [
+        "Python",
+        "JavaScript (React, Vue)",
+        "Java (Android)",
+        "Go",
+        "Swift",
+        "MS SQL",
+        "PostgreSQL",
+        "C#",
+        "C"
+      ],
+      "softwareAndOS": [
+        "PyCharm",
+        "AWS ECS",
+        "Docker",
+        "Xcode",
+        "pgAdmin",
+        "Git",
+        "macOS",
+        "Linux"
+      ]
     },
-    "languages": [
-      "Javascript",
-      "HTML5",
-      "CSS",
-      "Python",
-      "Go"
+    "projects": [
+      {
+        "title": "AI Editor-in-Chief and Virtual News Presenter",
+        "organization": "Natural Language Process Lab, NTCUST",
+        "location": "Taichung, Taiwan",
+        "dates": "September 2021 - July 2023",
+        "details": [
+          "Utilized Google Trends and NLP techniques (CKIP Transformers, TextRank, TF-IDF, BERT) to identify weekly trending topics.",
+          "Designed a pipeline with Docker and Flask to integrate multiple open-source repos for system infrastructure and data efficiency."
+        ]
+      },
+      {
+        "title": "RISC-V-Simulator",
+        "organization": "Computer Architecture Lab, NTCUST",
+        "location": "Taichung, Taiwan",
+        "dates": "September 2021 - July 2023",
+        "details": [
+          "Developed a 5-stage pipelined RISC-V Simulator in Python, supporting RV32I base instructions and hazard detection.",
+          "Implemented a GUI with Tkinter for user-friendly interaction and debugging."
+        ]
+      },
+      {
+        "title": "Retailpia",
+        "organization": "Level-Up Society Hackathon",
+        "location": "Online",
+        "dates": "September 2021",
+        "details": [
+          "Led a team of 4 students from 4 universities to develop a city-building game with an account book app and points collector.",
+          "Integrated Firebase for real-time data synchronization and user authentication."
+        ]
+      }
     ],
-    "frameworks": [
-      "React",
-      "Typescript",
-      "NodeJs"
-    ],
-    "others": [
-      "Figma",
-      "AdobeXD",
-      "AWS"
+    "honors": [
+      {
+        "title": "Emerging Technology Application Award",
+        "event": "Fi-Award 2023 by the 13th International Conference on Frontier Computing",
+        "location": "Tokyo, Japan",
+        "year": "2023"
+      },
+      {
+        "title": "1st prize in Project Competition",
+        "organization": "College of Information and Distribution Science, NTCUST",
+        "year": "2023"
+      },
+      {
+        "title": "Winner of Better Retail",
+        "event": "Level-Up Society Hackathon",
+        "organizer": "ShowCode",
+        "year": "2021"
+      }
     ]
   }
 }
