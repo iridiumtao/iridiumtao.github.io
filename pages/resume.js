@@ -43,7 +43,7 @@ const Resume = () => {
       <div className={`${theme === "dark" ? "gradient-circle-bottom-dark" : "gradient-circle-bottom"}`}></div>
 
       <div className="container mx-auto mb-10">
-        <Header/>
+        <Header isBlog={true}/>
 
         <h1 className="mx-auto mob:p-2 text-bold text-4xl laptop:text-6xl w-full">
           Resume
