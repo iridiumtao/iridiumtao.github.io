@@ -222,25 +222,25 @@ const Resume = () => {
                 <div className="flex justify-between items-center">
                   <h3 className="text-xl font-semibold">{honor.title}</h3>
                   <span className="text-gray-500 dark:text-gray-400 text-sm">
-          {honor.year}
-        </span>
+                    {honor.year}
+                  </span>
                 </div>
                 <div className="mt-1">
                   {honor.event && (
                     <span className="text-gray-600 dark:text-gray-300">
-            {honor.event}
-          </span>
+                      {honor.event}
+                    </span>
                   )}
                   {honor.organization && (
                     <span className="text-gray-600 dark:text-gray-300">
-            {honor.organization}
-          </span>
+                      {honor.organization}
+                    </span>
                   )}
                   {honor.location && (
                     <span className="text-gray-500 dark:text-gray-400 text-sm">
-            {" "}
-                      • {honor.location}
-          </span>
+                      {" "}
+                                • {honor.location}
+                    </span>
                   )}
                 </div>
                 {honor.details && (

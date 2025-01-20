@@ -1,14 +1,18 @@
 import Head from "next/head";
-import Router, { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
-import { stagger } from "../../animations";
+import Router, {useRouter} from "next/router";
+import {useEffect, useRef, useState} from "react";
+import {stagger} from "../../animations";
 import Button from "../../components/Button";
 import Cursor from "../../components/Cursor";
 import Header from "../../components/Header";
 import data from "../../data/portfolio.json";
-import { ISOToDate, useIsomorphicLayoutEffect } from "../../utils";
-import { getAllPosts } from "../../utils/api";
-const Blog = ({ posts }) => {
+import {ISOToDate, useIsomorphicLayoutEffect} from "../../utils";
+import {getAllPosts} from "../../utils/api";
+import {useTheme} from "next-themes";
+import Footer from "../../components/Footer";
+
+const Blog = ({posts}) => {
+  const theme = useTheme().theme;
   const showBlog = useRef(data.showBlog);
   const text = useRef();
   const router = useRouter();
@@ -17,10 +21,10 @@ const Blog = ({ posts }) => {
   useIsomorphicLayoutEffect(() => {
     stagger(
       [text.current],
-      { y: 40, x: -10, transform: "scale(0.95) skew(10deg)" },
-      { y: 0, x: 0, transform: "scale(1)" }
+      {y: 40, x: -10, transform: "scale(0.95) skew(10deg)"},
+      {y: 0, x: 0, transform: "scale(1)"}
     );
-    if (showBlog.current) stagger([text.current], { y: 30 }, { y: 0 });
+    if (showBlog.current) stagger([text.current], {y: 30}, {y: 0});
     else router.push("/");
   }, []);
 
@@ -62,11 +66,16 @@ const Blog = ({ posts }) => {
   };
   return (
     showBlog.current && (
-      <>
-        {data.showCursor && <Cursor />}
+      <div className="relative">
+        {data.showCursor && <Cursor/>}
         <Head>
           <title>Blog</title>
         </Head>
+
+        <div className={`${theme === "dark" ? "gradient-circle-dark" : "gradient-circle"}`}></div>
+        <div className={`${theme === "dark" ? "gradient-circle-bottom-dark" : "gradient-circle-bottom"}`}></div>
+
+
         <div
           className={`container mx-auto mb-10 ${
             data.showCursor && "cursor-none"
@@ -80,7 +89,8 @@ const Blog = ({ posts }) => {
             >
               Blog.
             </h1>
-            <div className="mt-10 grid grid-cols-1 mob:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 justify-between gap-10">
+            <div
+              className="mt-10 grid grid-cols-1 mob:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 justify-between gap-10">
               {posts &&
                 posts.map((post) => (
                   <div
@@ -123,7 +133,8 @@ const Blog = ({ posts }) => {
             </Button>
           </div>
         )}
-      </>
+        <Footer/>
+      </div>
     )
   );
 };
