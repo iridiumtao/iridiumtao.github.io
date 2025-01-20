@@ -70,7 +70,7 @@ const Resume = () => {
                 key={exp.id}
                 className="mb-8 border-l-2 border-gray-200 dark:border-gray-700 pl-4"
               >
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center gap-4">
                   <h3 className="text-xl font-semibold">{exp.position}</h3>
                   <span className="text-gray-500 dark:text-gray-400 text-sm">
                     {exp.dates}
