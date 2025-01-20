@@ -171,6 +171,19 @@ const Resume = () => {
               ))}
             </div>
           </div>
+          <div className="w-full mt-10 max-w-4xl">
+            <h2 className="text-2xl font-bold mb-6">Software & OS</h2>
+            <div className="flex flex-wrap gap-3">
+              {data.resume.skills.softwareAndOS.map((skill, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
 
           {/* Projects Section */}
           <div ref={projectsRef} className="w-full mt-16 max-w-4xl">
