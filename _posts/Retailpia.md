@@ -25,14 +25,16 @@ We are to give the society a new possible way of managing expenses, and engaging
 We are team OvOb, a group from Taiwan, and this is all about Retailpia. <be>
 
 ## Concept
-<img width="1280" alt="original-3" src="https://github.com/iridiumtao/Retailpia/assets/43561001/a49bb8ad-a7ca-47f8-8852-d5ca371bdfa1">
+![](https://github.com/iridiumtao/Retailpia/assets/43561001/a49bb8ad-a7ca-47f8-8852-d5ca371bdfa1)
 
 ## In-Game Images
-|Story|Game Play|Enter Expense|
-|---|---|---|
-|<img width="1280" alt="original-2" src="https://github.com/iridiumtao/Retailpia/assets/43561001/e2f97579-475a-4a9d-a1cc-1df7dadbcd4e">|<img width="1280" alt="original-2" src="https://github.com/iridiumtao/Retailpia/assets/43561001/8d1d5603-e090-4694-9eea-562258a6c361">|<img width="1280" alt="original-4" src="https://github.com/iridiumtao/Retailpia/assets/43561001/471d23fc-3e2c-4ec2-8b42-8d9b41cca815">|
 
-
+![Story](https://github.com/iridiumtao/Retailpia/assets/43561001/e2f97579-475a-4a9d-a1cc-1df7dadbcd4e)
+Story
+![Game Play](https://github.com/iridiumtao/Retailpia/assets/43561001/8d1d5603-e090-4694-9eea-562258a6c361)
+Game Play
+![Enter Expense](https://github.com/iridiumtao/Retailpia/assets/43561001/471d23fc-3e2c-4ec2-8b42-8d9b41cca815)
+Enter Expense
 
 
 ---
