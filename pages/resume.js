@@ -62,46 +62,6 @@ const Resume = () => {
             </p>
           </div>
 
-          {/* Experience Section */}
-          <div ref={expRef} className="w-full mt-16 max-w-4xl">
-            <h2 className="text-2xl font-bold mb-6">Professional Experience</h2>
-            {data.resume.experiences.map((exp) => (
-              <div
-                key={exp.id}
-                className="mb-8 border-l-2 border-gray-200 dark:border-gray-700 pl-4"
-              >
-                <div className="flex justify-between items-center gap-4">
-                  <h3 className="text-xl font-semibold">{exp.position}</h3>
-                  <span className="text-gray-500 dark:text-gray-400 text-sm">
-                    {exp.dates}
-                  </span>
-                </div>
-                <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400 text-sm mt-1">
-                  {exp.location && (
-                    <span>
-                      {exp.location}
-                    </span>
-                  )}
-                  {exp.location && exp.type && (
-                    <span>•</span>
-                  )}
-                  {exp.type && (
-                    <span>
-                      {exp.type}
-                    </span>
-                  )}
-                </div>
-                <ul className="list-disc list-inside mt-2">
-                  {exp.bullets.map((bullet, index) => (
-                    <li key={index} className="text-gray-600 dark:text-gray-300">
-                      {bullet}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
           {/* Education Section */}
           <div ref={eduRef} className="w-full mt-10 max-w-4xl">
             <h2 className="text-2xl font-bold mb-6">Education</h2>
@@ -183,6 +143,46 @@ const Resume = () => {
                 </span>
               ))}
             </div>
+          </div>
+
+          {/* Experience Section */}
+          <div ref={expRef} className="w-full mt-16 max-w-4xl">
+            <h2 className="text-2xl font-bold mb-6">Professional Experience</h2>
+            {data.resume.experiences.map((exp) => (
+              <div
+                key={exp.id}
+                className="mb-8 border-l-2 border-gray-200 dark:border-gray-700 pl-4"
+              >
+                <div className="flex justify-between items-center gap-4">
+                  <h3 className="text-xl font-semibold">{exp.position}</h3>
+                  <span className="text-gray-500 dark:text-gray-400 text-sm">
+                    {exp.dates}
+                  </span>
+                </div>
+                <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400 text-sm mt-1">
+                  {exp.location && (
+                    <span>
+                      {exp.location}
+                    </span>
+                  )}
+                  {exp.location && exp.type && (
+                    <span>•</span>
+                  )}
+                  {exp.type && (
+                    <span>
+                      {exp.type}
+                    </span>
+                  )}
+                </div>
+                <ul className="list-disc list-inside mt-2">
+                  {exp.bullets.map((bullet, index) => (
+                    <li key={index} className="text-gray-600 dark:text-gray-300">
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
 
           {/* Projects Section */}
