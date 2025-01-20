@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import {useRouter} from "next/router";
 
+
 const ProjectCard = ({ img, name, description, rowHeight, onImageLoad }) => {
     const router = useRouter();
     const [imageLoaded, setImageLoaded] = useState(false);
@@ -25,7 +26,7 @@ const ProjectCard = ({ img, name, description, rowHeight, onImageLoad }) => {
         >
             <div
                 className={`overflow-hidden transition-all cursor-pointer ease-out duration-300 hover:scale-95 h-48 mob:h-auto flex items-center justify-center ${
-                    !imageLoaded ? 'bg-gray-100' : ''
+                    !imageLoaded ? ('dark:bg-black bg-gray-100') : ''
                 }`}
                 style={{
                     height: imageLoaded ? rowHeight : 'auto',

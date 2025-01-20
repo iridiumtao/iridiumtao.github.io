@@ -3,21 +3,25 @@ import Header from "../components/Header";
 import WorkCard from "../components/WorkCard";
 import Socials from "../components/Socials";
 import ProjectCard from "../components/ProjectCard";
-import { useIsomorphicLayoutEffect } from "../utils";
-import { stagger } from "../animations";
+import {useIsomorphicLayoutEffect} from "../utils";
+import {stagger} from "../animations";
 import Footer from "../components/Footer";
 import Head from "next/head";
 import Button from "../components/Button";
 import Link from "next/link";
-import Cursor from "../components/Cursor";
-import { useTheme } from "next-themes";
-
+import dynamic from 'next/dynamic';
+import {useTheme} from "next-themes";
 
 // Local Data
 import data from "../data/portfolio.json";
 
+// Dynamically import the Cursor component
+const DynamicCursor = dynamic(() => import("../components/Cursor"), {
+  ssr: false,
+});
+
 export default function Home() {
-  // Ref
+  // Refs
   const projectRef = useRef();
   const workRef = useRef();
   const aboutRef = useRef();
@@ -25,57 +29,57 @@ export default function Home() {
   const textTwo = useRef();
   const textThree = useRef();
   const textFour = useRef();
-  const { theme } = useTheme();
 
+  // state
+  const [mounted, setMounted] = useState(false);
   const [rowHeights, setRowHeights] = useState([]);
-
-  const handleImageLoad = (index, height) => {
-    setRowHeights((prev) => {
-      const newHeights = [...prev];
-      const rowIndex = Math.floor(index / 2);
-
-      newHeights[rowIndex] = Math.max(newHeights[rowIndex] || 0, height);
-      return newHeights;
-    });
-  };
-
-
-  // Handling Scroll
-  const handleProjectScroll = () => {
-    window.scrollTo({
-      top: projectRef.current.offsetTop,
-      left: 0,
-      behavior: "smooth",
-    });
-  };
-
-  const handleWorkScroll = () => {
-    window.scrollTo({
-      top: workRef.current.offsetTop,
-      left: 0,
-      behavior: "smooth",
-    });
-  };
-
-  const handleAboutScroll = () => {
-    window.scrollTo({
-      top: aboutRef.current.offsetTop,
-      left: 0,
-      behavior: "smooth",
-    });
-  };
+  const {theme} = useTheme();
 
   useIsomorphicLayoutEffect(() => {
-    stagger(
-      [textOne.current, textTwo.current, textThree.current, textFour.current],
-      { y: 40, x: -10, transform: "scale(0.95) skew(10deg)" },
-      { y: 0, x: 0, transform: "scale(1)" }
+    setMounted(true);
+
+    if (mounted) {
+      stagger(
+        [textOne.current, textTwo.current, textThree.current, textFour.current],
+        {y: 40, x: -10, transform: "scale(0.95) skew(10deg)"},
+        {y: 0, x: 0, transform: "scale(1)"}
+      );
+    }
+  }, [mounted]);
+
+  const handleImageLoad = (index, height) => {
+    if (typeof window !== 'undefined') {
+      setRowHeights((prev) => {
+        const newHeights = [...prev];
+        const rowIndex = Math.floor(index / 2);
+        newHeights[rowIndex] = Math.max(newHeights[rowIndex] || 0, height);
+        return newHeights;
+      });
+    }
+  };
+
+  const handleScroll = (ref) => {
+    if (typeof window !== 'undefined' && ref.current) {
+      window.scrollTo({
+        top: ref.current.offsetTop,
+        left: 0,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  // If not yet mounted, return a basic loading state
+  if (!mounted) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse">Loading...</div>
+      </div>
     );
-  }, []);
+  }
 
   return (
     <div className={`relative ${data.showCursor && "cursor-none"}`}>
-      {data.showCursor && <Cursor />}
+      {data.showCursor && <DynamicCursor/>}
       <Head>
         <title>{data.name}</title>
       </Head>
@@ -85,9 +89,9 @@ export default function Home() {
 
       <div className="container mx-auto mb-10">
         <Header
-          handleProjectScroll={handleProjectScroll}
-          handleWorkScroll={handleWorkScroll}
-          handleAboutScroll={handleAboutScroll}
+          handleProjectScroll={() => handleScroll(projectRef)}
+          handleWorkScroll={() => handleScroll(workRef)}
+          handleAboutScroll={() => handleScroll(aboutRef)}
         />
         <div className="laptop:mt-20 mt-10">
           <div className="mt-5">
@@ -117,7 +121,7 @@ export default function Home() {
             </h1>
           </div>
 
-          <Socials className="mt-2 laptop:mt-5" />
+          <Socials className="mt-2 laptop:mt-5"/>
         </div>
         <div className="mt-10 laptop:mt-30 p-2 laptop:p-0" ref={projectRef}>
           <h1 className="text-2xl text-bold">Project Experiences</h1>
@@ -147,7 +151,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-        {/* This button should not go into production */}
+
         {process.env.NODE_ENV === "development" && (
           <div className="fixed bottom-5 right-5">
             <Link href="/edit">
@@ -155,18 +159,19 @@ export default function Home() {
             </Link>
           </div>
         )}
+
         <div className="mt-10 laptop:mt-40 p-2 laptop:p-0" ref={aboutRef}>
           <h1 className="tablet:m-10 text-2xl text-bold">About</h1>
           <p className="tablet:m-10 mt-2 text-lg laptop:text-2xl w-full laptop:w-4/5">
             {data.aboutpara.split('\n').map((line, index) => (
-                <Fragment key={index}>
-                  {line}
-                  <br />
-                </Fragment>
+              <Fragment key={index}>
+                {line}
+                <br/>
+              </Fragment>
             ))}
           </p>
         </div>
-        <Footer />
+        <Footer/>
       </div>
     </div>
   );
