@@ -88,7 +88,7 @@ export default function Home() {
       <div className={`${theme === "dark" ? "gradient-circle-bottom-dark" : "gradient-circle-bottom"}`}></div>
 
       <div className="container mx-auto mb-10">
-        <Header
+        <Header isHome
           handleProjectScroll={() => handleScroll(projectRef)}
           handleWorkScroll={() => handleScroll(workRef)}
           handleAboutScroll={() => handleScroll(aboutRef)}

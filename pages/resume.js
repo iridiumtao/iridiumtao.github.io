@@ -1,4 +1,4 @@
-import {useRef} from "react";
+import React, {useRef} from "react";
 import Header from "../components/Header";
 
 import {useIsomorphicLayoutEffect} from "../utils";
@@ -6,7 +6,6 @@ import {stagger} from "../animations";
 import Footer from "../components/Footer";
 import Head from "next/head";
 import Button from "../components/Button";
-import Link from "next/link";
 import Cursor from "../components/Cursor";
 import {useTheme} from "next-themes";
 
@@ -43,11 +42,15 @@ const Resume = () => {
       <div className={`${theme === "dark" ? "gradient-circle-bottom-dark" : "gradient-circle-bottom"}`}></div>
 
       <div className="container mx-auto mb-10">
-        <Header isBlog={true}/>
+        <Header/>
 
         <h1 className="mx-auto mob:p-2 text-bold text-4xl laptop:text-6xl w-full">
           Resume
         </h1>
+
+        <Button onClick={() => window.open("https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/Chun-Ju%20Tao%20Resume%20early%202025.pdf")}>
+          {`PDF Download 🔗`}
+        </Button>
 
         {/* Main Content */}
         <div className="mt-10 w-full flex flex-col items-center">
