@@ -96,7 +96,7 @@ export default function Home() {
           handleWorkScroll={() => handleScroll(workRef)}
           handleAboutScroll={() => handleScroll(aboutRef)}
         />
-        <div className="laptop:mt-20 mt-10">
+        <div className="laptop:mt-20 mt-10 pt-16 tablet:pt-0">
           <div className="mt-5">
             <h1
               ref={textOne}

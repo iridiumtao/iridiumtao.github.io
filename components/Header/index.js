@@ -56,10 +56,14 @@ const Header = ({ handleProjectScroll, handleWorkScroll, handleAboutScroll, isHo
 
   // Mobile Menu
   const MobileMenu = () => (
-    <Popover className="block tablet:hidden mt-5">
+    <Popover className="block tablet:hidden fixed top-0 left-0 right-0 z-50 bg-opacity-50">
       {({ open }) => (
         <>
-          <div className="flex items-center justify-between px-4">
+          <div className={`
+          flex items-center justify-between px-4 py-3
+          ${theme === "light" && "bg-white"}
+          dark:text-white backdrop-blur-sm
+        `}>
             <h1
               onClick={() => router.push("/")}
               className="font-medium text-xl"
