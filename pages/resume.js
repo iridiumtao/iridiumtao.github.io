@@ -93,6 +93,9 @@ const Resume = () => {
                   )}
                 </div>
 
+                <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+                  {edu.degree}
+                </p>
 
                 <p className="mt-2 text-gray-600 dark:text-gray-300">
                   {edu.universityPara}

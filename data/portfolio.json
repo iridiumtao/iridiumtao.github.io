@@ -129,7 +129,7 @@
         "universityName": "New York University",
         "universityDate": "May 2026",
         "location": "New York, NY",
-        "degree": "MS in Computer Engineering",
+        "degree": "Computer Engineering, M.S.",
         "gpa": "3.78",
         "relevantCoursework": [
           "Internet Architecture & Protocol",
@@ -142,7 +142,7 @@
         "universityName": "National Taichung University of Science and Technology (NTCUST)",
         "universityDate": "June 2023",
         "location": "Taichung, Taiwan",
-        "degree": "BEng in Computer Science and Information Engineering (CSIE)",
+        "degree": "Computer Science and Information Engineering, B.Eng.",
         "gpa": "3.79",
         "relevantCoursework": [
           "Software Engineering",
