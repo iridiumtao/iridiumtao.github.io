@@ -1,4 +1,5 @@
-import { Popover } from "@headlessui/react";
+import {Popover, Transition} from "@headlessui/react";
+import { Fragment } from 'react';
 import { useTheme } from "next-themes";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -58,46 +59,90 @@ const Header = ({ handleProjectScroll, handleWorkScroll, handleAboutScroll, isHo
     <Popover className="block tablet:hidden mt-5">
       {({ open }) => (
         <>
-          <div className="flex items-center justify-between p-2 laptop:p-0">
+          <div className="flex items-center justify-between px-4">
             <h1
               onClick={() => router.push("/")}
-              className="font-medium p-2 laptop:p-0 link"
+              className="font-medium text-xl"
             >
               {name}
             </h1>
 
-            <div className="flex items-center">
+            <div className="flex items-center gap-4">
               <ThemeToggle />
-              <Popover.Button>
-                <img
-                  className="h-5"
-                  src={`/images/${
-                    !open
-                      ? theme === "dark"
-                        ? "menu-white.svg"
-                        : "menu.svg"
-                      : theme === "light"
-                        ? "cancel.svg"
-                        : "cancel-white.svg"
-                  }`}
-                  alt="menu"
-                />
+              <Popover.Button className="focus:outline-none">
+                <div className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#E8E4DE] dark:hover:bg-[#6B5B4E] transition-colors">
+                  <img
+                    className="h-4 w-4"
+                    src={`/images/${
+                      !open
+                        ? theme === "dark"
+                          ? "menu-white.svg"
+                          : "menu.svg"
+                        : theme === "light"
+                          ? "cancel.svg"
+                          : "cancel-white.svg"
+                    }`}
+                    alt="menu"
+                  />
+                </div>
               </Popover.Button>
             </div>
           </div>
-          <Popover.Panel
-            className={`absolute right-0 z-10 w-11/12 p-4 ${
-              theme === "dark" ? "bg-slate-800" : "bg-white"
-            } shadow-md rounded-md`}
+
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-300"
+            enterFrom="translate-x-full"
+            enterTo="translate-x-0"
+            leave="transition ease-in duration-300"
+            leaveFrom="translate-x-0"
+            leaveTo="translate-x-full"
           >
-            <div className="grid grid-cols-1">
-              {getNavItems().map((item, index) => (
-                <Button key={index} {...item}>
-                  {item.label}
-                </Button>
-              ))}
-            </div>
-          </Popover.Panel>
+            <Popover.Panel className="fixed top-0 right-0 h-full w-64 z-50">
+              <div className={`
+              h-full w-full
+              ${theme === "dark"
+                ? "bg-gradient-to-b from-[#6B5B4E] to-[#4A4036]"
+                : "bg-gradient-to-b from-[#E8E4DE] to-[#D4C5B9]"
+              }
+              shadow-xl
+            `}>
+                {/* close button */}
+                <div className="flex justify-end p-4">
+                  <Popover.Button className="focus:outline-none">
+                    <div className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
+                      <img
+                        className="h-4 w-4"
+                        src={`/images/${theme === "dark" ? "cancel-white.svg" : "cancel.svg"}`}
+                        alt="close menu"
+                      />
+                    </div>
+                  </Popover.Button>
+                </div>
+
+                {/* nav items */}
+                <div className="flex flex-col items-center justify-center h-[calc(100%-5rem)] space-y-6 p-4">
+                  {getNavItems(true).map((item, index) => (
+                    <Button
+                      key={index}
+                      {...item}
+                      className={`
+                      w-full text-center py-3 px-4 rounded-xl
+                      ${theme === "dark"
+                        ? "hover:bg-white/10"
+                        : "hover:bg-black/10"
+                      }
+                      transition-colors duration-200
+                      text-lg font-medium
+                    `}
+                    >
+                      {item.label}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </Popover.Panel>
+          </Transition>
         </>
       )}
     </Popover>
