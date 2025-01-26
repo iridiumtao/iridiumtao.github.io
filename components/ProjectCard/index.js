@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import {useRouter} from "next/router";
 
 
-const ProjectCard = ({ img, name, description, rowHeight, onImageLoad }) => {
+const ProjectCard = ({ img, name, subtitle, description, rowHeight, onImageLoad }) => {
     const router = useRouter();
     const [imageLoaded, setImageLoaded] = useState(false);
     const imgRef = useRef(null);
@@ -45,6 +45,10 @@ const ProjectCard = ({ img, name, description, rowHeight, onImageLoad }) => {
             <h1 className="mt-5 text-3xl font-medium">
                 {name ? name : "Project Name"}
             </h1>
+            {subtitle && (
+                <h2 className="text-lg italic text-gray-600 dark:text-gray-400 mt-1 font-medium">
+                {subtitle}
+                </h2>)}
             <h2 className="text-xl opacity-50">
                 {description ? description : "Description"}
             </h2>

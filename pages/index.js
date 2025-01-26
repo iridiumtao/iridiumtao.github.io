@@ -131,6 +131,7 @@ export default function Home() {
                 key={project.id}
                 img={project.imageSrc}
                 name={project.title}
+                subtitle={project.subtitle}
                 description={project.description}
                 rowHeight={rowHeights[Math.floor(index / 2)] || "auto"}
                 onImageLoad={(height) => handleImageLoad(index, height)}

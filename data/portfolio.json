@@ -30,7 +30,8 @@
     {
       "id": "1",
       "title": "AI Editor-in-Chief and Virtual News Presenter",
-      "description": "[An Artificial Intelligence-Based Pipeline for Automated News Production in Taiwanese Mandarin] A project aimed to catch teenagers’ attention and refocus on critical societal issues with AI-driven Natural Language Processing technologies.",
+      "subtitle": "An Artificial Intelligence-Based Pipeline for Automated News Production",
+      "description": "A project aimed to catch teenagers’ attention and refocus on critical societal issues with AI-driven Natural Language Processing technologies in Taiwanese Mandarin.",
       "imageSrc": "https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/image/AI%20Editor-in-Chief%20and%20Virtual%20News%20Presenter.png",
       "url": "https://github.com/iridiumtao/Virtual-to-News-Public"
     },
@@ -44,7 +45,8 @@
     {
       "id": "3",
       "title": "Retailpia",
-      "description": "[Winner of Better Retail, Level-Up Society Hackathon, organized by ShowCode] Developed a city-building game that also included the additional feature of being an account book app and a points collector with students from four universities within 48 hours.",
+      "subtitle": "Winner of Better Retail, Level-Up Society Hackathon, organized by ShowCode",
+      "description": "Developed a city-building game that also included the additional feature of being an account book app and a points collector with students from four universities within 48 hours.",
       "imageSrc": "https://github.com/iridiumtao/Retailpia/assets/43561001/8d1d5603-e090-4694-9eea-562258a6c361",
       "url": "https://github.com/iridiumtao/Retailpia"
     },
