@@ -6,7 +6,7 @@ const isDev = process.env.NODE_ENV === "development";
 
 const nextConfig = {
   reactStrictMode: true,
-  output: "export",
+  output: (isDev === true ? undefined : "export"),
   basePath,
   assetPrefix,
   images: {
