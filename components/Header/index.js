@@ -102,8 +102,8 @@ const Header = ({ handleProjectScroll, handleWorkScroll, handleAboutScroll, isHo
               <div className={`
               h-full w-full
               ${theme === "dark"
-                ? "bg-gradient-to-b from-[#6B5B4E] to-[#4A4036]"
-                : "bg-gradient-to-b from-[#E8E4DE] to-[#D4C5B9]"
+                ? "bg-gradient-to-b from-[#6B5B4EF3] to-[#4A4036F3]"
+                : "bg-gradient-to-b from-[#E8E4DEF3] to-[#D4C5B9F3]"
               }
               shadow-xl
             `}>
