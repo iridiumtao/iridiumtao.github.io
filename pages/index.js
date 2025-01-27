@@ -34,7 +34,6 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [rowHeights, setRowHeights] = useState([]);
   const {theme} = useTheme();
-  const [currentScrollPosition, setCurrentScrollPosition] = useState(0);
 
   useIsomorphicLayoutEffect(() => {
     setMounted(true);
@@ -62,7 +61,6 @@ export default function Home() {
   const handleScroll = (ref) => {
     if (typeof window !== 'undefined' && ref.current) {
       const targetPosition = ref.current.offsetTop;
-      setCurrentScrollPosition(targetPosition);
       window.scrollTo({
         top: targetPosition,
         left: 0,

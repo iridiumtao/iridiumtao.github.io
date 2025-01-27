@@ -57,7 +57,7 @@ const Header = ({ handleProjectScroll, handleWorkScroll, handleAboutScroll, isHo
   // Mobile Menu
   const MobileMenu = () => (
     <Popover className="block tablet:hidden fixed top-0 left-0 right-0 z-50 bg-opacity-50">
-      {({ open }) => (
+      {({ open, close }) => (
         <>
           <div className={`
             flex items-center justify-between px-4 py-1
@@ -133,12 +133,17 @@ const Header = ({ handleProjectScroll, handleWorkScroll, handleAboutScroll, isHo
                     <Button
                       key={index}
                       {...item}
+                      // * uncomment these lines to enable auto close menu *
+                      // onClick={() => {
+                      //   close(); // close the menu
+                      //   item.onClick && item.onClick(); // scroll to the section when it's a scroll button
+                      // }}
                       className={`
                       w-full text-center py-3 px-4 rounded-xl
                       ${theme === "dark"
-                        ? "hover:bg-white/10"
-                        : "hover:bg-black/10"
-                      }
+                                      ? "hover:bg-white/10"
+                                      : "hover:bg-black/10"
+                                    }
                       transition-colors duration-200
                       text-lg font-medium
                     `}
