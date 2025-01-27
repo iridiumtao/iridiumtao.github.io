@@ -1,4 +1,4 @@
-import {useState, useRef, Fragment} from "react";
+import React, {useState, useRef, Fragment} from "react";
 import Header from "../components/Header";
 import WorkCard from "../components/WorkCard";
 import Socials from "../components/Socials";

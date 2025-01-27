@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -12,31 +14,76 @@ module.exports = {
       desktop: "1280px",
       laptopl: "1440px",
     },
-    theme: {
-      extend: {
-        colors: {
+    extend: {
+      colors: {
+        // background, untested
+        bg: {
           primary: {
-            light: '#E8E4DE', // 日系木質色
-            DEFAULT: '#9D8F80',
-            dark: '#4A4036'
+            light: colors.white,
+            dark: colors.stone[900],
           },
-          background: {
-            light: '#FFFFFF',
-            dark: '#1A1A1A'
+          secondary: {
+            light: colors.stone[100],
+            dark: colors.stone[800],
           },
           accent: {
-            light: '#D4C5B9',
-            dark: '#6B5B4E'
+            light: colors.stone[200],
+            dark: colors.stone[700],
           },
-          gradient: {
-            light: {
-              from: '#E8E4DE',
-              to: '#D4C5B9'
+        },
+        // text
+        text: {
+          primary: {
+            light: colors.stone[900], // Title, main text
+            dark: colors.stone[100],
+          },
+          secondary: {
+            light: colors.stone[700], // bullet points, description
+            dark: colors.stone[300],
+          },
+          tertiary: {
+            light: colors.stone[500], // location, date
+            dark: colors.stone[400],
+          },
+        },
+        // border
+        border: {
+          primary: {
+            light: colors.stone[200],
+            dark: colors.stone[700],
+          },
+          secondary: {
+            light: colors.stone[300],
+            dark: colors.stone[600],
+          },
+        },
+        // button, untested
+        button: {
+          primary: {
+            light: colors.stone[800],
+            dark: colors.stone[200],
+            hover: {
+              light: colors.stone[900],
+              dark: colors.stone[100],
             },
-            dark: {
-              from: '#6B5B4E',
-              to: '#4A4036'
-            }
+          },
+          secondary: {
+            light: colors.stone[200],
+            dark: colors.stone[700],
+            hover: {
+              light: colors.stone[300],
+              dark: colors.stone[600],
+            },
+          },
+        },
+        gradient: {
+          light: {
+            from: '#E8E4DE',
+            to: '#D4C5B9'
+          },
+          dark: {
+            from: '#6B5B4E',
+            to: '#4A4036'
           }
         }
       }

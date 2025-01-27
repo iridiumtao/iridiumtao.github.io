@@ -46,7 +46,7 @@ const ProjectCard = ({ img, name, subtitle, description, rowHeight, onImageLoad 
                 {name ? name : "Project Name"}
             </h1>
             {subtitle && (
-                <h2 className="text-lg italic text-gray-600 dark:text-gray-400 mt-1 font-medium">
+                <h2 className="text-lg italic text-text-tertiary-light dark:text-text-tertiary-dark mt-1 font-medium">
                 {subtitle}
                 </h2>)}
             <h2 className="text-xl opacity-50">

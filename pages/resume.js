@@ -57,10 +57,10 @@ const Resume = () => {
           {/* Header Section */}
           <div ref={headRef} className="w-full flex flex-col items-center">
 
-            <p className="text-lg text-center mt-5 text-gray-500 dark:text-gray-300">
+            <p className="text-lg text-center mt-5 text-text-secondary-light dark:text-text-secondary-dark">
               {data.resume.tagline}
             </p>
-            <p className="text-md text-center mt-2 max-w-2xl text-gray-500 dark:text-gray-300">
+            <p className="text-md text-center mt-2 max-w-2xl text-text-secondary-light dark:text-text-secondary-dark">
               {data.resume.description}
             </p>
           </div>
@@ -71,16 +71,16 @@ const Resume = () => {
             {data.resume.education.map((edu) => (
               <div
                 key={edu.id}
-                className="mb-8 border-l-2 border-gray-200 dark:border-gray-700 pl-4"
+                className="mb-8 border-l-2 border-border-primary-light dark:border-border-primary-dark pl-4"
               >
                 <div className="flex justify-between items-center">
                   <h3 className="text-xl font-semibold">{edu.universityName}</h3>
-                  <span className="text-gray-500 dark:text-gray-400 text-sm">
+                  <span className="text-text-tertiary-light dark:text-text-tertiary-dark text-sm">
                     {edu.universityDate}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400 text-sm mt-1">
+                <div className="flex items-center gap-1 text-text-tertiary-light dark:text-text-tertiary-dark text-sm mt-1">
                   {edu.location && (
                     <span>
                       {edu.location}
@@ -96,11 +96,11 @@ const Resume = () => {
                   )}
                 </div>
 
-                <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+                <p className="text-text-tertiary-light dark:text-text-tertiary-dark text-sm mt-1">
                   {edu.degree}
                 </p>
 
-                <p className="mt-2 text-gray-600 dark:text-gray-300">
+                <p className="mt-2 text-text-secondary-light dark:text-text-secondary-dark">
                   {edu.universityPara}
                 </p>
 
@@ -111,7 +111,7 @@ const Resume = () => {
                       {edu.relevantCoursework.map((course, index) => (
                         <span
                           key={index}
-                          className="text-sm px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-md"
+                          className="text-sm px-2 py-1 bg-bg-secondary-light dark:bg-bg-secondary-dark rounded-md"
                         >
                           {course}
                         </span>
@@ -130,7 +130,7 @@ const Resume = () => {
               {data.resume.skills.languages.map((skill, index) => (
                 <span
                   key={index}
-                  className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm"
+                  className="px-3 py-1 bg-bg-secondary-light dark:bg-bg-secondary-dark rounded-full text-sm"
                 >
                   {skill}
                 </span>
@@ -143,7 +143,7 @@ const Resume = () => {
               {data.resume.skills.softwareAndOS.map((skill, index) => (
                 <span
                   key={index}
-                  className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm"
+                  className="px-3 py-1 bg-bg-secondary-light dark:bg-bg-secondary-dark rounded-full text-sm"
                 >
                   {skill}
                 </span>
@@ -157,15 +157,15 @@ const Resume = () => {
             {data.resume.experiences.map((exp) => (
               <div
                 key={exp.id}
-                className="mb-8 border-l-2 border-gray-200 dark:border-gray-700 pl-4"
+                className="mb-8 border-l-2 border-border-primary-light dark:border-border-primary-dark pl-4"
               >
                 <div className="flex justify-between items-center gap-4">
                   <h3 className="text-xl font-semibold">{exp.position}</h3>
-                  <span className="text-gray-500 dark:text-gray-400 text-sm">
+                  <span className="text-text-tertiary-light dark:text-text-tertiary-dark text-sm">
                     {exp.dates}
                   </span>
                 </div>
-                <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400 text-sm mt-1">
+                <div className="flex items-center gap-1 text-text-tertiary-light dark:text-text-tertiary-dark text-sm mt-1">
                   {exp.location && (
                     <span>
                       {exp.location}
@@ -182,7 +182,7 @@ const Resume = () => {
                 </div>
                 <ul className="list-disc list-inside mt-2">
                   {exp.bullets.map((bullet, index) => (
-                    <li key={index} className="text-gray-600 dark:text-gray-300">
+                    <li key={index} className="text-text-secondary-light dark:text-text-secondary-dark">
                       {bullet}
                     </li>
                   ))}
@@ -197,20 +197,20 @@ const Resume = () => {
             {data.resume.projects.map((project, index) => (
               <div
                 key={index}
-                className="mb-8 border-l-2 border-gray-200 dark:border-gray-700 pl-4"
+                className="mb-8 border-l-2 border-border-primary-light dark:border-border-primary-dark pl-4"
               >
                 <div className="flex justify-between items-center">
                   <h3 className="text-xl font-semibold">{project.title}</h3>
-                  <span className="text-gray-500 dark:text-gray-400 text-sm">
+                  <span className="text-text-tertiary-light dark:text-text-tertiary-dark text-sm">
                     {project.dates}
                   </span>
                 </div>
                 <div className="mt-1">
-                <span className="text-gray-600 dark:text-gray-300">
+                <span className="text-text-tertiary-light dark:text-text-tertiary-dark">
                   {project.organization}
                 </span>
                   {project.location && (
-                    <span className="text-gray-500 dark:text-gray-400 text-sm">
+                    <span className="text-text-tertiary-light dark:text-text-tertiary-dark text-sm">
                       {" "}
                       • {project.location}
                     </span>
@@ -220,7 +220,7 @@ const Resume = () => {
                   {project.details && project.details.map((detail, idx) => (
                     <li
                       key={idx}
-                      className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed"
+                      className="text-text-secondary-light dark:text-text-secondary-dark text-sm leading-relaxed"
                     >
                       {detail}
                     </li>
@@ -236,27 +236,27 @@ const Resume = () => {
             {data.resume.honors.map((honor, index) => (
               <div
                 key={index}
-                className="mb-8 border-l-2 border-gray-200 dark:border-gray-700 pl-4"
+                className="mb-8 border-l-2 border-border-primary-light dark:border-border-primary-dark pl-4"
               >
                 <div className="flex justify-between items-center">
                   <h3 className="text-xl font-semibold">{honor.title}</h3>
-                  <span className="text-gray-500 dark:text-gray-400 text-sm">
+                  <span className="text-text-tertiary-light dark:text-text-tertiary-dark text-sm">
                     {honor.year}
                   </span>
                 </div>
                 <div className="mt-1">
                   {honor.event && (
-                    <span className="text-gray-600 dark:text-gray-300">
+                    <span className="text-text-tertiary-light dark:text-text-tertiary-dark">
                       {honor.event}
                     </span>
                   )}
                   {honor.organization && (
-                    <span className="text-gray-600 dark:text-gray-300">
+                    <span className="text-text-tertiary-light dark:text-text-tertiary-dark">
                       {honor.organization}
                     </span>
                   )}
                   {honor.location && (
-                    <span className="text-gray-500 dark:text-gray-400 text-sm">
+                    <span className="text-text-tertiary-light dark:text-text-tertiary-dark text-sm">
                       {" "}
                                 • {honor.location}
                     </span>
@@ -267,7 +267,7 @@ const Resume = () => {
                     {honor.details.map((detail, idx) => (
                       <li
                         key={idx}
-                        className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed"
+                        className="text-text-secondary-light dark:text-text-secondary-dark text-sm leading-relaxed"
                       >
                         {detail}
                       </li>

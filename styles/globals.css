@@ -40,8 +40,8 @@ body {
   filter: blur(40px);
   background: radial-gradient(
       circle,
-      #6B5B4E 0%,
-      #4A4036 100%
+      #E8E4DE 0%,
+      #D4C5B9 100%
   );
 }
 
@@ -72,8 +72,8 @@ body {
   filter: blur(40px);
   background: radial-gradient(
     circle,
-    #6B5B4E 0%,
-    #4A4036 100%
+    #E8E4DE 0%,
+    #D4C5B9 100%
   );
 }
 
