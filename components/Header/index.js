@@ -60,9 +60,12 @@ const Header = ({ handleProjectScroll, handleWorkScroll, handleAboutScroll, isHo
       {({ open }) => (
         <>
           <div className={`
-          flex items-center justify-between px-4 py-3
-          ${theme === "light" && "bg-white"}
-          dark:text-white backdrop-blur-sm
+            flex items-center justify-between px-4 py-1
+            backdrop-blur-sm
+            ${theme === "light"
+                      ? "bg-white/50"  // transparent white background
+                      : "bg-gray-900/50 text-white"  // transparent dark background
+                    }
         `}>
             <h1
               onClick={() => router.push("/")}
