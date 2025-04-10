@@ -133,7 +133,7 @@
         "gpa": "3.78",
         "relevantCoursework": [
           "Internet Architecture & Protocol",
-          "Computing Systems Architecture",
+          "Human Computer Interaction",
           "Machine Learning"
         ]
       },
@@ -235,12 +235,14 @@
       {
         "title": "1st prize in Project Competition",
         "organization": "College of Information and Distribution Science, NTCUST",
+        "location": "Taichung, Taiwan",
         "year": "2023"
       },
       {
         "title": "Winner of Better Retail",
         "event": "Level-Up Society Hackathon",
         "organizer": "ShowCode",
+        "location": "UK",
         "year": "2021"
       }
     ]
