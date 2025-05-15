@@ -29,6 +29,14 @@
   "projects": [
     {
       "id": "1",
+      "title": "Loud Plants in Your Area",
+      "subtitle": "HCI, AR, ML",
+      "description": "An Augmented Reality (AR) application that helps combat 'plant blindness' by making plant activities visible and interactive through augmented overlays.",
+      "imageSrc": "https://raw.githubusercontent.com/iridiumtao/LoudPlantsInYourArea/refs/heads/main/docs/happy_stark.jpeg",
+      "url": "https://github.com/iridiumtao/LoudPlantsInYourArea"
+    },
+    {
+      "id": "2",
       "title": "AI Editor-in-Chief and Virtual News Presenter",
       "subtitle": "An Artificial Intelligence-Based Pipeline for Automated News Production",
       "description": "A project aimed to catch teenagers’ attention and refocus on critical societal issues with AI-driven Natural Language Processing technologies in Taiwanese Mandarin.",
@@ -36,14 +44,14 @@
       "url": "https://github.com/iridiumtao/Virtual-to-News-Public"
     },
     {
-      "id": "2",
+      "id": "3",
       "title": "RISC-V-Simulator",
       "description": "A 5-stage pipelined RISC-V Simulator written in Python.",
       "imageSrc": "https://raw.githubusercontent.com/iridiumtao/RISC-V-Simulator/refs/heads/master/docs/Schematic%20RISCV%20Project%20Five%20Stage.png",
       "url": "https://github.com/iridiumtao/RISC-V-Simulator"
     },
     {
-      "id": "3",
+      "id": "4",
       "title": "Retailpia",
       "subtitle": "Winner of Better Retail, Level-Up Society Hackathon, organized by ShowCode",
       "description": "Developed a city-building game that also included the additional feature of being an account book app and a points collector with students from four universities within 48 hours.",
@@ -51,14 +59,14 @@
       "url": "https://github.com/iridiumtao/Retailpia"
     },
     {
-      "id": "4",
+      "id": "5",
       "title": "TW-COVID-Bot (Telegram Bot)",
       "description": "During the COVID-19 pandemic in Taiwan, I assisted social media influencers in automatically posting daily outbreak information for easy access to up-to-date information.",
       "imageSrc": "https://github.com/lhsueh1/TW-covid-Bot/blob/main/src/README/img1.png?raw=true",
       "url": "https://github.com/lhsueh1/TW-covid-Bot"
     },
     {
-      "id": "5",
+      "id": "6",
       "title": "iOS Development",
       "description": "During the summer vacation of my second year of University, I participated in the summer iOS development practical training, cultivating skills in mobile development through hands-on experience with UI components and design patterns in the Intelligent Mobile Application Club (I.M.A.C) laboratory on campus.",
       "imageSrc": "https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/image/iOS%20Development.png",
