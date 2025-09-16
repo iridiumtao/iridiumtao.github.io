@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Head from "next/head";
 import Router, {useRouter} from "next/router";
 import {useEffect, useRef, useState} from "react";
@@ -94,11 +95,15 @@ const Blog = ({posts}) => {
                     key={post.slug}
                     onClick={() => Router.push(`/blog/${post.slug}`)}
                   >
-                    <img
-                      className="w-full h-60 rounded-lg shadow-lg object-cover"
-                      src={post.image}
-                      alt={post.title}
-                    ></img>
+                    <div style={{ position: 'relative', width: '100%', paddingTop: '56.25%' }}>
+                      <Image
+                        alt={post.title}
+                        src={post.image}
+                        layout="fill"
+                        objectFit="cover"
+                        className="rounded-lg shadow-lg"
+                      />
+                    </div>
                     <h2 className="mt-5 text-4xl">{post.title}</h2>
                     <p className="mt-2 opacity-50 text-lg">{post.preview}</p>
                     <span className="text-sm mt-5 opacity-25">

@@ -1,23 +1,14 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import Link from 'next/link';
-
+import Image from 'next/image';
 
 const ProjectCard = ({ img, name, subtitle, description, rowHeight, onImageLoad }) => {
     const [imageLoaded, setImageLoaded] = useState(false);
-    const imgRef = useRef(null);
 
-    const handleImageLoad = useCallback(() => {
+    const handleImageLoad = useCallback((event) => {
         setImageLoaded(true);
-        if (imgRef.current) {
-            onImageLoad(imgRef.current.height);
-        }
+        onImageLoad(event.naturalHeight);
     }, [onImageLoad]);
-
-    useEffect(() => {
-        if (imgRef.current && imgRef.current.complete) {
-            handleImageLoad();
-        }
-    }, [handleImageLoad]);
 
     return (
         <div
@@ -25,7 +16,7 @@ const ProjectCard = ({ img, name, subtitle, description, rowHeight, onImageLoad 
         >
             <Link href={`/blog/${name}`} className="block">
                 <div
-                    className={`overflow-hidden transition-all cursor-pointer ease-out duration-300 hover:scale-95 h-48 mob:h-auto flex items-center justify-center ${
+                    className={`relative overflow-hidden transition-all cursor-pointer ease-out duration-300 hover:scale-95 h-48 mob:h-auto flex items-center justify-center ${
                         !imageLoaded ? ('dark:bg-black bg-gray-100') : ''
                     }`}
                     style={{
@@ -33,13 +24,13 @@ const ProjectCard = ({ img, name, subtitle, description, rowHeight, onImageLoad 
                         minHeight: '200px'
                     }}
                 >
-                    <img
-                        ref={imgRef}
+                    <Image
                         alt={name}
                         className="object-cover rounded-lg"
                         src={img}
                         onLoad={handleImageLoad}
-                    ></img>
+                        layout="fill"
+                    />
                 </div>
             </Link>
             <h1 className="mt-5 text-3xl font-medium">

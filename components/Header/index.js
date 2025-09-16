@@ -4,6 +4,7 @@ import { useTheme } from "next-themes";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Button from "../Button";
+import Image from "next/image";
 // Local Data
 import data from "../../data/portfolio.json";
 
@@ -45,8 +46,9 @@ const Header = ({ handleProjectScroll, handleWorkScroll, handleAboutScroll, isHo
 
     return (
       <Button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
-        <img
-          className="h-6"
+        <Image
+          width={24}
+          height={24}
           src={`/images/${theme === "dark" ? "moon.svg" : "sun.svg"}`}
           alt="theme toggle"
         />
@@ -78,8 +80,9 @@ const Header = ({ handleProjectScroll, handleWorkScroll, handleAboutScroll, isHo
               <ThemeToggle />
               <Popover.Button className="focus:outline-none">
                 <div className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#E8E4DE] dark:hover:bg-[#6B5B4E] transition-colors">
-                  <img
-                    className="h-4 w-4"
+                  <Image
+                    width={16}
+                    height={16}
                     src={`/images/${
                       !open
                         ? theme === "dark"
@@ -118,8 +121,9 @@ const Header = ({ handleProjectScroll, handleWorkScroll, handleAboutScroll, isHo
                 <div className="flex justify-end p-4">
                   <Popover.Button className="focus:outline-none">
                     <div className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
-                      <img
-                        className="h-4 w-4"
+                      <Image
+                        width={16}
+                        height={16}
                         src={`/images/${theme === "dark" ? "cancel-white.svg" : "cancel.svg"}`}
                         alt="close menu"
                       />
