@@ -15,11 +15,6 @@ import {useTheme} from "next-themes";
 // Local Data
 import data from "../data/portfolio.json";
 
-// Dynamically import the Cursor component
-const DynamicCursor = dynamic(() => import("../components/Cursor"), {
-  ssr: false,
-});
-
 export default function Home() {
   // Refs
   const projectRef = useRef();
@@ -79,8 +74,7 @@ export default function Home() {
   }
 
   return (
-    <div className={`relative ${data.showCursor && "cursor-none"}`}>
-      {data.showCursor && <DynamicCursor/>}
+    <div className={`relative`}>
       <Head>
         <title>{data.name}</title>
       </Head>

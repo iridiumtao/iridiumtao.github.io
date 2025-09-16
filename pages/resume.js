@@ -6,7 +6,6 @@ import {stagger} from "../animations";
 import Footer from "../components/Footer";
 import Head from "next/head";
 import Button from "../components/Button";
-import Cursor from "../components/Cursor";
 import {useTheme} from "next-themes";
 
 import data from "../data/portfolio.json";
@@ -32,8 +31,7 @@ const Resume = () => {
   }, []);
 
   return (
-    <div className={`relative ${data.showCursor && "cursor-none"}`}>
-      {data.showCursor && <Cursor/>}
+    <div className={`relative`}>
       <Head>
         <title>Resume</title>
       </Head>

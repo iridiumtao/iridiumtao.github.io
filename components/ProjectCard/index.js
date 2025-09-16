@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from 'next/link';
 
 
@@ -6,18 +6,18 @@ const ProjectCard = ({ img, name, subtitle, description, rowHeight, onImageLoad 
     const [imageLoaded, setImageLoaded] = useState(false);
     const imgRef = useRef(null);
 
-    useEffect(() => {
-        if (imgRef.current && imgRef.current.complete) {
-            handleImageLoad();
-        }
-    }, []);
-
-    const handleImageLoad = () => {
+    const handleImageLoad = useCallback(() => {
         setImageLoaded(true);
         if (imgRef.current) {
             onImageLoad(imgRef.current.height);
         }
-    };
+    }, [onImageLoad]);
+
+    useEffect(() => {
+        if (imgRef.current && imgRef.current.complete) {
+            handleImageLoad();
+        }
+    }, [handleImageLoad]);
 
     return (
         <div

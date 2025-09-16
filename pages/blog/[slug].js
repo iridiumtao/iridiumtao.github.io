@@ -9,7 +9,6 @@ import {stagger} from "../../animations";
 import Button from "../../components/Button";
 import BlogEditor from "../../components/BlogEditor";
 import {useRouter} from "next/router";
-import Cursor from "../../components/Cursor";
 import data from "../../data/portfolio.json";
 import {useTheme} from "next-themes";
 
@@ -31,16 +30,13 @@ const BlogPost = ({post}) => {
         <title>{"Blog - " + post.title}</title>
         <meta name="description" content={post.preview}/>
       </Head>
-      {data.showCursor && <Cursor/>}
 
       <div className={`${theme === "dark" ? "gradient-circle-dark" : "gradient-circle"}`}></div>
       <div className={`${theme === "dark" ? "gradient-circle-bottom-dark" : "gradient-circle-bottom"}`}></div>
 
 
       <div
-        className={`container mx-auto mt-10 ${
-          data.showCursor && "cursor-none"
-        }`}
+        className={`container mx-auto mt-10`}
       >
         <Header isBlog={true}/>
         <div className="mt-10 flex flex-col">

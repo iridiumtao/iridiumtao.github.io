@@ -70,6 +70,12 @@ npm run start
 yarn start
 ```
 
+### Start Server Mode (without static export)
+```bash
+# Build and start in server mode using environment variable
+NODE_ENV=development yarn build && NODE_ENV=development yarn start
+```
+
 ### Static Export (for hosting on GitHub Pages, Netlify, etc.)
 The project is configured to generate a static export by default in production:
 ```bash
