@@ -35,19 +35,20 @@ const Edit = () => {
   };
 
   const addProject = () => {
+    const newId = (data.projects.length > 0 ? Math.max(...data.projects.map(p => parseInt(p.id))) + 1 : 1).toString();
     setData({
       ...data,
       projects: [
-        ...data.projects,
         {
-          id: uuidv4(),
+          id: newId,
           title: "New Project",
+          subtitle: "Project Subtitle",
           description: "Web Design & Development",
           imageSrc:
             "https://images.unsplash.com/photo-1517479149777-5f3b1511d5ad?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTAyfHxwYXN0ZWx8ZW58MHx8MHw%3D&auto=format&fit=crop&w=400&q=60",
-
           url: "http://localhost",
         },
+        ...data.projects,
       ],
     });
   };
@@ -325,6 +326,11 @@ const Edit = () => {
         {currentTabs === "PROJECTS" && (
           <>
             <div className="mt-10">
+              <div className="my-10">
+                <Button onClick={addProject} type="primary">
+                  Add Project +
+                </Button>
+              </div>
               {data.projects.map((project, index) => (
                 <div className="mt-10" key={project.id}>
                   <div className="flex items-center justify-between">
@@ -345,6 +351,22 @@ const Edit = () => {
                         editProjects(index, {
                           ...project,
                           title: e.target.value,
+                        })
+                      }
+                      className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
+                      type="text"
+                    ></input>
+                  </div>
+                  <div className="flex items-center mt-2">
+                    <label className="w-1/5 text-lg opacity-50">
+                      Subtitle
+                    </label>
+                    <input
+                      value={project.subtitle}
+                      onChange={(e) =>
+                        editProjects(index, {
+                          ...project,
+                          subtitle: e.target.value,
                         })
                       }
                       className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
@@ -618,18 +640,17 @@ const Edit = () => {
                   <div className="mt-2 flex">
                     <label className="w-1/5 text-lg opacity-50">Bullets</label>
                     <div className="w-4/5 ml-10 flex flex-col">
-                      <input
-                        value={experiences.bullets}
+                      <textarea
+                        value={experiences.bullets.join(", ")}
                         onChange={(e) =>
                           handleEditExperiences(index, {
                             ...experiences,
-                            bullets: e.target.value,
+                            bullets: e.target.value.split(",").map(item => item.trim()),
                           })
                         }
                         placeholder="Bullet One, Bullet Two, Bullet Three"
                         className="p-2 rounded-md shadow-lg border-2"
-                        type="text"
-                      ></input>
+                      ></textarea>
                     </div>
                   </div>
                 </div>
@@ -643,242 +664,127 @@ const Edit = () => {
             <hr className="my-10"></hr>
             <div className="mt-10">
               <h1>Education</h1>
-              <div className="flex items-center mt-5">
-                <label className="w-1/5 text-lg opacity-50">Name</label>
-                <input
-                  value={data.resume.education.universityName}
-                  onChange={(e) =>
-                    setData({
-                      ...data,
-                      resume: {
-                        ...data.resume,
-                        education: {
-                          ...data.resume.education,
-                          universityName: e.target.value,
-                        },
-                      },
-                    })
-                  }
-                  className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
-                  type="text"
-                ></input>
-              </div>
-              <div className="flex items-center mt-5">
-                <label className="w-1/5 text-lg opacity-50">Dates</label>
-                <input
-                  value={data.resume.education.universityDate}
-                  onChange={(e) =>
-                    setData({
-                      ...data,
-                      resume: {
-                        ...data.resume,
-                        education: {
-                          ...data.resume.education,
-                          universityDate: e.target.value,
-                        },
-                      },
-                    })
-                  }
-                  className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
-                  type="text"
-                ></input>
-              </div>
-              <div className="flex items-center mt-5">
-                <label className="w-1/5 text-lg opacity-50">Detail</label>
-                <input
-                  value={data.resume.education.universityPara}
-                  onChange={(e) =>
-                    setData({
-                      ...data,
-                      resume: {
-                        ...data.resume,
-                        education: {
-                          ...data.resume.education,
-                          universityPara: e.target.value,
-                        },
-                      },
-                    })
-                  }
-                  className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
-                  type="text"
-                ></input>
-              </div>
+              {data.resume.education.map((edu, index) => (
+                <div key={edu.id} className="mt-5">
+                   <div className="flex items-center mt-5">
+                    <label className="w-1/5 text-lg opacity-50">University Name</label>
+                    <input
+                      value={edu.universityName}
+                      onChange={(e) => {
+                        const newEdu = [...data.resume.education];
+                        newEdu[index].universityName = e.target.value;
+                        setData({ ...data, resume: { ...data.resume, education: newEdu } });
+                      }}
+                      className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
+                      type="text"
+                    ></input>
+                  </div>
+                  <div className="flex items-center mt-5">
+                    <label className="w-1/5 text-lg opacity-50">Graduation Date</label>
+                    <input
+                      value={edu.universityDate}
+                      onChange={(e) => {
+                        const newEdu = [...data.resume.education];
+                        newEdu[index].universityDate = e.target.value;
+                        setData({ ...data, resume: { ...data.resume, education: newEdu } });
+                      }}
+                      className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
+                      type="text"
+                    ></input>
+                  </div>
+                  <div className="flex items-center mt-5">
+                    <label className="w-1/5 text-lg opacity-50">Location</label>
+                    <input
+                      value={edu.location}
+                      onChange={(e) => {
+                        const newEdu = [...data.resume.education];
+                        newEdu[index].location = e.target.value;
+                        setData({ ...data, resume: { ...data.resume, education: newEdu } });
+                      }}
+                      className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
+                      type="text"
+                    ></input>
+                  </div>
+                  <div className="flex items-center mt-5">
+                    <label className="w-1/5 text-lg opacity-50">Degree</label>
+                    <input
+                      value={edu.degree}
+                      onChange={(e) => {
+                        const newEdu = [...data.resume.education];
+                        newEdu[index].degree = e.target.value;
+                        setData({ ...data, resume: { ...data.resume, education: newEdu } });
+                      }}
+                      className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
+                      type="text"
+                    ></input>
+                  </div>
+                   <div className="flex items-center mt-5">
+                    <label className="w-1/5 text-lg opacity-50">GPA</label>
+                    <input
+                      value={edu.gpa}
+                      onChange={(e) => {
+                        const newEdu = [...data.resume.education];
+                        newEdu[index].gpa = e.target.value;
+                        setData({ ...data, resume: { ...data.resume, education: newEdu } });
+                      }}
+                      className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
+                      type="text"
+                    ></input>
+                  </div>
+                  <div className="flex items-center mt-5">
+                    <label className="w-1/5 text-lg opacity-50">Relevant Coursework</label>
+                    <textarea
+                      value={edu.relevantCoursework.join(", ")}
+                      onChange={(e) => {
+                        const newEdu = [...data.resume.education];
+                        newEdu[index].relevantCoursework = e.target.value.split(",").map(item => item.trim());
+                        setData({ ...data, resume: { ...data.resume, education: newEdu } });
+                      }}
+                      className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
+                    ></textarea>
+                  </div>
+                </div>
+              ))}
             </div>
             <hr className="my-10"></hr>
             <div className="mt-10">
-              <div className="flex">
+              <h1>Skills</h1>
+               <div className="flex mt-5">
                 <label className="w-1/5 text-lg opacity-50">Languages</label>
                 <div className="w-4/5 ml-10 flex flex-col">
-                  {data.resume.languages.map((language, index) => (
-                    <div key={index} className="flex">
-                      <input
-                        value={language}
-                        onChange={(e) => {
-                          setData({
-                            ...data,
-                            resume: {
-                              ...data.resume,
-                              languages: [
-                                ...data.resume.languages.slice(0, index),
-                                e.target.value,
-                                ...data.resume.languages.slice(index + 1),
-                              ],
-                            },
-                          });
-                        }}
-                        className="w-full p-2 rounded-md shadow-lg border-2"
-                        type="text"
-                      ></input>
-                      <Button
-                        onClick={() =>
-                          setData({
-                            ...data,
-                            resume: {
-                              ...data.resume,
-                              languages: data.resume.languages.filter(
-                                (value, i) => index !== i
-                              ),
-                            },
-                          })
-                        }
-                      >
-                        Remove
-                      </Button>
-                    </div>
-                  ))}
-                  <Button
-                    type="primary"
-                    classes="hover:scale-100"
-                    onClick={() =>
-                      setData({
-                        ...data,
-                        resume: {
-                          ...data.resume,
-                          languages: [...data.resume.languages, "Added"],
-                        },
-                      })
-                    }
-                  >
-                    Add +
-                  </Button>
+                  <textarea
+                    value={data.resume.skills.languages.join(", ")}
+                    onChange={(e) => {
+                      const newSkills = { ...data.resume.skills, languages: e.target.value.split(",").map(item => item.trim()) };
+                      setData({ ...data, resume: { ...data.resume, skills: newSkills } });
+                    }}
+                    className="w-full p-2 rounded-md shadow-lg border-2"
+                  ></textarea>
                 </div>
               </div>
-              <hr className="my-10"></hr>
-              <div className="flex">
-                <label className="w-1/5 text-lg opacity-50">Frameworks</label>
+              <div className="flex mt-5">
+                <label className="w-1/5 text-lg opacity-50">Software & OS</label>
                 <div className="w-4/5 ml-10 flex flex-col">
-                  {data.resume.frameworks.map((framework, index) => (
-                    <div key={index} className="flex">
-                      <input
-                        value={framework}
-                        onChange={(e) => {
-                          setData({
-                            ...data,
-                            resume: {
-                              ...data.resume,
-                              frameworks: [
-                                ...data.resume.frameworks.slice(0, index),
-                                e.target.value,
-                                ...data.resume.frameworks.slice(index + 1),
-                              ],
-                            },
-                          });
-                        }}
-                        className="w-full p-2 rounded-md shadow-lg border-2"
-                        type="text"
-                      ></input>
-                      <Button
-                        onClick={() =>
-                          setData({
-                            ...data,
-                            resume: {
-                              ...data.resume,
-                              frameworks: data.resume.frameworks.filter(
-                                (value, i) => index !== i
-                              ),
-                            },
-                          })
-                        }
-                      >
-                        Remove
-                      </Button>
-                    </div>
-                  ))}
-                  <Button
-                    onClick={() =>
-                      setData({
-                        ...data,
-                        resume: {
-                          ...data.resume,
-                          frameworks: [...data.resume.frameworks, "Added"],
-                        },
-                      })
-                    }
-                    type="primary"
-                    classes="hover:scale-100"
-                  >
-                    Add +
-                  </Button>
+                  <textarea
+                    value={data.resume.skills.softwareAndOS.join(", ")}
+                    onChange={(e) => {
+                      const newSkills = { ...data.resume.skills, softwareAndOS: e.target.value.split(",").map(item => item.trim()) };
+                      setData({ ...data, resume: { ...data.resume, skills: newSkills } });
+                    }}
+                    className="w-full p-2 rounded-md shadow-lg border-2"
+                  ></textarea>
                 </div>
               </div>
-              <hr className="my-10"></hr>
-              <div className="flex">
-                <label className="w-1/5 text-lg opacity-50">Others</label>
-                <div className="w-4/5 ml-10 flex flex-col">
-                  {data.resume.others.map((other, index) => (
-                    <div key={index} className="flex">
-                      <input
-                        value={other}
-                        onChange={(e) => {
-                          setData({
-                            ...data,
-                            resume: {
-                              ...data.resume,
-                              others: [
-                                ...data.resume.others.slice(0, index),
-                                e.target.value,
-                                ...data.resume.others.slice(index + 1),
-                              ],
-                            },
-                          });
-                        }}
-                        className="w-full p-2 rounded-md shadow-lg border-2"
-                        type="text"
-                      ></input>
-                      <Button
-                        onClick={() =>
-                          setData({
-                            ...data,
-                            resume: {
-                              ...data.resume,
-                              others: data.resume.others.filter(
-                                (value, i) => index !== i
-                              ),
-                            },
-                          })
-                        }
-                      >
-                        Remove
-                      </Button>
-                    </div>
-                  ))}
-                  <Button
-                    onClick={() =>
-                      setData({
-                        ...data,
-                        resume: {
-                          ...data.resume,
-                          others: [...data.resume.others, "Added"],
-                        },
-                      })
-                    }
-                    type="primary"
-                    classes="hover:scale-100"
-                  >
-                    Add +
-                  </Button>
-                </div>
-              </div>
+            </div>
+             <hr className="my-10"></hr>
+            <div className="mt-10">
+              <h1>Projects</h1>
+              {/* Add resume projects editor here */}
+            </div>
+            <hr className="my-10"></hr>
+            <div className="mt-10">
+              <h1>Honors</h1>
+               {/* Add honors editor here */}
             </div>
           </div>
         )}
