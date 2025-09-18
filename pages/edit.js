@@ -587,6 +587,7 @@ const Edit = () => {
                       Description
                     </label>
                     <textarea
+                      rows="5"
                       value={service.description}
                       onChange={(e) =>
                         editServices(index, {
@@ -691,6 +692,7 @@ const Edit = () => {
             <div className="flex items-center mt-5">
               <label className="w-1/5 text-lg opacity-50">Description</label>
               <textarea
+                rows="5"
                 value={data.resume.description}
                 onChange={(e) =>
                   setData({
@@ -768,6 +770,7 @@ const Edit = () => {
                     <label className="w-1/5 text-lg opacity-50">Bullets</label>
                     <div className="w-4/5 ml-10 flex flex-col">
                       <textarea
+                        rows="5"
                         value={experiences.bullets.join(", ")}
                         onChange={(e) =>
                           handleEditExperiences(index, {
@@ -988,6 +991,7 @@ const Edit = () => {
                     <label className="w-1/5 text-lg opacity-50">Details</label>
                     <div className="w-4/5 ml-10 flex flex-col">
                       <textarea
+                        rows="5"
                         value={project.details?.join(", ")}
                         onChange={(e) =>
                           handleEditResumeProject(index, {
