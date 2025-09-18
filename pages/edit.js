@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import { v4 as uuidv4 } from "uuid";
@@ -9,18 +9,105 @@ import yourData from "../data/portfolio.json";
 
 const Edit = () => {
   // states
-  const [data, setData] = useState(yourData);
+  const [data, setData] = useState(null);
   const [currentTabs, setCurrentTabs] = useState("HEADER");
   const { theme } = useTheme();
 
+  useEffect(() => {
+    const transformedData = JSON.parse(JSON.stringify(yourData));
+
+    // Experiences
+    transformedData.resume.experiences.forEach((exp) => {
+      if (Array.isArray(exp.bullets)) {
+        exp.bullets = exp.bullets.join("\n");
+      }
+    });
+
+    // Education
+    transformedData.resume.education.forEach((edu) => {
+      if (Array.isArray(edu.relevantCoursework)) {
+        edu.relevantCoursework = edu.relevantCoursework.join("\n");
+      }
+    });
+
+    // Skills
+    if (Array.isArray(transformedData.resume.skills.languages)) {
+      transformedData.resume.skills.languages =
+        transformedData.resume.skills.languages.join("\n");
+    }
+    if (Array.isArray(transformedData.resume.skills.softwareAndOS)) {
+      transformedData.resume.skills.softwareAndOS =
+        transformedData.resume.skills.softwareAndOS.join("\n");
+    }
+
+    // Resume Projects
+    transformedData.resume.projects.forEach((proj) => {
+      if (proj.details && Array.isArray(proj.details)) {
+        proj.details = proj.details.join("\n");
+      } else if (!proj.details) {
+        proj.details = "";
+      }
+    });
+
+    setData(transformedData);
+  }, []);
+
+
   const saveData = () => {
     if (process.env.NODE_ENV === "development") {
+      const dataToSave = JSON.parse(JSON.stringify(data));
+
+      // Experiences
+      dataToSave.resume.experiences.forEach((exp) => {
+        if (typeof exp.bullets === "string") {
+          exp.bullets = exp.bullets
+            .split("\n")
+            .map((s) => s.trim())
+            .filter(Boolean);
+        }
+      });
+
+      // Education
+      dataToSave.resume.education.forEach((edu) => {
+        if (typeof edu.relevantCoursework === "string") {
+          edu.relevantCoursework = edu.relevantCoursework
+            .split("\n")
+            .map((s) => s.trim())
+            .filter(Boolean);
+        }
+      });
+
+      // Skills
+      if (typeof dataToSave.resume.skills.languages === "string") {
+        dataToSave.resume.skills.languages =
+          dataToSave.resume.skills.languages
+            .split("\n")
+            .map((s) => s.trim())
+            .filter(Boolean);
+      }
+      if (typeof dataToSave.resume.skills.softwareAndOS === "string") {
+        dataToSave.resume.skills.softwareAndOS =
+          dataToSave.resume.skills.softwareAndOS
+            .split("\n")
+            .map((s) => s.trim())
+            .filter(Boolean);
+      }
+
+      // Resume Projects
+      dataToSave.resume.projects.forEach((proj) => {
+        if (proj.details && typeof proj.details === "string") {
+          proj.details = proj.details
+            .split("\n")
+            .map((s) => s.trim())
+            .filter(Boolean);
+        }
+      });
       fetch("/api/portfolio", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(dataToSave),
       });
     } else {
       alert("This thing only works in development mode.");
@@ -132,7 +219,7 @@ const Edit = () => {
             dates: "Enter Dates",
             type: "Full Time",
             position: "Frontend Engineer at X",
-            bullets: ["Worked on the frontend of a React application"],
+            bullets: "Worked on the frontend of a React application",
           },
         ],
       },
@@ -182,7 +269,7 @@ const Edit = () => {
             organization: "Organization",
             location: "Location",
             dates: "Dates",
-            details: ["Detail 1", "Detail 2"],
+            details: "",
           },
         ],
       },
@@ -235,6 +322,8 @@ const Edit = () => {
     copyHonors = copyHonors.filter((honor) => honor.id !== id);
     setData({ ...data, resume: { ...data.resume, honors: copyHonors } });
   };
+
+  if (!data) return <p>Loading Editor...</p>;
 
   return (
     <div className={`container mx-auto`}>
@@ -771,14 +860,14 @@ const Edit = () => {
                     <div className="w-4/5 ml-10 flex flex-col">
                       <textarea
                         rows="5"
-                        value={experiences.bullets.join(", ")}
+                        value={experiences.bullets}
                         onChange={(e) =>
                           handleEditExperiences(index, {
                             ...experiences,
-                            bullets: e.target.value.split(",").map(item => item.trim()),
+                            bullets: e.target.value,
                           })
                         }
-                        placeholder="Bullet One, Bullet Two, Bullet Three"
+                        placeholder="Enter each bullet point on a new line."
                         className="p-2 rounded-md shadow-lg border-2"
                       ></textarea>
                     </div>
@@ -868,10 +957,10 @@ const Edit = () => {
                   <div className="flex items-center mt-5">
                     <label className="w-1/5 text-lg opacity-50">Relevant Coursework</label>
                     <textarea
-                      value={edu.relevantCoursework.join(", ")}
+                      value={edu.relevantCoursework}
                       onChange={(e) => {
                         const newEdu = [...data.resume.education];
-                        newEdu[index].relevantCoursework = e.target.value.split(",").map(item => item.trim());
+                        newEdu[index].relevantCoursework = e.target.value;
                         setData({ ...data, resume: { ...data.resume, education: newEdu } });
                       }}
                       className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
@@ -887,9 +976,9 @@ const Edit = () => {
                 <label className="w-1/5 text-lg opacity-50">Languages</label>
                 <div className="w-4/5 ml-10 flex flex-col">
                   <textarea
-                    value={data.resume.skills.languages.join(", ")}
+                    value={data.resume.skills.languages}
                     onChange={(e) => {
-                      const newSkills = { ...data.resume.skills, languages: e.target.value.split(",").map(item => item.trim()) };
+                      const newSkills = { ...data.resume.skills, languages: e.target.value };
                       setData({ ...data, resume: { ...data.resume, skills: newSkills } });
                     }}
                     className="w-full p-2 rounded-md shadow-lg border-2"
@@ -900,9 +989,9 @@ const Edit = () => {
                 <label className="w-1/5 text-lg opacity-50">Software & OS</label>
                 <div className="w-4/5 ml-10 flex flex-col">
                   <textarea
-                    value={data.resume.skills.softwareAndOS.join(", ")}
+                    value={data.resume.skills.softwareAndOS}
                     onChange={(e) => {
-                      const newSkills = { ...data.resume.skills, softwareAndOS: e.target.value.split(",").map(item => item.trim()) };
+                      const newSkills = { ...data.resume.skills, softwareAndOS: e.target.value };
                       setData({ ...data, resume: { ...data.resume, skills: newSkills } });
                     }}
                     className="w-full p-2 rounded-md shadow-lg border-2"
@@ -992,16 +1081,14 @@ const Edit = () => {
                     <div className="w-4/5 ml-10 flex flex-col">
                       <textarea
                         rows="5"
-                        value={project.details?.join(", ")}
+                        value={project.details}
                         onChange={(e) =>
                           handleEditResumeProject(index, {
                             ...project,
-                            details: e.target.value
-                              .split(",")
-                              .map((item) => item.trim()),
+                            details: e.target.value,
                           })
                         }
-                        placeholder="Detail One, Detail Two, Detail Three"
+                        placeholder="Enter each detail on a new line."
                         className="p-2 rounded-md shadow-lg border-2"
                       ></textarea>
                     </div>
