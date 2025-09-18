@@ -148,33 +148,32 @@ const Edit = () => {
     setData({ ...data, projects: copyProjects });
   };
 
-  // Services Handler
-
-  const editServices = (serviceIndex, editService) => {
-    let copyServices = data.services;
-    copyServices[serviceIndex] = { ...editService };
-    setData({ ...data, services: copyServices });
+  // Experience Handler
+  const editExperiences = (experienceIndex, editExperience) => {
+    let copyExperiences = data.experiences;
+    copyExperiences[experienceIndex] = { ...editExperience };
+    setData({ ...data, experiences: copyExperiences });
   };
 
-  const addService = () => {
+  const addExperience = () => {
     setData({
       ...data,
-      services: [
+      experiences: [
         {
           id: uuidv4(),
-          title: "New Professional Experience",
+          title: "New Experience",
           description:
             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
         },
-        ...data.services,
+        ...data.experiences,
       ],
     });
   };
 
-  const deleteService = (id) => {
-    let copyServices = data.services;
-    copyServices = copyServices.filter((service) => service.id !== id);
-    setData({ ...data, services: copyServices });
+  const deleteExperience = (id) => {
+    let copyExperiences = data.experiences;
+    copyExperiences = copyExperiences.filter((experience) => experience.id !== id);
+    setData({ ...data, experiences: copyExperiences });
   };
 
   // Socials Handler
@@ -353,10 +352,10 @@ const Edit = () => {
               Projects
             </Button>
             <Button
-              onClick={() => setCurrentTabs("PROFESSIONAL_EXPERIENCES")}
-              type={currentTabs === "PROFESSIONAL_EXPERIENCES" && "primary"}
+              onClick={() => setCurrentTabs("EXPERIENCES")}
+              type={currentTabs === "EXPERIENCES" && "primary"}
             >
-              Professional Experiences
+              Experiences
             </Button>
             <Button
               onClick={() => setCurrentTabs("ABOUT")}
@@ -642,21 +641,21 @@ const Edit = () => {
             </div>
           </>
         )}
-        {/* PROFESSIONAL EXPERIENCES */}
-        {currentTabs === "PROFESSIONAL_EXPERIENCES" && (
+        {/* EXPERIENCES */}
+        {currentTabs === "EXPERIENCES" && (
           <>
             <div className="mt-10">
               <div className="my-10">
-                <Button onClick={addService} type="primary">
-                  Add Professional Experience +
+                <Button onClick={addExperience} type="primary">
+                  Add Experience +
                 </Button>
               </div>
-              {data.services.map((service, index) => (
-                <div key={service.id}>
+              {data.experiences.map((experience, index) => (
+                <div key={experience.id}>
                   <div className="flex items-center justify-between">
-                    <h1 className="text-2xl">{service.title}</h1>
+                    <h1 className="text-2xl">{experience.title}</h1>
                     <Button
-                      onClick={() => deleteService(service.id)}
+                      onClick={() => deleteExperience(experience.id)}
                       type="primary"
                     >
                       Delete
@@ -665,10 +664,10 @@ const Edit = () => {
                   <div className="flex items-center mt-5">
                     <label className="w-1/5 text-lg opacity-50">Title</label>
                     <input
-                      value={service.title}
+                      value={experience.title}
                       onChange={(e) =>
-                        editServices(index, {
-                          ...service,
+                        editExperiences(index, {
+                          ...experience,
                           title: e.target.value,
                         })
                       }
@@ -682,10 +681,10 @@ const Edit = () => {
                     </label>
                     <textarea
                       rows="5"
-                      value={service.description}
+                      value={experience.description}
                       onChange={(e) =>
-                        editServices(index, {
-                          ...service,
+                        editExperiences(index, {
+                          ...experience,
                           description: e.target.value,
                         })
                       }
