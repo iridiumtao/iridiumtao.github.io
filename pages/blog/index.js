@@ -95,13 +95,13 @@ const Blog = ({posts}) => {
                     key={post.slug}
                     onClick={() => Router.push(`/blog/${post.slug}`)}
                   >
-                    <div style={{ position: 'relative', width: '100%', paddingTop: '56.25%' }}>
+                    <div className="relative w-full aspect-[16/9]">
                       <Image
                         alt={post.title}
                         src={post.image}
-                        layout="fill"
-                        objectFit="cover"
-                        className="rounded-lg shadow-lg"
+                        fill={true}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover rounded-lg shadow-lg"
                       />
                     </div>
                     <h2 className="mt-5 text-4xl">{post.title}</h2>

@@ -27,7 +27,6 @@ export default function Home() {
 
   // state
   const [mounted, setMounted] = useState(false);
-  const [rowHeights, setRowHeights] = useState([]);
   const {theme} = useTheme();
 
   useIsomorphicLayoutEffect(() => {
@@ -41,17 +40,6 @@ export default function Home() {
       );
     }
   }, [mounted]);
-
-  const handleImageLoad = (index, height) => {
-    if (typeof window !== 'undefined') {
-      setRowHeights((prev) => {
-        const newHeights = [...prev];
-        const rowIndex = Math.floor(index / 2);
-        newHeights[rowIndex] = Math.max(newHeights[rowIndex] || 0, height);
-        return newHeights;
-      });
-    }
-  };
 
   const handleScroll = (ref) => {
     if (typeof window !== 'undefined' && ref.current) {
@@ -128,8 +116,6 @@ export default function Home() {
                 name={project.title}
                 subtitle={project.subtitle}
                 description={project.description}
-                rowHeight={rowHeights[Math.floor(index / 2)] || "auto"}
-                onImageLoad={(height) => handleImageLoad(index, height)}
               />
             ))}
           </div>

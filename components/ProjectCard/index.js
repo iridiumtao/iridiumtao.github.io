@@ -1,14 +1,9 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import Link from 'next/link';
 import Image from 'next/image';
 
-const ProjectCard = ({ img, name, subtitle, description, rowHeight, onImageLoad }) => {
+const ProjectCard = ({ img, name, subtitle, description }) => {
     const [imageLoaded, setImageLoaded] = useState(false);
-
-    const handleImageLoad = useCallback((event) => {
-        setImageLoaded(true);
-        onImageLoad(event.naturalHeight);
-    }, [onImageLoad]);
 
     return (
         <div
@@ -16,20 +11,17 @@ const ProjectCard = ({ img, name, subtitle, description, rowHeight, onImageLoad 
         >
             <Link href={`/blog/${name}`} className="block">
                 <div
-                    className={`relative overflow-hidden transition-all cursor-pointer ease-out duration-300 hover:scale-95 h-48 mob:h-auto flex items-center justify-center ${
+                    className={`relative overflow-hidden transition-all cursor-pointer ease-out duration-300 hover:scale-95 flex items-center justify-center aspect-[16/9] ${
                         !imageLoaded ? ('dark:bg-black bg-gray-100') : ''
                     }`}
-                    style={{
-                        height: imageLoaded ? rowHeight : 'auto',
-                        minHeight: '200px'
-                    }}
                 >
                     <Image
                         alt={name}
                         className="object-cover rounded-lg"
                         src={img}
-                        onLoad={handleImageLoad}
-                        layout="fill"
+                        onLoad={() => setImageLoaded(true)}
+                        fill={true}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                 </div>
             </Link>
