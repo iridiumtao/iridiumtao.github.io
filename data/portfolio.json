@@ -87,6 +87,11 @@
   ],
   "services": [
     {
+      "id": "678d33ac-a854-4dce-9c0e-db5fae6cd91e",
+      "title": "Data Science Intern, Micron",
+      "description": "Built a production-scale pipeline and Streamlit app for fab-dispatch analysis (33GB/2 weeks), created an explainable LightGBM-SHAP model for parameter simplification, and developed repo-documentation tools cutting token use 10× and boosting developer efficiency 3×."
+    },
+    {
       "id": "1",
       "title": "Software Developer, CARITY AI",
       "description": "Developed a DevOps workflow with Docker and AWS ECS, optimizing deployment and reducing costs by 40%. Researched Agentic RAG, improving token efficiency fivefold for complex question-answering capabilities."

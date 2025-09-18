@@ -160,13 +160,13 @@ const Edit = () => {
     setData({
       ...data,
       services: [
-        ...data.services,
         {
           id: uuidv4(),
-          title: "New Service",
+          title: "New Professional Experience",
           description:
             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
         },
+        ...data.services,
       ],
     });
   };
@@ -353,10 +353,10 @@ const Edit = () => {
               Projects
             </Button>
             <Button
-              onClick={() => setCurrentTabs("SERVICES")}
-              type={currentTabs === "SERVICES" && "primary"}
+              onClick={() => setCurrentTabs("PROFESSIONAL_EXPERIENCES")}
+              type={currentTabs === "PROFESSIONAL_EXPERIENCES" && "primary"}
             >
-              Services
+              Professional Experiences
             </Button>
             <Button
               onClick={() => setCurrentTabs("ABOUT")}
@@ -642,10 +642,15 @@ const Edit = () => {
             </div>
           </>
         )}
-        {/* SERVICES */}
-        {currentTabs === "SERVICES" && (
+        {/* PROFESSIONAL EXPERIENCES */}
+        {currentTabs === "PROFESSIONAL_EXPERIENCES" && (
           <>
             <div className="mt-10">
+              <div className="my-10">
+                <Button onClick={addService} type="primary">
+                  Add Professional Experience +
+                </Button>
+              </div>
               {data.services.map((service, index) => (
                 <div key={service.id}>
                   <div className="flex items-center justify-between">
@@ -690,11 +695,6 @@ const Edit = () => {
                   <hr className="my-10"></hr>
                 </div>
               ))}
-            </div>
-            <div className="my-10">
-              <Button onClick={addService} type="primary">
-                Add Service +
-              </Button>
             </div>
           </>
         )}
