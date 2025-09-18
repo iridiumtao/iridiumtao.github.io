@@ -8,6 +8,7 @@ A modern, responsive portfolio website built with Next.js, featuring a clean des
 - **Dark Mode**: Toggle between light and dark themes
 - **Dynamic Content**: Easy content management through JSON configuration
 - **Blog System**: Markdown-based blog posts with syntax highlighting
+- **Development-Only Editor**: Live-edit content in your local development environment
 - **Resume Section**: Dedicated resume page with detailed experience
 - **Static Export**: Optimized for static hosting and deployment
 - **Modern Stack**: Built with Next.js, React, and Tailwind CSS
@@ -28,60 +29,40 @@ Before you begin, ensure you have the following installed:
 
 2. **Install dependencies:**
    ```bash
-   # Using npm
-   npm install
-
    # Using yarn
    yarn install
    ```
 
 3. **Start the development server:**
    ```bash
-   # Using npm
-   npm run dev
-
-   # Using yarn
    yarn dev
    ```
 
 4. **Open your browser:**
-   Navigate to [http://localhost:3000](http://localhost:3000) to view the portfolio.
+   Navigate to [http://localhost:3000](http://localhost:3000) to view the portfolio. In this mode, the live editor will be available.
 
 ## 🔧 Building for Production
 
-### Development Build
+### Development Mode (with Live Editor)
+To run the site locally with the live editor enabled, use:
 ```bash
-npm run dev
-# or
 yarn dev
 ```
 
-### Production Build
+### Production Build (Static Export)
+To generate the static files for deployment, use:
 ```bash
-npm run build
-# or
 yarn build
 ```
+This will create an `out` directory with static files ready for deployment. The editor is disabled in this build.
 
-### Start Production Server
+### Running a Local Production Server
+To preview the production build locally, you can use a simple server after building:
 ```bash
-npm run start
-# or
-yarn start
+yarn build
+npx serve out # preview the production build locally
 ```
-
-### Start Server Mode (without static export)
-```bash
-# Build and start in server mode using environment variable
-NODE_ENV=development yarn build && NODE_ENV=development yarn start
-```
-
-### Static Export (for hosting on GitHub Pages, Netlify, etc.)
-The project is configured to generate a static export by default in production:
-```bash
-npm run build
-```
-This will create an `out` directory with static files ready for deployment.
+*Note: `yarn start` will not work with a static export. `serve` is a simple alternative for local testing.*
 
 ## 📝 Content Management
 
@@ -202,72 +183,23 @@ Blog posts are stored in the `_posts/` directory as Markdown files. To add a new
 
 ## 🚀 Deployment
 
-### GitHub Pages with GitHub Actions
+### Deploying to GitHub Pages
 
-To set up automatic deployment to GitHub Pages using GitHub Actions:
+This project is configured for easy deployment to a GitHub Pages User site (e.g., `username.github.io`).
 
-1. **Create the workflow directory:**
+1. **Run the deploy script:**
    ```bash
-   mkdir -p .github/workflows
+   yarn deploy
    ```
+   This command will automatically build the static site and push the contents of the `out` directory to the `gh-pages` branch of your repository.
 
-2. **Create the deployment workflow file:**
-   Create `.github/workflows/deploy.yml`:
-   ```yaml
-   name: Deploy to GitHub Pages
+2. **Configure GitHub Pages (One-Time Setup):**
+   - In your repository settings on GitHub, navigate to the "Pages" section.
+   - For the source, select "Deploy from a branch".
+   - Set the branch to `gh-pages` and the folder to `/ (root)`.
+   - Save the settings.
 
-   on:
-     push:
-       branches: [ main, master ]
-     pull_request:
-       branches: [ main, master ]
-
-   jobs:
-     build-and-deploy:
-       runs-on: ubuntu-latest
-       
-       steps:
-       - name: Checkout
-         uses: actions/checkout@v4
-
-       - name: Setup Node.js
-         uses: actions/setup-node@v4
-         with:
-           node-version: '18'
-           cache: 'npm'
-
-       - name: Install dependencies
-         run: npm ci
-
-       - name: Build
-         run: npm run build
-
-       - name: Deploy to GitHub Pages
-         uses: peaceiris/actions-gh-pages@v3
-         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-         with:
-           github_token: ${{ secrets.GITHUB_TOKEN }}
-           publish_dir: ./out
-           cname: your-custom-domain.com  # Optional: add your custom domain
-   ```
-
-3. **Configure GitHub Pages:**
-   - Go to your repository settings
-   - Navigate to "Pages" section
-   - Set source to "Deploy from a branch"
-   - Select `gh-pages` branch and `/ (root)` folder
-   - Save the settings
-
-4. **Update next.config.js for GitHub Pages:**
-   If deploying to a repository that's not your username.github.io, update the `next.config.js`:
-   ```javascript
-   const isProd = process.env.NODE_ENV === 'production'
-   const nextConfig = {
-     basePath: isProd ? '/your-repository-name' : '',
-     assetPrefix: isProd ? '/your-repository-name/' : '',
-     // ... rest of config
-   }
-   ```
+Your site will be deployed and live after a few moments.
 
 ### Other Deployment Options
 
@@ -329,16 +261,16 @@ iridium-portfolio/
 
 ## 🛠️ Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
+- `yarn dev` - Start development server with live editor
+- `yarn build` - Build for production (static export)
+- `yarn deploy` - Build and deploy to GitHub Pages
+- `yarn lint` - Run ESLint
 
 ## 📦 Dependencies
 
 ### Main Dependencies
-- **Next.js 15.1.5** - React framework
-- **React 19.0.0** - UI library
+- **Next.js 15.5.3** - React framework
+- **React 19.1.1** - UI library
 - **Tailwind CSS** - Utility-first CSS framework
 - **next-themes** - Dark mode support
 - **gray-matter** - Front matter parser for blog posts
@@ -346,7 +278,8 @@ iridium-portfolio/
 - **GSAP** - Animation library
 
 ### Development Dependencies
-- **ESLint** - Code linting
+- **ESLint 9.18.0** - Code linting
+- **gh-pages** - Helper for deploying to GitHub Pages
 - **PostCSS** - CSS processing
 - **Autoprefixer** - CSS vendor prefixes
 
