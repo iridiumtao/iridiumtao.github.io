@@ -1,14 +1,8 @@
 /** @type {import('next').NextConfig} */
 
-let basePath = "";
-let assetPrefix = "";
-const isDev = process.env.NODE_ENV === "development";
-
 const nextConfig = {
   reactStrictMode: true,
-  output: (isDev === true ? undefined : "export"),
-  basePath,
-  assetPrefix,
+  output: "export",
   images: {
     unoptimized: true,
   },
