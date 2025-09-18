@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import Head from "next/head";
 import Button from "../components/Button";
 import {useTheme} from "next-themes";
+import Link from "next/link";
 
 import data from "../data/portfolio.json";
 
@@ -278,6 +279,13 @@ const Resume = () => {
 
         </div>
       </div>
+      {process.env.NODE_ENV === "development" && (
+        <div className="fixed bottom-5 right-5">
+          <Link href="/edit">
+            <Button type="primary">Edit Data</Button>
+          </Link>
+        </div>
+      )}
       <Footer/>
     </div>
   );
