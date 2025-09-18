@@ -197,12 +197,14 @@
     },
     "projects": [
       {
+        "id": "1",
         "title": "RISC-V-Simulator",
         "organization": "NYU",
         "location": "New York, NY",
         "dates": "October 2024 - December 2024"
       },
       {
+        "id": "2",
         "title": "AI Editor-in-Chief and Virtual News Presenter",
         "organization": "Natural Language Process Lab, NTCUST",
         "location": "Taichung, Taiwan",
@@ -213,6 +215,7 @@
         ]
       },
       {
+        "id": "3",
         "title": "TW-COVID-Bot (Telegram Bot)",
         "organization": "Spontaneous Study",
         "location": "Taipei, Taiwan",
@@ -224,6 +227,7 @@
         ]
       },
       {
+        "id": "4",
         "title": "iOS Developer",
         "organization": "I.M.A.C. Lab, NTCUST",
         "location": "Taichung, Taiwan",
@@ -235,6 +239,7 @@
         ]
       },
       {
+        "id": "5",
         "title": "Retailpia",
         "organization": "Level-Up Society Hackathon",
         "location": "UK",
@@ -247,18 +252,21 @@
     ],
     "honors": [
       {
+        "id": "1",
         "title": "Emerging Technology Application Award",
         "event": "Fi-Award 2023 by the 13th International Conference on Frontier Computing",
         "location": "Tokyo, Japan",
         "year": "2023"
       },
       {
+        "id": "2",
         "title": "1st prize in Project Competition",
         "organization": "College of Information and Distribution Science, NTCUST",
         "location": "Taichung, Taiwan",
         "year": "2023"
       },
       {
+        "id": "3",
         "title": "Winner of Better Retail",
         "event": "Level-Up Society Hackathon",
         "organizer": "ShowCode",

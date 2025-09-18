@@ -148,6 +148,94 @@ const Edit = () => {
     });
   };
 
+  const handleDeleteExperience = (id) => {
+    let copyExperiences = data.resume.experiences;
+    copyExperiences = copyExperiences.filter(
+      (experience) => experience.id !== id
+    );
+    setData({
+      ...data,
+      resume: { ...data.resume, experiences: copyExperiences },
+    });
+  };
+
+  const handleDeleteEducation = (id) => {
+    let copyEducation = data.resume.education;
+    copyEducation = copyEducation.filter((edu) => edu.id !== id);
+    setData({
+      ...data,
+      resume: { ...data.resume, education: copyEducation },
+    });
+  };
+
+  // Resume Projects
+  const handleAddResumeProject = () => {
+    setData({
+      ...data,
+      resume: {
+        ...data.resume,
+        projects: [
+          ...data.resume.projects,
+          {
+            id: uuidv4(),
+            title: "New Project",
+            organization: "Organization",
+            location: "Location",
+            dates: "Dates",
+            details: ["Detail 1", "Detail 2"],
+          },
+        ],
+      },
+    });
+  };
+
+  const handleEditResumeProject = (index, editProject) => {
+    let copyProjects = data.resume.projects;
+    copyProjects[index] = { ...editProject };
+    setData({
+      ...data,
+      resume: { ...data.resume, projects: copyProjects },
+    });
+  };
+
+  const handleDeleteResumeProject = (id) => {
+    let copyProjects = data.resume.projects;
+    copyProjects = copyProjects.filter((project) => project.id !== id);
+    setData({ ...data, resume: { ...data.resume, projects: copyProjects } });
+  };
+
+  // Resume Honors
+  const handleAddHonor = () => {
+    setData({
+      ...data,
+      resume: {
+        ...data.resume,
+        honors: [
+          ...data.resume.honors,
+          {
+            id: uuidv4(),
+            title: "New Honor",
+            event: "Event",
+            location: "Location",
+            year: "Year",
+          },
+        ],
+      },
+    });
+  };
+
+  const handleEditHonor = (index, editHonor) => {
+    let copyHonors = data.resume.honors;
+    copyHonors[index] = { ...editHonor };
+    setData({ ...data, resume: { ...data.resume, honors: copyHonors } });
+  };
+
+  const handleDeleteHonor = (id) => {
+    let copyHonors = data.resume.honors;
+    copyHonors = copyHonors.filter((honor) => honor.id !== id);
+    setData({ ...data, resume: { ...data.resume, honors: copyHonors } });
+  };
+
   return (
     <div className={`container mx-auto`}>
       <Header isBlog></Header>
@@ -616,13 +704,18 @@ const Edit = () => {
             <hr className="my-10"></hr>
 
             <h1>Experiences</h1>
+            <div className="my-10">
+              <Button onClick={handleAddExperiences} type="primary">
+                Add Experience +
+              </Button>
+            </div>
             <div className="mt-10">
               {data.resume.experiences.map((experiences, index) => (
                 <div className="mt-5" key={experiences.id}>
                   <div className="flex items-center justify-between">
                     <h1 className="text-2xl">{experiences.position}</h1>
                     <Button
-                      // onClick={() => deleteProject(project.id)}
+                      onClick={() => handleDeleteExperience(experiences.id)}
                       type="primary"
                     >
                       Delete
@@ -690,17 +783,21 @@ const Edit = () => {
                 </div>
               ))}
             </div>
-            <div className="my-10">
-              <Button onClick={handleAddExperiences} type="primary">
-                Add Experience +
-              </Button>
-            </div>
             <hr className="my-10"></hr>
             <div className="mt-10">
               <h1>Education</h1>
               {data.resume.education.map((edu, index) => (
                 <div key={edu.id} className="mt-5">
-                   <div className="flex items-center mt-5">
+                  <div className="flex items-center justify-between">
+                    <h1 className="text-2xl">{edu.universityName}</h1>
+                    <Button
+                      onClick={() => handleDeleteEducation(edu.id)}
+                      type="primary"
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                  <div className="flex items-center mt-5">
                     <label className="w-1/5 text-lg opacity-50">University Name</label>
                     <input
                       value={edu.universityName}
@@ -813,12 +910,180 @@ const Edit = () => {
              <hr className="my-10"></hr>
             <div className="mt-10">
               <h1>Projects</h1>
-              {/* Add resume projects editor here */}
+              <div className="my-10">
+                <Button onClick={handleAddResumeProject} type="primary">
+                  Add Project +
+                </Button>
+              </div>
+              {data.resume.projects.map((project, index) => (
+                <div key={project.id} className="mt-5">
+                  <div className="flex items-center justify-between">
+                    <h1 className="text-2xl">{project.title}</h1>
+                    <Button
+                      onClick={() => handleDeleteResumeProject(project.id)}
+                      type="primary"
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                  <div className="flex items-center mt-5">
+                    <label className="w-1/5 text-lg opacity-50">Title</label>
+                    <input
+                      value={project.title}
+                      onChange={(e) =>
+                        handleEditResumeProject(index, {
+                          ...project,
+                          title: e.target.value,
+                        })
+                      }
+                      className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
+                      type="text"
+                    ></input>
+                  </div>
+                  <div className="flex items-center mt-2">
+                    <label className="w-1/5 text-lg opacity-50">
+                      Organization
+                    </label>
+                    <input
+                      value={project.organization}
+                      onChange={(e) =>
+                        handleEditResumeProject(index, {
+                          ...project,
+                          organization: e.target.value,
+                        })
+                      }
+                      className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
+                      type="text"
+                    ></input>
+                  </div>
+                  <div className="flex items-center mt-2">
+                    <label className="w-1/5 text-lg opacity-50">Location</label>
+                    <input
+                      value={project.location}
+                      onChange={(e) =>
+                        handleEditResumeProject(index, {
+                          ...project,
+                          location: e.target.value,
+                        })
+                      }
+                      className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
+                      type="text"
+                    ></input>
+                  </div>
+                  <div className="flex items-center mt-2">
+                    <label className="w-1/5 text-lg opacity-50">Dates</label>
+                    <input
+                      value={project.dates}
+                      onChange={(e) =>
+                        handleEditResumeProject(index, {
+                          ...project,
+                          dates: e.target.value,
+                        })
+                      }
+                      className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
+                      type="text"
+                    ></input>
+                  </div>
+                  <div className="mt-2 flex">
+                    <label className="w-1/5 text-lg opacity-50">Details</label>
+                    <div className="w-4/5 ml-10 flex flex-col">
+                      <textarea
+                        value={project.details?.join(", ")}
+                        onChange={(e) =>
+                          handleEditResumeProject(index, {
+                            ...project,
+                            details: e.target.value
+                              .split(",")
+                              .map((item) => item.trim()),
+                          })
+                        }
+                        placeholder="Detail One, Detail Two, Detail Three"
+                        className="p-2 rounded-md shadow-lg border-2"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
             <hr className="my-10"></hr>
             <div className="mt-10">
               <h1>Honors</h1>
-               {/* Add honors editor here */}
+              <div className="my-10">
+                <Button onClick={handleAddHonor} type="primary">
+                  Add Honor +
+                </Button>
+              </div>
+              {data.resume.honors.map((honor, index) => (
+                <div key={honor.id} className="mt-5">
+                  <div className="flex items-center justify-between">
+                    <h1 className="text-2xl">{honor.title}</h1>
+                    <Button
+                      onClick={() => handleDeleteHonor(honor.id)}
+                      type="primary"
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                  <div className="flex items-center mt-5">
+                    <label className="w-1/5 text-lg opacity-50">Title</label>
+                    <input
+                      value={honor.title}
+                      onChange={(e) =>
+                        handleEditHonor(index, {
+                          ...honor,
+                          title: e.target.value,
+                        })
+                      }
+                      className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
+                      type="text"
+                    ></input>
+                  </div>
+                  <div className="flex items-center mt-2">
+                    <label className="w-1/5 text-lg opacity-50">Event</label>
+                    <input
+                      value={honor.event}
+                      onChange={(e) =>
+                        handleEditHonor(index, {
+                          ...honor,
+                          event: e.target.value,
+                        })
+                      }
+                      className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
+                      type="text"
+                    ></input>
+                  </div>
+                  <div className="flex items-center mt-2">
+                    <label className="w-1/5 text-lg opacity-50">
+                      Location
+                    </label>
+                    <input
+                      value={honor.location}
+                      onChange={(e) =>
+                        handleEditHonor(index, {
+                          ...honor,
+                          location: e.target.value,
+                        })
+                      }
+                      className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
+                      type="text"
+                    ></input>
+                  </div>
+                  <div className="flex items-center mt-2">
+                    <label className="w-1/5 text-lg opacity-50">Year</label>
+                    <input
+                      value={honor.year}
+                      onChange={(e) =>
+                        handleEditHonor(index, {
+                          ...honor,
+                          year: e.target.value,
+                        })
+                      }
+                      className="w-4/5 ml-10 p-2 rounded-md shadow-lg border-2"
+                      type="text"
+                    ></input>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}
