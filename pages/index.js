@@ -29,6 +29,13 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const {theme} = useTheme();
 
+  const sortedProjects = [...data.projects].sort((a, b) => {
+    const dateA = a.endDate ? new Date(a.endDate) : null;
+    const dateB = b.endDate ? new Date(b.endDate) : null;
+    if (!dateA || !dateB || isNaN(dateA.getTime()) || isNaN(dateB.getTime())) return 0;
+    return dateB - dateA;
+  });
+
   useIsomorphicLayoutEffect(() => {
     setMounted(true);
 
@@ -109,7 +116,7 @@ export default function Home() {
         <div className="mt-10 laptop:mt-30 p-2 laptop:p-0" ref={projectRef}>
           <h1 className="text-2xl text-bold">Project Experiences</h1>
           <div className="mt-5 laptop:mt-10 grid grid-cols-1 tablet:grid-cols-2 gap-4">
-            {data.projects.map((project, index) => (
+            {sortedProjects.map((project, index) => (
               <ProjectCard
                 key={project.id}
                 img={project.imageSrc}

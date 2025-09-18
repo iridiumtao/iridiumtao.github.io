@@ -31,6 +31,8 @@
       "id": "1",
       "title": "Loud Plants in Your Area",
       "subtitle": "HCI, AR, ML",
+      "startDate": "February 2024",
+      "endDate": "May 2024",
       "description": "An Augmented Reality (AR) application that helps combat 'plant blindness' by making plant activities visible and interactive through augmented overlays.",
       "imageSrc": "https://raw.githubusercontent.com/iridiumtao/LoudPlantsInYourArea/refs/heads/main/docs/LoudPlantsInYourArea.jpeg",
       "url": "https://github.com/iridiumtao/LoudPlantsInYourArea"
@@ -39,6 +41,8 @@
       "id": "2",
       "title": "AI Editor-in-Chief and Virtual News Presenter",
       "subtitle": "An Artificial Intelligence-Based Pipeline for Automated News Production",
+      "startDate": "September 2021",
+      "endDate": "July 2023",
       "description": "A project aimed to catch teenagers’ attention and refocus on critical societal issues with AI-driven Natural Language Processing technologies in Taiwanese Mandarin.",
       "imageSrc": "https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/image/AI%20Editor-in-Chief%20and%20Virtual%20News%20Presenter.png",
       "url": "https://github.com/iridiumtao/Virtual-to-News-Public"
@@ -46,6 +50,8 @@
     {
       "id": "3",
       "title": "RISC-V-Simulator",
+      "startDate": "October 2024",
+      "endDate": "December 2024",
       "description": "A 5-stage pipelined RISC-V Simulator written in Python.",
       "imageSrc": "https://raw.githubusercontent.com/iridiumtao/RISC-V-Simulator/refs/heads/master/docs/Schematic%20RISCV%20Project%20Five%20Stage.png",
       "url": "https://github.com/iridiumtao/RISC-V-Simulator"
@@ -54,6 +60,8 @@
       "id": "4",
       "title": "Retailpia",
       "subtitle": "Winner of Better Retail, Level-Up Society Hackathon, organized by ShowCode",
+      "startDate": "July 2021",
+      "endDate": "July 2021",
       "description": "Developed a city-building game that also included the additional feature of being an account book app and a points collector with students from four universities within 48 hours.",
       "imageSrc": "https://github.com/iridiumtao/Retailpia/assets/43561001/8d1d5603-e090-4694-9eea-562258a6c361",
       "url": "https://github.com/iridiumtao/Retailpia"
@@ -61,6 +69,8 @@
     {
       "id": "5",
       "title": "TW-COVID-Bot (Telegram Bot)",
+      "startDate": "August 2020",
+      "endDate": "November 2022",
       "description": "During the COVID-19 pandemic in Taiwan, I assisted social media influencers in automatically posting daily outbreak information for easy access to up-to-date information.",
       "imageSrc": "https://github.com/lhsueh1/TW-covid-Bot/blob/main/src/README/img1.png?raw=true",
       "url": "https://github.com/lhsueh1/TW-covid-Bot"
@@ -68,6 +78,8 @@
     {
       "id": "6",
       "title": "iOS Development",
+      "startDate": "June 2020",
+      "endDate": "October 2020",
       "description": "During the summer vacation of my second year of University, I participated in the summer iOS development practical training, cultivating skills in mobile development through hands-on experience with UI components and design patterns in the Intelligent Mobile Application Club (I.M.A.C) laboratory on campus.",
       "imageSrc": "https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/image/iOS%20Development.png",
       "url": "https://github.com/jerry960331/iOS_practice_SwiftUIWeatherApp"
