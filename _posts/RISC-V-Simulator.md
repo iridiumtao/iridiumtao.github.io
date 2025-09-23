@@ -28,7 +28,6 @@ I developed the RISC-V Processor Simulator in Python to implement and compare fu
 * **Developed** a parallel simulation workflow to execute identical RISC-V programs on both cores simultaneously, ensuring accurate, side-by-side comparison of outputs and performance metrics.
 * **Built** an automated performance analysis module that calculates and reports key metrics, including total cycle count, instructions per cycle (IPC), and cycles per instruction (CPI) for each processor core.
 
-***
 
 ## Features
 

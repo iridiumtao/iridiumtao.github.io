@@ -2,7 +2,7 @@
 date: '2025-7-12T11:50:54.000Z'
 title: Oblivilight - OpenHCI'25
 tagline: >-
-  A 5-stage pipelined RISC-V Simulator written in Python.
+  AI-powered HCI lamp
 preview: >-
   An AI-powered smart lamp that transforms nightly voice conversations into tangible memories you can choose to keep or physically discard, ensuring digital privacy.
 image: >-
@@ -14,7 +14,7 @@ links: [
 
 Oblivilight is a human-computer interaction project designed to address the growing anxiety around AI data permanence. It functions as an intelligent night lamp that provides a safe, ephemeral space for users to voice their thoughts and emotions. By converting conversations into physical paper notes at the end of a session, it gives users tangible control over their personal data, turning the act of "forgetting" into a meaningful, physical ritual.
 
-The project's innovative approach was recognized with the Best Demo Award at OpenHCI'25, where it was also the only project selected for presentation at the TaiCHI conference.
+The project's innovative approach was recognized with the Best Demo Award at OpenHCI'25, where it was also the only project selected for presentation at the TAICHI'25 conference.
 
 
 ## Overview
@@ -27,7 +27,7 @@ In an era where personal AI companions collect vast amounts of user data, Oblivi
 * Led a user-centric design process from research to prototype, identifying a key user need for tangible, privacy-preserving "forgetting mechanisms" in AI companions through 11 user interviews and secondary research.
 * Architected a full-stack proof-of-concept integrating an LLM for conversation, emotion analysis, and a multi-modal interface with voice (Whisper/TTS) and gesture controls.
 * Designed a novel interaction model that visualizes emotional sentiment as colored light and externalizes digital conversations into physical artifacts via a thermal printer, directly addressing AI data permanence anxiety.
-* **Won the Best Demo Award at OpenHCI'25 and was the sole project selected for presentation at the subsequent TaiCHI conference.**
+
 
 ### Features
 

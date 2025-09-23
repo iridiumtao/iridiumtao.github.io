@@ -28,12 +28,22 @@
   ],
   "projects": [
     {
+      "id": "8",
+      "title": "Oblivilight - OpenHCI'25",
+      "subtitle": "HCI, LangChain",
+      "startDate": "July 2025",
+      "endDate": "August 2025",
+      "description": "A privacy-focused AI-powered smart lamp that transforms nightly voice conversations into tangible memories.",
+      "imageSrc": "https://raw.githubusercontent.com/iridiumtao/OpenHCI25-Oblivilight/refs/heads/main/docs/Cover.png?raw=true",
+      "url": "https://github.com/iridiumtao/OpenHCI25-Oblivilight"
+    },
+    {
       "id": "7",
       "title": "Taigi (Taiwanese-Hokkien) Medical Advising LLM",
       "subtitle": "AI, ML, LLM",
       "startDate": "March 2025",
       "endDate": "May 2025",
-      "description": "Fine-tuned the first Taigi (Taiwanese-Hokkien) medical advising LLM with a full-stack MLOps pipeline, enabling bilingual clinical Q&A and continuous doctor-in-the-loop retraining.",
+      "description": "Fine-tuned Taigi (Taiwanese-Hokkien) medical advising LLM with a full-stack MLOps pipeline.",
       "imageSrc": "https://raw.githubusercontent.com/iridiumtao/Fine-Tuning-Taiwanese-Hokkien-LLM-for-Medical-Advising/refs/heads/main/docs/project_diagram.png",
       "url": "https://github.com/iridiumtao/Fine-Tuning-Taiwanese-Hokkien-LLM-for-Medical-Advising"
     },
