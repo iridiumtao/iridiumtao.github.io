@@ -9,6 +9,7 @@ image: >-
   https://github.com/iridiumtao/RISC-V-Simulator/blob/master/docs/Schematic%20RISCV%20Project%20Five%20Stage.png?raw=true
 links: [
   {name: GitHub, url: https://github.com/iridiumtao/RISC-V-Simulator}, 
+  {name: DeepWiki, url: https://deepwiki.com/iridiumtao/RISC-V-Simulator}, 
 ]
 ---
 
