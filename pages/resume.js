@@ -31,6 +31,26 @@ const Resume = () => {
     );
   }, []);
 
+  const getSortableDate = (dateString) => {
+    if (!dateString) return new Date(0);
+    const lowerDateString = dateString.toString().toLowerCase();
+    if (lowerDateString.includes('present') || lowerDateString.includes('current')) return new Date();
+  
+    const dateParts = lowerDateString.split(' - ');
+    const endDateString = dateParts.length > 1 ? dateParts[1] : dateParts[0];
+  
+    const date = new Date(endDateString);
+    if (!isNaN(date.getTime())) return date;
+  
+    const yearMatch = endDateString.match(/\d{4}/);
+    if (yearMatch) {
+      const yearDate = new Date(yearMatch[0]);
+      if (!isNaN(yearDate.getTime())) return yearDate;
+    }
+    
+    return new Date(0);
+  };
+
   return (
     <div className={`relative`}>
       <Head>
@@ -73,7 +93,9 @@ const Resume = () => {
           {/* Education Section */}
           <div ref={eduRef} className="w-full mt-10 max-w-4xl">
             <h2 className="text-2xl font-bold mb-6">Education</h2>
-            {data.resume.education.map((edu) => (
+            {[...data.resume.education]
+              .sort((a, b) => getSortableDate(b.universityDate) - getSortableDate(a.universityDate))
+              .map((edu) => (
               <div
                 key={edu.id}
                 className="mb-8 border-l-2 border-border-primary-light dark:border-border-primary-dark pl-4"
@@ -159,7 +181,9 @@ const Resume = () => {
           {/* Experience Section */}
           <div ref={expRef} className="w-full mt-16 max-w-4xl">
             <h2 className="text-2xl font-bold mb-6">Professional Experience</h2>
-            {data.resume.experiences.map((exp) => (
+            {[...data.resume.experiences]
+              .sort((a, b) => getSortableDate(b.dates) - getSortableDate(a.dates))
+              .map((exp) => (
               <div
                 key={exp.id}
                 className="mb-8 border-l-2 border-border-primary-light dark:border-border-primary-dark pl-4"
@@ -199,9 +223,11 @@ const Resume = () => {
           {/* Projects Section */}
           <div ref={projectsRef} className="w-full mt-16 max-w-4xl">
             <h2 className="text-2xl font-bold mb-6">Projects</h2>
-            {data.resume.projects.map((project, index) => (
+            {[...data.resume.projects]
+              .sort((a, b) => getSortableDate(b.dates) - getSortableDate(a.dates))
+              .map((project) => (
               <div
-                key={index}
+                key={project.id}
                 className="mb-8 border-l-2 border-border-primary-light dark:border-border-primary-dark pl-4"
               >
                 <div className="flex justify-between items-center">
@@ -238,9 +264,11 @@ const Resume = () => {
           {/* Honors Section */}
           <div ref={honorsRef} className="w-full mt-16 max-w-4xl">
             <h2 className="text-2xl font-bold mb-6">Honors & Awards</h2>
-            {data.resume.honors.map((honor, index) => (
+            {[...data.resume.honors]
+              .sort((a, b) => getSortableDate(b.year) - getSortableDate(a.year))
+              .map((honor) => (
               <div
-                key={index}
+                key={honor.id}
                 className="mb-8 border-l-2 border-border-primary-light dark:border-border-primary-dark pl-4"
               >
                 <div className="flex justify-between items-center">

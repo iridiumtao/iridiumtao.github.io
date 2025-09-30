@@ -235,12 +235,54 @@
     },
     "projects": [
       {
+        "id": "b2787423-bef6-463a-9e8c-7c973939e4eb",
+        "title": " Oblivilight - OpenHCI'25",
+        "organization": "OpenHCI'25",
+        "location": "Taipei, Taiwan",
+        "dates": "July 2025 - August 2025",
+        "details": [
+          "Led a user-centric design process from research to prototype, identifying a key user need for tangible, privacy-preserving \"forgetting mechanisms\" in AI companions through 11 user interviews and secondary research.",
+          "Architected a full-stack proof-of-concept integrating an LLM for conversation, emotion analysis, and a multi-modal interface with voice (Whisper/TTS) and gesture controls.",
+          "Designed a novel interaction model that visualizes emotional sentiment as colored light and externalizes digital conversations into physical artifacts via a thermal printer, directly addressing AI data permanence anxiety.",
+          "Won the Best Demo Award at OpenHCI'25 and was the sole project selected for presentation at the subsequent TAICHI'25 conference."
+        ]
+      },
+      {
+        "id": "4391db8e-1b56-435e-a510-f929e328a871",
+        "title": " Loud Plants in Your Area",
+        "organization": "NYU",
+        "location": "New York, NY",
+        "dates": "February 2025 - May 2025",
+        "details": [
+          "Loud Plants in Your Area is an Augmented Reality (AR) application that helps combat \"plant blindness\" – the tendency to overlook plants as mere background décor. It is designed for urban residents with limited exposure to nature, allowing them to perceive plants as living beings with feelings.",
+          "The app uses AR visualizations to reveal a plant’s mood or status in real time. By capturing subtle signals or “sounds” from plants and interpreting them with AI, the app overlays engaging indicators and information on each plant through an AR view. This way, users can “hear” and see how plants feel, encouraging empathy and a stronger human-plant connection."
+        ]
+      },
+      {
+        "id": "843a0605-bfc9-47e7-bccb-52d310723cfe",
+        "title": " Taigi (Taiwanese-Hokkien) Medical Advising LLM",
+        "organization": "NYU",
+        "location": "New York, NY",
+        "dates": "March 2025 - May 2025",
+        "details": [
+          "Fine-tuned an 8 B-parameter LLaMA-3.1 model into the first Taigi medical advisor, curating & preprocessing 120K bilingual Q&A pairs, applying LoRA + mixed-precision training on an A100 GPU, and logging experiments in MLflow to guarantee full reproducibility and hyper-parameter traceability.",
+          "Engineered a cloud-native MLOps stack that ships code, model, service in one click: Terraform-provisioned GPU/CPU nodes, Docker Compose micro-services (FastAPI, Gradio, MinIO), and Prometheus / Grafana observability.",
+          "Built a doctor-in-the-loop continuous-training workflow with Airflow DAGs, MinIO object tags, and Label",
+          "Studio, enabling gated canary"
+        ]
+      },
+      {
         "id": "1",
         "title": "RISC-V-Simulator",
         "organization": "NYU",
         "location": "New York, NY",
         "dates": "October 2024 - December 2024",
-        "details": ""
+        "details": [
+          "Architected a RISC-V processor simulator in Python, implementing both single-stage and five-stage pipelined designs to analyze and compare architectural performance trade-offs.",
+          "Engineered a comprehensive hazard management system for the five-stage pipeline, featuring dedicated data forwarding units, a load-use hazard detection unit for stall insertion, and a branch forwarding unit with early resolution in the ID stage to minimize control hazards.",
+          "Developed a parallel simulation workflow to execute identical RISC-V programs on both pipelines simultaneously, ensuring accurate, side-by-side comparison of outputs and performance metrics.",
+          "Built an automated performance analysis module that calculates and reports key metrics, including total cycle count, instructions per cycle (IPC), and cycles per instruction (CPI) for each processor core."
+        ]
       },
       {
         "id": "2",
@@ -290,6 +332,13 @@
       }
     ],
     "honors": [
+      {
+        "id": "7c11e028-878a-4373-b445-9b6d792d3ef2",
+        "title": "Best Demo Award",
+        "event": "OpenHCI'25",
+        "location": "Taipei, Taiwan",
+        "year": "2025"
+      },
       {
         "id": "1",
         "title": "Emerging Technology Application Award",

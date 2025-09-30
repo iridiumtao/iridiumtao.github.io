@@ -212,7 +212,6 @@ const Edit = () => {
       resume: {
         ...data.resume,
         experiences: [
-          ...data.resume.experiences,
           {
             id: uuidv4(),
             dates: "Enter Dates",
@@ -220,6 +219,7 @@ const Edit = () => {
             position: "Frontend Engineer at X",
             bullets: "Worked on the frontend of a React application",
           },
+          ...data.resume.experiences,
         ],
       },
     });
@@ -261,7 +261,6 @@ const Edit = () => {
       resume: {
         ...data.resume,
         projects: [
-          ...data.resume.projects,
           {
             id: uuidv4(),
             title: "New Project",
@@ -270,6 +269,7 @@ const Edit = () => {
             dates: "Dates",
             details: "",
           },
+          ...data.resume.projects,
         ],
       },
     });
@@ -297,7 +297,6 @@ const Edit = () => {
       resume: {
         ...data.resume,
         honors: [
-          ...data.resume.honors,
           {
             id: uuidv4(),
             title: "New Honor",
@@ -305,6 +304,7 @@ const Edit = () => {
             location: "Location",
             year: "Year",
           },
+          ...data.resume.honors,
         ],
       },
     });
