@@ -47,9 +47,15 @@ const Resume = () => {
           Resume
         </h1>
 
-        <Button onClick={() => window.open("https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/Chun-Ju%20Tao%20Resume%20early%202025.pdf")}>
-          {`PDF Download 🔗`}
+        <Button onClick={() => window.open("https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/Chun-Ju%20Tao%20Resume%20late%202025%2v4.1.pdf")}>
+          {`Resume as SWE 🔗`}
         </Button>
+          <Button onClick={() => window.open("https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/Chun-Ju%20Tao%20Resume%20late%202025%2ML%2v2.1.pdf")}>
+              {`Resume as ML Engineer 🔗`}
+          </Button>
+          <Button onClick={() => window.open("https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/Chun-Ju%20Tao%20Resume%20late%202025%2iOS.pdf")}>
+              {`Resume as iOS Developer 🔗`}
+          </Button>
 
         {/* Main Content */}
         <div className="mt-10 w-full flex flex-col items-center">
