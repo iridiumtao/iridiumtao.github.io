@@ -3,7 +3,9 @@
   "version": "1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/prepare-resumes.js",
     "dev": "next dev",
+    "prebuild": "node scripts/prepare-resumes.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

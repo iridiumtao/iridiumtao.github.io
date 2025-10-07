@@ -11,8 +11,46 @@ import Link from "next/link";
 
 import data from "../data/portfolio.json";
 
+import fs from 'fs';
+import path from 'path';
 
-const Resume = () => {
+export async function getStaticProps() {
+  const resumesDir = path.join(process.cwd(), 'public', 'resumes');
+  let resumes = [];
+
+  try {
+    const filenames = fs.readdirSync(resumesDir);
+    resumes = filenames
+      .filter(filename => filename.endsWith('.pdf'))
+      .map(filename => {
+        const purpose = filename.replace('resume-', '').replace('.pdf', '');
+        let name = purpose.toUpperCase();
+        if (purpose === 'swe') name = 'Software Engineer';
+        else if (purpose === 'ml') name = 'ML Engineer';
+        else if (purpose === 'ios') name = 'iOS Developer';
+        else if (purpose === 'ex') name = 'Extended';
+        else if (purpose === 'mlops') name = 'MLOps Engineer';
+        
+        return {
+          url: `/resumes/${filename}`,
+          name: `${name} Resume 🔗`,
+          purpose: purpose,
+        };
+      })
+      .reverse();
+  } catch (error) {
+    console.log("no resumes folder, it's ok in dev");
+  }
+  
+  return {
+    props: {
+      resumes,
+    },
+  };
+}
+
+
+const Resume = ({ resumes }) => {
   const theme = useTheme();
   // Refs for animation
   const eduRef = useRef(null);
@@ -67,15 +105,16 @@ const Resume = () => {
           Resume
         </h1>
 
-        <Button onClick={() => window.open("https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/Chun-Ju%20Tao%20Resume%20late%202025%20v4.1.pdf")}>
-          {`SWE Resume 🔗`}
-        </Button>
-          <Button onClick={() => window.open("https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/Chun-Ju%20Tao%20Resume%20late%202025%20ML%20v2.1.pdf")}>
-              {`ML Engineer Resume 🔗`}
-          </Button>
-          <Button onClick={() => window.open("https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/Chun-Ju%20Tao%20Resume%20late%202025%20iOS.pdf")}>
-              {`iOS Developer Resume 🔗`}
-          </Button>
+        <div className="mt-8">
+        <h1 className="text-xl font-medium">Resumes</h1>
+        <div className="flex flex-wrap gap-2 mt-5">
+            {resumes.map((resume) => (
+                <Button key={resume.url} onClick={() => window.open(resume.url)}>
+                    {resume.name}
+                </Button>
+            ))}
+        </div>
+      </div>
 
         {/* Main Content */}
         <div className="mt-10 w-full flex flex-col items-center">
