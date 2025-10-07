@@ -130,17 +130,18 @@
   "aboutpara": "Chun-Ju Tao is a Computer Engineering master’s student at New York University (GPA: 3.83) specializing in MLOps, applied machine learning, and scalable cloud systems. With a strong foundation in both software development and data science, he is proficient in Python, Go, and JavaScript, and deeply skilled in the modern MLOps and cloud-native toolchain, including Docker, Terraform, AWS, PyTorch, and MLflow.\n\nNotable accomplishments include architecting a complete MLOps stack to fine-tune and deploy a custom LLM, featuring an automated, doctor-in-the-loop retraining pipeline with Airflow and MLflow. At Micron, he designed a production-scale Python pipeline and Streamlit web app to analyze terabytes of manufacturing data, enabling fast, reproducible studies across teams. At CARITY AI, he containerized microservices and automated CI/CD on AWS ECS, cutting infrastructure costs by 40% and deployment time by 70%.\n\nChun-Ju has demonstrated leadership by introducing Agile and GitFlow methodologies at MoBagel, stabilizing team management and improving efficiency during a 300% team expansion. An award-winning developer recognized at international conferences for technical innovation, his achievements reflect a commitment to driving operational excellence and delivering reliable, scalable, and data-driven solutions.",
   "resume": {
     "tagline": "Chun-Ju Tao",
-    "description": "Computer Engineering master’s student at NYU with extensive experience in software development, DevOps, and AI applications. Proven success in optimizing processes, leading collaborative projects, and delivering innovative solutions across multiple industries.",
+    "description": "Passive about creating innovative and scalable solutions in Software. Experienced in designing backend systems, automating CI/CD pipelines, and building cloud-native MLOps platforms. Seeking a backend or software infrastructure role to tackle complex engineering challenges.",
     "experiences": [
       {
         "id": "dab034bf-1fa5-41ea-b336-64f66fbd76f9",
         "dates": "July 2025 - August 2025",
         "type": "Internship",
-        "position": "Data Science Intern at Micron",
+        "position": "Data Science Intern at Micron Technology",
+        "location": "Taoyuan, Taiwan",
         "bullets": [
-          "Designed a production-scale Python pipeline and Streamlit web app for fab-dispatch analysis, processing 2 weeks' logs (33GB) and delivering a self-serve interface for parameter tuning and rich visuals, enabling fast, reproducible studies and broad cross-team adoption.",
-          "Built an explainable LightGBM simulation proxy with SHAP analysis for lot-level decision tracing, enabling evidence-based simplification of scheduling parameters by quantifying which factors truly drive selection and reducing tuning overhead for production engineers.",
-          "Built repo-documentation tools across enterprise applications with over one million lines of code using Prompt Engineering with Roo Code Orchestrator, MCP, and Qdrant; produced modular docs and standardized class/method summaries; cut token usage 10x and expected ~3x developer efficiency."
+          "Architected a production-scale Python pipeline and Streamlit web app for fab-dispatch analysis, processing 2 weeks' logs (33GB) and delivering a self-serve interface for parameter tuning and rich visuals, enabling fast, reproducible studies and broad cross-team adoption.",
+          "Developed an explainable LightGBM simulation proxy with SHAP analysis for lot-level decision tracing, enabling evidence-based simplification of scheduling parameters by quantifying which factors truly drive selection and reducing tuning overhead for production engineers.",
+          "Engineered repo-documentation tools for an enterprise application with over one million lines of code using Prompt Engineering with Roo Code Orchestrator, MCP, and Qdrant; produced modular docs and standardized class/method summaries; cut token usage 10x and expected ~3x developer efficiency."
         ]
       },
       {
@@ -150,8 +151,8 @@
         "position": "Software Developer at CARITY AI",
         "location": "Ontario, Canada",
         "bullets": [
-          "Containerized 4 microservices of an LLM pipeline and developed a DevOps workflow using Docker, GitHub Actions, and AWS ECS, reducing operational costs by 40%.",
-          "Researched and implemented Agentic RAG with LlamaIndex, reducing token usage up to 5 times and enabling complex question-answering capabilities."
+          "Developed and implemented a CI/CD pipeline with GitHub Actions for an LLM-based product, containerizing 4 microservices on AWS ECS, reduced infrastructure costs by 40% and cut deployment time by 70%.",
+          "Delivered a Proof-of-Concept using Retrieval-Augmented Generation (RAG), demonstrating a potential 5x reduction in token usage and influencing the team's future technical roadmap for cost optimization."
         ]
       },
       {
@@ -161,9 +162,9 @@
         "position": "Software Engineering Intern at MoBagel",
         "location": "Taichung, Taiwan",
         "bullets": [
-          "Developed a full-stack material management system for Taiwan Water Corporation, automating budgeting and inventory control for assets worth trillions.",
-          "Established GitFlow and Agile-like development model, improving team efficiency during a 300% team expansion.",
-          "Migrated a legacy system to .NET framework using C#, Microsoft SQL, and Vue.js, enhancing scalability and user experience."
+          "Re-architected a critical full-stack system to automate inventory and budgeting for trillions in government assets for the Taiwan Water Corporation, migrating a legacy Java 4 application to a modern .NET stack (C#, MS SQL, Vue.js) to enhance performance, security, and scalability.",
+          "Proactively identified and reported critical security vulnerabilities across legacy and new systems, including SQL injection risks and an exposed database, preventing potential large-scale data breaches.",
+          "Established GitFlow and an Agile-like development model for a 10-person team, fostering a culture of collaboration that improved development efficiency and stabilized team management during a 300% expansion."
         ]
       },
       {
@@ -173,9 +174,9 @@
         "position": "Software Engineering Intern at Mindtronic AI",
         "location": "Taipei, Taiwan",
         "bullets": [
-          "Developed a back-end server with Golang, Python, and PostgreSQL for processing over 480,000 weekly data entries.",
-          "Added data visualization and real-time video streaming features to a React-based project.",
-          "Built a real-time uploading application for ARM-based devices for fleet management."
+          "Spearheaded the backend migration from Node.js to Go, re-architecting and building the new system from the ground up to enhance processing efficiency and system security; Mastered the Go language independently to deliver a robust, production-ready backend.",
+          "Owned the full lifecycle of 53 RESTful APIs in Go, from design and implementation to documentation, proactively identified and eliminated critical SQL injection vulnerabilities across the entire API suite while ensuring the system could reliably process over 480,000 data entries weekly.",
+          "Developed key data-rich features for the React frontend to enable real-time fleet monitoring, delivering complex user-facing functionalities including interactive dashboards, live video streaming, and vehicle trajectory visualization on a map."
         ]
       }
     ],
@@ -214,23 +215,35 @@
       "languages": [
         "Python",
         "JavaScript (React, Vue)",
-        "Java (Android)",
         "Go",
+        "Java",
+        "C#",
         "Swift",
         "MS SQL",
         "PostgreSQL",
-        "C#",
         "C"
       ],
-      "softwareAndOS": [
-        "PyCharm",
-        "AWS ECS",
+      "cloudAndDevOps": [
         "Docker",
-        "Xcode",
-        "pgAdmin",
+        "AWS ECS",
+        "Terraform",
+        "GitHub Actions",
+        "Airflow",
+        "Prometheus",
+        "Grafana",
+        "MinIO",
         "Git",
-        "macOS",
         "Linux"
+      ],
+      "dataAndML": [
+        "PyTorch",
+        "MLflow",
+        "LlamaIndex",
+        "Lang Chain",
+        "LightGBM",
+        "SHAP",
+        "Streamlit",
+        "FastAPI"
       ]
     },
     "projects": [
@@ -254,8 +267,10 @@
         "location": "New York, NY",
         "dates": "February 2025 - May 2025",
         "details": [
-          "Loud Plants in Your Area is an Augmented Reality (AR) application that helps combat \"plant blindness\" – the tendency to overlook plants as mere background décor. It is designed for urban residents with limited exposure to nature, allowing them to perceive plants as living beings with feelings.",
-          "The app uses AR visualizations to reveal a plant’s mood or status in real time. By capturing subtle signals or “sounds” from plants and interpreting them with AI, the app overlays engaging indicators and information on each plant through an AR view. This way, users can “hear” and see how plants feel, encouraging empathy and a stronger human-plant connection."
+          "Initiated and led the end-to-end development of a novel iOS application that translates plant bio-acoustic signals into real-time, AR visualizations, defining the project vision and architecting the full technology stack.",
+          "Engineered a custom machine learning pipeline based on academic research to classify plant health. Independently implemented a deep scattering network (ScatNet with Morlet wavelets), extracted Mel-frequency cepstral coefficients (MFCCs), and trained a high-performing SVM classifier for signal analysis.",
+          "Developed a fully functional AR prototype using Swift, RealityKit, and Reality Composer Pro. Owned the entire iOS application development, building custom animated UI overlays that rendered dynamic plant statuses based on live data from the ML pipeline.",
+          "Validated the project's core hypothesis through a user evaluation study that demonstrated the AR interface significantly increased user-plant interaction and emotional connection (mean score increase from 1.67 to 5.33, p=0.018)."
         ]
       },
       {
@@ -265,10 +280,9 @@
         "location": "New York, NY",
         "dates": "March 2025 - May 2025",
         "details": [
-          "Fine-tuned an 8 B-parameter LLaMA-3.1 model into the first Taigi medical advisor, curating & preprocessing 120K bilingual Q&A pairs, applying LoRA + mixed-precision training on an A100 GPU, and logging experiments in MLflow to guarantee full reproducibility and hyper-parameter traceability.",
-          "Engineered a cloud-native MLOps stack that ships code, model, service in one click: Terraform-provisioned GPU/CPU nodes, Docker Compose micro-services (FastAPI, Gradio, MinIO), and Prometheus / Grafana observability.",
-          "Built a doctor-in-the-loop continuous-training workflow with Airflow DAGs, MinIO object tags, and Label",
-          "Studio, enabling gated canary"
+          "Architected a cloud-native MLOps platform for LLM using Terraform for IaC, and deployed a suite of Docker-based microservices (FastAPI, Gradio, MinIO) to production.",
+          "Orchestrated a Continuous Training (CT) pipeline with Airflow for human-in-the-loop retraining, and established system observability using Prometheus and Grafana.",
+          "Fine-tuned an 8B LLaMA-3.1 into the first Taigi medical advisor using 120K bilingual Q&A pairs with LoRA + mixed-precision on an A100 GPU; tracked all runs in MLflow for full reproducibility."
         ]
       },
       {
@@ -291,8 +305,10 @@
         "location": "Taichung, Taiwan",
         "dates": "September 2021 - July 2023",
         "details": [
-          "Leveraged Google Trends and natural language processing (CKIP Transformers, TextRank, TF-IDF, BERT) to find the trending topic for the week and researched and designed the approach for compiling news articles.",
-          "Developed the system infrastructure and designed a pipeline with Docker and Flask for integrating five open-sourced repos into work for project integrity, data transferring efficiency, and future development possibilities."
+          "Led a year-long capstone project from concept to award-winning completion, architecting a fully automated AI pipeline that autonomously generated animated news segments from trending topics.",
+          "Engineered the core system infrastructure to resolve critical dependency and versioning conflicts across 5 disparate open-source microservices; designed and implemented a resilient data pipeline using Docker Compose and Flask to ensure system integrity and enable scalable future development.",
+          "Automated the end-to-end deployment process for the entire stack, creating a reproducible, one-command build that slashed manual setup and deployment time by over 80% (from 2 hours to 20 minutes).",
+          "Pioneered the team's adoption of GitFlow, establishing a structured version control workflow that significantly improved development velocity and collaboration, and served as a foundational experience for implementing Agile methodologies in subsequent professional roles."
         ]
       },
       {
@@ -334,8 +350,8 @@
     "honors": [
       {
         "id": "7c11e028-878a-4373-b445-9b6d792d3ef2",
-        "title": "Best Demo Award",
-        "event": "OpenHCI'25",
+        "title": "1st prize & Best Demo",
+        "event": "OpenHCI’25, presented at the 11th Annual TAICHI Conference",
         "location": "Taipei, Taiwan",
         "year": "2025"
       },

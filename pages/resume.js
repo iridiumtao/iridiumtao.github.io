@@ -204,9 +204,22 @@ const Resume = ({ resumes }) => {
             </div>
           </div>
           <div className="w-full mt-10 max-w-4xl">
-            <h2 className="text-2xl font-bold mb-6">Software & OS</h2>
+            <h2 className="text-2xl font-bold mb-6">Cloud & DevOps</h2>
             <div className="flex flex-wrap gap-3">
-              {data.resume.skills.softwareAndOS.map((skill, index) => (
+              {data.resume.skills.cloudAndDevOps.map((skill, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1 bg-bg-secondary-light dark:bg-bg-secondary-dark rounded-full text-sm"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="w-full mt-10 max-w-4xl">
+            <h2 className="text-2xl font-bold mb-6">Data & ML</h2>
+            <div className="flex flex-wrap gap-3">
+              {data.resume.skills.dataAndML.map((skill, index) => (
                 <span
                   key={index}
                   className="px-3 py-1 bg-bg-secondary-light dark:bg-bg-secondary-dark rounded-full text-sm"
