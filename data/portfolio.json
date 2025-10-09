@@ -162,7 +162,7 @@
         "position": "Software Engineering Intern at MoBagel",
         "location": "Taichung, Taiwan",
         "bullets": [
-          "Re-architected a critical full-stack system to automate inventory and budgeting for trillions in government assets for the Taiwan Water Corporation, migrating a legacy Java 4 application to a modern .NET stack (C#, MS SQL, Vue.js) to enhance performance, security, and scalability.",
+          "Engineered a critical full-stack system to automate inventory and budgeting for trillions in government assets for the Taiwan Water Corporation, migrating a legacy Java 4 application to a modern .NET stack (C#, MS SQL, Vue.js) to enhance performance, security, and scalability.",
           "Proactively identified and reported critical security vulnerabilities across legacy and new systems, including SQL injection risks and an exposed database, preventing potential large-scale data breaches.",
           "Established GitFlow and an Agile-like development model for a 10-person team, fostering a culture of collaboration that improved development efficiency and stabilized team management during a 300% expansion."
         ]
