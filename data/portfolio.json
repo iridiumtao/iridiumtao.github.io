@@ -141,7 +141,7 @@
         "bullets": [
           "Architected a production-scale Python pipeline and Streamlit web app for fab-dispatch analysis, processing 2 weeks' logs (33GB) and delivering a self-serve interface for parameter tuning and rich visuals, enabling fast, reproducible studies and broad cross-team adoption.",
           "Developed an explainable LightGBM simulation proxy with SHAP analysis for lot-level decision tracing, enabling evidence-based simplification of scheduling parameters by quantifying which factors truly drive selection and reducing tuning overhead for production engineers.",
-          "Engineered repo-documentation tools for an enterprise application with over one million lines of code using Prompt Engineering with Roo Code Orchestrator, MCP, and Qdrant; produced modular docs and standardized class/method summaries; cut token usage 10x and expected ~3x developer efficiency."
+          "Engineered repo-documentation tools for an enterprise application with over one million lines of code using Prompt Engineering with Roo Code Orchestrator, MCP, and Qdrant; produced modular docs and standardized class/method summaries; cut token usage 10x and projected ~3x developer efficiency."
         ]
       },
       {
@@ -151,7 +151,7 @@
         "position": "Software Developer at CARITY AI",
         "location": "Ontario, Canada",
         "bullets": [
-          "Developed and implemented a CI/CD pipeline with GitHub Actions for an LLM-based product, containerizing 4 microservices on AWS ECS, reduced infrastructure costs by 40% and cut deployment time by 70%.",
+          "Automated CI/CD for an LLM-based product, containerizing 4 microservices on AWS ECS with GitHub Actions, reduced infrastructure costs by 40% and cut deployment time by 70%.",
           "Delivered a Proof-of-Concept using Retrieval-Augmented Generation (RAG), demonstrating a potential 5x reduction in token usage and influencing the team's future technical roadmap for cost optimization."
         ]
       },
@@ -164,7 +164,7 @@
         "bullets": [
           "Engineered a critical full-stack system to automate inventory and budgeting for trillions in government assets for the Taiwan Water Corporation, migrating a legacy Java 4 application to a modern .NET stack (C#, MS SQL, Vue.js) to enhance performance, security, and scalability.",
           "Proactively identified and reported critical security vulnerabilities across legacy and new systems, including SQL injection risks and an exposed database, preventing potential large-scale data breaches.",
-          "Established GitFlow and an Agile-like development model for a 10-person team, fostering a culture of collaboration that improved development efficiency and stabilized team management during a 300% expansion."
+          "Established GitFlow and an Agile development model for a 10-person team, fostering a culture of collaboration that improved development efficiency and stabilized team management during a 300% expansion."
         ]
       },
       {
@@ -249,12 +249,12 @@
     "projects": [
       {
         "id": "b2787423-bef6-463a-9e8c-7c973939e4eb",
-        "title": " Oblivilight - OpenHCI'25",
+        "title": "Privacy‑First AI Smart Lamp for Ephemeral Night Conversations - Oblivilight",
         "organization": "OpenHCI'25",
         "location": "Taipei, Taiwan",
         "dates": "July 2025 - August 2025",
         "details": [
-          "Led a user-centric design process from research to prototype, identifying a key user need for tangible, privacy-preserving \"forgetting mechanisms\" in AI companions through 11 user interviews and secondary research.",
+          "Led a user-centric design process from research to prototype, identifying key user needs for tangible, privacy-preserving \"forgetting mechanisms\" in AI companions through 11 user interviews and secondary research.",
           "Architected a full-stack proof-of-concept integrating an LLM for conversation, emotion analysis, and a multi-modal interface with voice (Whisper/TTS) and gesture controls.",
           "Designed a novel interaction model that visualizes emotional sentiment as colored light and externalizes digital conversations into physical artifacts via a thermal printer, directly addressing AI data permanence anxiety.",
           "Won the Best Demo Award at OpenHCI'25 and was the sole project selected for presentation at the subsequent TAICHI'25 conference."
@@ -262,7 +262,7 @@
       },
       {
         "id": "4391db8e-1b56-435e-a510-f929e328a871",
-        "title": " Loud Plants in Your Area",
+        "title": "Real‑Time Plant Health & Mood Visualization - Loud Plants in Your Area",
         "organization": "NYU",
         "location": "New York, NY",
         "dates": "February 2025 - May 2025",
@@ -275,7 +275,7 @@
       },
       {
         "id": "843a0605-bfc9-47e7-bccb-52d310723cfe",
-        "title": " Taigi (Taiwanese-Hokkien) Medical Advising LLM",
+        "title": "Taigi (Taiwanese-Hokkien) Medical Advising LLM",
         "organization": "NYU",
         "location": "New York, NY",
         "dates": "March 2025 - May 2025",
