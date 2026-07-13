@@ -30,3 +30,12 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# serena
+/.serena/
+
+# local resume drafts
+/docs/
+
+# GSD planning docs (local only)
+/.planning/

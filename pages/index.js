@@ -1,167 +1,246 @@
-import React, {useState, useRef, Fragment} from "react";
-import Header from "../components/Header";
-import WorkCard from "../components/WorkCard";
-import Socials from "../components/Socials";
-import ProjectCard from "../components/ProjectCard";
-import {useIsomorphicLayoutEffect} from "../utils";
-import {stagger} from "../animations";
-import Footer from "../components/Footer";
+import React, { Fragment, useState } from "react";
 import Head from "next/head";
-import Button from "../components/Button";
 import Link from "next/link";
-import dynamic from 'next/dynamic';
-import {useTheme} from "next-themes";
+import Nav from "../components/wood/Nav";
+import Footer from "../components/wood/Footer";
 
-// Local Data
+// Local data
 import data from "../data/portfolio.json";
 
-export default function Home() {
-  // Refs
-  const projectRef = useRef();
-  const workRef = useRef();
-  const aboutRef = useRef();
-  const textOne = useRef();
-  const textTwo = useRef();
-  const textThree = useRef();
-  const textFour = useRef();
+/* ── Helpers ──────────────────────────────────────────────────────────── */
 
-  // state
-  const [mounted, setMounted] = useState(false);
-  const {theme} = useTheme();
+const MONTHS = {
+  January: "JAN", February: "FEB", March: "MAR", April: "APR",
+  May: "MAY", June: "JUN", July: "JUL", August: "AUG",
+  September: "SEP", October: "OCT", November: "NOV", December: "DEC",
+};
 
-  const sortedProjects = [...data.projects].sort((a, b) => {
-    const dateA = a.endDate ? new Date(a.endDate) : null;
-    const dateB = b.endDate ? new Date(b.endDate) : null;
-    if (!dateA || !dateB || isNaN(dateA.getTime()) || isNaN(dateB.getTime())) return 0;
-    return dateB - dateA;
-  });
-
-  useIsomorphicLayoutEffect(() => {
-    setMounted(true);
-
-    if (mounted) {
-      stagger(
-        [textOne.current, textTwo.current, textThree.current, textFour.current],
-        {y: 40, x: -10, transform: "scale(0.95) skew(10deg)"},
-        {y: 0, x: 0, transform: "scale(1)"}
-      );
-    }
-  }, [mounted]);
-
-  const handleScroll = (ref) => {
-    if (typeof window !== 'undefined' && ref.current) {
-      const targetPosition = ref.current.offsetTop;
-      window.scrollTo({
-        top: targetPosition,
-        left: 0,
-        behavior: "smooth",
-      });
-    }
+// "July 2025 - August 2025" → "JUL — AUG 2025"; collapses shared years.
+function formatExpDate(dates) {
+  if (!dates) return "";
+  const fmt = (s) => {
+    const [m, y] = s.trim().split(" ");
+    return { m: MONTHS[m] || (m || "").toUpperCase(), y };
   };
+  const [rawA, rawB] = dates.split(" - ");
+  const a = fmt(rawA);
+  if (!rawB) return `${a.m} ${a.y}`;
+  const b = fmt(rawB);
+  return a.y === b.y ? `${a.m} — ${b.m} ${b.y}` : `${a.m} ${a.y} — ${b.m} ${b.y}`;
+}
 
-  // If not yet mounted, return a basic loading state
-  if (!mounted) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse">Loading...</div>
+// First 4-digit year found in a date string.
+function endYear(d) {
+  const m = String(d || "").match(/\d{4}/);
+  return m ? m[0] : "";
+}
+
+// "Data Science Intern at Micron Technology" → { role, company }
+function splitPosition(pos) {
+  const i = (pos || "").indexOf(" at ");
+  if (i === -1) return { role: pos || "", company: "" };
+  return { role: pos.slice(0, i), company: pos.slice(i + 4) };
+}
+
+const escapeRegExp = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+// Wraps a single accent word inside a headline line.
+function renderAccent(line, accent) {
+  if (!accent || !line.includes(accent)) return line;
+  const [before, after] = line.split(accent);
+  return (
+    <>
+      {before}
+      <span className="accent">{accent}</span>
+      {after}
+    </>
+  );
+}
+
+// Wraps emphasised terms (rendered as <em> accent) inside body copy.
+function renderEmphasis(text, terms = []) {
+  if (!terms.length) return text;
+  const re = new RegExp(`(${terms.map(escapeRegExp).join("|")})`, "g");
+  return text.split(re).map((chunk, i) =>
+    terms.includes(chunk) ? <em key={i}>{chunk}</em> : <Fragment key={i}>{chunk}</Fragment>
+  );
+}
+
+/* ── Page ─────────────────────────────────────────────────────────────── */
+
+export default function Home() {
+  const home = data.home;
+
+  // Projects: most-recent first, featured count from data.
+  const sortedProjects = [...data.projects].sort((a, b) => {
+    const da = a.endDate ? new Date(a.endDate) : null;
+    const db = b.endDate ? new Date(b.endDate) : null;
+    if (!da || !db || isNaN(da) || isNaN(db)) return 0;
+    return db - da;
+  });
+  const featuredCount = home.projectCount || 3;
+  const featured = sortedProjects.slice(0, featuredCount);
+  const remaining = sortedProjects.slice(featuredCount);
+  const [lead, ...rest] = featured;
+  const [showAll, setShowAll] = useState(false);
+
+  // Skill marquee, flattened from the résumé skill groups.
+  const skills = [
+    ...data.resume.skills.languages,
+    ...data.resume.skills.cloudAndDevOps,
+    ...data.resume.skills.dataAndML,
+  ];
+
+  const Project = ({ p, size }) => (
+    <a className="proj" href={p.url} target="_blank" rel="noreferrer">
+      <div className={`proj-img ${size}`}>
+        <img src={p.imageSrc} alt={p.title} loading="lazy" />
+        {endYear(p.endDate) && <span className="badge">{endYear(p.endDate)}</span>}
       </div>
-    );
-  }
+      {p.subtitle && <span className="proj-sub">{p.subtitle}</span>}
+      <h3>{p.title}</h3>
+      <p>{p.description}</p>
+    </a>
+  );
 
   return (
-    <div className={`relative`}>
+    <div className="we">
       <Head>
-        <title>{data.name}</title>
+        <title>{data.name} Tao — Engineer</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div className={`${theme === "dark" ? "gradient-circle-dark" : "gradient-circle"}`}></div>
-      <div className={`${theme === "dark" ? "gradient-circle-bottom-dark" : "gradient-circle-bottom"}`}></div>
+      <div className="wrap">
+        <Nav home />
 
-      <div className="container mx-auto mb-10">
-        <Header isHome
-          handleProjectScroll={() => handleScroll(projectRef)}
-          handleWorkScroll={() => handleScroll(workRef)}
-          handleAboutScroll={() => handleScroll(aboutRef)}
-        />
-        <div className="laptop:mt-20 mt-10 pt-16 tablet:pt-0">
-          <div className="mt-5">
-            <h1
-              ref={textOne}
-              className="text-2xl tablet:text-4xl laptop:text-4xl laptopl:text-6xl p-1 tablet:p-2 w-full laptop:w-4/5"
-            >
+        {/* Hero */}
+        <section className="hero">
+          <div>
+            <div className="greeting">
+              <span className="dot" />
               {data.headerTaglineOne}
+              {home.availability ? ` · ${home.availability}` : ""}
+            </div>
+            <h1>
+              {home.heroLines.map((line, i) => (
+                <Fragment key={i}>
+                  {renderAccent(line, home.heroAccent)}
+                  {i < home.heroLines.length - 1 && <br />}
+                </Fragment>
+              ))}
             </h1>
-            <h1
-              ref={textTwo}
-              className="text-3xl tablet:text-6xl laptop:text-6xl laptopl:text-8xl p-1 tablet:p-2 text-bold w-full laptop:w-4/5"
-            >
-              {data.headerTaglineTwo}
-            </h1>
-            <h1
-              ref={textThree}
-              className="text-2xl tablet:text-4xl laptop:text-4xl laptopl:text-6xl p-1 tablet:p-2 w-full laptop:w-4/5"
-            >
-              {data.headerTaglineThree}
-            </h1>
-            <h1
-              ref={textFour}
-              className="text-2xl tablet:text-4xl laptop:text-4xl laptopl:text-6xl p-1 tablet:p-2 w-full laptop:w-4/5"
-            >
-              {data.headerTaglineFour}
-            </h1>
+            <p className="lede">{renderEmphasis(home.lede, home.ledeEmphasis)}</p>
           </div>
-
-          <Socials className="mt-2 laptop:mt-5"/>
-        </div>
-        <div className="mt-10 laptop:mt-30 p-2 laptop:p-0" ref={projectRef}>
-          <h1 className="text-2xl text-bold">Project Experiences</h1>
-          <div className="mt-5 laptop:mt-10 grid grid-cols-1 tablet:grid-cols-2 gap-4">
-            {sortedProjects.map((project, index) => (
-              <ProjectCard
-                key={project.id}
-                img={project.imageSrc}
-                name={project.title}
-                subtitle={project.subtitle}
-                description={project.description}
-              />
-            ))}
+          <div className="hero-meta">
+            <div className="meta-row">
+              <span className="meta-label">Based</span>
+              <span className="meta-value">{home.based}</span>
+            </div>
+            <div className="meta-row">
+              <span className="meta-label">Degree</span>
+              <span className="meta-value">{home.degree}</span>
+            </div>
+            <div className="meta-row">
+              <span className="meta-label">Stack</span>
+              <span className="meta-value">{home.stack}</span>
+            </div>
+            <div className="meta-row">
+              <span className="meta-label">Honors</span>
+              <span className="meta-value">{home.honorsShort}</span>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div className="mt-10 laptop:mt-30 p-2 laptop:p-0" ref={workRef}>
-          <h1 className="tablet:m-10 text-2xl text-bold">Professional Experiences</h1>
-          <div className="mt-5 tablet:m-10 grid grid-cols-1 laptop:grid-cols-2 gap-6">
-            {data.experiences.map((experience, index) => (
-              <WorkCard
-                key={index}
-                name={experience.title}
-                description={experience.description}
-              />
-            ))}
-          </div>
-        </div>
-
-        {process.env.NODE_ENV === "development" && (
-          <div className="fixed bottom-5 right-5">
-            <Link href="/edit">
-              <Button type="primary">Edit Data</Button>
-            </Link>
-          </div>
-        )}
-
-        <div className="mt-10 laptop:mt-40 p-2 laptop:p-0" ref={aboutRef}>
-          <h1 className="tablet:m-10 text-2xl text-bold">About</h1>
-          <p className="tablet:m-10 mt-2 text-lg laptop:text-2xl w-full laptop:w-4/5">
-            {data.aboutpara.split('\n').map((line, index) => (
-              <Fragment key={index}>
-                {line}
-                <br/>
+        {/* Skill marquee */}
+        <div className="strip" aria-hidden="true">
+          <div className="strip-track">
+            {[...skills, ...skills].map((s, i) => (
+              <Fragment key={i}>
+                <span>{s}</span>
+                <span className="sep">✦</span>
               </Fragment>
             ))}
-          </p>
+          </div>
         </div>
-        <Footer/>
+
+        {/* Projects */}
+        <section id="projects">
+          <div className="sec-head">
+            <h2><span className="num">01 ／</span>Selected Projects</h2>
+            <span className="aside">
+              {showAll ? data.projects.length : featured.length} of {data.projects.length}
+            </span>
+          </div>
+          <div className="projects">
+            {lead && <Project p={lead} size="large" />}
+            <div className="right-col">
+              {rest.map((p) => (
+                <Project key={p.id} p={p} size="small" />
+              ))}
+            </div>
+          </div>
+          {showAll && remaining.length > 0 && (
+            <div className="projects-all">
+              {remaining.map((p) => (
+                <Project key={p.id} p={p} size="small" />
+              ))}
+            </div>
+          )}
+          {remaining.length > 0 && (
+            <div className="show-all">
+              <button type="button" onClick={() => setShowAll((v) => !v)}>
+                {showAll ? "Show Less" : `Show All (${data.projects.length})`}
+              </button>
+            </div>
+          )}
+        </section>
+
+        {/* Work */}
+        <section id="work">
+          <div className="sec-head">
+            <h2><span className="num">02 ／</span>Professional Experience</h2>
+            <span className="aside">{data.resume.experiences.length} internships</span>
+          </div>
+          <div className="exp-list">
+            {data.resume.experiences.map((exp, i) => {
+              const { role, company } = splitPosition(exp.position);
+              const blurb = data.experiences[i]?.description || exp.bullets?.[0] || "";
+              return (
+                <div className="exp-row" key={exp.id}>
+                  <span className="exp-idx">/{String(i + 1).padStart(2, "0")}</span>
+                  <span className="exp-role">
+                    {role} <span className="at">at {company}</span>
+                  </span>
+                  <span className="exp-blurb">{blurb}</span>
+                  <span className="exp-when">{formatExpDate(exp.dates)}</span>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* About */}
+        <section id="about">
+          <div className="sec-head">
+            <h2><span className="num">03 ／</span>About</h2>
+            <span className="aside">A short note</span>
+          </div>
+          <div className="about">
+            <div className="about-pull">&ldquo;{home.aboutPull}&rdquo;</div>
+            <div className="about-body">
+              {data.aboutpara.split("\n\n").map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <Footer />
       </div>
+
+      {process.env.NODE_ENV === "development" && (
+        <Link href="/edit" className="dev-edit">Edit Data</Link>
+      )}
     </div>
   );
 }

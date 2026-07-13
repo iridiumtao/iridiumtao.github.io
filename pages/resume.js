@@ -1,380 +1,243 @@
-import React, {useRef} from "react";
-import Header from "../components/Header";
-
-import {useIsomorphicLayoutEffect} from "../utils";
-import {stagger} from "../animations";
-import Footer from "../components/Footer";
+import React from "react";
 import Head from "next/head";
-import Button from "../components/Button";
-import {useTheme} from "next-themes";
 import Link from "next/link";
+import fs from "fs";
+import path from "path";
 
+import Nav from "../components/wood/Nav";
+import Footer from "../components/wood/Footer";
 import data from "../data/portfolio.json";
 
-import fs from 'fs';
-import path from 'path';
-
 export async function getStaticProps() {
-  const resumesDir = path.join(process.cwd(), 'public', 'resumes');
+  const resumesDir = path.join(process.cwd(), "public", "resumes");
   let resumes = [];
 
   try {
     const filenames = fs.readdirSync(resumesDir);
     resumes = filenames
-      .filter(filename => filename.endsWith('.pdf'))
-      .map(filename => {
-        const purpose = filename.replace('resume-', '').replace('.pdf', '');
+      .filter((filename) => filename.endsWith(".pdf"))
+      .map((filename) => {
+        const purpose = filename.replace("resume-", "").replace(".pdf", "");
         let name = purpose.toUpperCase();
-        if (purpose === 'swe') name = 'Software Engineer';
-        else if (purpose === 'ml') name = 'ML Engineer';
-        else if (purpose === 'ios') name = 'iOS Developer';
-        else if (purpose === 'ex') name = 'Extended';
-        else if (purpose === 'mlops') name = 'MLOps Engineer';
-        
-        return {
-          url: `/resumes/${filename}`,
-          name: `${name} Resume 🔗`,
-          purpose: purpose,
-        };
+        if (purpose === "swe") name = "Software Engineer";
+        else if (purpose === "ml") name = "ML Engineer";
+        else if (purpose === "ios") name = "iOS Developer";
+        else if (purpose === "ex") name = "Extended";
+        else if (purpose === "mlops") name = "MLOps Engineer";
+
+        return { url: `/resumes/${filename}`, name, purpose };
       })
       .reverse();
   } catch (error) {
     console.log("no resumes folder, it's ok in dev");
   }
-  
-  return {
-    props: {
-      resumes,
-    },
-  };
+
+  return { props: { resumes } };
 }
 
+/* ── Helpers ──────────────────────────────────────────────────────────── */
 
-const Resume = ({ resumes }) => {
-  const theme = useTheme();
-  // Refs for animation
-  const eduRef = useRef(null);
-  const expRef = useRef(null);
-  const skillsRef = useRef(null);
-  const headRef = useRef(null);
-  const projectsRef = useRef(null);
-  const honorsRef = useRef(null);
+// Sortable date from a "Mon YYYY - Mon YYYY" / "YYYY" string (uses the end).
+function getSortableDate(dateString) {
+  if (!dateString) return new Date(0);
+  const lower = dateString.toString().toLowerCase();
+  if (lower.includes("present") || lower.includes("current")) return new Date();
+  const parts = lower.split(" - ");
+  const end = parts.length > 1 ? parts[1] : parts[0];
+  const date = new Date(end);
+  if (!isNaN(date.getTime())) return date;
+  const year = end.match(/\d{4}/);
+  if (year) {
+    const yd = new Date(year[0]);
+    if (!isNaN(yd.getTime())) return yd;
+  }
+  return new Date(0);
+}
 
-  // Animation effect
-  useIsomorphicLayoutEffect(() => {
-    stagger(
-      [headRef.current, eduRef.current, expRef.current, skillsRef.current, projectsRef.current, honorsRef.current],
-      {y: 40, x: -10, transform: "scale(0.95) skew(10deg)"},
-      {y: 0, x: 0, transform: "scale(1)"}
-    );
-  }, []);
+const byDateDesc = (key) => (a, b) => getSortableDate(b[key]) - getSortableDate(a[key]);
 
-  const getSortableDate = (dateString) => {
-    if (!dateString) return new Date(0);
-    const lowerDateString = dateString.toString().toLowerCase();
-    if (lowerDateString.includes('present') || lowerDateString.includes('current')) return new Date();
-  
-    const dateParts = lowerDateString.split(' - ');
-    const endDateString = dateParts.length > 1 ? dateParts[1] : dateParts[0];
-  
-    const date = new Date(endDateString);
-    if (!isNaN(date.getTime())) return date;
-  
-    const yearMatch = endDateString.match(/\d{4}/);
-    if (yearMatch) {
-      const yearDate = new Date(yearMatch[0]);
-      if (!isNaN(yearDate.getTime())) return yearDate;
-    }
-    
-    return new Date(0);
-  };
+// Normalise " - " to an en dash for display.
+const fmtRange = (d) => (d || "").replace(/\s*-\s*/, " – ");
 
+// Join present meta parts with a middot.
+const metaLine = (...parts) => parts.filter(Boolean).join(" · ");
+
+// "Software Developer at CARITY AI" → role + accented company.
+function renderRole(position) {
+  const i = (position || "").indexOf(" at ");
+  if (i === -1) return position;
   return (
-    <div className={`relative`}>
-      <Head>
-        <title>Resume</title>
-      </Head>
+    <>
+      {position.slice(0, i)} <span className="at">at {position.slice(i + 4)}</span>
+    </>
+  );
+}
 
-      <div className={`${theme === "dark" ? "gradient-circle-dark" : "gradient-circle"}`}></div>
-      <div className={`${theme === "dark" ? "gradient-circle-bottom-dark" : "gradient-circle-bottom"}`}></div>
+/* ── Reusable timeline item ───────────────────────────────────────────── */
 
-      <div className="container mx-auto mb-10 pt-16 tablet:pt-0">
-        <Header/>
-
-        <h1 className="mx-auto mob:p-2 text-bold text-4xl laptop:text-6xl w-full">
-          Resume
-        </h1>
-
-        <div className="mt-8">
-        <h1 className="text-xl font-medium">Resumes</h1>
-        <div className="flex flex-wrap gap-2 mt-5">
-            {resumes.map((resume) => (
-                <Button key={resume.url} onClick={() => window.open(resume.url)}>
-                    {resume.name}
-                </Button>
-            ))}
-        </div>
+function TimelineItem({ title, date, meta, bullets, courses }) {
+  return (
+    <div className="tl-item">
+      <div className="tl-head">
+        <span className="tl-title">{title}</span>
+        {date && <span className="tl-date">{fmtRange(date)}</span>}
       </div>
-
-        {/* Main Content */}
-        <div className="mt-10 w-full flex flex-col items-center">
-          {/* Header Section */}
-          <div ref={headRef} className="w-full flex flex-col items-center">
-
-            <p className="text-lg text-center mt-5 text-text-secondary-light dark:text-text-secondary-dark">
-              {data.resume.tagline}
-            </p>
-            <p className="text-md text-center mt-2 max-w-2xl text-text-secondary-light dark:text-text-secondary-dark">
-              {data.resume.description}
-            </p>
-          </div>
-
-          {/* Education Section */}
-          <div ref={eduRef} className="w-full mt-10 max-w-4xl">
-            <h2 className="text-2xl font-bold mb-6">Education</h2>
-            {[...data.resume.education]
-              .sort((a, b) => getSortableDate(b.universityDate) - getSortableDate(a.universityDate))
-              .map((edu) => (
-              <div
-                key={edu.id}
-                className="mb-8 border-l-2 border-border-primary-light dark:border-border-primary-dark pl-4"
-              >
-                <div className="flex justify-between items-center">
-                  <h3 className="text-xl font-semibold">{edu.universityName}</h3>
-                  <span className="text-text-tertiary-light dark:text-text-tertiary-dark text-sm">
-                    {edu.universityDate}
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-1 text-text-tertiary-light dark:text-text-tertiary-dark text-sm mt-1">
-                  {edu.location && (
-                    <span>
-                      {edu.location}
-                    </span>
-                  )}
-                  {edu.location && edu.gpa && (
-                    <span>•</span>
-                  )}
-                  {edu.gpa && (
-                    <span>
-                      GPA: {edu.gpa}
-                    </span>
-                  )}
-                </div>
-
-                <p className="text-text-tertiary-light dark:text-text-tertiary-dark text-sm mt-1">
-                  {edu.degree}
-                </p>
-
-                <p className="mt-2 text-text-secondary-light dark:text-text-secondary-dark">
-                  {edu.universityPara}
-                </p>
-
-                {edu.relevantCoursework && edu.relevantCoursework.length > 0 && (
-                  <div className="mt-3">
-                    <span className="text-sm font-medium">Relevant Courses:</span>
-                    <div className="flex flex-wrap gap-2 mt-1">
-                      {edu.relevantCoursework.map((course, index) => (
-                        <span
-                          key={index}
-                          className="text-sm px-2 py-1 bg-bg-secondary-light dark:bg-bg-secondary-dark rounded-md"
-                        >
-                          {course}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {/* Skills Section */}
-          <div ref={skillsRef} className="w-full mt-10 max-w-4xl">
-            <h2 className="text-2xl font-bold mb-6">Technical Skills</h2>
-            <div className="flex flex-wrap gap-3">
-              {data.resume.skills.languages.map((skill, index) => (
-                <span
-                  key={index}
-                  className="px-3 py-1 bg-bg-secondary-light dark:bg-bg-secondary-dark rounded-full text-sm"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="w-full mt-10 max-w-4xl">
-            <h2 className="text-2xl font-bold mb-6">Cloud & DevOps</h2>
-            <div className="flex flex-wrap gap-3">
-              {data.resume.skills.cloudAndDevOps.map((skill, index) => (
-                <span
-                  key={index}
-                  className="px-3 py-1 bg-bg-secondary-light dark:bg-bg-secondary-dark rounded-full text-sm"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="w-full mt-10 max-w-4xl">
-            <h2 className="text-2xl font-bold mb-6">Data & ML</h2>
-            <div className="flex flex-wrap gap-3">
-              {data.resume.skills.dataAndML.map((skill, index) => (
-                <span
-                  key={index}
-                  className="px-3 py-1 bg-bg-secondary-light dark:bg-bg-secondary-dark rounded-full text-sm"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Experience Section */}
-          <div ref={expRef} className="w-full mt-16 max-w-4xl">
-            <h2 className="text-2xl font-bold mb-6">Professional Experience</h2>
-            {[...data.resume.experiences]
-              .sort((a, b) => getSortableDate(b.dates) - getSortableDate(a.dates))
-              .map((exp) => (
-              <div
-                key={exp.id}
-                className="mb-8 border-l-2 border-border-primary-light dark:border-border-primary-dark pl-4"
-              >
-                <div className="flex justify-between items-center gap-4">
-                  <h3 className="text-xl font-semibold">{exp.position}</h3>
-                  <span className="text-text-tertiary-light dark:text-text-tertiary-dark text-sm">
-                    {exp.dates}
-                  </span>
-                </div>
-                <div className="flex items-center gap-1 text-text-tertiary-light dark:text-text-tertiary-dark text-sm mt-1">
-                  {exp.location && (
-                    <span>
-                      {exp.location}
-                    </span>
-                  )}
-                  {exp.location && exp.type && (
-                    <span>•</span>
-                  )}
-                  {exp.type && (
-                    <span>
-                      {exp.type}
-                    </span>
-                  )}
-                </div>
-                <ul className="list-disc list-inside mt-2">
-                  {exp.bullets.map((bullet, index) => (
-                    <li key={index} className="text-text-secondary-light dark:text-text-secondary-dark">
-                      {bullet}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          {/* Projects Section */}
-          <div ref={projectsRef} className="w-full mt-16 max-w-4xl">
-            <h2 className="text-2xl font-bold mb-6">Projects</h2>
-            {[...data.resume.projects]
-              .sort((a, b) => getSortableDate(b.dates) - getSortableDate(a.dates))
-              .map((project) => (
-              <div
-                key={project.id}
-                className="mb-8 border-l-2 border-border-primary-light dark:border-border-primary-dark pl-4"
-              >
-                <div className="flex justify-between items-center">
-                  <h3 className="text-xl font-semibold">{project.title}</h3>
-                  <span className="text-text-tertiary-light dark:text-text-tertiary-dark text-sm">
-                    {project.dates}
-                  </span>
-                </div>
-                <div className="mt-1">
-                <span className="text-text-tertiary-light dark:text-text-tertiary-dark">
-                  {project.organization}
-                </span>
-                  {project.location && (
-                    <span className="text-text-tertiary-light dark:text-text-tertiary-dark text-sm">
-                      {" "}
-                      • {project.location}
-                    </span>
-                  )}
-                </div>
-                <ul className="list-disc list-inside mt-2">
-                  {project.details && project.details.map((detail, idx) => (
-                    <li
-                      key={idx}
-                      className="text-text-secondary-light dark:text-text-secondary-dark text-sm leading-relaxed"
-                    >
-                      {detail}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          {/* Honors Section */}
-          <div ref={honorsRef} className="w-full mt-16 max-w-4xl">
-            <h2 className="text-2xl font-bold mb-6">Honors & Awards</h2>
-            {[...data.resume.honors]
-              .sort((a, b) => getSortableDate(b.year) - getSortableDate(a.year))
-              .map((honor) => (
-              <div
-                key={honor.id}
-                className="mb-8 border-l-2 border-border-primary-light dark:border-border-primary-dark pl-4"
-              >
-                <div className="flex justify-between items-center">
-                  <h3 className="text-xl font-semibold">{honor.title}</h3>
-                  <span className="text-text-tertiary-light dark:text-text-tertiary-dark text-sm">
-                    {honor.year}
-                  </span>
-                </div>
-                <div className="mt-1">
-                  {honor.event && (
-                    <span className="text-text-tertiary-light dark:text-text-tertiary-dark">
-                      {honor.event}
-                    </span>
-                  )}
-                  {honor.organization && (
-                    <span className="text-text-tertiary-light dark:text-text-tertiary-dark">
-                      {honor.organization}
-                    </span>
-                  )}
-                  {honor.location && (
-                    <span className="text-text-tertiary-light dark:text-text-tertiary-dark text-sm">
-                      {" "}
-                                • {honor.location}
-                    </span>
-                  )}
-                </div>
-                {honor.details && (
-                  <ul className="list-disc list-inside mt-2">
-                    {honor.details.map((detail, idx) => (
-                      <li
-                        key={idx}
-                        className="text-text-secondary-light dark:text-text-secondary-dark text-sm leading-relaxed"
-                      >
-                        {detail}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </div>
-      {process.env.NODE_ENV === "development" && (
-        <div className="fixed bottom-5 right-5">
-          <Link href="/edit">
-            <Button type="primary">Edit Data</Button>
-          </Link>
+      {meta && <div className="tl-meta">{meta}</div>}
+      {bullets && bullets.length > 0 && (
+        <ul className="tl-bullets">
+          {bullets.map((b, i) => (
+            <li key={i}>{b}</li>
+          ))}
+        </ul>
+      )}
+      {courses && courses.length > 0 && (
+        <div className="tl-courses chip-row">
+          {courses.map((c, i) => (
+            <span key={i} className="chip-sq">{c}</span>
+          ))}
         </div>
       )}
-      <Footer/>
     </div>
   );
-};
+}
 
-export default Resume;
+/* ── Page ─────────────────────────────────────────────────────────────── */
+
+const SKILL_GROUPS = [
+  { label: "Languages", key: "languages" },
+  { label: "Cloud & DevOps", key: "cloudAndDevOps" },
+  { label: "Data & ML", key: "dataAndML" },
+];
+
+export default function Resume({ resumes }) {
+  const r = data.resume;
+
+  return (
+    <div className="we">
+      <Head>
+        <title>Resume — {data.name} Tao</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+
+      <div className="wrap">
+        <Nav />
+
+        {/* Header */}
+        <header className="resume-head">
+          <span className="kicker">{r.tagline}</span>
+          <h1>Résumé</h1>
+          <p className="desc">{r.description}</p>
+          {resumes.length > 0 && (
+            <div className="resume-downloads">
+              {resumes.map((resume) => (
+                <a key={resume.url} href={resume.url} target="_blank" rel="noreferrer">
+                  {resume.name} 🔗
+                </a>
+              ))}
+            </div>
+          )}
+        </header>
+
+        <div className="resume-body">
+          {/* Education */}
+          <section>
+            <div className="sec-head">
+              <h2><span className="num">01 ／</span>Education</h2>
+            </div>
+            <div className="tl">
+              {[...r.education].sort(byDateDesc("universityDate")).map((edu) => (
+                <TimelineItem
+                  key={edu.id}
+                  title={edu.universityName}
+                  date={edu.universityDate}
+                  meta={metaLine(edu.location, edu.gpa && `GPA ${edu.gpa}`, edu.degree)}
+                  bullets={edu.universityPara ? [edu.universityPara] : null}
+                  courses={edu.relevantCoursework}
+                />
+              ))}
+            </div>
+          </section>
+
+          {/* Skills */}
+          <section>
+            <div className="sec-head">
+              <h2><span className="num">02 ／</span>Technical Skills</h2>
+            </div>
+            {SKILL_GROUPS.map((g) => (
+              <div className="skill-group" key={g.key}>
+                <div className="skill-label">{g.label}</div>
+                <div className="chip-row">
+                  {(r.skills[g.key] || []).map((skill, i) => (
+                    <span key={i} className="chip">{skill}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </section>
+
+          {/* Experience */}
+          <section>
+            <div className="sec-head">
+              <h2><span className="num">03 ／</span>Professional Experience</h2>
+              <span className="aside">{r.experiences.length} roles</span>
+            </div>
+            <div className="tl">
+              {[...r.experiences].sort(byDateDesc("dates")).map((exp) => (
+                <TimelineItem
+                  key={exp.id}
+                  title={renderRole(exp.position)}
+                  date={exp.dates}
+                  meta={metaLine(exp.location, exp.type)}
+                  bullets={exp.bullets}
+                />
+              ))}
+            </div>
+          </section>
+
+          {/* Projects */}
+          <section>
+            <div className="sec-head">
+              <h2><span className="num">04 ／</span>Projects</h2>
+              <span className="aside">{r.projects.length} selected</span>
+            </div>
+            <div className="tl">
+              {[...r.projects].sort(byDateDesc("dates")).map((project) => (
+                <TimelineItem
+                  key={project.id}
+                  title={project.title}
+                  date={project.dates}
+                  meta={metaLine(project.organization, project.location)}
+                  bullets={project.details}
+                />
+              ))}
+            </div>
+          </section>
+
+          {/* Honors */}
+          <section>
+            <div className="sec-head">
+              <h2><span className="num">05 ／</span>Honors &amp; Awards</h2>
+            </div>
+            <div className="tl">
+              {[...r.honors].sort(byDateDesc("year")).map((honor) => (
+                <TimelineItem
+                  key={honor.id}
+                  title={honor.title}
+                  date={honor.year}
+                  meta={metaLine(honor.event || honor.organization, honor.location)}
+                  bullets={honor.details}
+                />
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <Footer />
+      </div>
+
+      {process.env.NODE_ENV === "development" && (
+        <Link href="/edit" className="dev-edit">Edit Data</Link>
+      )}
+    </div>
+  );
+}
