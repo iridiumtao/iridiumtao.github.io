@@ -1,8 +1,8 @@
 /* 2026 brand typeface: jf open-huninn 2.1 (justfont) — single rounded humanist
    sans for body + display; JetBrains Mono for code, metadata, timestamps.
-   See colors_and_type design system. Replaces the original Hind webfont. */
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap");
-@import url("https://cdn.jsdelivr.net/gh/justfont/open-huninn-font@2.1/dist/jf-openhuninn-2.1.css");
+   See colors_and_type design system. Replaces the original Hind webfont.
+   Both fonts are now self-hosted via next/font (pages/_app.js) — zero runtime
+   external font requests; --font-huninn / --font-jbmono are exposed there. */
 @import "./markdown.css";
 
 @tailwind base;
@@ -46,11 +46,11 @@
   /* Warm paper surface (light) */
   --paper: #fbf7f2;
 
-  /* Typography */
+  /* Typography — leads with the self-hosted next/font variables (pages/_app.js) */
   --font-sans:
-    "jf-openhuninn-2.1", "Open Huninn", "Varela Round", "PingFang TC",
-    "Microsoft JhengHei", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    var(--font-huninn), "Varela Round", "PingFang TC", "Microsoft JhengHei",
+    system-ui, sans-serif;
+  --font-mono: var(--font-jbmono), ui-monospace, monospace;
 
   /* Motion — GSAP Power3.easeOut analogue */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
