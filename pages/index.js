@@ -5,7 +5,7 @@ import Nav from "../components/wood/Nav";
 import Footer from "../components/wood/Footer";
 
 // Local data
-import data from "../data/portfolio.json";
+import data from "@/data/portfolio.json";
 
 /* ── Helpers ──────────────────────────────────────────────────────────── */
 
