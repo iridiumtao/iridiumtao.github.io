@@ -10,9 +10,18 @@ import data from "@/data/portfolio.json";
 /* ── Helpers ──────────────────────────────────────────────────────────── */
 
 const MONTHS = {
-  January: "JAN", February: "FEB", March: "MAR", April: "APR",
-  May: "MAY", June: "JUN", July: "JUL", August: "AUG",
-  September: "SEP", October: "OCT", November: "NOV", December: "DEC",
+  January: "JAN",
+  February: "FEB",
+  March: "MAR",
+  April: "APR",
+  May: "MAY",
+  June: "JUN",
+  July: "JUL",
+  August: "AUG",
+  September: "SEP",
+  October: "OCT",
+  November: "NOV",
+  December: "DEC",
 };
 
 // "July 2025 - August 2025" → "JUL — AUG 2025"; collapses shared years.
@@ -26,7 +35,9 @@ function formatExpDate(dates) {
   const a = fmt(rawA);
   if (!rawB) return `${a.m} ${a.y}`;
   const b = fmt(rawB);
-  return a.y === b.y ? `${a.m} — ${b.m} ${b.y}` : `${a.m} ${a.y} — ${b.m} ${b.y}`;
+  return a.y === b.y
+    ? `${a.m} — ${b.m} ${b.y}`
+    : `${a.m} ${a.y} — ${b.m} ${b.y}`;
 }
 
 // First 4-digit year found in a date string.
@@ -61,9 +72,15 @@ function renderAccent(line, accent) {
 function renderEmphasis(text, terms = []) {
   if (!terms.length) return text;
   const re = new RegExp(`(${terms.map(escapeRegExp).join("|")})`, "g");
-  return text.split(re).map((chunk, i) =>
-    terms.includes(chunk) ? <em key={i}>{chunk}</em> : <Fragment key={i}>{chunk}</Fragment>
-  );
+  return text
+    .split(re)
+    .map((chunk, i) =>
+      terms.includes(chunk) ? (
+        <em key={i}>{chunk}</em>
+      ) : (
+        <Fragment key={i}>{chunk}</Fragment>
+      ),
+    );
 }
 
 /* ── Page ─────────────────────────────────────────────────────────────── */
@@ -95,7 +112,9 @@ export default function Home() {
     <a className="proj" href={p.url} target="_blank" rel="noreferrer">
       <div className={`proj-img ${size}`}>
         <img src={p.imageSrc} alt={p.title} loading="lazy" />
-        {endYear(p.endDate) && <span className="badge">{endYear(p.endDate)}</span>}
+        {endYear(p.endDate) && (
+          <span className="badge">{endYear(p.endDate)}</span>
+        )}
       </div>
       {p.subtitle && <span className="proj-sub">{p.subtitle}</span>}
       <h3>{p.title}</h3>
@@ -129,7 +148,9 @@ export default function Home() {
                 </Fragment>
               ))}
             </h1>
-            <p className="lede">{renderEmphasis(home.lede, home.ledeEmphasis)}</p>
+            <p className="lede">
+              {renderEmphasis(home.lede, home.ledeEmphasis)}
+            </p>
           </div>
           <div className="hero-meta">
             <div className="meta-row">
@@ -166,9 +187,12 @@ export default function Home() {
         {/* Projects */}
         <section id="projects">
           <div className="sec-head">
-            <h2><span className="num">01 ／</span>Selected Projects</h2>
+            <h2>
+              <span className="num">01 ／</span>Selected Projects
+            </h2>
             <span className="aside">
-              {showAll ? data.projects.length : featured.length} of {data.projects.length}
+              {showAll ? data.projects.length : featured.length} of{" "}
+              {data.projects.length}
             </span>
           </div>
           <div className="projects">
@@ -198,16 +222,23 @@ export default function Home() {
         {/* Work */}
         <section id="work">
           <div className="sec-head">
-            <h2><span className="num">02 ／</span>Professional Experience</h2>
-            <span className="aside">{data.resume.experiences.length} internships</span>
+            <h2>
+              <span className="num">02 ／</span>Professional Experience
+            </h2>
+            <span className="aside">
+              {data.resume.experiences.length} internships
+            </span>
           </div>
           <div className="exp-list">
             {data.resume.experiences.map((exp, i) => {
               const { role, company } = splitPosition(exp.position);
-              const blurb = data.experiences[i]?.description || exp.bullets?.[0] || "";
+              const blurb =
+                data.experiences[i]?.description || exp.bullets?.[0] || "";
               return (
                 <div className="exp-row" key={exp.id}>
-                  <span className="exp-idx">/{String(i + 1).padStart(2, "0")}</span>
+                  <span className="exp-idx">
+                    /{String(i + 1).padStart(2, "0")}
+                  </span>
                   <span className="exp-role">
                     {role} <span className="at">at {company}</span>
                   </span>
@@ -222,7 +253,9 @@ export default function Home() {
         {/* About */}
         <section id="about">
           <div className="sec-head">
-            <h2><span className="num">03 ／</span>About</h2>
+            <h2>
+              <span className="num">03 ／</span>About
+            </h2>
             <span className="aside">A short note</span>
           </div>
           <div className="about">
@@ -239,7 +272,9 @@ export default function Home() {
       </div>
 
       {process.env.NODE_ENV === "development" && (
-        <Link href="/edit" className="dev-edit">Edit Data</Link>
+        <Link href="/edit" className="dev-edit">
+          Edit Data
+        </Link>
       )}
     </div>
   );

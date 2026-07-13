@@ -2,7 +2,14 @@ import React from "react";
 import data from "../../data/portfolio.json";
 import Link from "next/link";
 
-const Button = ({ children, href, onClick, classes, target = "_blank", isInternal }) => {
+const Button = ({
+  children,
+  href,
+  onClick,
+  classes,
+  target = "_blank",
+  isInternal,
+}) => {
   const baseStyles = `text-sm tablet:text-base p-1 laptop:p-2 m-1 laptop:m-2 rounded-lg transition-all duration-300 ease-out first:ml-0 hover:scale-105 active:scale-100 ${
     data.showCursor && "cursor-none"
   } ${classes}`;
@@ -32,11 +39,7 @@ const Button = ({ children, href, onClick, classes, target = "_blank", isInterna
 
   // default buttons
   return (
-    <button
-      onClick={onClick}
-      type="button"
-      className={`${baseStyles}`}
-    >
+    <button onClick={onClick} type="button" className={`${baseStyles}`}>
       {children}
     </button>
   );

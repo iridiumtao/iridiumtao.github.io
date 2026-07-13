@@ -28,11 +28,11 @@
 }
 
 .markdown-class a {
-  @apply opacity-80 font-bold text-base underline transition-all duration-200 ease-out hover:opacity-100;
+  @apply text-base font-bold underline opacity-80 transition-all duration-200 ease-out hover:opacity-100;
 }
 
 .markdown-class p {
-  @apply mt-2 opacity-80 leading-7 font-normal text-base;
+  @apply mt-2 text-base font-normal leading-7 opacity-80;
 }
 
 .markdown-class strong {
@@ -43,40 +43,36 @@
   @apply my-5;
 }
 
-
-
 /* Markdown Lists */
 
 .markdown-class ol {
-  @apply mt-5 ml-5;
+  @apply ml-5 mt-5;
 }
 
 .markdown-class ol li {
-  @apply text-base opacity-80 list-decimal;
+  @apply list-decimal text-base opacity-80;
 }
 
 .markdown-class ul {
-  @apply mt-5 ml-5;
+  @apply ml-5 mt-5;
 }
 
 .markdown-class ul li {
-  @apply text-base opacity-80 list-disc;
+  @apply list-disc text-base opacity-80;
 }
 
 /* BlockQuote */
 
 .markdown-class blockquote {
-  @apply p-5 border-l-8 rounded-lg shadow-lg  text-sm bg-slate-200 text-black;
+  @apply rounded-lg border-l-8 bg-slate-200 p-5 text-sm text-black shadow-lg;
 }
 
 .markdown-class blockquote p {
-  @apply text-black text-sm;
+  @apply text-sm text-black;
 }
-
-
 
 /* Image */
 
 .markdown-class img {
-  @apply w-full my-5 object-cover rounded-lg shadow-lg;
+  @apply my-5 w-full rounded-lg object-cover shadow-lg;
 }

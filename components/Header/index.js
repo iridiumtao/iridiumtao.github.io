@@ -1,5 +1,5 @@
-import {Popover, Transition} from "@headlessui/react";
-import { Fragment } from 'react';
+import { Popover, Transition } from "@headlessui/react";
+import { Fragment } from "react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -8,7 +8,12 @@ import Image from "next/image";
 // Local Data
 import data from "../../data/portfolio.json";
 
-const Header = ({ handleProjectScroll, handleWorkScroll, handleAboutScroll, isHome }) => {
+const Header = ({
+  handleProjectScroll,
+  handleWorkScroll,
+  handleAboutScroll,
+  isHome,
+}) => {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -22,19 +27,17 @@ const Header = ({ handleProjectScroll, handleWorkScroll, handleAboutScroll, isHo
   const getNavItems = () => {
     const baseNavItems = isHome
       ? [
-        { label: 'Project', onClick: handleProjectScroll },
-        { label: 'Work', onClick: handleWorkScroll },
-        { label: 'About', onClick: handleAboutScroll },
-      ]
-      : [
-        { label: 'Home', href: '/', isInternal: true },
-      ];
+          { label: "Project", onClick: handleProjectScroll },
+          { label: "Work", onClick: handleWorkScroll },
+          { label: "About", onClick: handleAboutScroll },
+        ]
+      : [{ label: "Home", href: "/", isInternal: true }];
 
     // common buttons
     const commonNavItems = [
-      showBlog && { label: 'Blog', href: '/blog', isInternal: true },
-      showResume && { label: 'Resume', href: '/resume', isInternal: true },
-      { label: 'Contact', href: 'mailto:c.tao@nyu.edu' },
+      showBlog && { label: "Blog", href: "/blog", isInternal: true },
+      showResume && { label: "Resume", href: "/resume", isInternal: true },
+      { label: "Contact", href: "mailto:c.tao@nyu.edu" },
     ].filter(Boolean);
 
     return [...baseNavItems, ...commonNavItems];
@@ -58,20 +61,19 @@ const Header = ({ handleProjectScroll, handleWorkScroll, handleAboutScroll, isHo
 
   // Mobile Menu
   const MobileMenu = () => (
-    <Popover className="block tablet:hidden fixed top-0 left-0 right-0 z-50 bg-opacity-50">
+    <Popover className="fixed left-0 right-0 top-0 z-50 block bg-opacity-50 tablet:hidden">
       {({ open, close }) => (
         <>
-          <div className={`
-            flex items-center justify-between px-4 py-1
-            backdrop-blur-sm
-            ${theme === "light"
-                      ? "bg-white/50"  // transparent white background
-                      : "bg-gray-900/50 text-white"  // transparent dark background
-                    }
-        `}>
+          <div
+            className={`flex items-center justify-between px-4 py-1 backdrop-blur-sm ${
+              theme === "light"
+                ? "bg-white/50" // transparent white background
+                : "bg-gray-900/50 text-white" // transparent dark background
+            } `}
+          >
             <h1
               onClick={() => router.push("/")}
-              className="font-medium text-xl"
+              className="text-xl font-medium"
             >
               {name}
             </h1>
@@ -79,7 +81,7 @@ const Header = ({ handleProjectScroll, handleWorkScroll, handleAboutScroll, isHo
             <div className="flex items-center gap-4">
               <ThemeToggle />
               <Popover.Button className="focus:outline-none">
-                <div className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#E8E4DE] dark:hover:bg-[#6B5B4E] transition-colors">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-[#E8E4DE] dark:hover:bg-[#6B5B4E]">
                   <Image
                     width={16}
                     height={16}
@@ -108,19 +110,18 @@ const Header = ({ handleProjectScroll, handleWorkScroll, handleAboutScroll, isHo
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Popover.Panel className="fixed top-0 right-0 h-full w-64 z-50">
-              <div className={`
-              h-full w-full
-              ${theme === "dark"
-                ? "bg-gradient-to-b from-[#6B5B4EF3] to-[#4A4036F3]"
-                : "bg-gradient-to-b from-[#E8E4DEF3] to-[#D4C5B9F3]"
-              }
-              shadow-xl
-            `}>
+            <Popover.Panel className="fixed right-0 top-0 z-50 h-full w-64">
+              <div
+                className={`h-full w-full ${
+                  theme === "dark"
+                    ? "bg-gradient-to-b from-[#6B5B4EF3] to-[#4A4036F3]"
+                    : "bg-gradient-to-b from-[#E8E4DEF3] to-[#D4C5B9F3]"
+                } shadow-xl`}
+              >
                 {/* close button */}
                 <div className="flex justify-end p-4">
                   <Popover.Button className="focus:outline-none">
-                    <div className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-black/10 dark:hover:bg-white/10">
                       <Image
                         width={16}
                         height={16}
@@ -132,7 +133,7 @@ const Header = ({ handleProjectScroll, handleWorkScroll, handleAboutScroll, isHo
                 </div>
 
                 {/* nav items */}
-                <div className="flex flex-col items-center justify-center h-[calc(100%-5rem)] space-y-6 p-4">
+                <div className="flex h-[calc(100%-5rem)] flex-col items-center justify-center space-y-6 p-4">
                   {getNavItems(true).map((item, index) => (
                     <Button
                       key={index}
@@ -142,15 +143,11 @@ const Header = ({ handleProjectScroll, handleWorkScroll, handleAboutScroll, isHo
                       //   close(); // close the menu
                       //   item.onClick && item.onClick(); // scroll to the section when it's a scroll button
                       // }}
-                      className={`
-                      w-full text-center py-3 px-4 rounded-xl
-                      ${theme === "dark"
-                                      ? "hover:bg-white/10"
-                                      : "hover:bg-black/10"
-                                    }
-                      transition-colors duration-200
-                      text-lg font-medium
-                    `}
+                      className={`w-full rounded-xl px-4 py-3 text-center ${
+                        theme === "dark"
+                          ? "hover:bg-white/10"
+                          : "hover:bg-black/10"
+                      } text-lg font-medium transition-colors duration-200`}
                     >
                       {item.label}
                     </Button>
@@ -167,13 +164,13 @@ const Header = ({ handleProjectScroll, handleWorkScroll, handleAboutScroll, isHo
   // Desktop Menu
   const DesktopMenu = () => (
     <div
-      className={`mt-10 hidden flex-row items-center justify-between sticky ${
+      className={`sticky mt-10 hidden flex-row items-center justify-between ${
         theme === "light" && "bg-white"
-      } dark:text-white top-0 z-10 tablet:flex`}
+      } top-0 z-10 dark:text-white tablet:flex`}
     >
       <h1
         onClick={() => router.push("/")}
-        className="font-medium cursor-pointer mob:p-2 laptop:p-0"
+        className="cursor-pointer font-medium mob:p-2 laptop:p-0"
       >
         {name}
       </h1>

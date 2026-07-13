@@ -17,7 +17,9 @@ export default function Nav({ home = false }) {
         <a href={`${base}#work`}>Work</a>
         <a href={`${base}#about`}>About</a>
         <a href={data.home.contactEmail}>Contact</a>
-        <Link href="/resume" className="cta">Resume →</Link>
+        <Link href="/resume" className="cta">
+          Resume →
+        </Link>
       </div>
     </nav>
   );

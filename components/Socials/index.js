@@ -3,9 +3,8 @@ import Button from "../Button";
 import data from "../../data/portfolio.json";
 
 const Socials = ({ className }) => {
-
   return (
-    <div className={`${className} flex flex-wrap mob:flex-nowrap link`}>
+    <div className={`${className} link flex flex-wrap mob:flex-nowrap`}>
       {data.socials.map((social) => (
         <Button
           key={social.title}

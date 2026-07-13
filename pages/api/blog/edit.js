@@ -17,7 +17,7 @@ export default function handler(req, res) {
           image,
         }),
         "utf-8",
-        (err) => console.log(err)
+        (err) => console.log(err),
       );
       res.status(200).json({ status: "DONE" });
     } else {

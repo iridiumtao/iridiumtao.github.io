@@ -7,9 +7,9 @@ export default function handler(req, res) {
     if (req.method === "POST") {
       try {
         fs.writeFileSync(
-            portfolioData,
-            JSON.stringify(req.body, null, 2),
-            "utf-8"
+          portfolioData,
+          JSON.stringify(req.body, null, 2),
+          "utf-8",
         );
         console.log("File written successfully.");
       } catch (err) {
@@ -17,8 +17,6 @@ export default function handler(req, res) {
       }
     }
   } else {
-    res
-        .status(200)
-        .json({ name: "This route works in development mode only" });
+    res.status(200).json({ name: "This route works in development mode only" });
   }
 }

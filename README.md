@@ -16,24 +16,28 @@ A modern, responsive portfolio website built with Next.js, featuring a clean des
 ## 📋 Prerequisites
 
 Before you begin, ensure you have the following installed:
+
 - Node.js (version 16 or higher)
 - npm or yarn package manager
 
 ## 🛠️ Installation & Setup
 
 1. **Clone the repository:**
+
    ```bash
    git clone <your-repository-url>
    cd iridium-portfolio
    ```
 
 2. **Install dependencies:**
+
    ```bash
    # Using yarn
    yarn install
    ```
 
 3. **Start the development server:**
+
    ```bash
    yarn dev
    ```
@@ -44,25 +48,33 @@ Before you begin, ensure you have the following installed:
 ## 🔧 Building for Production
 
 ### Development Mode (with Live Editor)
+
 To run the site locally with the live editor enabled, use:
+
 ```bash
 yarn dev
 ```
 
 ### Production Build (Static Export)
+
 To generate the static files for deployment, use:
+
 ```bash
 yarn build
 ```
+
 This will create an `out` directory with static files ready for deployment. The editor is disabled in this build.
 
 ### Running a Local Production Server
+
 To preview the production build locally, you can use a simple server after building:
+
 ```bash
 yarn build
 npx serve out # preview the production build locally
 ```
-*Note: `yarn start` will not work with a static export. `serve` is a simple alternative for local testing.*
+
+_Note: `yarn start` will not work with a static export. `serve` is a simple alternative for local testing._
 
 ## 📝 Content Management
 
@@ -73,6 +85,7 @@ The main content is managed through the `data/portfolio.json` file. This file co
 #### Key sections to edit:
 
 1. **Personal Information:**
+
    ```json
    {
      "name": "Your Name",
@@ -84,6 +97,7 @@ The main content is managed through the `data/portfolio.json` file. This file co
    ```
 
 2. **Social Links:**
+
    ```json
    "socials": [
      {
@@ -91,13 +105,14 @@ The main content is managed through the `data/portfolio.json` file. This file co
        "link": "https://github.com/yourusername"
      },
      {
-       "title": "LinkedIn", 
+       "title": "LinkedIn",
        "link": "https://linkedin.com/in/yourprofile"
      }
    ]
    ```
 
 3. **Projects:**
+
    ```json
    "projects": [
      {
@@ -112,6 +127,7 @@ The main content is managed through the `data/portfolio.json` file. This file co
    ```
 
 4. **Work Experience:**
+
    ```json
    "services": [
      {
@@ -123,6 +139,7 @@ The main content is managed through the `data/portfolio.json` file. This file co
    ```
 
 5. **Resume Experiences:**
+
    ```json
    "resume": {
      "experiences": [
@@ -142,6 +159,7 @@ The main content is managed through the `data/portfolio.json` file. This file co
    ```
 
 6. **Education:**
+
    ```json
    "education": [
      {
@@ -175,9 +193,9 @@ Blog posts are stored in the `_posts/` directory as Markdown files. To add a new
    date: "2024-01-01"
    excerpt: "A brief description of your post"
    ---
-   
+
    # Your Blog Content
-   
+
    Write your blog content here using Markdown syntax.
    ```
 
@@ -188,9 +206,11 @@ Blog posts are stored in the `_posts/` directory as Markdown files. To add a new
 This project is configured for easy deployment to a GitHub Pages User site (e.g., `username.github.io`).
 
 1. **Run the deploy script:**
+
    ```bash
    yarn deploy
    ```
+
    This command will automatically build the static site and push the contents of the `out` directory to the `gh-pages` branch of your repository.
 
 2. **Configure GitHub Pages (One-Time Setup):**
@@ -245,16 +265,19 @@ iridium-portfolio/
 ## 🎨 Customization
 
 ### Styling
+
 - The project uses Tailwind CSS for styling
 - Global styles are in `styles/globals.css`
 - Markdown styles are in `styles/markdown.css`
 - Dark mode is handled by `next-themes`
 
 ### Components
+
 - All components are modular and located in the `components/` directory
 - Each component has its own directory with an `index.js` file
 
 ### Configuration
+
 - `next.config.js`: Next.js configuration
 - `tailwind.config.js`: Tailwind CSS configuration
 - `postcss.config.js`: PostCSS configuration
@@ -269,6 +292,7 @@ iridium-portfolio/
 ## 📦 Dependencies
 
 ### Main Dependencies
+
 - **Next.js 15.5.3** - React framework
 - **React 19.1.1** - UI library
 - **Tailwind CSS** - Utility-first CSS framework
@@ -278,6 +302,7 @@ iridium-portfolio/
 - **GSAP** - Animation library
 
 ### Development Dependencies
+
 - **ESLint 9.18.0** - Code linting
 - **gh-pages** - Helper for deploying to GitHub Pages
 - **PostCSS** - CSS processing

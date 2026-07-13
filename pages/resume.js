@@ -54,7 +54,8 @@ function getSortableDate(dateString) {
   return new Date(0);
 }
 
-const byDateDesc = (key) => (a, b) => getSortableDate(b[key]) - getSortableDate(a[key]);
+const byDateDesc = (key) => (a, b) =>
+  getSortableDate(b[key]) - getSortableDate(a[key]);
 
 // Normalise " - " to an en dash for display.
 const fmtRange = (d) => (d || "").replace(/\s*-\s*/, " – ");
@@ -68,7 +69,8 @@ function renderRole(position) {
   if (i === -1) return position;
   return (
     <>
-      {position.slice(0, i)} <span className="at">at {position.slice(i + 4)}</span>
+      {position.slice(0, i)}{" "}
+      <span className="at">at {position.slice(i + 4)}</span>
     </>
   );
 }
@@ -93,7 +95,9 @@ function TimelineItem({ title, date, meta, bullets, courses }) {
       {courses && courses.length > 0 && (
         <div className="tl-courses chip-row">
           {courses.map((c, i) => (
-            <span key={i} className="chip-sq">{c}</span>
+            <span key={i} className="chip-sq">
+              {c}
+            </span>
           ))}
         </div>
       )}
@@ -130,7 +134,12 @@ export default function Resume({ resumes }) {
           {resumes.length > 0 && (
             <div className="resume-downloads">
               {resumes.map((resume) => (
-                <a key={resume.url} href={resume.url} target="_blank" rel="noreferrer">
+                <a
+                  key={resume.url}
+                  href={resume.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {resume.name} 🔗
                 </a>
               ))}
@@ -142,33 +151,45 @@ export default function Resume({ resumes }) {
           {/* Education */}
           <section>
             <div className="sec-head">
-              <h2><span className="num">01 ／</span>Education</h2>
+              <h2>
+                <span className="num">01 ／</span>Education
+              </h2>
             </div>
             <div className="tl">
-              {[...r.education].sort(byDateDesc("universityDate")).map((edu) => (
-                <TimelineItem
-                  key={edu.id}
-                  title={edu.universityName}
-                  date={edu.universityDate}
-                  meta={metaLine(edu.location, edu.gpa && `GPA ${edu.gpa}`, edu.degree)}
-                  bullets={edu.universityPara ? [edu.universityPara] : null}
-                  courses={edu.relevantCoursework}
-                />
-              ))}
+              {[...r.education]
+                .sort(byDateDesc("universityDate"))
+                .map((edu) => (
+                  <TimelineItem
+                    key={edu.id}
+                    title={edu.universityName}
+                    date={edu.universityDate}
+                    meta={metaLine(
+                      edu.location,
+                      edu.gpa && `GPA ${edu.gpa}`,
+                      edu.degree,
+                    )}
+                    bullets={edu.universityPara ? [edu.universityPara] : null}
+                    courses={edu.relevantCoursework}
+                  />
+                ))}
             </div>
           </section>
 
           {/* Skills */}
           <section>
             <div className="sec-head">
-              <h2><span className="num">02 ／</span>Technical Skills</h2>
+              <h2>
+                <span className="num">02 ／</span>Technical Skills
+              </h2>
             </div>
             {SKILL_GROUPS.map((g) => (
               <div className="skill-group" key={g.key}>
                 <div className="skill-label">{g.label}</div>
                 <div className="chip-row">
                   {(r.skills[g.key] || []).map((skill, i) => (
-                    <span key={i} className="chip">{skill}</span>
+                    <span key={i} className="chip">
+                      {skill}
+                    </span>
                   ))}
                 </div>
               </div>
@@ -178,7 +199,9 @@ export default function Resume({ resumes }) {
           {/* Experience */}
           <section>
             <div className="sec-head">
-              <h2><span className="num">03 ／</span>Professional Experience</h2>
+              <h2>
+                <span className="num">03 ／</span>Professional Experience
+              </h2>
               <span className="aside">{r.experiences.length} roles</span>
             </div>
             <div className="tl">
@@ -197,7 +220,9 @@ export default function Resume({ resumes }) {
           {/* Projects */}
           <section>
             <div className="sec-head">
-              <h2><span className="num">04 ／</span>Projects</h2>
+              <h2>
+                <span className="num">04 ／</span>Projects
+              </h2>
               <span className="aside">{r.projects.length} selected</span>
             </div>
             <div className="tl">
@@ -216,7 +241,9 @@ export default function Resume({ resumes }) {
           {/* Honors */}
           <section>
             <div className="sec-head">
-              <h2><span className="num">05 ／</span>Honors &amp; Awards</h2>
+              <h2>
+                <span className="num">05 ／</span>Honors &amp; Awards
+              </h2>
             </div>
             <div className="tl">
               {[...r.honors].sort(byDateDesc("year")).map((honor) => (
@@ -224,7 +251,10 @@ export default function Resume({ resumes }) {
                   key={honor.id}
                   title={honor.title}
                   date={honor.year}
-                  meta={metaLine(honor.event || honor.organization, honor.location)}
+                  meta={metaLine(
+                    honor.event || honor.organization,
+                    honor.location,
+                  )}
                   bullets={honor.details}
                 />
               ))}
@@ -236,7 +266,9 @@ export default function Resume({ resumes }) {
       </div>
 
       {process.env.NODE_ENV === "development" && (
-        <Link href="/edit" className="dev-edit">Edit Data</Link>
+        <Link href="/edit" className="dev-edit">
+          Edit Data
+        </Link>
       )}
     </div>
   );

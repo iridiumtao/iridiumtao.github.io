@@ -1,4 +1,4 @@
-const colors = require('tailwindcss/colors')
+const colors = require("tailwindcss/colors");
 
 module.exports = {
   content: [
@@ -78,16 +78,16 @@ module.exports = {
         },
         gradient: {
           light: {
-            from: '#E8E4DE',
-            to: '#D4C5B9'
+            from: "#E8E4DE",
+            to: "#D4C5B9",
           },
           dark: {
-            from: '#6B5B4E',
-            to: '#4A4036'
-          }
-        }
-      }
-    }
+            from: "#6B5B4E",
+            to: "#4A4036",
+          },
+        },
+      },
+    },
   },
   plugins: [],
 };
