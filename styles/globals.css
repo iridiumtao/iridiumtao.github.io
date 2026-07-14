@@ -4,10 +4,15 @@
    Both fonts are now self-hosted via next/font (pages/_app.js) — zero runtime
    external font requests; --font-huninn / --font-jbmono are exposed there. */
 @import "./markdown.css";
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* v4 ignores the old JS `darkMode:"class"` key — must be declared explicitly,
+   aligned with next-themes ThemeProvider attribute="class" (pages/_app.js). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Transitional bridge: keeps the tailwind.config.js custom colors compiling
+   through this step. Removed once @theme tokens land (01-04 Task 2). */
+@config "../tailwind.config.js";
 
 /* =========================================================================
    IRIDIUM PORTFOLIO — design tokens (2026 update)
