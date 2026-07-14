@@ -1,8 +1,9 @@
 /* 2026 brand typeface: jf open-huninn 2.1 (justfont) — single rounded humanist
    sans for body + display; JetBrains Mono for code, metadata, timestamps.
    See colors_and_type design system. Replaces the original Hind webfont.
-   Both fonts are now self-hosted via next/font (pages/_app.js) — zero runtime
-   external font requests; --font-huninn / --font-jbmono are exposed there. */
+   Both fonts are now self-hosted via next/font (styles/fonts.js, applied to
+   <html> in pages/_document.js) — zero runtime external font requests;
+   --font-huninn / --font-jbmono are exposed there. */
 @import "./markdown.css";
 @import "tailwindcss";
 
@@ -52,20 +53,16 @@
   --color-glow-cyan: #45caff;
   --color-glow-pink: #ff1b6b;
 
-  /* Typography — leads with the self-hosted next/font variables (pages/_app.js).
-     Each var() carries an explicit literal fallback (the exact family names
-     next/font registers via @font-face for these fonts) so `font-family`
-     never becomes invalid-at-computed-value-time if --font-huninn/
-     --font-jbmono fail to resolve through the display:contents font wrapper
-     in _app.js — without this, an unresolved var() poisons the whole
-     comma-list and the UA default (serif) is used instead of any entry in
-     the sans-serif fallback chain. Fixes the 01-04 Task 3 serif regression. */
+  /* Typography — leads with the self-hosted next/font variables, now declared
+     directly on <html> (pages/_document.js via styles/fonts.js) rather than a
+     display:contents wrapper. Because <html> is the true document root, these
+     custom properties always resolve for every descendant — no literal
+     @font-face-name fallback is needed to guard against invalid-at-computed-
+     value-time collapse to the UA default. */
   --font-sans:
-    var(--font-huninn, "huninn", "huninn Fallback"), "Varela Round",
-    "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
-  --font-mono:
-    var(--font-jbmono, "JetBrains Mono", "JetBrains Mono Fallback"),
-    ui-monospace, monospace;
+    var(--font-huninn), "Varela Round", "PingFang TC", "Microsoft JhengHei",
+    system-ui, sans-serif;
+  --font-mono: var(--font-jbmono), ui-monospace, monospace;
 
   /* Note: Tailwind v4 ships the `stone` neutral scale built-in
      (--color-stone-50 … --color-stone-900) — intentionally not redeclared
