@@ -81,11 +81,11 @@ const Blog = ({ posts }) => {
           <div className="mt-10">
             <h1
               ref={text}
-              className="text-bold mx-auto w-full text-6xl mob:p-2 laptop:text-8xl"
+              className="text-bold mob:p-2 laptop:text-8xl mx-auto w-full text-6xl"
             >
               Blog.
             </h1>
-            <div className="mt-10 grid grid-cols-1 justify-between gap-10 mob:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3">
+            <div className="mob:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 mt-10 grid grid-cols-1 justify-between gap-10">
               {posts &&
                 posts.map((post) => (
                   <div
@@ -108,7 +108,7 @@ const Blog = ({ posts }) => {
                       {ISOToDate(post.date)}
                     </span>
                     {process.env.NODE_ENV === "development" && mounted && (
-                      <div className="absolute right-0 top-0">
+                      <div className="absolute top-0 right-0">
                         <Button
                           onClick={(e) => {
                             deleteBlog(post.slug);
@@ -126,7 +126,7 @@ const Blog = ({ posts }) => {
           </div>
         </div>
         {process.env.NODE_ENV === "development" && mounted && (
-          <div className="fixed bottom-6 right-6">
+          <div className="fixed right-6 bottom-6">
             <Button onClick={createBlog} type={"primary"}>
               Add New Post +{" "}
             </Button>

@@ -4,7 +4,7 @@ import data from "../../data/portfolio.json";
 
 const Socials = ({ className }) => {
   return (
-    <div className={`${className} link flex flex-wrap mob:flex-nowrap`}>
+    <div className={`${className} link mob:flex-nowrap flex flex-wrap`}>
       {data.socials.map((social) => (
         <Button
           key={social.title}

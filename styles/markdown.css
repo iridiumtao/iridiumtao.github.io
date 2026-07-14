@@ -32,7 +32,7 @@
 }
 
 .markdown-class p {
-  @apply mt-2 text-base font-normal leading-7 opacity-80;
+  @apply mt-2 text-base leading-7 font-normal opacity-80;
 }
 
 .markdown-class strong {
@@ -46,7 +46,7 @@
 /* Markdown Lists */
 
 .markdown-class ol {
-  @apply ml-5 mt-5;
+  @apply mt-5 ml-5;
 }
 
 .markdown-class ol li {
@@ -54,7 +54,7 @@
 }
 
 .markdown-class ul {
-  @apply ml-5 mt-5;
+  @apply mt-5 ml-5;
 }
 
 .markdown-class ul li {

@@ -61,7 +61,7 @@ const Header = ({
 
   // Mobile Menu
   const MobileMenu = () => (
-    <Popover className="fixed left-0 right-0 top-0 z-50 block bg-opacity-50 tablet:hidden">
+    <Popover className="bg-opacity-50 tablet:hidden fixed top-0 right-0 left-0 z-50 block">
       {({ open, close }) => (
         <>
           <div
@@ -110,7 +110,7 @@ const Header = ({
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Popover.Panel className="fixed right-0 top-0 z-50 h-full w-64">
+            <Popover.Panel className="fixed top-0 right-0 z-50 h-full w-64">
               <div
                 className={`h-full w-full ${
                   theme === "dark"
@@ -166,11 +166,11 @@ const Header = ({
     <div
       className={`sticky mt-10 hidden flex-row items-center justify-between ${
         theme === "light" && "bg-white"
-      } top-0 z-10 dark:text-white tablet:flex`}
+      } tablet:flex top-0 z-10 dark:text-white`}
     >
       <h1
         onClick={() => router.push("/")}
-        className="cursor-pointer font-medium mob:p-2 laptop:p-0"
+        className="mob:p-2 laptop:p-0 cursor-pointer font-medium"
       >
         {name}
       </h1>

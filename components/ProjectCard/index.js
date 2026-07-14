@@ -6,7 +6,7 @@ const ProjectCard = ({ img, name, subtitle, description }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
-    <div className="overflow-hidden rounded-lg p-2 first:ml-0 laptop:p-4">
+    <div className="laptop:p-4 overflow-hidden rounded-lg p-2 first:ml-0">
       <Link href={`/blog/${name}`} className="block">
         <div
           className={`relative flex aspect-[16/9] cursor-pointer items-center justify-center overflow-hidden transition-all duration-300 ease-out hover:scale-95 ${
@@ -27,7 +27,7 @@ const ProjectCard = ({ img, name, subtitle, description }) => {
         {name ? name : "Project Name"}
       </h1>
       {subtitle && (
-        <h2 className="mt-1 text-lg font-medium italic text-text-tertiary-light dark:text-text-tertiary-dark">
+        <h2 className="text-text-tertiary-light dark:text-text-tertiary-dark mt-1 text-lg font-medium italic">
           {subtitle}
         </h2>
       )}

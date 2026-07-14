@@ -10,7 +10,7 @@ const WorkCard = ({ name, description }) => {
   }, []);
   return (
     <div
-      className={`w-full rounded-lg p-2 transition-all duration-300 ease-out mob:p-4 ${
+      className={`mob:p-4 w-full rounded-lg p-2 transition-all duration-300 ease-out ${
         mounted && theme === "dark"
           ? "hover:bg-stone-900"
           : "hover:bg-[#E8E4DE]/30"

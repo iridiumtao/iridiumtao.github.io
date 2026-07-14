@@ -52,7 +52,7 @@ const BlogPost = ({ post }) => {
           </div>
           <h1
             ref={textOne}
-            className="text-bold mt-10 text-4xl mob:text-2xl laptop:text-6xl"
+            className="text-bold mob:text-2xl laptop:text-6xl mt-10 text-4xl"
           >
             {post.title}
           </h1>
@@ -62,7 +62,7 @@ const BlogPost = ({ post }) => {
           >
             {post.tagline}
           </h2>
-          <div className={`link flex flex-wrap mob:flex-nowrap`}>
+          <div className={`link mob:flex-nowrap flex flex-wrap`}>
             {Array.isArray(post.links) &&
               post.links.length > 0 &&
               post.links.map((link, index) => (
@@ -74,7 +74,7 @@ const BlogPost = ({ post }) => {
         </div>
 
         <ContentSection content={post.content}></ContentSection>
-        <div className={`link flex flex-wrap mob:flex-nowrap`}>
+        <div className={`link mob:flex-nowrap flex flex-wrap`}>
           {Array.isArray(post.links) &&
             post.links.length > 0 &&
             post.links.map((link, index) => (
@@ -86,7 +86,7 @@ const BlogPost = ({ post }) => {
         <Footer />
       </div>
       {process.env.NODE_ENV === "development" && (
-        <div className="fixed bottom-6 right-6">
+        <div className="fixed right-6 bottom-6">
           <Button onClick={() => setShowEditor(true)} type={"primary"}>
             Edit this blog
           </Button>
