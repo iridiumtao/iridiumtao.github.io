@@ -52,11 +52,20 @@
   --color-glow-cyan: #45caff;
   --color-glow-pink: #ff1b6b;
 
-  /* Typography — leads with the self-hosted next/font variables (pages/_app.js) */
+  /* Typography — leads with the self-hosted next/font variables (pages/_app.js).
+     Each var() carries an explicit literal fallback (the exact family names
+     next/font registers via @font-face for these fonts) so `font-family`
+     never becomes invalid-at-computed-value-time if --font-huninn/
+     --font-jbmono fail to resolve through the display:contents font wrapper
+     in _app.js — without this, an unresolved var() poisons the whole
+     comma-list and the UA default (serif) is used instead of any entry in
+     the sans-serif fallback chain. Fixes the 01-04 Task 3 serif regression. */
   --font-sans:
-    var(--font-huninn), "Varela Round", "PingFang TC", "Microsoft JhengHei",
-    system-ui, sans-serif;
-  --font-mono: var(--font-jbmono), ui-monospace, monospace;
+    var(--font-huninn, "huninn", "huninn Fallback"), "Varela Round",
+    "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --font-mono:
+    var(--font-jbmono, "JetBrains Mono", "JetBrains Mono Fallback"),
+    ui-monospace, monospace;
 
   /* Note: Tailwind v4 ships the `stone` neutral scale built-in
      (--color-stone-50 … --color-stone-900) — intentionally not redeclared
