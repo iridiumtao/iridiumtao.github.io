@@ -29,13 +29,20 @@
   "projects": [
     {
       "id": "8",
+      "slug": "openhci25-oblivilight",
       "title": "Oblivilight - OpenHCI'25",
       "subtitle": "HCI, LangChain",
+      "techStack": ["HCI", "LangChain"],
       "startDate": "July 2025",
       "endDate": "August 2025",
       "description": "A privacy-focused AI-powered smart lamp that transforms nightly voice conversations into tangible memories.",
       "imageSrc": "https://raw.githubusercontent.com/iridiumtao/OpenHCI25-Oblivilight/refs/heads/main/docs/Cover.png?raw=true",
-      "url": "https://github.com/iridiumtao/OpenHCI25-Oblivilight"
+      "url": "https://github.com/iridiumtao/OpenHCI25-Oblivilight",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
     },
     {
       "id": "7",
