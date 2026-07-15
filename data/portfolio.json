@@ -32,11 +32,14 @@
       "slug": "openhci25-oblivilight",
       "title": "Oblivilight - OpenHCI'25",
       "subtitle": "HCI, LangChain",
-      "techStack": ["HCI", "LangChain"],
+      "techStack": [
+        "HCI",
+        "LangChain"
+      ],
       "startDate": "July 2025",
       "endDate": "August 2025",
       "description": "A privacy-focused AI-powered smart lamp that transforms nightly voice conversations into tangible memories.",
-      "imageSrc": "https://raw.githubusercontent.com/iridiumtao/OpenHCI25-Oblivilight/refs/heads/main/docs/Cover.png?raw=true",
+      "imageSrc": "/images/projects/openhci25-oblivilight.png",
       "url": "https://github.com/iridiumtao/OpenHCI25-Oblivilight",
       "demoUrl": null,
       "role": null,
@@ -137,10 +140,17 @@
   "aboutpara": "Chun-Ju Tao is a Computer Engineering master’s student at New York University (GPA: 3.83) specializing in MLOps, applied machine learning, and scalable cloud systems. With a strong foundation in both software development and data science, he is proficient in Python, Go, and JavaScript, and deeply skilled in the modern MLOps and cloud-native toolchain, including Docker, Terraform, AWS, PyTorch, and MLflow.\n\nNotable accomplishments include architecting a complete MLOps stack to fine-tune and deploy a custom LLM, featuring an automated, doctor-in-the-loop retraining pipeline with Airflow and MLflow. At Micron, he designed a production-scale Python pipeline and Streamlit web app to analyze terabytes of manufacturing data, enabling fast, reproducible studies across teams. At CARITY AI, he containerized microservices and automated CI/CD on AWS ECS, cutting infrastructure costs by 40% and deployment time by 70%.\n\nChun-Ju has demonstrated leadership by introducing Agile and GitFlow methodologies at MoBagel, stabilizing team management and improving efficiency during a 300% team expansion. An award-winning developer recognized at international conferences for technical innovation, his achievements reflect a commitment to driving operational excellence and delivering reliable, scalable, and data-driven solutions.",
   "home": {
     "availability": "Available May 2026",
-    "heroLines": ["Engineer", "building scalable", "and reliable", "systems."],
+    "heroLines": [
+      "Engineer",
+      "building scalable",
+      "and reliable",
+      "systems."
+    ],
     "heroAccent": "scalable",
     "lede": "I'm Chun-Ju (Iridium) Tao — a Computer Engineering MS at NYU working on MLOps, applied machine learning, and cloud-native infrastructure. Recently architected the first Taigi medical-advising LLM, won OpenHCI'25 Best Demo, and shipped a 33GB-data pipeline at Micron.",
-    "ledeEmphasis": ["MLOps"],
+    "ledeEmphasis": [
+      "MLOps"
+    ],
     "based": "New York / Taipei",
     "degree": "M.S. Computer Engineering, NYU · GPA 3.83",
     "stack": "Python · Go · Docker · AWS · PyTorch · MLflow",
