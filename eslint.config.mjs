@@ -13,6 +13,12 @@ export default [
     // parser is incompatible with ESLint 10's scope-manager API. Fall back to
     // ESLint's built-in parser (espree) — this codebase is plain modern
     // JS/JSX/ESM with no Babel-only syntax, so no functional loss.
+    // Scoped to plain JS/JSX files only (files glob added in Phase 2, plan
+    // 02-01): without a `files` restriction this object applies globally and
+    // clobbers nextCoreWebVitals's own typescript-eslint/parser assignment for
+    // **/*.ts and **/*.tsx (Phase 2 introduces lib/projects.ts) — espree cannot
+    // parse TypeScript syntax, which would break `yarn lint` on any .ts file.
+    files: ["**/*.{js,jsx,mjs,cjs}"],
     languageOptions: {
       parser: espree,
       parserOptions: {
@@ -45,5 +51,28 @@ export default [
   },
   {
     ignores: ["public/**"],
+  },
+  {
+    // DATA-05 static boundary: lib/projects.ts performs synchronous fs calls
+    // at build time and must never ship into the client bundle. This is the
+    // static half of the enforcement (the runtime half is assertServerOnly()
+    // in lib/projects.ts) — see 02-RESEARCH.md "Server-only Enforcement"
+    // (the `server-only` npm package is not viable under Pages Router).
+    files: ["components/wood/**/*.js"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["*/lib/projects", "@/lib/projects", "**/lib/projects"],
+              message:
+                "lib/projects.ts is server-only (build-time fs access). " +
+                "Import it only from getStaticProps/getStaticPaths in pages/*.js.",
+            },
+          ],
+        },
+      ],
+    },
   },
 ];

@@ -49,8 +49,12 @@ export function assertServerOnly(): void {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function toProject(raw: any): Project {
+// Raw shape from data/portfolio.json — untyped since the JSON schema itself
+// is extended by a parallel plan (02-02); this module only needs to coalesce
+// whatever optional fields are present today.
+type RawProject = any;
+
+function toProject(raw: RawProject): Project {
   return {
     id: raw.id,
     slug: raw.slug,
