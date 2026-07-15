@@ -7,8 +7,14 @@
 import fs from "fs";
 import { join } from "path";
 import matter from "gray-matter";
-import markdownToHtml from "../utils/markdownToHtml";
-import portfolioData from "../data/portfolio.json";
+// Explicit ".js" extension + JSON import attribute: required for Node's native
+// ESM loader (used directly by `node --test`, D-12) to resolve these relative
+// imports — Node's ESM resolver (unlike webpack/tsc's "bundler" resolution)
+// does not infer extensions and requires an import attribute for JSON. Both
+// forms remain valid under the project's tsconfig ("moduleResolution":
+// "bundler") and Next.js's build pipeline; verified via `yarn build`.
+import markdownToHtml from "../utils/markdownToHtml.js";
+import portfolioData from "../data/portfolio.json" with { type: "json" };
 
 export type Project = {
   id: string;
