@@ -912,3 +912,91 @@ body {
     display: none;
   }
 }
+
+/* ── Project showcase page ───────────────────────────────────────────── */
+.we .proj-cover {
+  margin: 40px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.we .proj-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Base typography for the rendered Markdown body — no bespoke layout (D-03),
+   just readable spacing on top of the page's existing type scale. */
+.we .proj-body {
+  max-width: 720px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-stone-700);
+}
+.we .proj-body h1,
+.we .proj-body h2,
+.we .proj-body h3 {
+  margin: 40px 0 16px;
+  color: var(--color-stone-900);
+  line-height: 1.3;
+}
+.we .proj-body p {
+  margin: 0 0 20px;
+}
+.we .proj-body ul,
+.we .proj-body ol {
+  margin: 0 0 20px;
+  padding-left: 22px;
+}
+.we .proj-body li {
+  margin-bottom: 8px;
+}
+.we .proj-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+.we .proj-body a {
+  color: var(--color-accent-ink);
+}
+.we .proj-body code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--color-stone-100);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.we .proj-body pre {
+  overflow-x: auto;
+  background: var(--color-stone-100);
+  padding: 16px;
+  border-radius: 8px;
+  margin: 0 0 20px;
+}
+.we .proj-body pre code {
+  background: none;
+  padding: 0;
+}
+
+.we .proj-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 820px;
+  margin: 48px 0 0;
+  padding-top: 24px;
+  border-top: 1px solid rgb(from var(--color-wood-600) r g b / 0.12);
+}
+.we .proj-nav-link {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: var(--color-stone-700);
+  max-width: 48%;
+}
+.we .proj-nav-link:hover {
+  color: var(--color-stone-900);
+}
