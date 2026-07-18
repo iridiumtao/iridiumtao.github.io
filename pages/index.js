@@ -3,9 +3,15 @@ import Head from "next/head";
 import Link from "next/link";
 import Nav from "../components/wood/Nav";
 import Footer from "../components/wood/Footer";
+import ProjectCard from "../components/wood/ProjectCard";
+import { getAllProjects } from "../lib/projects";
 
 // Local data
 import data from "@/data/portfolio.json";
+
+export async function getStaticProps() {
+  return { props: { projects: getAllProjects() } };
+}
 
 /* ── Helpers ──────────────────────────────────────────────────────────── */
 
@@ -38,12 +44,6 @@ function formatExpDate(dates) {
   return a.y === b.y
     ? `${a.m} — ${b.m} ${b.y}`
     : `${a.m} ${a.y} — ${b.m} ${b.y}`;
-}
-
-// First 4-digit year found in a date string.
-function endYear(d) {
-  const m = String(d || "").match(/\d{4}/);
-  return m ? m[0] : "";
 }
 
 // "Data Science Intern at Micron Technology" → { role, company }
@@ -85,19 +85,14 @@ function renderEmphasis(text, terms = []) {
 
 /* ── Page ─────────────────────────────────────────────────────────────── */
 
-export default function Home() {
+export default function Home({ projects }) {
   const home = data.home;
 
-  // Projects: most-recent first, featured count from data.
-  const sortedProjects = [...data.projects].sort((a, b) => {
-    const da = a.endDate ? new Date(a.endDate) : null;
-    const db = b.endDate ? new Date(b.endDate) : null;
-    if (!da || !db || isNaN(da) || isNaN(db)) return 0;
-    return db - da;
-  });
+  // getAllProjects() (via getStaticProps) already sorts most-recent first —
+  // the same canonical order the showcase page's prev/next uses (D-13).
   const featuredCount = home.projectCount || 3;
-  const featured = sortedProjects.slice(0, featuredCount);
-  const remaining = sortedProjects.slice(featuredCount);
+  const featured = projects.slice(0, featuredCount);
+  const remaining = projects.slice(featuredCount);
   const [lead, ...rest] = featured;
   const [showAll, setShowAll] = useState(false);
 
@@ -107,20 +102,6 @@ export default function Home() {
     ...data.resume.skills.cloudAndDevOps,
     ...data.resume.skills.dataAndML,
   ];
-
-  const Project = ({ p, size }) => (
-    <a className="proj" href={p.url} target="_blank" rel="noreferrer">
-      <div className={`proj-img ${size}`}>
-        <img src={p.imageSrc} alt={p.title} loading="lazy" />
-        {endYear(p.endDate) && (
-          <span className="badge">{endYear(p.endDate)}</span>
-        )}
-      </div>
-      {p.subtitle && <span className="proj-sub">{p.subtitle}</span>}
-      <h3>{p.title}</h3>
-      <p>{p.description}</p>
-    </a>
-  );
 
   return (
     <div className="we">
@@ -191,29 +172,29 @@ export default function Home() {
               <span className="num">01 ／</span>Selected Projects
             </h2>
             <span className="aside">
-              {showAll ? data.projects.length : featured.length} of{" "}
-              {data.projects.length}
+              {showAll ? projects.length : featured.length} of{" "}
+              {projects.length}
             </span>
           </div>
           <div className="projects">
-            {lead && <Project p={lead} size="large" />}
+            {lead && <ProjectCard p={lead} size="large" />}
             <div className="right-col">
               {rest.map((p) => (
-                <Project key={p.id} p={p} size="small" />
+                <ProjectCard key={p.id} p={p} size="small" />
               ))}
             </div>
           </div>
           {showAll && remaining.length > 0 && (
             <div className="projects-all">
               {remaining.map((p) => (
-                <Project key={p.id} p={p} size="small" />
+                <ProjectCard key={p.id} p={p} size="small" />
               ))}
             </div>
           )}
           {remaining.length > 0 && (
             <div className="show-all">
               <button type="button" onClick={() => setShowAll((v) => !v)}>
-                {showAll ? "Show Less" : `Show All (${data.projects.length})`}
+                {showAll ? "Show Less" : `Show All (${projects.length})`}
               </button>
             </div>
           )}
