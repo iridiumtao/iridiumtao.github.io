@@ -39,6 +39,12 @@ project showcase pages, and ship it clean. `.planning/ROADMAP.md` is the map (gi
   read is build-time. No `basePath` (user page at root); `public/.nojekyll` required.
 - **Optimize for the owner tweaking design later**, and favor stable, boring, well-supported
   tools — he hand-edits this site often and it has a 5-year horizon.
+- **Responsive and cross-browser is fundamental, not polish.** Over half of this site's visitors
+  read it on an iPhone. Phone, tablet, and desktop across Safari, Chromium, and Firefox are all
+  first-class targets — Mobile Safari most of all. A layout that only holds up on a laptop is
+  broken, not nearly done.
+- **Design mobile-first and verify at real viewport widths** — "never fabricate" applies to
+  layout too. Calling a screen responsive after reading the CSS is a guess, not evidence.
 
 ## Working on a 7-year-old base
 
@@ -48,7 +54,7 @@ The repo started from a template that is 7+ years old, and two visual systems st
   and `pages/resume.js`.
 - **Legacy (dying):** `components/{Header,Footer,Button,ContentSection,BlogEditor,…}` — only
   `pages/blog/*` and `pages/edit.js` still import them. `ProjectCard`, `ProjectResume`,
-  `Socials`, `WorkCard` are **already orphaned**.
+  `WorkCard` are **already orphaned** (`Socials` is still imported by the legacy `Footer`).
 
 **Strangler-fig rule:** never delete a legacy piece before its Wood replacement is built and
 verified. Build the new surface first, delete last.
