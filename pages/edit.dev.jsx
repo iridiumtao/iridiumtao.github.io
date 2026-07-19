@@ -1,11 +1,29 @@
+// Dev-only visual editor for data/portfolio.json; excluded from production
+// builds at the routing level via the pageExtensions split in next.config.js.
 import React, { useState, useEffect } from "react";
-import Button from "../components/Button";
-import Header from "../components/Header";
+import Nav from "../components/wood/Nav";
 import { v4 as uuidv4 } from "uuid";
 import { useTheme } from "next-themes";
 
 // Data
 import yourData from "../data/portfolio.json";
+
+/* ── Helpers ─────────────────────────────────────────────────────────── */
+
+// Local replacement for the legacy Button component: the editor only ever used
+// its plain-button branch (children/onClick/classes), so this keeps the same
+// base utility classes without pulling in the dying legacy component tree.
+const EditButton = ({ children, onClick, classes }) => (
+  <button
+    onClick={onClick}
+    type="button"
+    className={`text-sm tablet:text-base p-1 laptop:p-2 m-1 laptop:m-2 rounded-lg transition-all duration-300 ease-out first:ml-0 hover:scale-105 active:scale-100 ${classes ?? ""}`}
+  >
+    {children}
+  </button>
+);
+
+/* ── Page ────────────────────────────────────────────────────────────── */
 
 const Edit = () => {
   // states
@@ -330,55 +348,55 @@ const Edit = () => {
 
   return (
     <div className={`container mx-auto`}>
-      <Header isBlog></Header>
+      <Nav />
       <div className="mt-10">
         <div className={`${theme === "dark" ? "bg-transparent" : "bg-white"}`}>
           <div className="flex items-center justify-between">
             <h1 className="text-4xl">Dashboard</h1>
             <div className="flex items-center">
-              <Button onClick={saveData} type="primary">
+              <EditButton onClick={saveData} type="primary">
                 Save
-              </Button>
+              </EditButton>
             </div>
           </div>
 
           <div className="flex items-center">
-            <Button
+            <EditButton
               onClick={() => setCurrentTabs("HEADER")}
               type={currentTabs === "HEADER" && "primary"}
             >
               Header
-            </Button>
-            <Button
+            </EditButton>
+            <EditButton
               onClick={() => setCurrentTabs("PROJECTS")}
               type={currentTabs === "PROJECTS" && "primary"}
             >
               Projects
-            </Button>
-            <Button
+            </EditButton>
+            <EditButton
               onClick={() => setCurrentTabs("EXPERIENCES")}
               type={currentTabs === "EXPERIENCES" && "primary"}
             >
               Experiences
-            </Button>
-            <Button
+            </EditButton>
+            <EditButton
               onClick={() => setCurrentTabs("ABOUT")}
               type={currentTabs === "ABOUT" && "primary"}
             >
               About
-            </Button>
-            <Button
+            </EditButton>
+            <EditButton
               onClick={() => setCurrentTabs("SOCIAL")}
               type={currentTabs === "SOCIAL" && "primary"}
             >
               Social
-            </Button>
-            <Button
+            </EditButton>
+            <EditButton
               onClick={() => setCurrentTabs("RESUME")}
               type={currentTabs === "RESUME" && "primary"}
             >
               Resume
-            </Button>
+            </EditButton>
           </div>
         </div>
         {/* HEADER */}
@@ -446,60 +464,41 @@ const Edit = () => {
               ></input>
             </div>
             <div className="mt-5 flex items-center">
-              <label className="w-1/5 text-lg opacity-50">Blog</label>
-              <div className="ml-10 flex w-4/5 items-center">
-                <Button
-                  onClick={() => setData({ ...data, showBlog: true })}
-                  type={data.showBlog && "primary"}
-                >
-                  Yes
-                </Button>
-                <Button
-                  onClick={() => setData({ ...data, showBlog: false })}
-                  classes={
-                    !data.showBlog && "bg-red-500 text-white hover:bg-red-600"
-                  }
-                >
-                  No
-                </Button>
-              </div>
-            </div>
-            <div className="mt-5 flex items-center">
               <label className="w-1/5 text-lg opacity-50">Dark Mode</label>
               <div className="ml-10 flex w-4/5 items-center">
-                <Button
+                <EditButton
                   onClick={() => setData({ ...data, darkMode: true })}
                   type={data.darkMode && "primary"}
                 >
                   Yes
-                </Button>
-                <Button
+                </EditButton>
+                <EditButton
                   onClick={() => setData({ ...data, darkMode: false })}
                   classes={
                     !data.darkMode && "bg-red-500 text-white hover:bg-red-600"
                   }
                 >
                   No
-                </Button>
+                </EditButton>
               </div>
             </div>
             <div className="mt-5 flex items-center">
               <label className="w-1/5 text-lg opacity-50">Show Resume</label>
               <div className="ml-10 flex w-4/5 items-center">
-                <Button
+                <EditButton
                   onClick={() => setData({ ...data, showResume: true })}
                   type={data.showResume && "primary"}
                 >
                   Yes
-                </Button>
-                <Button
+                </EditButton>
+                <EditButton
                   onClick={() => setData({ ...data, showResume: false })}
                   classes={
                     !data.showResume && "bg-red-500 text-white hover:bg-red-600"
                   }
                 >
                   No
-                </Button>
+                </EditButton>
               </div>
             </div>
           </div>
@@ -509,20 +508,20 @@ const Edit = () => {
           <>
             <div className="mt-10">
               <div className="my-10">
-                <Button onClick={addProject} type="primary">
+                <EditButton onClick={addProject} type="primary">
                   Add Project +
-                </Button>
+                </EditButton>
               </div>
               {data.projects.map((project, index) => (
                 <div className="mt-10" key={project.id}>
                   <div className="flex items-center justify-between">
                     <h1 className="text-2xl">{project.title}</h1>
-                    <Button
+                    <EditButton
                       onClick={() => deleteProject(project.id)}
                       type="primary"
                     >
                       Delete
-                    </Button>
+                    </EditButton>
                   </div>
 
                   <div className="mt-5 flex items-center">
@@ -635,9 +634,9 @@ const Edit = () => {
             </div>
 
             <div className="my-10">
-              <Button onClick={addProject} type="primary">
+              <EditButton onClick={addProject} type="primary">
                 Add Project +
-              </Button>
+              </EditButton>
             </div>
           </>
         )}
@@ -646,20 +645,20 @@ const Edit = () => {
           <>
             <div className="mt-10">
               <div className="my-10">
-                <Button onClick={addExperience} type="primary">
+                <EditButton onClick={addExperience} type="primary">
                   Add Experience +
-                </Button>
+                </EditButton>
               </div>
               {data.experiences.map((experience, index) => (
                 <div key={experience.id}>
                   <div className="flex items-center justify-between">
                     <h1 className="text-2xl">{experience.title}</h1>
-                    <Button
+                    <EditButton
                       onClick={() => deleteExperience(experience.id)}
                       type="primary"
                     >
                       Delete
-                    </Button>
+                    </EditButton>
                   </div>
                   <div className="mt-5 flex items-center">
                     <label className="w-1/5 text-lg opacity-50">Title</label>
@@ -714,12 +713,12 @@ const Edit = () => {
                 <div key={social.id}>
                   <div className="flex items-center justify-between">
                     <h1 className="text-2xl">{social.title}</h1>
-                    <Button
+                    <EditButton
                       onClick={() => deleteSocials(social.id)}
                       type="primary"
                     >
                       Delete
-                    </Button>
+                    </EditButton>
                   </div>
                   <div className="mt-5 flex items-center">
                     <label className="w-1/5 text-lg opacity-50">Title</label>
@@ -754,9 +753,9 @@ const Edit = () => {
               </>
             ))}
             <div className="my-10">
-              <Button onClick={addSocials} type="primary">
+              <EditButton onClick={addSocials} type="primary">
                 Add Social +
-              </Button>
+              </EditButton>
             </div>
           </div>
         )}
@@ -795,21 +794,21 @@ const Edit = () => {
 
             <h1>Experiences</h1>
             <div className="my-10">
-              <Button onClick={handleAddExperiences} type="primary">
+              <EditButton onClick={handleAddExperiences} type="primary">
                 Add Experience +
-              </Button>
+              </EditButton>
             </div>
             <div className="mt-10">
               {data.resume.experiences.map((experiences, index) => (
                 <div className="mt-5" key={experiences.id}>
                   <div className="flex items-center justify-between">
                     <h1 className="text-2xl">{experiences.position}</h1>
-                    <Button
+                    <EditButton
                       onClick={() => handleDeleteExperience(experiences.id)}
                       type="primary"
                     >
                       Delete
-                    </Button>
+                    </EditButton>
                   </div>
 
                   <div className="mt-5 flex items-center">
@@ -881,12 +880,12 @@ const Edit = () => {
                 <div key={edu.id} className="mt-5">
                   <div className="flex items-center justify-between">
                     <h1 className="text-2xl">{edu.universityName}</h1>
-                    <Button
+                    <EditButton
                       onClick={() => handleDeleteEducation(edu.id)}
                       type="primary"
                     >
                       Delete
-                    </Button>
+                    </EditButton>
                   </div>
                   <div className="mt-5 flex items-center">
                     <label className="w-1/5 text-lg opacity-50">
@@ -1040,20 +1039,20 @@ const Edit = () => {
             <div className="mt-10">
               <h1>Projects</h1>
               <div className="my-10">
-                <Button onClick={handleAddResumeProject} type="primary">
+                <EditButton onClick={handleAddResumeProject} type="primary">
                   Add Project +
-                </Button>
+                </EditButton>
               </div>
               {data.resume.projects.map((project, index) => (
                 <div key={project.id} className="mt-5">
                   <div className="flex items-center justify-between">
                     <h1 className="text-2xl">{project.title}</h1>
-                    <Button
+                    <EditButton
                       onClick={() => handleDeleteResumeProject(project.id)}
                       type="primary"
                     >
                       Delete
-                    </Button>
+                    </EditButton>
                   </div>
                   <div className="mt-5 flex items-center">
                     <label className="w-1/5 text-lg opacity-50">Title</label>
@@ -1137,20 +1136,20 @@ const Edit = () => {
             <div className="mt-10">
               <h1>Honors</h1>
               <div className="my-10">
-                <Button onClick={handleAddHonor} type="primary">
+                <EditButton onClick={handleAddHonor} type="primary">
                   Add Honor +
-                </Button>
+                </EditButton>
               </div>
               {data.resume.honors.map((honor, index) => (
                 <div key={honor.id} className="mt-5">
                   <div className="flex items-center justify-between">
                     <h1 className="text-2xl">{honor.title}</h1>
-                    <Button
+                    <EditButton
                       onClick={() => handleDeleteHonor(honor.id)}
                       type="primary"
                     >
                       Delete
-                    </Button>
+                    </EditButton>
                   </div>
                   <div className="mt-5 flex items-center">
                     <label className="w-1/5 text-lg opacity-50">Title</label>
