@@ -8,11 +8,10 @@ export default [
   ...nextCoreWebVitals,
   {
     // eslint-config-next's bundled parser (next/dist/compiled/babel/eslint-parser)
-    // is vendored inside the installed `next` package. This repo is still on
-    // Next 15.5.3 (the Next 16 bump is a later slice), and that older bundled
-    // parser is incompatible with ESLint 10's scope-manager API. Fall back to
-    // ESLint's built-in parser (espree) — this codebase is plain modern
-    // JS/JSX/ESM with no Babel-only syntax, so no functional loss.
+    // is vendored inside the installed `next` package and is incompatible with
+    // ESLint 10's scope-manager API, which is why this repo pins ESLint 9.
+    // Fall back to ESLint's built-in parser (espree) — this codebase is plain
+    // modern JS/JSX/ESM with no Babel-only syntax, so no functional loss.
     // Scoped to plain JS/JSX files only (files glob added in Phase 2, plan
     // 02-01): without a `files` restriction this object applies globally and
     // clobbers nextCoreWebVitals's own typescript-eslint/parser assignment for
@@ -28,13 +27,12 @@ export default [
     rules: {
       // eslint-config-next 16 bundles eslint-plugin-react-hooks@7, a major bump that
       // adds a large set of new React-Compiler-readiness rules on top of the classic
-      // pair (rules-of-hooks, exhaustive-deps) the prior 15.5.3 ruleset enforced. Those
-      // new rules fire "error" on pre-existing legacy components across the repo
-      // (components/Header, components/WorkCard, pages/blog/*, pages/edit.js,
-      // pages/index.js) — files this tooling-only task does not touch. Downgraded to
-      // warn (not silenced) so they stay visible for a future phase to fix; this
-      // preserves the old ruleset's pass/fail surface (zero regression) instead of
-      // gating this task's build on unrelated pre-existing code. See deferred-items.md.
+      // pair (rules-of-hooks, exhaustive-deps) the prior ruleset enforced. Those new
+      // rules originally fired "error" across the legacy component tree, which phase
+      // 03 has since deleted; the surviving offenders are the remaining page-level
+      // components. Downgraded to warn (not silenced) so they stay visible for a
+      // future pass to fix, preserving the old ruleset's pass/fail surface (zero
+      // regression) rather than gating builds on it. See deferred-items.md.
       "react-hooks/static-components": "warn",
       "react-hooks/use-memo": "warn",
       "react-hooks/preserve-manual-memoization": "warn",
