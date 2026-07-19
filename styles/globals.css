@@ -4,7 +4,6 @@
    Both fonts are now self-hosted via next/font (styles/fonts.js, applied to
    <html> in pages/_document.js) — zero runtime external font requests;
    --font-huninn / --font-jbmono are exposed there. */
-@import "./markdown.css";
 @import "tailwindcss";
 
 /* v4 ignores the old JS `darkMode:"class"` key — must be declared explicitly,

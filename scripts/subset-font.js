@@ -35,9 +35,12 @@ function collectFiles(dir, matches, exclude) {
   return results;
 }
 
-// Site-wide scan scope -- widens 01-03's Wood-only scope to also cover the
-// legacy component tree and blog posts, since `* { font-family: var(--font-sans) }`
-// in styles/globals.css makes Open Huninn the font for every surface.
+// Site-wide scan scope: the JSON content source, every rendered page, the Wood
+// component tree, and the Markdown project bodies under _projects/ (the single
+// surviving Markdown content directory -- the legacy component tree and the old
+// post sources were deleted in phase 03). `* { font-family: var(--font-sans) }`
+// in styles/globals.css makes Open Huninn the font for every surface, so any
+// content directory left out here silently drops its glyphs from the subset.
 const filesToScan = [
   path.join(rootDir, "data/portfolio.json"),
   ...collectFiles(
@@ -48,7 +51,9 @@ const filesToScan = [
   ...collectFiles(path.join(rootDir, "components"), (name) =>
     name.endsWith(".js"),
   ),
-  ...collectFiles(path.join(rootDir, "_posts"), (name) => name.endsWith(".md")),
+  ...collectFiles(path.join(rootDir, "_projects"), (name) =>
+    name.endsWith(".md"),
+  ),
 ].filter((filePath) => fs.existsSync(filePath));
 
 // Build the set of distinct characters actually used across the scanned
