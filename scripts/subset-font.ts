@@ -83,17 +83,22 @@ const projectFiles = collectFiles(path.join(rootDir, "_projects"), (name) =>
 // because the site is 100% English today and the printable-ASCII range below
 // is always unioned in. Once Phase 5 ships Traditional Chinese copy, a drifted
 // scope would drop real CJK glyphs and render that copy in a fallback font.
+let scanScopeBroken = false;
 for (const [label, found] of [
   ["pages", pageFiles],
   ["components", componentFiles],
   ["_projects", projectFiles],
 ] as const) {
   if (found.length === 0) {
-    console.warn(
-      `WARNING: subset-font scanned 0 files under ${label}/ -- its glyphs are ` +
+    console.error(
+      `ERROR: subset-font scanned 0 files under ${label}/ -- its glyphs would be ` +
         `missing from the subset. Check SOURCE_EXTENSIONS against the real file layout.`,
     );
+    scanScopeBroken = true;
   }
+}
+if (scanScopeBroken) {
+  process.exit(1);
 }
 
 const filesToScan = [
@@ -143,4 +148,7 @@ console.log(
     `Subsetted open-huninn-subset.woff2: ${sourceBuffer.length} bytes -> ${subsetBuffer.length} bytes ` +
       `(${usedChars.size} distinct characters).`,
   );
-})();
+})().catch((err) => {
+  console.error("subset-font failed:", err);
+  process.exit(1);
+});
