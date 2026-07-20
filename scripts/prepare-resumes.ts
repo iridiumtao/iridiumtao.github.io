@@ -25,18 +25,10 @@ type ResumeEntry = {
 const docsDir = path.join(__dirname, "../docs");
 const publicResumesDir = path.join(__dirname, "../public/resumes");
 
-if (!fs.existsSync(publicResumesDir)) {
-  fs.mkdirSync(publicResumesDir, { recursive: true });
-}
 
-fs.readdirSync(publicResumesDir).forEach((f) => {
-  try {
-    fs.unlinkSync(path.join(publicResumesDir, f));
-  } catch (e) {
-    console.error(`Error removing file ${f}: ${e}`);
-  }
-});
-
+// Within-year ordering of the filename's season prefix. Rank 1 is deliberately
+// absent from this table: a bare "2025" (no prefix) is assigned rank 1 below,
+// so it sorts after "pre 2025" and before "early 2025".
 const yearInfoOrder: Record<string, number> = {
   pre: 0,
   early: 2,
@@ -52,7 +44,10 @@ function parseYearInfo(yearInfoStr: string): { year: number; rank: number } {
     rank = 1;
   } else {
     year = parseInt(parts[1], 10);
-    rank = yearInfoOrder[parts[0]];
+    // noUncheckedIndexedAccess is off, so this lookup is typed `number` while
+    // an unknown prefix yields undefined at runtime -- that NaN would poison
+    // the sort comparator below and make "latest résumé" arbitrary.
+    rank = yearInfoOrder[parts[0]] ?? 0;
   }
   return { year, rank };
 }
@@ -70,6 +65,15 @@ function compareVersions(v1: string, v2: string): number {
     if (p1 < p2) return -1;
   }
   return 0;
+}
+
+// Read and parse docs/ BEFORE touching public/resumes/. The destination wipe
+// used to run first, so a missing or unreadable docs/ left the directory empty
+// and crashed prebuild -- and because pages/resume.page.tsx swallows the empty
+// read, the next build would quietly ship a résumé page with no downloads.
+if (!fs.existsSync(docsDir)) {
+  console.error(`prepare-resumes: ${docsDir} not found`);
+  process.exit(1);
 }
 
 const files = fs.readdirSync(docsDir);
@@ -111,6 +115,29 @@ for (const pdf of pdfs) {
   }
   resumes[purpose].push(resumeData);
 }
+
+// Only now is it safe to clear the destination: at least one purpose resolved,
+// so the copy loop below will repopulate it.
+const purposes = Object.keys(resumes);
+if (purposes.length === 0) {
+  console.error(
+    `prepare-resumes: no résumé PDFs matched in ${docsDir} -- ` +
+      `leaving public/resumes/ untouched.`,
+  );
+  process.exit(1);
+}
+
+if (!fs.existsSync(publicResumesDir)) {
+  fs.mkdirSync(publicResumesDir, { recursive: true });
+}
+
+fs.readdirSync(publicResumesDir).forEach((f) => {
+  try {
+    fs.unlinkSync(path.join(publicResumesDir, f));
+  } catch (e) {
+    console.error(`Error removing file ${f}: ${e}`);
+  }
+});
 
 for (const purpose in resumes) {
   resumes[purpose].sort((a, b) => {
