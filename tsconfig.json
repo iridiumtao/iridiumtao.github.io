@@ -16,6 +16,8 @@
     "skipLibCheck": true,
     "strict": false,
     "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "moduleDetection": "force",
     "incremental": true,
     "module": "esnext",
     "esModuleInterop": true,

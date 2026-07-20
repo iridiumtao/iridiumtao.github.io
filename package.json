@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start",
     "test": "node --test",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write .",
     "deploy": "yarn build && gh-pages -d out"
