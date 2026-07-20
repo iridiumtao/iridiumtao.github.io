@@ -1,4 +1,4 @@
-// pages/projects/[slug].js
+// pages/projects/[slug].page.tsx
 // Wood-styled project showcase page (PROJ-01/02/03/04). Thin static-generation
 // consumer of lib/projects.ts — build-time data only, no client fs access.
 // getStaticPaths enumerates all real project slugs (fallback: false is the
@@ -9,21 +9,52 @@ import Head from "next/head";
 import Link from "next/link";
 import Nav from "../../components/wood/Nav";
 import Footer from "../../components/wood/Footer";
+import type { GetStaticPaths, GetStaticProps } from "next";
 import { getAllProjects, getProjectBySlug } from "../../lib/projects";
+import type { Project, ProjectWithBody } from "../../lib/projects";
 import { SITE_ORIGIN } from "../../lib/site";
 
-export async function getStaticPaths() {
+// The prev/next neighbour link — just enough of a project to render the label
+// and href. null at each end of the list (D-13, no wrap-around).
+type NavEntry = { slug: string; title: string } | null;
+
+type Props = {
+  project: ProjectWithBody;
+  prev: NavEntry;
+  next: NavEntry;
+};
+
+// The dynamic segment this route generates. Passed as GetStaticProps' second
+// type argument so `params` is narrowed from ParsedUrlQuery to this exact shape.
+type Params = { slug: string };
+
+export const getStaticPaths: GetStaticPaths<Params> = async () => {
   return {
     paths: getAllProjects().map((p) => ({ params: { slug: p.slug } })),
     fallback: false,
   };
-}
+};
 
-export async function getStaticProps({ params }) {
-  const project = await getProjectBySlug(params.slug);
+export const getStaticProps: GetStaticProps<Props, Params> = async ({
+  params,
+}) => {
+  // `fallback: false` means only slugs enumerated by getStaticPaths — i.e. real
+  // projects — ever reach here, so getProjectBySlug cannot return null in
+  // practice. Throwing rather than rendering a null project keeps `project`
+  // non-nullable for the component below and fails the build loudly if the
+  // paths and the data source ever drift apart.
+  const project = params ? await getProjectBySlug(params.slug) : null;
+  if (!project) {
+    throw new Error(
+      `No project found for slug "${params?.slug}". getStaticPaths and ` +
+        "lib/projects.ts have drifted apart.",
+    );
+  }
+
   const all = getAllProjects(); // newest-first, same order as the home grid
-  const i = all.findIndex((p) => p.slug === params.slug);
-  const toNav = (p) => (p ? { slug: p.slug, title: p.title } : null);
+  const i = all.findIndex((p) => p.slug === project.slug);
+  const toNav = (p: Project | null): NavEntry =>
+    p ? { slug: p.slug, title: p.title } : null;
   return {
     props: {
       project,
@@ -31,9 +62,9 @@ export async function getStaticProps({ params }) {
       next: toNav(all[i + 1] ?? null), // older neighbour; null at the oldest end
     },
   };
-}
+};
 
-export default function ProjectPage({ project, prev, next }) {
+export default function ProjectPage({ project, prev, next }: Props) {
   const p = project;
   const dateRange =
     p.startDate === p.endDate ? p.endDate : `${p.startDate} — ${p.endDate}`;
