@@ -1,5 +1,26 @@
-const fs = require("fs");
-const path = require("path");
+// scripts/prepare-resumes.ts
+// Selects the newest-versioned résumé PDF per "purpose" from docs/ and copies
+// each into public/resumes/resume-<purpose>.pdf. Runs on every predev/prebuild.
+// Deliberately CommonJS (require/__dirname, no import/export): Node executes
+// this file directly via the lifecycle hooks and strips the type annotations
+// at runtime, and adding any top-level import/export would flip it to ESM and
+// break `require`. tsconfig's moduleDetection: "force" keeps `tsc` from
+// treating this and subset-font.ts as one shared global scope.
+// `require` returns `any`, so the annotations below are what give every fs/path
+// call site real types. `typeof import(...)` is a type-position-only construct:
+// it is erased entirely at runtime and does NOT turn this file into an ESM
+// module, so `require` keeps working.
+const fs: typeof import("fs") = require("fs");
+const path: typeof import("path") = require("path");
+
+// One résumé PDF discovered in docs/, after filename parsing.
+type ResumeEntry = {
+  filename: string;
+  year: number;
+  rank: number;
+  version: string;
+  purpose: string;
+};
 
 const docsDir = path.join(__dirname, "../docs");
 const publicResumesDir = path.join(__dirname, "../public/resumes");
@@ -16,12 +37,17 @@ fs.readdirSync(publicResumesDir).forEach((f) => {
   }
 });
 
-const yearInfoOrder = { pre: 0, early: 2, mid: 3, late: 4 };
+const yearInfoOrder: Record<string, number> = {
+  pre: 0,
+  early: 2,
+  mid: 3,
+  late: 4,
+};
 
-function parseYearInfo(yearInfoStr) {
+function parseYearInfo(yearInfoStr: string): { year: number; rank: number } {
   const parts = yearInfoStr.split(" ");
-  let year, rank;
-  if (parts.length === 1 && !isNaN(parts[0])) {
+  let year: number, rank: number;
+  if (parts.length === 1 && !isNaN(Number(parts[0]))) {
     year = parseInt(parts[0], 10);
     rank = 1;
   } else {
@@ -31,7 +57,7 @@ function parseYearInfo(yearInfoStr) {
   return { year, rank };
 }
 
-function compareVersions(v1, v2) {
+function compareVersions(v1: string, v2: string): number {
   if (!v1) return -1;
   if (!v2) return 1;
   const parts1 = v1.split(".").map(Number);
@@ -49,7 +75,7 @@ function compareVersions(v1, v2) {
 const files = fs.readdirSync(docsDir);
 const pdfs = files.filter((file) => file.endsWith(".pdf"));
 
-const resumes = {};
+const resumes: Record<string, ResumeEntry[]> = {};
 
 const filenameRegex = /^Chun-Ju Tao Resume (.*)\.pdf$/;
 
@@ -78,7 +104,7 @@ for (const pdf of pdfs) {
     purpose = "SWE";
   }
 
-  const resumeData = { filename: pdf, year, rank, version, purpose };
+  const resumeData: ResumeEntry = { filename: pdf, year, rank, version, purpose };
 
   if (!resumes[purpose]) {
     resumes[purpose] = [];

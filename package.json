@@ -3,9 +3,9 @@
   "version": "1.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/prepare-resumes.js && node scripts/subset-font.js",
+    "predev": "node scripts/prepare-resumes.ts && node scripts/subset-font.js",
     "dev": "next dev",
-    "prebuild": "node scripts/prepare-resumes.js && node scripts/subset-font.js",
+    "prebuild": "node scripts/prepare-resumes.ts && node scripts/subset-font.js",
     "build": "next build",
     "start": "next start",
     "test": "node --test",
