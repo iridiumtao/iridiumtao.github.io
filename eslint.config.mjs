@@ -24,6 +24,16 @@ export default [
         ecmaFeatures: { jsx: true },
       },
     },
+  },
+  {
+    // Severity downgrades, kept SEPARATE from the espree block above and
+    // deliberately extension-agnostic. Phase 4, plan 04-08: these rules used to
+    // live in the JS-only block, so migrating a file to .tsx silently promoted
+    // its findings from warn back to error — pages/edit.dev.tsx alone flipped 7
+    // warnings into build-gating errors purely by being renamed. That is the
+    // same stale-glob failure 04-03 fixed for components/wood/**; scoping a
+    // severity policy by file extension re-introduces it on every migration.
+    files: ["**/*.{js,jsx,mjs,cjs,ts,tsx,mts}"],
     rules: {
       // eslint-config-next 16 bundles eslint-plugin-react-hooks@7, a major bump that
       // adds a large set of new React-Compiler-readiness rules on top of the classic

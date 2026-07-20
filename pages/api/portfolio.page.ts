@@ -1,5 +1,5 @@
 // pages/api/portfolio.page.ts
-// Dev-only writer for data/portfolio.json, POSTed to by pages/edit.dev.jsx.
+// Dev-only writer for data/portfolio.json, POSTed to by pages/edit.dev.tsx.
 // Absent from the static export (output: "export" drops pages/api/*), so this
 // only ever runs under `next dev`. In any non-development NODE_ENV it answers
 // with a static notice instead of touching the filesystem.

@@ -26,14 +26,13 @@ const nextConfig = {
   // page instead removes that collision class permanently: no page-file naming
   // choice can ever accidentally match the dev-only marker.
   //
-  // "dev.jsx" is TRANSITIONAL: the editor is still pages/edit.dev.jsx until it
-  // is converted to pages/edit.dev.tsx (Plan 04-08). Drop "dev.jsx" from the dev
-  // list at that point. It is absent from the prod list either way.
+  // The transitional "dev.jsx" entry was dropped in Plan 04-08 once the editor
+  // became pages/edit.dev.tsx; it is now the only `.dev.*` file in the tree.
   //
   // WARNING: a new page file without a `.page.` suffix will silently vanish from
   // production builds. New pages must be named `<name>.page.tsx` (or .ts/.js).
   pageExtensions: isDev
-    ? ["dev.tsx", "dev.jsx", "page.tsx", "page.ts", "page.js"]
+    ? ["dev.tsx", "page.tsx", "page.ts", "page.js"]
     : ["page.tsx", "page.ts", "page.js"],
 };
 
