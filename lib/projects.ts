@@ -18,26 +18,17 @@ import matter from "gray-matter";
 // verified via `yarn build`.
 import markdownToHtml from "../utils/markdownToHtml.ts";
 import portfolioData from "../data/portfolio.json" with { type: "json" };
+// types/portfolio.ts is the single source of truth for the content model
+// (D-08). This module re-exports Project/ProjectWithBody so its existing
+// consumers keep importing them from here, but it no longer defines its own
+// parallel copies that could silently drift from the canonical ones.
+import type {
+  Project,
+  ProjectWithBody,
+  RawProjectEntry,
+} from "../types/portfolio";
 
-export type Project = {
-  id: string;
-  slug: string;
-  title: string;
-  subtitle: string | null;
-  techStack: string[];
-  startDate: string;
-  endDate: string;
-  description: string;
-  imageSrc: string;
-  url: string;
-  demoUrl: string | null;
-  role: string | null;
-  problem: string | null;
-  process: string | null;
-  outcome: string | null;
-};
-
-export type ProjectWithBody = Project & { body: string | null };
+export type { Project, ProjectWithBody };
 
 // Kebab-case only — rejects path traversal sequences (e.g. "../../etc/passwd")
 // before any path.join() call using the raw slug (T-02-01).
@@ -58,12 +49,10 @@ export function assertServerOnly(): void {
   }
 }
 
-// Raw shape from data/portfolio.json — untyped since the JSON schema itself
-// is extended by a parallel plan (02-02); this module only needs to coalesce
-// whatever optional fields are present today.
-type RawProject = any;
-
-function toProject(raw: RawProject): Project {
+// The one place the raw-JSON shape (subtitle optional/absent) meets the
+// normalized shape (subtitle nullable). The `?? null` coalescing below already
+// handles an absent key correctly, so RawProjectEntry needs no extra guards.
+function toProject(raw: RawProjectEntry): Project {
   return {
     id: raw.id,
     slug: raw.slug,
