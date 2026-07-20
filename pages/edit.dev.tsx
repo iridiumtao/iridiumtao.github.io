@@ -668,7 +668,7 @@ const Edit = () => {
                   <div className="mt-2 flex items-center">
                     <label className="w-1/5 text-lg opacity-50">Subtitle</label>
                     <input
-                      value={project.subtitle}
+                      value={project.subtitle ?? ""}
                       onChange={(e) =>
                         editProjects(index, {
                           ...project,
@@ -1162,7 +1162,7 @@ const Edit = () => {
                 </label>
                 <div className="ml-10 flex w-4/5 flex-col">
                   <textarea
-                    value={data.resume.skills.softwareAndOS}
+                    value={data.resume.skills.softwareAndOS ?? ""}
                     onChange={(e) => {
                       const newSkills = {
                         ...data.resume.skills,
@@ -1309,7 +1309,7 @@ const Edit = () => {
                   <div className="mt-2 flex items-center">
                     <label className="w-1/5 text-lg opacity-50">Event</label>
                     <input
-                      value={honor.event}
+                      value={honor.event ?? ""}
                       onChange={(e) =>
                         handleEditHonor(index, {
                           ...honor,
