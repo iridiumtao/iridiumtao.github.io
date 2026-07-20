@@ -1,8 +1,8 @@
-// pages/_document.js
+// pages/_document.page.tsx
 // Custom Document — anchors <Html suppressHydrationWarning> so next-themes'
 // pre-hydration <html> class mutation (light/dark) never triggers a React
 // hydration-mismatch warning. next/font loaders must NOT live here — they
-// stay in styles/fonts.js (the single font-definitions module); this file
+// stay in styles/fonts.ts (the single font-definitions module); this file
 // only imports the already-instantiated `.variable` string constants and
 // applies them directly to <Html>, the true document root. <html> is
 // unconditionally not `display:contents`, so font-family resolution never
