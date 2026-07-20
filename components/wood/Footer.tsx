@@ -1,5 +1,6 @@
+// components/wood/Footer.tsx
 import React from "react";
-import data from "../../data/portfolio.json";
+import data from "../../lib/portfolio";
 
 // Shared Wood Editorial footer.
 export default function Footer() {
