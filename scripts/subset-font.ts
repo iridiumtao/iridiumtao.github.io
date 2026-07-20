@@ -1,13 +1,18 @@
-// scripts/subset-font.js
+// scripts/subset-font.ts
 // Regenerates public/fonts/open-huninn-subset.woff2 on every predev/prebuild
 // by scanning the site's actual rendered content (site-wide, not just the
 // Wood pages) for distinct characters and re-subsetting the committed
 // hermetic source font (assets/fonts/jf-openhuninn-2.1.ttf) with a pure
 // Node/WASM subsetter (subset-font, backed by harfbuzzjs) -- no Python, no
-// manual re-subsetting step. Mirrors scripts/prepare-resumes.js's style:
+// manual re-subsetting step. Mirrors scripts/prepare-resumes.ts's style:
 // plain CommonJS, fs/path only, console.log progress lines.
-const fs = require("fs");
-const path = require("path");
+//
+// Deliberately CommonJS (require/__dirname, no import/export): Node runs this
+// file directly from the lifecycle hooks and strips its type annotations at
+// runtime; a top-level import/export would flip it to ESM and break `require`.
+// The `typeof import(...)` annotations are type-position only and fully erased.
+const fs: typeof import("fs") = require("fs");
+const path: typeof import("path") = require("path");
 
 const rootDir = path.join(__dirname, "..");
 const sourceFontPath = path.join(rootDir, "assets/fonts/jf-openhuninn-2.1.ttf");
@@ -18,8 +23,12 @@ const outputFontPath = path.join(
 
 // Recursively collect files under `dir` whose name passes `matches(name)`.
 // No glob dependency exists in this project, so we walk manually.
-function collectFiles(dir, matches, exclude) {
-  const results = [];
+function collectFiles(
+  dir: string,
+  matches: (name: string) => boolean,
+  exclude?: (fullPath: string) => boolean,
+): string[] {
+  const results: string[] = [];
   if (!fs.existsSync(dir)) return results;
 
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -60,7 +69,7 @@ const filesToScan = [
 // content, unioned with the full printable-ASCII range so English copy is
 // always covered even if a future edit temporarily removes it (01-03
 // precedent).
-const usedChars = new Set();
+const usedChars = new Set<string>();
 for (const filePath of filesToScan) {
   const content = fs.readFileSync(filePath, "utf8");
   for (const char of content) {
@@ -77,7 +86,13 @@ console.log(
 );
 
 (async () => {
-  const subsetFont = require("subset-font");
+  // subset-font ships no type declarations (no `types` field, no .d.ts), so
+  // this local signature documents the single call shape this script uses.
+  const subsetFont: (
+    source: Buffer,
+    text: string,
+    options: { targetFormat: "woff2" | "woff" | "truetype" | "sfnt" },
+  ) => Promise<Buffer> = require("subset-font");
 
   const sourceBuffer = fs.readFileSync(sourceFontPath);
   const subsetBuffer = await subsetFont(sourceBuffer, subsetText, {
