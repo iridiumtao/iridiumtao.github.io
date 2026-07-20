@@ -185,19 +185,25 @@ const Edit = () => {
     setData(toEditable(cloned));
   }, []);
 
-  const saveData = () => {
+  const saveData = async () => {
     if (!data) return;
-    if (process.env.NODE_ENV === "development") {
-      const dataToSave = toSaved(data);
-      fetch("/api/portfolio", {
+    if (process.env.NODE_ENV !== "development") {
+      alert("This thing only works in development mode.");
+      return;
+    }
+    try {
+      const res = await fetch("/api/portfolio", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(dataToSave),
+        body: JSON.stringify(toSaved(data)),
       });
-    } else {
-      alert("This thing only works in development mode.");
+      if (!res.ok) throw new Error(`save failed: ${res.status}`);
+      alert("Saved.");
+    } catch (err) {
+      console.error(err);
+      alert(`Save failed: ${err}`);
     }
   };
 
