@@ -56,14 +56,31 @@ export default [
     // static half of the enforcement (the runtime half is assertServerOnly()
     // in lib/projects.ts) — see 02-RESEARCH.md "Server-only Enforcement"
     // (the `server-only` npm package is not viable under Pages Router).
-    files: ["components/wood/**/*.js"],
+    // Glob widened in Phase 4, plan 04-03 (D-19): the wood tier is now .tsx,
+    // so the previous .js-only glob matched nothing and this rule had silently
+    // stopped firing. Keep this in sync with the wood tier's file extensions.
+    files: ["components/wood/**/*.{ts,tsx}"],
     rules: {
       "no-restricted-imports": [
         "error",
         {
           patterns: [
             {
-              group: ["*/lib/projects", "@/lib/projects", "**/lib/projects"],
+              // Both the extensionless and the extension-exact ".ts" spelling
+              // must be listed: no-restricted-imports matches the specifier
+              // string literally, so "../../lib/projects.ts" does NOT match
+              // "**/lib/projects". Phase 4 plan 04-02 made extension-exact
+              // specifiers a real in-repo convention (Node's native ESM loader
+              // requires them under `node --test`), so this is a spelling a
+              // future author would plausibly reach for, not a contrived one.
+              group: [
+                "*/lib/projects",
+                "@/lib/projects",
+                "**/lib/projects",
+                "*/lib/projects.ts",
+                "@/lib/projects.ts",
+                "**/lib/projects.ts",
+              ],
               message:
                 "lib/projects.ts is server-only (build-time fs access). " +
                 "Import it only from getStaticProps/getStaticPaths in pages/*.js.",
