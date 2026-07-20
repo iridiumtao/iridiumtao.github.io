@@ -12,9 +12,10 @@
       "dom.iterable",
       "esnext"
     ],
-    "allowJs": true,
+    "allowJs": false,
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
+    "erasableSyntaxOnly": true,
     "noEmit": true,
     "allowImportingTsExtensions": true,
     "moduleDetection": "force",
