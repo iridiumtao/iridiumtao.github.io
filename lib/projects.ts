@@ -7,13 +7,16 @@
 import fs from "fs";
 import { join } from "path";
 import matter from "gray-matter";
-// Explicit ".js" extension + JSON import attribute: required for Node's native
+// Extension-exact specifier + JSON import attribute: required for Node's native
 // ESM loader (used directly by `node --test`, D-12) to resolve these relative
 // imports — Node's ESM resolver (unlike webpack/tsc's "bundler" resolution)
-// does not infer extensions and requires an import attribute for JSON. Both
+// does not infer extensions and requires an import attribute for JSON. The
+// extension must literally match the file on disk, so it tracks renames: when
+// markdownToHtml moved .js -> .ts, this specifier had to move with it. Both
 // forms remain valid under the project's tsconfig ("moduleResolution":
-// "bundler") and Next.js's build pipeline; verified via `yarn build`.
-import markdownToHtml from "../utils/markdownToHtml.js";
+// "bundler", "allowImportingTsExtensions") and Next.js's build pipeline;
+// verified via `yarn build`.
+import markdownToHtml from "../utils/markdownToHtml.ts";
 import portfolioData from "../data/portfolio.json" with { type: "json" };
 
 export type Project = {
