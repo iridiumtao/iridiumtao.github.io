@@ -17,7 +17,12 @@ import matter from "gray-matter";
 // "bundler", "allowImportingTsExtensions") and Next.js's build pipeline;
 // verified via `yarn build`.
 import markdownToHtml from "../utils/markdownToHtml.ts";
-import portfolioData from "../data/portfolio.json" with { type: "json" };
+// Goes through lib/portfolio.ts rather than the raw JSON so the content shape
+// is checked against PortfolioData in the one place that promises to check it
+// (D-06). Importing the JSON directly here meant toProject() consumed the
+// inferred literal type and its RawProjectEntry parameter was never actually
+// enforced against the real file.
+import portfolioData from "./portfolio.ts";
 // types/portfolio.ts is the single source of truth for the content model
 // (D-08). This module re-exports Project/ProjectWithBody so its existing
 // consumers keep importing them from here, but it no longer defines its own
@@ -78,13 +83,19 @@ function toProject(raw: RawProjectEntry): Project {
  */
 export function getAllProjects(): Project[] {
   assertServerOnly();
-  const projects = (portfolioData.projects ?? []).map(toProject);
-  return projects.sort((a, b) => {
-    const da = a.endDate ? new Date(a.endDate) : null;
-    const db = b.endDate ? new Date(b.endDate) : null;
-    if (!da || !db || isNaN(da.getTime()) || isNaN(db.getTime())) return 0;
-    return db.getTime() - da.getTime();
-  });
+  const projects = portfolioData.projects.map(toProject);
+  // Returning 0 for any unparseable date (the previous behaviour) is not a
+  // valid total order: it is non-transitive, so a single malformed endDate made
+  // Array.prototype.sort produce an engine-dependent arrangement of the WHOLE
+  // list rather than misplacing one entry. This order is load-bearing — the
+  // homepage featured grid and every showcase page's prev/next derive from it.
+  // Bad dates now sort deterministically to the end and announce themselves.
+  const ts = (d: string | undefined): number => {
+    const t = d ? new Date(d).getTime() : NaN;
+    if (isNaN(t)) console.warn(`lib/projects: unparseable endDate: "${d}"`);
+    return isNaN(t) ? -Infinity : t;
+  };
+  return projects.sort((a, b) => ts(b.endDate) - ts(a.endDate));
 }
 
 /**
