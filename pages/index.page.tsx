@@ -71,13 +71,17 @@ function renderAccent(
   line: string,
   accent: string | undefined,
 ): React.ReactNode {
-  if (!accent || !line.includes(accent)) return line;
-  const [before, after] = line.split(accent);
+  if (!accent) return line;
+  // Index rather than split(): split() cuts on EVERY occurrence, and
+  // destructuring only the first two chunks silently dropped the tail of the
+  // headline whenever the accent word appeared twice in one line.
+  const i = line.indexOf(accent);
+  if (i === -1) return line;
   return (
     <>
-      {before}
+      {line.slice(0, i)}
       <span className="accent">{accent}</span>
-      {after}
+      {line.slice(i + accent.length)}
     </>
   );
 }
