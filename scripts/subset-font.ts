@@ -44,25 +44,63 @@ function collectFiles(
   return results;
 }
 
+// Source extensions that can contain rendered copy. Phase 4 migrated every
+// page and component from .js to .ts/.tsx, which made the previous
+// `.endsWith(".js")` filters match ZERO files -- the subset silently shrank
+// from 15296 B to 14804 B across the migration. .js/.jsx stay listed so the
+// scan does not break again in the other direction.
+const SOURCE_EXTENSIONS = [".ts", ".tsx", ".js", ".jsx"];
+const isSourceFile = (name: string): boolean =>
+  SOURCE_EXTENSIONS.some((ext) => name.endsWith(ext));
+
 // Site-wide scan scope: the JSON content source, every rendered page, the Wood
 // component tree, and the Markdown project bodies under _projects/ (the single
 // surviving Markdown content directory -- the legacy component tree and the old
 // post sources were deleted in phase 03). `* { font-family: var(--font-sans) }`
 // in styles/globals.css makes Open Huninn the font for every surface, so any
 // content directory left out here silently drops its glyphs from the subset.
+//
+// styles/ is deliberately NOT scanned: globals.css's every `content:` rule is
+// the empty string `""` and styles/fonts.ts holds only identifiers and CSS
+// variable names -- neither contributes a rendered glyph. Verified by
+// inspection in plan 04-09; re-check if a `content: "<glyph>"` is ever added.
+const pageFiles = collectFiles(
+  path.join(rootDir, "pages"),
+  isSourceFile,
+  (fullPath) => fullPath.includes(`${path.sep}pages${path.sep}api${path.sep}`),
+);
+const componentFiles = collectFiles(
+  path.join(rootDir, "components"),
+  isSourceFile,
+);
+const projectFiles = collectFiles(path.join(rootDir, "_projects"), (name) =>
+  name.endsWith(".md"),
+);
+
+// Fail loud instead of silently emitting an under-covered subset. An empty
+// branch here means the scan scope has drifted away from the real source
+// layout again -- exactly the failure mode above, which stayed invisible only
+// because the site is 100% English today and the printable-ASCII range below
+// is always unioned in. Once Phase 5 ships Traditional Chinese copy, a drifted
+// scope would drop real CJK glyphs and render that copy in a fallback font.
+for (const [label, found] of [
+  ["pages", pageFiles],
+  ["components", componentFiles],
+  ["_projects", projectFiles],
+] as const) {
+  if (found.length === 0) {
+    console.warn(
+      `WARNING: subset-font scanned 0 files under ${label}/ -- its glyphs are ` +
+        `missing from the subset. Check SOURCE_EXTENSIONS against the real file layout.`,
+    );
+  }
+}
+
 const filesToScan = [
   path.join(rootDir, "data/portfolio.json"),
-  ...collectFiles(
-    path.join(rootDir, "pages"),
-    (name) => name.endsWith(".js"),
-    (fullPath) => fullPath.includes(`${path.sep}pages${path.sep}api${path.sep}`),
-  ),
-  ...collectFiles(path.join(rootDir, "components"), (name) =>
-    name.endsWith(".js"),
-  ),
-  ...collectFiles(path.join(rootDir, "_projects"), (name) =>
-    name.endsWith(".md"),
-  ),
+  ...pageFiles,
+  ...componentFiles,
+  ...projectFiles,
 ].filter((filePath) => fs.existsSync(filePath));
 
 // Build the set of distinct characters actually used across the scanned
