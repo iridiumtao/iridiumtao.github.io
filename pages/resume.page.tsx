@@ -1,3 +1,7 @@
+// pages/resume.page.tsx
+// The résumé page. All content comes from lib/portfolio.ts (TS-03) — never from
+// data/portfolio.json directly — so a content edit that breaks the shape fails
+// in one place rather than silently here.
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
@@ -6,11 +10,18 @@ import path from "path";
 
 import Nav from "../components/wood/Nav";
 import Footer from "../components/wood/Footer";
-import data from "../data/portfolio.json";
+import data from "../lib/portfolio";
+import type { ResumeSkills } from "../types/portfolio";
 
-export async function getStaticProps() {
+// Build-time-computed from the public/resumes/*.pdf filenames, so it is not part
+// of PortfolioData and deliberately does not live in types/portfolio.ts.
+type ResumeDownload = { url: string; name: string; purpose: string };
+
+export async function getStaticProps(): Promise<{
+  props: { resumes: ResumeDownload[] };
+}> {
   const resumesDir = path.join(process.cwd(), "public", "resumes");
-  let resumes = [];
+  let resumes: ResumeDownload[] = [];
 
   try {
     const filenames = fs.readdirSync(resumesDir);
@@ -38,7 +49,7 @@ export async function getStaticProps() {
 /* ── Helpers ──────────────────────────────────────────────────────────── */
 
 // Sortable date from a "Mon YYYY - Mon YYYY" / "YYYY" string (uses the end).
-function getSortableDate(dateString) {
+function getSortableDate(dateString: string | undefined): Date {
   if (!dateString) return new Date(0);
   const lower = dateString.toString().toLowerCase();
   if (lower.includes("present") || lower.includes("current")) return new Date();
@@ -54,19 +65,27 @@ function getSortableDate(dateString) {
   return new Date(0);
 }
 
-const byDateDesc = (key) => (a, b) =>
-  getSortableDate(b[key]) - getSortableDate(a[key]);
+// Descending comparator over a date field. Takes an accessor rather than a key
+// string so the field is checked against the entry type at compile time — a
+// misspelled or removed field is now a build error, not a silently dead sort.
+// (`.getTime()` is explicit because `Date - Date` only works via valueOf.)
+const byDateDesc =
+  <T,>(pick: (item: T) => string | undefined) =>
+  (a: T, b: T): number =>
+    getSortableDate(pick(b)).getTime() - getSortableDate(pick(a)).getTime();
 
 // Normalise " - " to an en dash for display.
-const fmtRange = (d) => (d || "").replace(/\s*-\s*/, " – ");
+const fmtRange = (d: string | undefined): string =>
+  (d || "").replace(/\s*-\s*/, " – ");
 
 // Join present meta parts with a middot.
-const metaLine = (...parts) => parts.filter(Boolean).join(" · ");
+const metaLine = (...parts: (string | undefined | false)[]): string =>
+  parts.filter(Boolean).join(" · ");
 
 // "Software Developer at CARITY AI" → role + accented company.
-function renderRole(position) {
+function renderRole(position: string | undefined): React.ReactNode {
   const i = (position || "").indexOf(" at ");
-  if (i === -1) return position;
+  if (i === -1 || !position) return position;
   return (
     <>
       {position.slice(0, i)}{" "}
@@ -77,7 +96,24 @@ function renderRole(position) {
 
 /* ── Reusable timeline item ───────────────────────────────────────────── */
 
-function TimelineItem({ title, date, meta, bullets, courses }) {
+// `title` is a ReactNode because renderRole() returns markup for experience
+// entries and a plain string everywhere else. `bullets`/`courses` are optional:
+// only education passes `courses`, and only experience/projects pass `bullets`.
+type TimelineItemProps = {
+  title: React.ReactNode;
+  date?: string;
+  meta?: string;
+  bullets?: string[] | null;
+  courses?: string[] | null;
+};
+
+function TimelineItem({
+  title,
+  date,
+  meta,
+  bullets,
+  courses,
+}: TimelineItemProps) {
   return (
     <div className="tl-item">
       <div className="tl-head">
@@ -107,13 +143,13 @@ function TimelineItem({ title, date, meta, bullets, courses }) {
 
 /* ── Page ─────────────────────────────────────────────────────────────── */
 
-const SKILL_GROUPS = [
+const SKILL_GROUPS: { label: string; key: keyof ResumeSkills }[] = [
   { label: "Languages", key: "languages" },
   { label: "Cloud & DevOps", key: "cloudAndDevOps" },
   { label: "Data & ML", key: "dataAndML" },
 ];
 
-export default function Resume({ resumes }) {
+export default function Resume({ resumes }: { resumes: ResumeDownload[] }) {
   const r = data.resume;
 
   return (
@@ -157,7 +193,7 @@ export default function Resume({ resumes }) {
             </div>
             <div className="tl">
               {[...r.education]
-                .sort(byDateDesc("universityDate"))
+                .sort(byDateDesc((edu) => edu.universityDate))
                 .map((edu) => (
                   <TimelineItem
                     key={edu.id}
@@ -168,7 +204,6 @@ export default function Resume({ resumes }) {
                       edu.gpa && `GPA ${edu.gpa}`,
                       edu.degree,
                     )}
-                    bullets={edu.universityPara ? [edu.universityPara] : null}
                     courses={edu.relevantCoursework}
                   />
                 ))}
@@ -205,7 +240,9 @@ export default function Resume({ resumes }) {
               <span className="aside">{r.experiences.length} roles</span>
             </div>
             <div className="tl">
-              {[...r.experiences].sort(byDateDesc("dates")).map((exp) => (
+              {[...r.experiences]
+                .sort(byDateDesc((exp) => exp.dates))
+                .map((exp) => (
                 <TimelineItem
                   key={exp.id}
                   title={renderRole(exp.position)}
@@ -226,15 +263,17 @@ export default function Resume({ resumes }) {
               <span className="aside">{r.projects.length} selected</span>
             </div>
             <div className="tl">
-              {[...r.projects].sort(byDateDesc("dates")).map((project) => (
-                <TimelineItem
-                  key={project.id}
-                  title={project.title}
-                  date={project.dates}
-                  meta={metaLine(project.organization, project.location)}
-                  bullets={project.details}
-                />
-              ))}
+              {[...r.projects]
+                .sort(byDateDesc((project) => project.dates))
+                .map((project) => (
+                  <TimelineItem
+                    key={project.id}
+                    title={project.title}
+                    date={project.dates}
+                    meta={metaLine(project.organization, project.location)}
+                    bullets={project.details}
+                  />
+                ))}
             </div>
           </section>
 
@@ -246,18 +285,19 @@ export default function Resume({ resumes }) {
               </h2>
             </div>
             <div className="tl">
-              {[...r.honors].sort(byDateDesc("year")).map((honor) => (
-                <TimelineItem
-                  key={honor.id}
-                  title={honor.title}
-                  date={honor.year}
-                  meta={metaLine(
-                    honor.event || honor.organization,
-                    honor.location,
-                  )}
-                  bullets={honor.details}
-                />
-              ))}
+              {[...r.honors]
+                .sort(byDateDesc((honor) => honor.year))
+                .map((honor) => (
+                  <TimelineItem
+                    key={honor.id}
+                    title={honor.title}
+                    date={honor.year}
+                    meta={metaLine(
+                      honor.event || honor.organization,
+                      honor.location,
+                    )}
+                  />
+                ))}
             </div>
           </section>
         </div>
