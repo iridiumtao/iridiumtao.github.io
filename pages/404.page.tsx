@@ -1,4 +1,4 @@
-// pages/404.js
+// pages/404.page.tsx
 // Wood-styled custom 404 (PROJ-05). Next exports this to out/404.html;
 // GitHub Pages serves it automatically for unknown paths. No data fetching —
 // static content only.
