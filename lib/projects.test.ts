@@ -27,7 +27,13 @@ test("getProjectBySlug resolves a fully-shaped project for real Oblivilight data
   assert.deepEqual(project.techStack, ["HCI", "LangChain"]);
   assert.match(project.imageSrc, /^\/images\/projects\//);
   // Proves the Markdown was actually rendered through remark-html, not just read raw.
-  assert.equal(typeof project.body, "string");
+  // `assert.ok` is declared `asserts value` in @types/node, so unlike the
+  // `assert.equal(typeof ..., "string")` spelling it previously used, it also
+  // narrows `body` from `string | null` for the assert.match below (TS2345).
+  assert.ok(
+    typeof project.body === "string",
+    "expected a rendered Markdown body string",
+  );
   assert.match(project.body, /<p>/);
 });
 
