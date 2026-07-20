@@ -1,3 +1,7 @@
+// pages/index.page.tsx
+// The home page. Content comes from lib/portfolio.ts and project data from
+// lib/projects.ts (TS-03) — never from the raw JSON directly. Pages may
+// import lib/projects; the ESLint server-only boundary covers components/wood/**.
 import React, { Fragment, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
@@ -5,17 +9,20 @@ import Nav from "../components/wood/Nav";
 import Footer from "../components/wood/Footer";
 import ProjectCard from "../components/wood/ProjectCard";
 import { getAllProjects } from "../lib/projects";
+import type { Project } from "../lib/projects";
 
 // Local data
-import data from "@/data/portfolio.json";
+import data from "@/lib/portfolio";
 
-export async function getStaticProps() {
+export async function getStaticProps(): Promise<{
+  props: { projects: Project[] };
+}> {
   return { props: { projects: getAllProjects() } };
 }
 
 /* ── Helpers ──────────────────────────────────────────────────────────── */
 
-const MONTHS = {
+const MONTHS: Record<string, string> = {
   January: "JAN",
   February: "FEB",
   March: "MAR",
@@ -31,9 +38,9 @@ const MONTHS = {
 };
 
 // "July 2025 - August 2025" → "JUL — AUG 2025"; collapses shared years.
-function formatExpDate(dates) {
+function formatExpDate(dates: string | undefined): string {
   if (!dates) return "";
-  const fmt = (s) => {
+  const fmt = (s: string) => {
     const [m, y] = s.trim().split(" ");
     return { m: MONTHS[m] || (m || "").toUpperCase(), y };
   };
@@ -47,16 +54,23 @@ function formatExpDate(dates) {
 }
 
 // "Data Science Intern at Micron Technology" → { role, company }
-function splitPosition(pos) {
+function splitPosition(pos: string | undefined): {
+  role: string;
+  company: string;
+} {
   const i = (pos || "").indexOf(" at ");
-  if (i === -1) return { role: pos || "", company: "" };
+  if (i === -1 || !pos) return { role: pos || "", company: "" };
   return { role: pos.slice(0, i), company: pos.slice(i + 4) };
 }
 
-const escapeRegExp = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const escapeRegExp = (s: string): string =>
+  s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 // Wraps a single accent word inside a headline line.
-function renderAccent(line, accent) {
+function renderAccent(
+  line: string,
+  accent: string | undefined,
+): React.ReactNode {
   if (!accent || !line.includes(accent)) return line;
   const [before, after] = line.split(accent);
   return (
@@ -69,12 +83,15 @@ function renderAccent(line, accent) {
 }
 
 // Wraps emphasised terms (rendered as <em> accent) inside body copy.
-function renderEmphasis(text, terms = []) {
+function renderEmphasis(
+  text: string,
+  terms: string[] = [],
+): React.ReactNode {
   if (!terms.length) return text;
   const re = new RegExp(`(${terms.map(escapeRegExp).join("|")})`, "g");
   return text
     .split(re)
-    .map((chunk, i) =>
+    .map((chunk: string, i: number) =>
       terms.includes(chunk) ? (
         <em key={i}>{chunk}</em>
       ) : (
@@ -85,7 +102,7 @@ function renderEmphasis(text, terms = []) {
 
 /* ── Page ─────────────────────────────────────────────────────────────── */
 
-export default function Home({ projects }) {
+export default function Home({ projects }: { projects: Project[] }) {
   const home = data.home;
 
   // getAllProjects() (via getStaticProps) already sorts most-recent first —

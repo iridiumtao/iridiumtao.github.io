@@ -1,7 +1,7 @@
 // pages/resume.page.tsx
 // The résumé page. All content comes from lib/portfolio.ts (TS-03) — never from
-// data/portfolio.json directly — so a content edit that breaks the shape fails
-// in one place rather than silently here.
+// the raw JSON directly — so a content edit that breaks the shape fails in one
+// place rather than silently here.
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
