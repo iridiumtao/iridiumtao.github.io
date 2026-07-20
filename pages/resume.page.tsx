@@ -40,7 +40,17 @@ export async function getStaticProps(): Promise<{
       })
       .reverse();
   } catch (error) {
-    console.log("no resumes folder, it's ok in dev");
+    // Distinguish "not generated yet" from a real failure. prepare-resumes.ts
+    // runs on prebuild and should have populated this directory, so anything
+    // other than ENOENT here is a regression that would otherwise ship a résumé
+    // page with zero download links.
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      console.warn(
+        "public/resumes missing — expected only before prepare-resumes runs",
+      );
+    } else {
+      console.error("Failed to read public/resumes:", error);
+    }
   }
 
   return { props: { resumes } };
