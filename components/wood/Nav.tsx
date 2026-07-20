@@ -1,10 +1,11 @@
+// components/wood/Nav.tsx
 import React from "react";
 import Link from "next/link";
-import data from "../../data/portfolio.json";
+import data from "../../lib/portfolio";
 
 // Shared Wood Editorial navigation. On the homepage, section links are
 // in-page anchors; elsewhere they jump back to the homepage sections.
-export default function Nav({ home = false }) {
+export default function Nav({ home = false }: { home?: boolean }) {
   const base = home ? "" : "/";
   return (
     <nav>
