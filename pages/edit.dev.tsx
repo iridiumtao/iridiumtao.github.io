@@ -1,14 +1,149 @@
-// Dev-only visual editor for data/portfolio.json; excluded from production
-// builds at the routing level via the pageExtensions split in next.config.js.
+// Dev-only visual editor for the site's portfolio content, read through the
+// typed accessor in lib/portfolio.ts; excluded from production builds at the
+// routing level via the pageExtensions split in next.config.js.
+//
+// KNOWN GAP (Phase 5 / EDIT-02): the Skills tab is out of sync with the real
+// content model. It edits `resume.skills.softwareAndOS`, a field that no longer
+// exists in the committed content, and offers no control for the two fields
+// that do (`cloudAndDevOps`, `dataAndML`). Loading and saving without touching
+// that textarea is a no-op, but typing into it writes a `softwareAndOS` array
+// back to the content file, which then fails lib/portfolio.ts's `satisfies
+// PortfolioData` check on the next `yarn typecheck`. Loud, not silent — but
+// still wrong. Typing this file (Plan 04-08) deliberately did not redesign the
+// tab; see D-25.
 import React, { useState, useEffect } from "react";
 import Nav from "../components/wood/Nav";
 import { v4 as uuidv4 } from "uuid";
 import { useTheme } from "next-themes";
 
 // Data
-import yourData from "../data/portfolio.json";
+import yourData from "../lib/portfolio";
+import type {
+  PortfolioData,
+  Resume,
+  ResumeExperienceEntry,
+  ResumeEducationEntry,
+  ResumeSkills,
+  ResumeProjectEntry,
+  ResumeHonorEntry,
+  RawProjectEntry,
+  Experience,
+  Social,
+} from "../types/portfolio";
+
+/* ── Editable shape ──────────────────────────────────────────────────────
+ * The editor's working state is NOT PortfolioData. Several `string[]` fields
+ * are joined into newline-separated strings so a single <textarea> can edit
+ * them, then split back on save. These types describe that transformed shape;
+ * every other field keeps its canonical type.
+ *
+ * `softwareAndOS` is optional and lives ONLY here — it is absent from both the
+ * committed JSON and types/portfolio.ts's ResumeSkills. Adding it to the shared
+ * type would fabricate a content-model field that no real data carries.
+ */
+
+type EditableResumeExperience = Omit<ResumeExperienceEntry, "bullets"> & {
+  bullets: string;
+};
+
+type EditableResumeEducation = Omit<
+  ResumeEducationEntry,
+  "relevantCoursework"
+> & {
+  relevantCoursework: string;
+};
+
+type EditableResumeSkills = Omit<ResumeSkills, "languages"> & {
+  languages: string;
+  softwareAndOS?: string;
+};
+
+type EditableResumeProject = Omit<ResumeProjectEntry, "details"> & {
+  details: string;
+};
+
+type EditableResume = Omit<
+  Resume,
+  "experiences" | "education" | "skills" | "projects"
+> & {
+  experiences: EditableResumeExperience[];
+  education: EditableResumeEducation[];
+  skills: EditableResumeSkills;
+  projects: EditableResumeProject[];
+};
+
+type EditableData = Omit<PortfolioData, "resume"> & { resume: EditableResume };
+
+type TabId =
+  | "HEADER"
+  | "PROJECTS"
+  | "EXPERIENCES"
+  | "ABOUT"
+  | "SOCIAL"
+  | "RESUME";
 
 /* ── Helpers ─────────────────────────────────────────────────────────── */
+
+// PortfolioData -> EditableData. Takes an already-deep-cloned source so the
+// untouched nested objects it spreads through cannot alias the imported module.
+const toEditable = (source: PortfolioData): EditableData => ({
+  ...source,
+  resume: {
+    ...source.resume,
+    experiences: source.resume.experiences.map((exp) => ({
+      ...exp,
+      bullets: exp.bullets.join("\n"),
+    })),
+    education: source.resume.education.map((edu) => ({
+      ...edu,
+      relevantCoursework: edu.relevantCoursework.join("\n"),
+    })),
+    skills: {
+      ...source.resume.skills,
+      languages: source.resume.skills.languages.join("\n"),
+    },
+    projects: source.resume.projects.map((proj) => ({
+      ...proj,
+      details: proj.details ? proj.details.join("\n") : "",
+    })),
+  },
+});
+
+const splitLines = (value: string): string[] =>
+  value
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+// EditableData -> PortfolioData, the inverse of toEditable. Builds a new object
+// rather than mutating a clone, so the live editor state is never touched.
+const toSaved = (edited: EditableData): PortfolioData => ({
+  ...edited,
+  resume: {
+    ...edited.resume,
+    experiences: edited.resume.experiences.map((exp) => ({
+      ...exp,
+      bullets: splitLines(exp.bullets),
+    })),
+    education: edited.resume.education.map((edu) => ({
+      ...edu,
+      relevantCoursework: splitLines(edu.relevantCoursework),
+    })),
+    skills: {
+      ...edited.resume.skills,
+      languages: splitLines(edited.resume.skills.languages),
+      // Preserved only to keep the legacy textarea's save path behaving exactly
+      // as it did before this file was typed. See the KNOWN GAP note above.
+      ...(typeof edited.resume.skills.softwareAndOS === "string"
+        ? { softwareAndOS: splitLines(edited.resume.skills.softwareAndOS) }
+        : {}),
+    },
+    projects: edited.resume.projects.map((proj) => ({
+      ...proj,
+      details: proj.details ? splitLines(proj.details) : [],
+    })),
+  },
+});
 
 // Local replacement for the legacy Button component: the editor only ever used
 // its plain-button branch (children/onClick/classes), so this keeps the same
@@ -27,97 +162,21 @@ const EditButton = ({ children, onClick, classes }) => (
 
 const Edit = () => {
   // states
-  const [data, setData] = useState(null);
-  const [currentTabs, setCurrentTabs] = useState("HEADER");
+  const [data, setData] = useState<EditableData | null>(null);
+  const [currentTabs, setCurrentTabs] = useState<TabId>("HEADER");
   const { theme } = useTheme();
 
   useEffect(() => {
-    const transformedData = JSON.parse(JSON.stringify(yourData));
-
-    // Experiences
-    transformedData.resume.experiences.forEach((exp) => {
-      if (Array.isArray(exp.bullets)) {
-        exp.bullets = exp.bullets.join("\n");
-      }
-    });
-
-    // Education
-    transformedData.resume.education.forEach((edu) => {
-      if (Array.isArray(edu.relevantCoursework)) {
-        edu.relevantCoursework = edu.relevantCoursework.join("\n");
-      }
-    });
-
-    // Skills
-    if (Array.isArray(transformedData.resume.skills.languages)) {
-      transformedData.resume.skills.languages =
-        transformedData.resume.skills.languages.join("\n");
-    }
-    if (Array.isArray(transformedData.resume.skills.softwareAndOS)) {
-      transformedData.resume.skills.softwareAndOS =
-        transformedData.resume.skills.softwareAndOS.join("\n");
-    }
-
-    // Resume Projects
-    transformedData.resume.projects.forEach((proj) => {
-      if (proj.details && Array.isArray(proj.details)) {
-        proj.details = proj.details.join("\n");
-      } else if (!proj.details) {
-        proj.details = "";
-      }
-    });
-
-    setData(transformedData);
+    // Deep-clone first: the editor mutates arrays in place, and the imported
+    // module object must not be one of them.
+    const cloned = JSON.parse(JSON.stringify(yourData)) as PortfolioData;
+    setData(toEditable(cloned));
   }, []);
 
   const saveData = () => {
+    if (!data) return;
     if (process.env.NODE_ENV === "development") {
-      const dataToSave = JSON.parse(JSON.stringify(data));
-
-      // Experiences
-      dataToSave.resume.experiences.forEach((exp) => {
-        if (typeof exp.bullets === "string") {
-          exp.bullets = exp.bullets
-            .split("\n")
-            .map((s) => s.trim())
-            .filter(Boolean);
-        }
-      });
-
-      // Education
-      dataToSave.resume.education.forEach((edu) => {
-        if (typeof edu.relevantCoursework === "string") {
-          edu.relevantCoursework = edu.relevantCoursework
-            .split("\n")
-            .map((s) => s.trim())
-            .filter(Boolean);
-        }
-      });
-
-      // Skills
-      if (typeof dataToSave.resume.skills.languages === "string") {
-        dataToSave.resume.skills.languages = dataToSave.resume.skills.languages
-          .split("\n")
-          .map((s) => s.trim())
-          .filter(Boolean);
-      }
-      if (typeof dataToSave.resume.skills.softwareAndOS === "string") {
-        dataToSave.resume.skills.softwareAndOS =
-          dataToSave.resume.skills.softwareAndOS
-            .split("\n")
-            .map((s) => s.trim())
-            .filter(Boolean);
-      }
-
-      // Resume Projects
-      dataToSave.resume.projects.forEach((proj) => {
-        if (proj.details && typeof proj.details === "string") {
-          proj.details = proj.details
-            .split("\n")
-            .map((s) => s.trim())
-            .filter(Boolean);
-        }
-      });
+      const dataToSave = toSaved(data);
       fetch("/api/portfolio", {
         method: "POST",
         headers: {
@@ -131,16 +190,18 @@ const Edit = () => {
   };
 
   // Project Handler
-  const editProjects = (projectIndex, editProject) => {
-    let copyProjects = data.projects;
+  const editProjects = (projectIndex: number, editProject: RawProjectEntry) => {
+    if (!data) return;
+    const copyProjects = data.projects;
     copyProjects[projectIndex] = { ...editProject };
     setData({ ...data, projects: copyProjects });
   };
 
   const addProject = () => {
+    if (!data) return;
     const newId = (
       data.projects.length > 0
-        ? Math.max(...data.projects.map((p) => parseInt(p.id))) + 1
+        ? Math.max(...data.projects.map((p) => parseInt(p.id, 10))) + 1
         : 1
     ).toString();
     setData({
@@ -148,34 +209,50 @@ const Edit = () => {
       projects: [
         {
           id: newId,
+          // Required by RawProjectEntry and by lib/projects.ts, which keys
+          // every showcase page off `slug`. Left as a placeholder for the owner
+          // to replace — an entry without it cannot render a project page.
+          slug: "new-project",
           title: "New Project",
           subtitle: "Project Subtitle",
+          techStack: [],
           startDate: "January 2025",
           endDate: "January 2025",
           description: "Web Design & Development",
           imageSrc:
             "https://images.unsplash.com/photo-1517479149777-5f3b1511d5ad?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTAyfHxwYXN0ZWx8ZW58MHx8MHw%3D&auto=format&fit=crop&w=400&q=60",
           url: "http://localhost",
+          demoUrl: null,
+          // The owner writes this prose himself — never generated.
+          role: null,
+          problem: null,
+          process: null,
+          outcome: null,
         },
         ...data.projects,
       ],
     });
   };
 
-  const deleteProject = (id) => {
-    let copyProjects = data.projects;
-    copyProjects = copyProjects.filter((project) => project.id !== id);
+  const deleteProject = (id: string) => {
+    if (!data) return;
+    const copyProjects = data.projects.filter((project) => project.id !== id);
     setData({ ...data, projects: copyProjects });
   };
 
   // Experience Handler
-  const editExperiences = (experienceIndex, editExperience) => {
-    let copyExperiences = data.experiences;
+  const editExperiences = (
+    experienceIndex: number,
+    editExperience: Experience,
+  ) => {
+    if (!data) return;
+    const copyExperiences = data.experiences;
     copyExperiences[experienceIndex] = { ...editExperience };
     setData({ ...data, experiences: copyExperiences });
   };
 
   const addExperience = () => {
+    if (!data) return;
     setData({
       ...data,
       experiences: [
@@ -190,29 +267,33 @@ const Edit = () => {
     });
   };
 
-  const deleteExperience = (id) => {
-    let copyExperiences = data.experiences;
-    copyExperiences = copyExperiences.filter(
+  const deleteExperience = (id: string) => {
+    if (!data) return;
+    const copyExperiences = data.experiences.filter(
       (experience) => experience.id !== id,
     );
     setData({ ...data, experiences: copyExperiences });
   };
 
   // Socials Handler
+  // Socials are addressed by index, not id: Social carries no `id` in the real
+  // content model, so the previous id-based filter compared `undefined !==
+  // undefined` for every existing entry and deleted the entire list.
 
-  const editSocials = (socialIndex, editSocial) => {
-    let copySocials = data.socials;
+  const editSocials = (socialIndex: number, editSocial: Social) => {
+    if (!data) return;
+    const copySocials = data.socials;
     copySocials[socialIndex] = { ...editSocial };
     setData({ ...data, socials: copySocials });
   };
 
   const addSocials = () => {
+    if (!data) return;
     setData({
       ...data,
       socials: [
         ...data.socials,
         {
-          id: uuidv4(),
           title: "New Link",
           link: "localhost",
         },
@@ -220,15 +301,16 @@ const Edit = () => {
     });
   };
 
-  const deleteSocials = (id) => {
-    let copySocials = data.socials;
-    copySocials = copySocials.filter((social) => social.id !== id);
+  const deleteSocials = (socialIndex: number) => {
+    if (!data) return;
+    const copySocials = data.socials.filter((_, i) => i !== socialIndex);
     setData({ ...data, socials: copySocials });
   };
 
   // Resume
 
   const handleAddExperiences = () => {
+    if (!data) return;
     setData({
       ...data,
       resume: {
@@ -239,6 +321,8 @@ const Edit = () => {
             dates: "Enter Dates",
             type: "Full Time",
             position: "Frontend Engineer at X",
+            // Required by ResumeExperienceEntry; every real entry carries it.
+            location: "Location",
             bullets: "Worked on the frontend of a React application",
           },
           ...data.resume.experiences,
@@ -247,8 +331,12 @@ const Edit = () => {
     });
   };
 
-  const handleEditExperiences = (index, editExperience) => {
-    let copyExperiences = data.resume.experiences;
+  const handleEditExperiences = (
+    index: number,
+    editExperience: EditableResumeExperience,
+  ) => {
+    if (!data) return;
+    const copyExperiences = data.resume.experiences;
     copyExperiences[index] = { ...editExperience };
     setData({
       ...data,
@@ -256,9 +344,9 @@ const Edit = () => {
     });
   };
 
-  const handleDeleteExperience = (id) => {
-    let copyExperiences = data.resume.experiences;
-    copyExperiences = copyExperiences.filter(
+  const handleDeleteExperience = (id: string) => {
+    if (!data) return;
+    const copyExperiences = data.resume.experiences.filter(
       (experience) => experience.id !== id,
     );
     setData({
@@ -267,9 +355,9 @@ const Edit = () => {
     });
   };
 
-  const handleDeleteEducation = (id) => {
-    let copyEducation = data.resume.education;
-    copyEducation = copyEducation.filter((edu) => edu.id !== id);
+  const handleDeleteEducation = (id: string) => {
+    if (!data) return;
+    const copyEducation = data.resume.education.filter((edu) => edu.id !== id);
     setData({
       ...data,
       resume: { ...data.resume, education: copyEducation },
@@ -278,6 +366,7 @@ const Edit = () => {
 
   // Resume Projects
   const handleAddResumeProject = () => {
+    if (!data) return;
     setData({
       ...data,
       resume: {
@@ -297,8 +386,12 @@ const Edit = () => {
     });
   };
 
-  const handleEditResumeProject = (index, editProject) => {
-    let copyProjects = data.resume.projects;
+  const handleEditResumeProject = (
+    index: number,
+    editProject: EditableResumeProject,
+  ) => {
+    if (!data) return;
+    const copyProjects = data.resume.projects;
     copyProjects[index] = { ...editProject };
     setData({
       ...data,
@@ -306,14 +399,17 @@ const Edit = () => {
     });
   };
 
-  const handleDeleteResumeProject = (id) => {
-    let copyProjects = data.resume.projects;
-    copyProjects = copyProjects.filter((project) => project.id !== id);
+  const handleDeleteResumeProject = (id: string) => {
+    if (!data) return;
+    const copyProjects = data.resume.projects.filter(
+      (project) => project.id !== id,
+    );
     setData({ ...data, resume: { ...data.resume, projects: copyProjects } });
   };
 
   // Resume Honors
   const handleAddHonor = () => {
+    if (!data) return;
     setData({
       ...data,
       resume: {
@@ -332,15 +428,16 @@ const Edit = () => {
     });
   };
 
-  const handleEditHonor = (index, editHonor) => {
-    let copyHonors = data.resume.honors;
+  const handleEditHonor = (index: number, editHonor: ResumeHonorEntry) => {
+    if (!data) return;
+    const copyHonors = data.resume.honors;
     copyHonors[index] = { ...editHonor };
     setData({ ...data, resume: { ...data.resume, honors: copyHonors } });
   };
 
-  const handleDeleteHonor = (id) => {
-    let copyHonors = data.resume.honors;
-    copyHonors = copyHonors.filter((honor) => honor.id !== id);
+  const handleDeleteHonor = (id: string) => {
+    if (!data) return;
+    const copyHonors = data.resume.honors.filter((honor) => honor.id !== id);
     setData({ ...data, resume: { ...data.resume, honors: copyHonors } });
   };
 
