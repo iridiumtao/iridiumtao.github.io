@@ -10,8 +10,15 @@ export default [
     // eslint-config-next's bundled parser (next/dist/compiled/babel/eslint-parser)
     // is vendored inside the installed `next` package and is incompatible with
     // ESLint 10's scope-manager API, which is why this repo pins ESLint 9.
-    // Fall back to ESLint's built-in parser (espree) — this codebase is plain
-    // modern JS/JSX/ESM with no Babel-only syntax, so no functional loss.
+    // Fall back to ESLint's built-in parser (espree) — the files this block
+    // still governs are plain modern ESM with no Babel-only syntax, so no
+    // functional loss.
+    //
+    // Phase 4, plan 04-10 audit: after the full TypeScript migration this glob
+    // matches exactly four root config files (next.config.js, postcss.config.js,
+    // eslint.config.mjs, prettier.config.mjs) and nothing else. It is therefore
+    // still load-bearing — do NOT widen it to .ts/.tsx, which would re-introduce
+    // the exact clobbering bug described below.
     // Scoped to plain JS/JSX files only (files glob added in Phase 2, plan
     // 02-01): without a `files` restriction this object applies globally and
     // clobbers nextCoreWebVitals's own typescript-eslint/parser assignment for
@@ -93,7 +100,8 @@ export default [
               ],
               message:
                 "lib/projects.ts is server-only (build-time fs access). " +
-                "Import it only from getStaticProps/getStaticPaths in pages/*.js.",
+                "Import it only from getStaticProps/getStaticPaths in " +
+                "pages/**/*.page.tsx.",
             },
           ],
         },
