@@ -123,7 +123,7 @@ export default function Home({ projects }: { projects: Project[] }) {
   return (
     <div className="we">
       <Head>
-        <title>{data.name} Tao — Engineer</title>
+        <title>{`${data.name} Tao — Engineer`}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 

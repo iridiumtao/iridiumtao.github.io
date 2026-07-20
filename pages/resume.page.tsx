@@ -155,7 +155,7 @@ export default function Resume({ resumes }: { resumes: ResumeDownload[] }) {
   return (
     <div className="we">
       <Head>
-        <title>Resume — {data.name} Tao</title>
+        <title>{`Resume — ${data.name} Tao`}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
