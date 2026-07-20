@@ -210,9 +210,12 @@ const Edit = () => {
   // Project Handler
   const editProjects = (projectIndex: number, editProject: RawProjectEntry) => {
     if (!data) return;
-    const copyProjects = data.projects;
-    copyProjects[projectIndex] = { ...editProject };
-    setData({ ...data, projects: copyProjects });
+    setData({
+      ...data,
+      projects: data.projects.map((p, i) =>
+        i === projectIndex ? { ...editProject } : p,
+      ),
+    });
   };
 
   const addProject = () => {
@@ -264,9 +267,12 @@ const Edit = () => {
     editExperience: Experience,
   ) => {
     if (!data) return;
-    const copyExperiences = data.experiences;
-    copyExperiences[experienceIndex] = { ...editExperience };
-    setData({ ...data, experiences: copyExperiences });
+    setData({
+      ...data,
+      experiences: data.experiences.map((e, i) =>
+        i === experienceIndex ? { ...editExperience } : e,
+      ),
+    });
   };
 
   const addExperience = () => {
@@ -300,9 +306,12 @@ const Edit = () => {
 
   const editSocials = (socialIndex: number, editSocial: Social) => {
     if (!data) return;
-    const copySocials = data.socials;
-    copySocials[socialIndex] = { ...editSocial };
-    setData({ ...data, socials: copySocials });
+    setData({
+      ...data,
+      socials: data.socials.map((s, i) =>
+        i === socialIndex ? { ...editSocial } : s,
+      ),
+    });
   };
 
   const addSocials = () => {
@@ -354,11 +363,14 @@ const Edit = () => {
     editExperience: EditableResumeExperience,
   ) => {
     if (!data) return;
-    const copyExperiences = data.resume.experiences;
-    copyExperiences[index] = { ...editExperience };
     setData({
       ...data,
-      resume: { ...data.resume, experiences: copyExperiences },
+      resume: {
+        ...data.resume,
+        experiences: data.resume.experiences.map((e, i) =>
+          i === index ? { ...editExperience } : e,
+        ),
+      },
     });
   };
 
@@ -409,11 +421,14 @@ const Edit = () => {
     editProject: EditableResumeProject,
   ) => {
     if (!data) return;
-    const copyProjects = data.resume.projects;
-    copyProjects[index] = { ...editProject };
     setData({
       ...data,
-      resume: { ...data.resume, projects: copyProjects },
+      resume: {
+        ...data.resume,
+        projects: data.resume.projects.map((p, i) =>
+          i === index ? { ...editProject } : p,
+        ),
+      },
     });
   };
 
@@ -448,9 +463,15 @@ const Edit = () => {
 
   const handleEditHonor = (index: number, editHonor: ResumeHonorEntry) => {
     if (!data) return;
-    const copyHonors = data.resume.honors;
-    copyHonors[index] = { ...editHonor };
-    setData({ ...data, resume: { ...data.resume, honors: copyHonors } });
+    setData({
+      ...data,
+      resume: {
+        ...data.resume,
+        honors: data.resume.honors.map((h, i) =>
+          i === index ? { ...editHonor } : h,
+        ),
+      },
+    });
   };
 
   const handleDeleteHonor = (id: string) => {
@@ -992,11 +1013,15 @@ const Edit = () => {
                     <input
                       value={edu.universityName}
                       onChange={(e) => {
-                        const newEdu = [...data.resume.education];
-                        newEdu[index].universityName = e.target.value;
+                        const value = e.target.value;
                         setData({
                           ...data,
-                          resume: { ...data.resume, education: newEdu },
+                          resume: {
+                            ...data.resume,
+                            education: data.resume.education.map((it, i) =>
+                              i === index ? { ...it, universityName: value } : it,
+                            ),
+                          },
                         });
                       }}
                       className="ml-10 w-4/5 rounded-md border-2 p-2 shadow-lg"
@@ -1010,11 +1035,15 @@ const Edit = () => {
                     <input
                       value={edu.universityDate}
                       onChange={(e) => {
-                        const newEdu = [...data.resume.education];
-                        newEdu[index].universityDate = e.target.value;
+                        const value = e.target.value;
                         setData({
                           ...data,
-                          resume: { ...data.resume, education: newEdu },
+                          resume: {
+                            ...data.resume,
+                            education: data.resume.education.map((it, i) =>
+                              i === index ? { ...it, universityDate: value } : it,
+                            ),
+                          },
                         });
                       }}
                       className="ml-10 w-4/5 rounded-md border-2 p-2 shadow-lg"
@@ -1026,11 +1055,15 @@ const Edit = () => {
                     <input
                       value={edu.location}
                       onChange={(e) => {
-                        const newEdu = [...data.resume.education];
-                        newEdu[index].location = e.target.value;
+                        const value = e.target.value;
                         setData({
                           ...data,
-                          resume: { ...data.resume, education: newEdu },
+                          resume: {
+                            ...data.resume,
+                            education: data.resume.education.map((it, i) =>
+                              i === index ? { ...it, location: value } : it,
+                            ),
+                          },
                         });
                       }}
                       className="ml-10 w-4/5 rounded-md border-2 p-2 shadow-lg"
@@ -1042,11 +1075,15 @@ const Edit = () => {
                     <input
                       value={edu.degree}
                       onChange={(e) => {
-                        const newEdu = [...data.resume.education];
-                        newEdu[index].degree = e.target.value;
+                        const value = e.target.value;
                         setData({
                           ...data,
-                          resume: { ...data.resume, education: newEdu },
+                          resume: {
+                            ...data.resume,
+                            education: data.resume.education.map((it, i) =>
+                              i === index ? { ...it, degree: value } : it,
+                            ),
+                          },
                         });
                       }}
                       className="ml-10 w-4/5 rounded-md border-2 p-2 shadow-lg"
@@ -1058,11 +1095,15 @@ const Edit = () => {
                     <input
                       value={edu.gpa}
                       onChange={(e) => {
-                        const newEdu = [...data.resume.education];
-                        newEdu[index].gpa = e.target.value;
+                        const value = e.target.value;
                         setData({
                           ...data,
-                          resume: { ...data.resume, education: newEdu },
+                          resume: {
+                            ...data.resume,
+                            education: data.resume.education.map((it, i) =>
+                              i === index ? { ...it, gpa: value } : it,
+                            ),
+                          },
                         });
                       }}
                       className="ml-10 w-4/5 rounded-md border-2 p-2 shadow-lg"
@@ -1076,11 +1117,15 @@ const Edit = () => {
                     <textarea
                       value={edu.relevantCoursework}
                       onChange={(e) => {
-                        const newEdu = [...data.resume.education];
-                        newEdu[index].relevantCoursework = e.target.value;
+                        const value = e.target.value;
                         setData({
                           ...data,
-                          resume: { ...data.resume, education: newEdu },
+                          resume: {
+                            ...data.resume,
+                            education: data.resume.education.map((it, i) =>
+                              i === index ? { ...it, relevantCoursework: value } : it,
+                            ),
+                          },
                         });
                       }}
                       className="ml-10 w-4/5 rounded-md border-2 p-2 shadow-lg"
