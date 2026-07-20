@@ -11,7 +11,7 @@
 //   ("./blogRedirects" alone is rejected by Node's ESM resolver).
 import test from "node:test";
 import assert from "node:assert/strict";
-import { OLD_TO_NEW_SLUG } from "./blogRedirects.js";
+import { OLD_TO_NEW_SLUG } from "./blogRedirects.ts";
 import portfolioData from "../data/portfolio.json" with { type: "json" };
 
 const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
