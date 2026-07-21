@@ -935,6 +935,17 @@ body {
   .we .proj-nav .proj-nav-link {
     max-width: none;
   }
+  /* CR-01: the base rule below sets margin-left: auto on the "next" link to
+     push it right in the row layout. Once flex-direction is column that same
+     margin becomes a CROSS-axis auto margin, which per CSS Flexbox 8.1
+     absorbs all free space and outranks the align-items: flex-start above —
+     right-aligning the stacked next link (and a lone "next" on the first
+     project). Reset it so the column stays genuinely left-aligned. The extra
+     .proj-nav class is required for the same file-order reason as the rule
+     above: this block precedes the base rule in the file. */
+  .we .proj-nav .proj-nav-link.proj-nav-next {
+    margin-left: 0;
+  }
 }
 
 /* ── Project showcase page ───────────────────────────────────────────── */
