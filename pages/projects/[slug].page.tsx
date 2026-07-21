@@ -131,7 +131,10 @@ export default function ProjectPage({ project, prev, next }: Props) {
             </Link>
           )}
           {next && (
-            <Link className="proj-nav-link" href={`/projects/${next.slug}`}>
+            <Link
+              className="proj-nav-link proj-nav-next"
+              href={`/projects/${next.slug}`}
+            >
               {next.title} →
             </Link>
           )}

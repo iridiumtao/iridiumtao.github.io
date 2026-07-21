@@ -910,6 +910,31 @@ body {
   .we .nav-links a:not(.cta) {
     display: none;
   }
+  /* FIX-02/D-05: stack prev/next vertically so a long project title gets
+     full width instead of crowding inside a 48%-capped row. The .proj-nav
+     .proj-nav-link selector (one class more specific than the base
+     .we .proj-nav-link rule below) is required, not stylistic — this block
+     precedes the base rule in the file, so at equal specificity the base
+     rule's later source position would otherwise win the cascade and the
+     max-width: 48% cap would silently survive this override.
+     align-items: flex-start is also required, not incidental: .proj-nav is
+     a <nav> element, and the generic ".we nav { align-items: center; }"
+     header-bar rule (above) matches it too — invisible while row-direction
+     hid its cross-axis effect, but once flex-direction is column that same
+     inherited center pulls each stacked link to the middle instead of the
+     left. flex-start (not stretch) is deliberate: it keeps a short lone
+     link's own hit box left-aligned and measurable, while a long title
+     still wraps to the full row width either way (shrink-to-fit is capped
+     at the available width regardless of align-items), so D-05's
+     no-crowding guarantee is unaffected. */
+  .we .proj-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .we .proj-nav .proj-nav-link {
+    max-width: none;
+  }
 }
 
 /* ── Project showcase page ───────────────────────────────────────────── */
@@ -998,4 +1023,20 @@ body {
 }
 .we .proj-nav-link:hover {
   color: var(--color-stone-900);
+}
+/* FIX-02/D-06: under justify-content: space-between, a LONE flex child
+   (first project has no prev, last has no next) lands at flex-start, so a
+   solo "next →" link renders on the left and misreads as "previous". A
+   structural :last-child selector cannot fix this alone — the last
+   project's solo "prev ←" link is *also* :last-child (its only child), so
+   :last-child would incorrectly drag that already-correct link to the
+   right too. The .proj-nav-next class (set only on the next link in
+   pages/projects/[slug].page.tsx) is the one reliable way to target "next"
+   specifically regardless of whether it is paired or alone. In the paired
+   case this margin-left: auto is a no-op — with two flex children,
+   space-between already puts the second flush against the right edge, and
+   an auto margin on that same child consumes the identical leftover space
+   to land it in the same place. */
+.we .proj-nav-link.proj-nav-next {
+  margin-left: auto;
 }
