@@ -116,6 +116,13 @@ export default function ProjectPage({ project, prev, next }: Props) {
           <div className="proj-cover">
             <img src={p.imageSrc} alt={p.title} />
           </div>
+          {/* HTML sink. p.body is build-time output of utils/markdownToHtml.ts,
+              which runs remark-html >= 14 with its default sanitizer on
+              repo-owned _projects/*.md -- raw HTML and javascript: hrefs are
+              stripped before they reach here (verified against remark-html
+              16.0.1). No user input ever reaches this string. If that pipeline
+              is ever switched to `sanitize: false` or fed non-repo content,
+              this sink must be re-audited. */}
           {p.body !== null && (
             <div
               className="proj-body"
