@@ -7,9 +7,11 @@
 // drifts but still matches other files, the buckets stay non-empty, the build
 // stays green, and the CJK glyphs silently disappear anyway -- the Phase 4
 // failure mode (15296 B -> 14804 B). Run via bare `yarn test` (`node --test`
-// discovery); never `node --test <dir>` (repo gotcha). No pretest hook exists,
-// so this reads whatever woff2 is currently on disk -- run
-// `node scripts/subset-font.ts` first to guarantee a fresh subset.
+// discovery); never `node --test <dir>` (repo gotcha). `yarn test` runs a
+// `pretest` hook that regenerates the subset first, so the run always grades
+// fresh output rather than a stale committed woff2. Bare `node --test` bypasses
+// that hook, which is why the existence assertion below spells out the recovery
+// command instead of letting fs.readFileSync throw a bare ENOENT.
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -64,6 +66,11 @@ test("every non-ASCII glyph on the CJK proof page is present in the subset cmap"
   assert.ok(
     codepoints.size > 0,
     "proof page has no non-ASCII specimen text -- specimen must not be empty/ASCII-only",
+  );
+
+  assert.ok(
+    fs.existsSync(FONT),
+    `${FONT} missing -- run \`node scripts/subset-font.ts\` first (or \`yarn test\`, whose pretest hook does it for you)`,
   );
 
   const font = create(fs.readFileSync(FONT));

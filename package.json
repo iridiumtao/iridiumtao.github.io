@@ -8,6 +8,7 @@
     "prebuild": "node scripts/prepare-resumes.ts && node scripts/subset-font.ts",
     "build": "next build",
     "start": "next start",
+    "pretest": "node scripts/subset-font.ts",
     "test": "node --test",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
