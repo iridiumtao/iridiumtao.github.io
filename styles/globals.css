@@ -927,10 +927,16 @@ body {
      still wraps to the full row width either way (shrink-to-fit is capped
      at the available width regardless of align-items), so D-05's
      no-crowding guarantee is unaffected. */
-  .we .proj-nav {
+  /* WR-01: .proj-nav is repeated to raise specificity above the base
+     ".we .proj-nav" rule further down the file — same reason the link rules
+     below carry an extra class. Without it the two selectors tie and the
+     base rule wins on source order, so adding flex-direction/align-items
+     there later would silently kill this override. gap is intentionally not
+     restated: the base rule's 16px already applies and a duplicate would be
+     dead today and misleading tomorrow. */
+  .we .proj-nav.proj-nav {
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
   }
   .we .proj-nav .proj-nav-link {
     max-width: none;
