@@ -9,7 +9,11 @@ import Head from "next/head";
 
 export default function CjkSpecimen() {
   return (
-    <div className="we">
+    // lang tags the CJK subtree: _document.page.tsx sets <Html lang="en">, and
+    // an untagged specimen would get Latin line-breaking/font heuristics and the
+    // wrong screen-reader voice. For a page whose whole job is proving CJK
+    // rendering, the language tag is part of what is being proven.
+    <div className="we" lang="zh-Hant-TW">
       <Head>
         <title>{"CJK Font Specimen — chun-ju"}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
