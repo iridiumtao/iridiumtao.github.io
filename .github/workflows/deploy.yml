@@ -73,6 +73,9 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
+      - name: Generate build artifacts (resumes + font subset)
+        run: node scripts/prepare-resumes.ts && node scripts/subset-font.ts
+
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
 

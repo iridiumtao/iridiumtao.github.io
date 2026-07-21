@@ -11,8 +11,7 @@
     "test": "node --test",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "format": "prettier --write .",
-    "deploy": "yarn build && gh-pages -d out"
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@tailwindcss/postcss": "4.3.2",
@@ -34,7 +33,6 @@
     "eslint": "9.39.5",
     "eslint-config-next": "16.2.10",
     "fontkit": "2.0.4",
-    "gh-pages": "^6.3.0",
     "prettier": "3.9.5",
     "prettier-plugin-tailwindcss": "0.8.0",
     "subset-font": "2.5.0",
