@@ -4,9 +4,13 @@ The personal portfolio site of Chun-Ju "Iridium" Tao (歐東 / iridiumtao). Next
 Router**, **statically exported** to GitHub Pages. A real, live shopfront for his work — not a
 toy project — meant to live and be iterated on for 5+ years.
 
-The current milestone finishes the "Wood Editorial" redesign: move the site off its legacy
-7-year-old template components onto the Wood component system, turn the old blog into clickable
-project showcase pages, and ship it clean. `.planning/ROADMAP.md` is the map (gitignored).
+The "Wood Editorial" redesign shipped in milestone v1.0: the site moved off its legacy
+7-year-old template components onto the Wood component system, the old blog became clickable
+project showcase pages, and the legacy component tree was deleted outright. It was deliberately
+not deployed — the redesign lives on the `new-design` branch and the live site still serves the
+old design. The current milestone (v2.0) migrates the codebase to strict TypeScript and clears
+known outstanding defects and tooling gaps; still build-only — nothing merges to `master` or
+deploys. `.planning/ROADMAP.md` is the map (gitignored).
 
 ## Who the owner is
 
@@ -48,16 +52,19 @@ project showcase pages, and ship it clean. `.planning/ROADMAP.md` is the map (gi
 
 ## Working on a 7-year-old base
 
-The repo started from a template that is 7+ years old, and two visual systems still coexist:
+The repo started from a template that is 7+ years old. Its legacy component tree
+(`components/{Header,Footer,Button,ContentSection,BlogEditor,ProjectCard,WorkCard,
+ProjectResume,Socials}`) was **deleted outright in v1.0** — `components/` now contains only
+`components/wood/*` (flat `.tsx` files: `Nav`, `Footer`, `ProjectCard`). There is a single
+design system now, not two coexisting ones. The old blog was repurposed into project showcase
+pages: `pages/blog/[slug].page.tsx` is a redirect shim from the 8 legacy `/blog/<slug>` URLs
+onto the new `/projects/<slug>` routes, and `pages/edit.dev.tsx` is a dev-only content editor
+excluded from the production build via `pageExtensions` (not a `NODE_ENV` check).
 
-- **Wood (active):** `components/wood/*` — flat `PascalCase.js` files. Used by `pages/index.js`
-  and `pages/resume.js`.
-- **Legacy (dying):** `components/{Header,Footer,Button,ContentSection,BlogEditor,…}` — only
-  `pages/blog/*` and `pages/edit.js` still import them. `ProjectCard`, `ProjectResume`,
-  `WorkCard` are **already orphaned** (`Socials` is still imported by the legacy `Footer`).
-
-**Strangler-fig rule:** never delete a legacy piece before its Wood replacement is built and
-verified. Build the new surface first, delete last.
+**Strangler-fig rule (historical):** while the legacy tree still existed, the rule was never
+delete a legacy piece before its Wood replacement is built and verified — build the new surface
+first, delete last. The migration is complete, so this is a record of how it was done, not a
+live constraint on today's single-system codebase.
 
 **Modernizing old patterns — the boundary:**
 
@@ -68,17 +75,27 @@ verified. Build the new surface first, delete last.
 
 ## Conventions
 
-- **Wood components: flat `PascalCase.js` under `components/wood/`** — a deliberate deviation
-  from the legacy `PascalCase/index.js` directories. New components follow the flat pattern.
-- Pages and utilities: `camelCase.js`. `UPPER_SNAKE_CASE` for module-level lookup tables.
+- **Wood components: flat `PascalCase.tsx` under `components/wood/`** — a deliberate deviation
+  from the old `PascalCase/index.js` directory convention the now-deleted legacy tree used.
+- Pages: `camelCase.page.tsx` (`.page.ts` for API routes). The `.page.` infix is required by
+  `next.config.js`'s `pageExtensions` — a page file without it silently vanishes from the
+  production export. The dev-only editor is `pages/edit.dev.tsx` (`.dev.` infix, excluded from
+  production the same way). Utilities/lib/scripts: `camelCase.ts` (`kebab-case.ts` for
+  `scripts/prepare-resumes.ts` and `scripts/subset-font.ts`). `UPPER_SNAKE_CASE` for
+  module-level lookup tables.
 - 2-space indent, double quotes.
 - File-header comment naming the file's role; helpers grouped under a `/* ── Helpers ── */`
-  banner above the main component (see `pages/index.js`).
+  banner above the main component (see `pages/index.page.tsx`).
 - Error handling: `try/catch` around file I/O only — log and return a safe fallback (`null`,
   `[]`) rather than throwing.
-- No PropTypes, no JSDoc type blocks — default parameter values carry prop defaults.
+- **TypeScript prop types, not PropTypes/JSDoc**: components declare inline prop types (e.g.
+  `{ home?: boolean }`) with default parameter values carrying prop defaults — no `PropTypes`
+  package, no JSDoc `@param` type blocks.
 - **`data/portfolio.json` is the single content source** for every page. Extend the JSON rather
-  than hardcoding content into components.
+  than hardcoding content into components. Read it only through `lib/portfolio.ts`'s typed
+  accessor (`import data from "@/lib/portfolio"`), never by importing the raw JSON directly —
+  the accessor's `satisfies PortfolioData` check catches a content edit that breaks the shape at
+  `yarn typecheck` time, in one place, instead of silently at a call site.
 - **`lib/projects.ts` is the only module that touches the filesystem for project data**, and it
   must never be imported from `components/wood/*` — enforced by a runtime `assertServerOnly()`
   throw *and* an ESLint `no-restricted-imports` rule.
@@ -89,16 +106,18 @@ verified. Build the new surface first, delete last.
   it — non-technical readers mistake `github.io` for GitHub). Use it for OG tags and canonical
   links. The domain lives in **GitHub Pages Settings**; there is **no `CNAME` file** in the repo.
 - **`.github/workflows/deploy.yml` (Actions) is the real deploy path.** The `gh-pages` branch is
-  dead (last commit 2025-09-18).
-- ⚠️ **Don't run `yarn deploy`** (`gh-pages -d out`) — a branch-based publish that would
-  overwrite Pages with a `CNAME`-less `out/`. Slated for removal.
+  dead (last commit 2025-09-18). The `yarn deploy` script and the `gh-pages` devDependency were
+  removed in v2.0 (HYG-02) — that branch-based publish would have overwritten Pages with a
+  `CNAME`-less `out/`. Do not reintroduce it.
 - **The live site is still the OLD design** (redesign lives on `new-design`), and old
   `/blog/<slug>` showcase pages are **live at HTTP 200** — real URLs worth redirecting.
 
 ## Gotchas
 
 - **Never hand-edit build output:** `public/resumes/*.pdf` and the font subset are regenerated
-  every `predev`/`prebuild` by `scripts/prepare-resumes.js` and `scripts/subset-font.js`.
+  every `predev`/`prebuild` by `scripts/prepare-resumes.ts` and `scripts/subset-font.ts`. CI
+  (`.github/workflows/deploy.yml`) also runs both explicitly before the build step, since it
+  invokes the `next` binary directly and bypasses the `prebuild` yarn lifecycle hook.
 - `node --test <dir>` breaks on this Node build (treats the path as a script). Use bare
   `node --test`.
 - **`.claude/CLAUDE.md` is generated by GSD** from `.planning/` sources (note the

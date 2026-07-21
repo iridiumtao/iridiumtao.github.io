@@ -14,7 +14,7 @@ import localFont from "next/font/local";
 import { JetBrains_Mono } from "next/font/google";
 
 // Self-hosted display font: CJK-subsetted Open Huninn (SIL OFL 1.1), vendored
-// under public/fonts/. Regenerated automatically by scripts/subset-font.js.
+// under public/fonts/. Regenerated automatically by scripts/subset-font.ts.
 export const huninn = localFont({
   src: "../public/fonts/open-huninn-subset.woff2",
   variable: "--font-huninn",
