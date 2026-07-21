@@ -76,6 +76,12 @@ jobs:
       - name: Generate build artifacts (resumes + font subset)
         run: node scripts/prepare-resumes.ts && node scripts/subset-font.ts
 
+      # Runs after artifact generation so scripts/subset-font.test.ts grades
+      # the freshly built subset, not a stale committed woff2. Gates the build:
+      # the D-04 cmap regression guard is inert if CI never executes it.
+      - name: Test
+        run: ${{ steps.detect-package-manager.outputs.manager }} test
+
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
 
