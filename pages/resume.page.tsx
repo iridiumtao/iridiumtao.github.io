@@ -156,6 +156,7 @@ function TimelineItem({
 const SKILL_GROUPS: { label: string; key: keyof ResumeSkills }[] = [
   { label: "Languages", key: "languages" },
   { label: "Cloud & DevOps", key: "cloudAndDevOps" },
+  { label: "Frameworks & Backend", key: "frameworksAndBackend" },
   { label: "Data & ML", key: "dataAndML" },
 ];
 
@@ -170,7 +171,7 @@ export default function Resume({ resumes }: { resumes: ResumeDownload[] }) {
       </Head>
 
       <div className="wrap wrap-narrow">
-        <Nav />
+        <Nav back />
 
         {/* Header */}
         <header className="resume-head">

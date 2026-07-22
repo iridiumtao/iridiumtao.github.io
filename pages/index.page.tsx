@@ -38,6 +38,8 @@ const MONTHS: Record<string, string> = {
 };
 
 // "July 2025 - August 2025" → "JUL — AUG 2025"; collapses shared years.
+// An open-ended end ("May 2025 - Present") carries no year, so it is emitted
+// on its own — without this it rendered as "MAY 2025 — PRESENT undefined".
 function formatExpDate(dates: string | undefined): string {
   if (!dates) return "";
   const fmt = (s: string) => {
@@ -48,6 +50,7 @@ function formatExpDate(dates: string | undefined): string {
   const a = fmt(rawA);
   if (!rawB) return `${a.m} ${a.y}`;
   const b = fmt(rawB);
+  if (!b.y) return `${a.m} ${a.y} — ${b.m}`;
   return a.y === b.y
     ? `${a.m} — ${b.m} ${b.y}`
     : `${a.m} ${a.y} — ${b.m} ${b.y}`;

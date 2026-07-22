@@ -7,7 +7,7 @@ export default function Footer() {
   const socials = data.socials.filter((s) => s.title !== "Resume");
   return (
     <footer>
-      <span className="footer-brand">✦ {data.name} Tao</span>
+      <span className="footer-brand">{data.name} Tao</span>
       <div className="footer-links">
         {socials.map((s) => (
           <a key={s.title} href={s.link}>

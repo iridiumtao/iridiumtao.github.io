@@ -54,10 +54,12 @@ export type ResumeEducationEntry = {
   relevantCoursework: string[];
 };
 
-// Exactly the three keys present in the committed data today.
+// Exactly the four keys present in the committed data today, in the order the
+// résumé itself groups them.
 export type ResumeSkills = {
   languages: string[];
   cloudAndDevOps: string[];
+  frameworksAndBackend: string[];
   dataAndML: string[];
 };
 

@@ -166,6 +166,16 @@
   ],
   "experiences": [
     {
+      "id": "a-day-cofounder",
+      "title": "Co-Founder, A Day",
+      "description": "Architected a production-grade MVVM iOS app with SwiftData and SwiftUI across 7 interconnected data models and 60+ source files, backed by Xcode Cloud CI/CD and 700+ Swift Testing unit and integration tests."
+    },
+    {
+      "id": "nyu-course-assistant",
+      "title": "Course Assistant, NYU",
+      "description": "Built a 5-microservice ML safeguard lab with FastAPI and Docker Compose, and reviewed end-to-end MLOps systems from 30 teams on Chameleon Cloud against production criteria."
+    },
+    {
       "id": "678d33ac-a854-4dce-9c0e-db5fae6cd91e",
       "title": "Data Science Intern, Micron",
       "description": "Built a production-scale pipeline and Streamlit app for fab-dispatch analysis (33GB/2 weeks), created an explainable LightGBM-SHAP model for parameter simplification, and developed repo-documentation tools cutting token use 10× and boosting developer efficiency 3×."
@@ -177,7 +187,7 @@
     },
     {
       "id": "2",
-      "title": "Software Engineering Intern, MoBagel",
+      "title": "Software Engineer, MoBagel",
       "description": "Built a full-stack material management system automating budgeting and inventory for Taiwan Water Corporation. Led GitFlow and Agile adoption, boosting efficiency during a 300% team expansion."
     },
     {
@@ -197,8 +207,8 @@
       "runs on."
     ],
     "lede": "I'm Chun-Ju (Iridium) Tao — a Computer Engineering MS from NYU who works on **backend and infrastructure**. I've automated CI/CD on AWS, right-sized microservices to cut cloud cost, and built the first Taigi medical-advising LLM.",
-    "based": "New York / Taipei",
-    "degree": "M.S. Computer Engineering, NYU · GPA 3.83",
+    "based": "Pittsburgh, PA",
+    "degree": "M.S. Computer Engineering, NYU · GPA 3.73",
     "stack": "Python · Go · Docker · AWS · PyTorch · MLflow",
     "honorsShort": "OpenHCI'25 1st · Fi-Award'23 · Level-Up'21",
     "aboutPull": "Bringing the warmth of Taiwanese craft to the cold rigor of cloud systems.",
@@ -210,15 +220,37 @@
     "description": "Passive about creating innovative and scalable solutions in Software. Experienced in designing backend systems, automating CI/CD pipelines, and building cloud-native MLOps platforms. Seeking a backend or software infrastructure role to tackle complex engineering challenges.",
     "experiences": [
       {
+        "id": "a-day-cofounder",
+        "dates": "May 2025 - Present",
+        "type": "",
+        "position": "Co-Founder at A Day",
+        "location": "New York, NY",
+        "bullets": [
+          "Architected a production-grade MVVM application with SwiftData and latest SwiftUI features, decoupling the service layer to ensure strict separation of concerns across 7 interconnected data models and 60+ source files.",
+          "Engineered an AI-augmented development workflow (Cursor/Claude) with custom MCPs and skills for context management, accelerating delivery velocity by 4x while strictly adhering to TDD cycles to eliminate regression risks.",
+          "Established a CI/CD Pipeline using Xcode Cloud with a rigorous QA framework using Swift Testing, implementing 700+ unit and integration tests to guarantee architectural integrity and regression prevention across ViewModels and data flows."
+        ]
+      },
+      {
+        "id": "nyu-course-assistant",
+        "dates": "January 2026 - May 2026",
+        "type": "Part-time",
+        "position": "Course Assistant at New York University",
+        "location": "Brooklyn, NY",
+        "bullets": [
+          "Built a 5-microservice ML safeguard lab (FastAPI, Docker Compose) routing requests through two custom MobileNetV2 guard models and a Food11 classifier via short-circuit logic; generated synthetic edge-case data and benchmarked median/p95/p99 inference latency to quantify the cost of each safety layer.",
+          "Reviewed end-to-end MLOps systems from 30 teams (110 students) on Chameleon Cloud across design, code, and live demos, assessing them against production criteria: experiment tracking, automated retraining, drift monitoring, secrets hygiene, and container reproducibility; delivered structured feedback that teams used to remediate issues such as data leakage and shortcut/proxy learning."
+        ]
+      },
+      {
         "id": "dab034bf-1fa5-41ea-b336-64f66fbd76f9",
         "dates": "July 2025 - August 2025",
         "type": "Internship",
         "position": "Data Science Intern at Micron Technology",
         "location": "Taoyuan, Taiwan",
         "bullets": [
-          "Architected a production-scale Python pipeline and Streamlit web app for fab-dispatch analysis, processing 2 weeks' logs (33GB) and delivering a self-serve interface for parameter tuning and rich visuals, enabling fast, reproducible studies and broad cross-team adoption.",
-          "Developed an explainable LightGBM simulation proxy with SHAP analysis for lot-level decision tracing, enabling evidence-based simplification of scheduling parameters by quantifying which factors truly drive selection and reducing tuning overhead for production engineers.",
-          "Engineered repo-documentation tools for an enterprise application with over one million lines of code using Prompt Engineering with Roo Code Orchestrator, MCP, and Qdrant; produced modular docs and standardized class/method summaries; cut token usage 10x and projected ~3x developer efficiency."
+          "Architected a production-scale Python pipeline and self-serve Streamlit app over 33GB of bi-weekly fab-dispatch logs, surfacing key scheduling drivers via an explainable LightGBM/SHAP model for reproducible, evidence-based tuning adopted across teams.",
+          "Engineered repo-documentation tools for an enterprise application with over one million lines of code using Prompt Engineering and sub-task agents; cut token usage 10x and projected ~3x gain in developer efficiency."
         ]
       },
       {
@@ -228,20 +260,20 @@
         "position": "Software Developer at CARITY AI",
         "location": "Ontario, Canada",
         "bullets": [
-          "Automated CI/CD for an LLM-based product, containerizing 4 microservices on AWS ECS with GitHub Actions, reduced infrastructure costs by 40% and cut deployment time by 70%.",
-          "Delivered a Proof-of-Concept using Retrieval-Augmented Generation (RAG), demonstrating a potential 5x reduction in token usage and influencing the team's future technical roadmap for cost optimization."
+          "Automated CI/CD for an LLM-based product by containerizing 4 microservices on AWS ECS with GitHub Actions, reducing infrastructure costs by 40% and cutting deployment time by 70%.",
+          "Delivered a Retrieval-Augmented Generation (RAG) proof-of-concept showing a potential 5x token-usage reduction, shaping the team's cost-optimization roadmap."
         ]
       },
       {
         "id": "2",
         "dates": "January 2023 - July 2023",
         "type": "Internship",
-        "position": "Software Engineering Intern at MoBagel",
+        "position": "Software Engineer at MoBagel",
         "location": "Taichung, Taiwan",
         "bullets": [
-          "Engineered a critical full-stack system to automate inventory and budgeting for trillions in government assets for the Taiwan Water Corporation, migrating a legacy Java 4 application to a modern .NET stack (C#, MS SQL, Vue.js) to enhance performance, security, and scalability.",
-          "Proactively identified and reported critical security vulnerabilities across legacy and new systems, including SQL injection risks and an exposed database, preventing potential large-scale data breaches.",
-          "Established GitFlow and an Agile development model for a 10-person team, fostering a culture of collaboration that improved development efficiency and stabilized team management during a 300% expansion."
+          "Engineered a full-stack material management system for the Taiwan Water Corporation (national utility, 7M+ households), migrating its legacy Java application to automate inventory and budgeting over millions of historical records.",
+          "Introduced GitFlow and an Agile workflow that scaled the engineering process as the team tripled from 10 to 30, enabling a smooth transition recognized by the supervising manager.",
+          "Discovered and reported critical security flaws, including SQL-injection vectors and a publicly exposed, unauthenticated test database that risked a large-scale breach of decades of records."
         ]
       },
       {
@@ -251,9 +283,7 @@
         "position": "Software Engineering Intern at Mindtronic AI",
         "location": "Taipei, Taiwan",
         "bullets": [
-          "Spearheaded the backend migration from Node.js to Go, re-architecting and building the new system from the ground up to enhance processing efficiency and system security; Mastered the Go language independently to deliver a robust, production-ready backend.",
-          "Owned the full lifecycle of 53 RESTful APIs in Go, from design and implementation to documentation, proactively identified and eliminated critical SQL injection vulnerabilities across the entire API suite while ensuring the system could reliably process over 480,000 data entries weekly.",
-          "Developed key data-rich features for the React frontend to enable real-time fleet monitoring, delivering complex user-facing functionalities including interactive dashboards, live video streaming, and vehicle trajectory visualization on a map."
+          "Rebuilt the entire backend in Go from a legacy Node.js service, owning 53 RESTful APIs end to end (design, implementation, and SQL-injection hardening) while reliably processing 480K+ entries weekly."
         ]
       }
     ],
@@ -264,9 +294,9 @@
         "universityDate": "May 2026",
         "location": "New York, NY",
         "degree": "Computer Engineering, M.S.",
-        "gpa": "3.83",
+        "gpa": "3.73",
         "relevantCoursework": [
-          "Internet Architecture & Protocol",
+          "Practical Software Engineering",
           "Human Computer Interaction",
           "Machine Learning",
           "MLOps",
@@ -291,39 +321,58 @@
     "skills": {
       "languages": [
         "Python",
-        "JavaScript (React, Vue)",
         "Go",
         "Java",
         "C#",
         "Swift",
-        "MS SQL",
-        "PostgreSQL",
-        "C"
+        "JavaScript",
+        "SQL (PostgreSQL, MS SQL)",
+        "C/C++"
       ],
       "cloudAndDevOps": [
         "Docker",
-        "AWS ECS",
+        "AWS",
         "Terraform",
         "GitHub Actions",
         "Airflow",
         "Prometheus",
         "Grafana",
-        "MinIO",
-        "Git",
-        "Linux"
+        "Linux",
+        "Git/GitFlow"
+      ],
+      "frameworksAndBackend": [
+        "FastAPI",
+        "Flask",
+        "Django",
+        "Node.js",
+        "React",
+        "Vue",
+        "RESTful APIs",
+        "WebSocket"
       ],
       "dataAndML": [
         "PyTorch",
         "MLflow",
         "LlamaIndex",
-        "Lang Chain",
+        "LangChain",
         "LightGBM",
         "SHAP",
-        "Streamlit",
-        "FastAPI"
+        "Streamlit"
       ]
     },
     "projects": [
+      {
+        "id": "nyu-marketplace",
+        "title": "NYU Marketplace",
+        "organization": "Practical Software Engineering, NYU",
+        "location": "New York, NY",
+        "dates": "September 2025 - December 2025",
+        "details": [
+          "Architected a CI/CD pipeline on Travis CI and AWS Elastic Beanstalk with strict merge gates (linting, 85%+ test coverage), automating deployment on every approved PR.",
+          "Built scalable RESTful and real-time WebSocket APIs with Django 5 and Channels, serving as lead code reviewer to enforce system design and clean code standards across the team.",
+          "Advised by Professor Gennadiy Civil (Adjunct; Senior Engineering Manager at Google)."
+        ]
+      },
       {
         "id": "b2787423-bef6-463a-9e8c-7c973939e4eb",
         "title": "Privacy‑First AI Smart Lamp for Ephemeral Night Conversations - Oblivilight",
