@@ -337,20 +337,21 @@ body {
   color: var(--color-stone-900);
   max-width: 18ch;
 }
-.we .hero h1 .accent {
-  color: var(--color-wood-500);
-  position: relative;
+/* Inline Markdown emphasis in the hero and lede, rendered by renderCopy() in
+   pages/index.page.tsx: `*em*`, `**strong**`, `***both***`.
+
+   Bold alone carries the clay accent — one rule for both surfaces, so a phrase
+   moved between the headline and the lede keeps its look. Italic stays in the
+   surrounding colour: it is the quieter of the two by design, and colouring it
+   as well would leave the page with no un-accented emphasis at all. */
+.we .hero h1 strong,
+.we .lede strong {
+  font-weight: 600;
+  color: var(--color-accent-clay);
 }
-.we .hero h1 .accent::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0.04em;
-  height: 0.06em;
-  background: var(--color-accent-clay);
-  opacity: 0.4;
-  border-radius: 999px;
+.we .hero h1 em,
+.we .lede em {
+  font-style: italic;
 }
 .we .lede {
   margin-top: 28px;
@@ -359,11 +360,6 @@ body {
   line-height: 1.6;
   color: var(--color-stone-700);
   text-wrap: pretty;
-}
-.we .lede em {
-  font-style: normal;
-  color: var(--color-accent-clay);
-  border-bottom: 1.5px solid rgb(from var(--color-accent-clay) r g b / 0.32);
 }
 .we .hero-meta {
   display: flex;

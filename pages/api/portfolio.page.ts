@@ -38,7 +38,14 @@ export default function handler(
 
   const portfolioData = join(process.cwd(), "/data/portfolio.json");
   try {
-    fs.writeFileSync(portfolioData, JSON.stringify(req.body, null, 2), "utf-8");
+    // Trailing newline: without it every save left the content file with a
+    // "\ No newline at end of file" diff, so the editor showed up as a dirty
+    // working tree even when nothing had actually changed.
+    fs.writeFileSync(
+      portfolioData,
+      JSON.stringify(req.body, null, 2) + "\n",
+      "utf-8",
+    );
     return res.status(200).json({ name: "ok" });
   } catch (err) {
     console.error("Error writing file:", err);

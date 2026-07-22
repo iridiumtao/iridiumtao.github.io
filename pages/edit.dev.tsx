@@ -20,6 +20,7 @@ import { useTheme } from "next-themes";
 import yourData from "../lib/portfolio";
 import type {
   PortfolioData,
+  Home,
   Resume,
   ResumeExperienceEntry,
   ResumeEducationEntry,
@@ -41,6 +42,13 @@ import type {
  * committed JSON and types/portfolio.ts's ResumeSkills. Adding it to the shared
  * type would fabricate a content-model field that no real data carries.
  */
+
+// The hero headline is one line of copy per array entry, and the line breaks
+// between them are meaningful — they are exactly where the rendered <h1>
+// breaks. A textarea edits them as the four visual lines they are.
+type EditableHome = Omit<Home, "heroLines"> & {
+  heroLines: string;
+};
 
 type EditableResumeExperience = Omit<ResumeExperienceEntry, "bullets"> & {
   bullets: string;
@@ -72,15 +80,13 @@ type EditableResume = Omit<
   projects: EditableResumeProject[];
 };
 
-type EditableData = Omit<PortfolioData, "resume"> & { resume: EditableResume };
+type EditableData = Omit<PortfolioData, "home" | "resume"> & {
+  home: EditableHome;
+  resume: EditableResume;
+};
 
 type TabId =
-  | "HEADER"
-  | "PROJECTS"
-  | "EXPERIENCES"
-  | "ABOUT"
-  | "SOCIAL"
-  | "RESUME";
+  "HEADER" | "PROJECTS" | "EXPERIENCES" | "ABOUT" | "SOCIAL" | "RESUME";
 
 /* ── Helpers ─────────────────────────────────────────────────────────── */
 
@@ -88,6 +94,10 @@ type TabId =
 // untouched nested objects it spreads through cannot alias the imported module.
 const toEditable = (source: PortfolioData): EditableData => ({
   ...source,
+  home: {
+    ...source.home,
+    heroLines: source.home.heroLines.join("\n"),
+  },
   resume: {
     ...source.resume,
     experiences: source.resume.experiences.map((exp) => ({
@@ -119,6 +129,12 @@ const splitLines = (value: string): string[] =>
 // rather than mutating a clone, so the live editor state is never touched.
 const toSaved = (edited: EditableData): PortfolioData => ({
   ...edited,
+  home: {
+    ...edited.home,
+    // splitLines drops blank lines, so a stray trailing newline in the textarea
+    // cannot save an empty headline line that would render as a bare <br>.
+    heroLines: splitLines(edited.home.heroLines),
+  },
   resume: {
     ...edited.resume,
     experiences: edited.resume.experiences.map((exp) => ({
@@ -164,10 +180,56 @@ const EditButton = ({ children, onClick, classes }: EditButtonProps) => (
   <button
     onClick={onClick}
     type="button"
-    className={`text-sm tablet:text-base p-1 laptop:p-2 m-1 laptop:m-2 rounded-lg transition-all duration-300 ease-out first:ml-0 hover:scale-105 active:scale-100 ${classes ?? ""}`}
+    className={`tablet:text-base laptop:p-2 laptop:m-2 m-1 rounded-lg p-1 text-sm transition-all duration-300 ease-out first:ml-0 hover:scale-105 active:scale-100 ${classes ?? ""}`}
   >
     {children}
   </button>
+);
+
+// The Header tab edits a dozen single-line fields that all share one layout.
+// These two wrappers hold that markup once instead of repeating it per field.
+type FieldProps = {
+  label: string;
+  hint?: string;
+  value: string;
+  onChange: (value: string) => void;
+};
+
+const FieldLabel = ({ label, hint }: { label: string; hint?: string }) => (
+  <label className="w-1/5 text-lg opacity-50">
+    {label}
+    {hint && <span className="mt-1 block text-xs leading-snug">{hint}</span>}
+  </label>
+);
+
+const Field = ({ label, hint, value, onChange }: FieldProps) => (
+  <div className="mt-5 flex items-center">
+    <FieldLabel label={label} hint={hint} />
+    <input
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className="ml-10 w-4/5 rounded-md border-2 p-2 shadow-lg"
+      type="text"
+    />
+  </div>
+);
+
+const AreaField = ({
+  label,
+  hint,
+  value,
+  onChange,
+  rows = 4,
+}: FieldProps & { rows?: number }) => (
+  <div className="mt-5 flex items-start">
+    <FieldLabel label={label} hint={hint} />
+    <textarea
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      rows={rows}
+      className="ml-10 w-4/5 rounded-md border-2 p-2 shadow-lg"
+    />
+  </div>
 );
 
 /* ── Page ────────────────────────────────────────────────────────────── */
@@ -490,41 +552,27 @@ const Edit = () => {
           <div className="flex items-center justify-between">
             <h1 className="text-4xl">Dashboard</h1>
             <div className="flex items-center">
-              <EditButton onClick={saveData}>
-                Save
-              </EditButton>
+              <EditButton onClick={saveData}>Save</EditButton>
             </div>
           </div>
 
           <div className="flex items-center">
-            <EditButton
-              onClick={() => setCurrentTabs("HEADER")}
-            >
+            <EditButton onClick={() => setCurrentTabs("HEADER")}>
               Header
             </EditButton>
-            <EditButton
-              onClick={() => setCurrentTabs("PROJECTS")}
-            >
+            <EditButton onClick={() => setCurrentTabs("PROJECTS")}>
               Projects
             </EditButton>
-            <EditButton
-              onClick={() => setCurrentTabs("EXPERIENCES")}
-            >
+            <EditButton onClick={() => setCurrentTabs("EXPERIENCES")}>
               Experiences
             </EditButton>
-            <EditButton
-              onClick={() => setCurrentTabs("ABOUT")}
-            >
+            <EditButton onClick={() => setCurrentTabs("ABOUT")}>
               About
             </EditButton>
-            <EditButton
-              onClick={() => setCurrentTabs("SOCIAL")}
-            >
+            <EditButton onClick={() => setCurrentTabs("SOCIAL")}>
               Social
             </EditButton>
-            <EditButton
-              onClick={() => setCurrentTabs("RESUME")}
-            >
+            <EditButton onClick={() => setCurrentTabs("RESUME")}>
               Resume
             </EditButton>
           </div>
@@ -532,66 +580,118 @@ const Edit = () => {
         {/* HEADER */}
         {currentTabs === "HEADER" && (
           <div className="mt-10">
-            <div className="flex items-center">
-              <label className="w-1/5 text-lg opacity-50">Name</label>
-              <input
-                value={data.name}
-                onChange={(e) => setData({ ...data, name: e.target.value })}
-                className="ml-10 w-4/5 rounded-md border-2 p-2 shadow-lg"
-                type="text"
-              ></input>
-            </div>
+            <p className="text-sm opacity-60">
+              Everything above the first section of the home page. Headline and
+              Lede accept inline Markdown: <code>**bold**</code> (rendered in
+              the clay accent colour), <code>*italic*</code>, and{" "}
+              <code>***bold italic***</code>.
+            </p>
+            <Field
+              label="Name"
+              hint="Nav, footer, and the browser tab title"
+              value={data.name}
+              onChange={(name) => setData({ ...data, name })}
+            />
+            <Field
+              label="Greeting"
+              hint="First half of the small line above the headline"
+              value={data.home.greeting}
+              onChange={(greeting) =>
+                setData({ ...data, home: { ...data.home, greeting } })
+              }
+            />
+            <Field
+              label="Availability"
+              hint="Second half, after the · separator"
+              value={data.home.availability}
+              onChange={(availability) =>
+                setData({ ...data, home: { ...data.home, availability } })
+              }
+            />
+            <AreaField
+              label="Headline"
+              hint="One line here = one line in the hero. Blank lines are dropped."
+              rows={4}
+              value={data.home.heroLines}
+              onChange={(heroLines) =>
+                setData({ ...data, home: { ...data.home, heroLines } })
+              }
+            />
+            <AreaField
+              label="Lede"
+              hint="The paragraph under the headline"
+              rows={5}
+              value={data.home.lede}
+              onChange={(lede) =>
+                setData({ ...data, home: { ...data.home, lede } })
+              }
+            />
+            <Field
+              label="Based"
+              value={data.home.based}
+              onChange={(based) =>
+                setData({ ...data, home: { ...data.home, based } })
+              }
+            />
+            <Field
+              label="Degree"
+              value={data.home.degree}
+              onChange={(degree) =>
+                setData({ ...data, home: { ...data.home, degree } })
+              }
+            />
+            <Field
+              label="Stack"
+              value={data.home.stack}
+              onChange={(stack) =>
+                setData({ ...data, home: { ...data.home, stack } })
+              }
+            />
+            <Field
+              label="Honors"
+              value={data.home.honorsShort}
+              onChange={(honorsShort) =>
+                setData({ ...data, home: { ...data.home, honorsShort } })
+              }
+            />
+            <Field
+              label="About Pull-quote"
+              hint="The large quoted line in section 03"
+              value={data.home.aboutPull}
+              onChange={(aboutPull) =>
+                setData({ ...data, home: { ...data.home, aboutPull } })
+              }
+            />
+            <Field
+              label="Contact Email"
+              hint="Footer link — include the mailto: prefix"
+              value={data.home.contactEmail}
+              onChange={(contactEmail) =>
+                setData({ ...data, home: { ...data.home, contactEmail } })
+              }
+            />
             <div className="mt-5 flex items-center">
-              <label className="text-sx w-1/5 opacity-50">
-                Header Tagline One
-              </label>
+              <FieldLabel
+                label="Featured Projects"
+                hint="How many show before “Show All”"
+              />
               <input
-                value={data.headerTaglineOne}
+                value={data.home.projectCount}
                 onChange={(e) =>
-                  setData({ ...data, headerTaglineOne: e.target.value })
+                  setData({
+                    ...data,
+                    home: {
+                      ...data.home,
+                      // An empty or half-typed field must not save NaN into the
+                      // content file — fall back to the rendered default of 3.
+                      projectCount: Number(e.target.value) || 3,
+                    },
+                  })
                 }
                 className="ml-10 w-4/5 rounded-md border-2 p-2 shadow-lg"
-                type="text"
-              ></input>
-            </div>
-            <div className="mt-5 flex items-center">
-              <label className="w-1/5 text-lg opacity-50">
-                Header Tagline Two
-              </label>
-              <input
-                value={data.headerTaglineTwo}
-                onChange={(e) =>
-                  setData({ ...data, headerTaglineTwo: e.target.value })
-                }
-                className="ml-10 w-4/5 rounded-md border-2 p-2 shadow-lg"
-                type="text"
-              ></input>
-            </div>
-            <div className="mt-5 flex items-center">
-              <label className="w-1/5 text-lg opacity-50">
-                Header Tagline Three
-              </label>
-              <input
-                value={data.headerTaglineThree}
-                onChange={(e) =>
-                  setData({ ...data, headerTaglineThree: e.target.value })
-                }
-                className="ml-10 w-4/5 rounded-md border-2 p-2 shadow-lg"
-                type="text"
-              ></input>
-            </div>
-            <div className="mt-5 flex items-center">
-              <label className="w-1/5 text-lg opacity-50">
-                Header Tagline Four
-              </label>
-              <input
-                value={data.headerTaglineFour}
-                onChange={(e) =>
-                  setData({ ...data, headerTaglineFour: e.target.value })
-                }
-                className="ml-10 w-4/5 rounded-md border-2 p-2 shadow-lg"
-                type="text"
-              ></input>
+                type="number"
+                min={1}
+              />
             </div>
             <div className="mt-5 flex items-center">
               <label className="w-1/5 text-lg opacity-50">Dark Mode</label>
@@ -636,17 +736,13 @@ const Edit = () => {
           <>
             <div className="mt-10">
               <div className="my-10">
-                <EditButton onClick={addProject}>
-                  Add Project +
-                </EditButton>
+                <EditButton onClick={addProject}>Add Project +</EditButton>
               </div>
               {data.projects.map((project, index) => (
                 <div className="mt-10" key={project.id}>
                   <div className="flex items-center justify-between">
                     <h1 className="text-2xl">{project.title}</h1>
-                    <EditButton
-                      onClick={() => deleteProject(project.id)}
-                    >
+                    <EditButton onClick={() => deleteProject(project.id)}>
                       Delete
                     </EditButton>
                   </div>
@@ -761,9 +857,7 @@ const Edit = () => {
             </div>
 
             <div className="my-10">
-              <EditButton onClick={addProject}>
-                Add Project +
-              </EditButton>
+              <EditButton onClick={addProject}>Add Project +</EditButton>
             </div>
           </>
         )}
@@ -780,9 +874,7 @@ const Edit = () => {
                 <div key={experience.id}>
                   <div className="flex items-center justify-between">
                     <h1 className="text-2xl">{experience.title}</h1>
-                    <EditButton
-                      onClick={() => deleteExperience(experience.id)}
-                    >
+                    <EditButton onClick={() => deleteExperience(experience.id)}>
                       Delete
                     </EditButton>
                   </div>
@@ -874,9 +966,7 @@ const Edit = () => {
               </div>
             ))}
             <div className="my-10">
-              <EditButton onClick={addSocials}>
-                Add Social +
-              </EditButton>
+              <EditButton onClick={addSocials}>Add Social +</EditButton>
             </div>
           </div>
         )}
@@ -1000,9 +1090,7 @@ const Edit = () => {
                 <div key={edu.id} className="mt-5">
                   <div className="flex items-center justify-between">
                     <h1 className="text-2xl">{edu.universityName}</h1>
-                    <EditButton
-                      onClick={() => handleDeleteEducation(edu.id)}
-                    >
+                    <EditButton onClick={() => handleDeleteEducation(edu.id)}>
                       Delete
                     </EditButton>
                   </div>
@@ -1019,7 +1107,9 @@ const Edit = () => {
                           resume: {
                             ...data.resume,
                             education: data.resume.education.map((it, i) =>
-                              i === index ? { ...it, universityName: value } : it,
+                              i === index
+                                ? { ...it, universityName: value }
+                                : it,
                             ),
                           },
                         });
@@ -1041,7 +1131,9 @@ const Edit = () => {
                           resume: {
                             ...data.resume,
                             education: data.resume.education.map((it, i) =>
-                              i === index ? { ...it, universityDate: value } : it,
+                              i === index
+                                ? { ...it, universityDate: value }
+                                : it,
                             ),
                           },
                         });
@@ -1123,7 +1215,9 @@ const Edit = () => {
                           resume: {
                             ...data.resume,
                             education: data.resume.education.map((it, i) =>
-                              i === index ? { ...it, relevantCoursework: value } : it,
+                              i === index
+                                ? { ...it, relevantCoursework: value }
+                                : it,
                             ),
                           },
                         });
@@ -1278,17 +1372,13 @@ const Edit = () => {
             <div className="mt-10">
               <h1>Honors</h1>
               <div className="my-10">
-                <EditButton onClick={handleAddHonor}>
-                  Add Honor +
-                </EditButton>
+                <EditButton onClick={handleAddHonor}>Add Honor +</EditButton>
               </div>
               {data.resume.honors.map((honor, index) => (
                 <div key={honor.id} className="mt-5">
                   <div className="flex items-center justify-between">
                     <h1 className="text-2xl">{honor.title}</h1>
-                    <EditButton
-                      onClick={() => handleDeleteHonor(honor.id)}
-                    >
+                    <EditButton onClick={() => handleDeleteHonor(honor.id)}>
                       Delete
                     </EditButton>
                   </div>

@@ -17,12 +17,15 @@ export type Experience = {
   description: string;
 };
 
+// `greeting`, `heroLines`, and `lede` are the hero's copy. The two of them that
+// used to carry a separate highlight field (`heroAccent`, `ledeEmphasis`) now
+// mark their own emphasis inline with Markdown `**strong**` — one string to
+// edit instead of a string plus a fragile "which substring" pointer.
 export type Home = {
+  greeting: string;
   availability: string;
   heroLines: string[];
-  heroAccent: string;
   lede: string;
-  ledeEmphasis: string[];
   based: string;
   degree: string;
   stack: string;
@@ -125,10 +128,6 @@ export type RawProjectEntry = Omit<Project, "subtitle"> & {
 
 export type PortfolioData = {
   name: string;
-  headerTaglineOne: string;
-  headerTaglineTwo: string;
-  headerTaglineThree: string;
-  headerTaglineFour: string;
   showCursor: boolean;
   darkMode: boolean;
   showResume: boolean;

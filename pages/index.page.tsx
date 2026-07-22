@@ -63,45 +63,61 @@ function splitPosition(pos: string | undefined): {
   return { role: pos.slice(0, i), company: pos.slice(i + 4) };
 }
 
-const escapeRegExp = (s: string): string =>
-  s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+// The three asterisk-based Markdown emphasis forms, longest delimiter first:
+// alternation is first-match-wins, so listing `**` before `***` would consume
+// the leading two asterisks of a bold-italic run and leave a stray one behind.
+// The bodies are lazy, keeping each run to its own nearest closer, and none of
+// them cross a newline because every string fed in is a single line.
+//
+// `\S(?:.*?\S)?` is CommonMark's flanking rule in its simplest useful form: a
+// run may not open on whitespace or close on it. Without it a lone asterisk in
+// the prose pairs with the opening asterisk of the next real emphasis and
+// italicises everything in between — "a lone * asterisk ... on **MLOps**"
+// rendered as one long italic run with a stray asterisk left over.
+const INLINE_MARKDOWN =
+  /\*\*\*(\S(?:.*?\S)?)\*\*\*|\*\*(\S(?:.*?\S)?)\*\*|\*(\S(?:.*?\S)?)\*/g;
 
-// Wraps a single accent word inside a headline line.
-function renderAccent(
-  line: string,
-  accent: string | undefined,
-): React.ReactNode {
-  if (!accent) return line;
-  // Index rather than split(): split() cuts on EVERY occurrence, and
-  // destructuring only the first two chunks silently dropped the tail of the
-  // headline whenever the accent word appeared twice in one line.
-  const i = line.indexOf(accent);
-  if (i === -1) return line;
-  return (
-    <>
-      {line.slice(0, i)}
-      <span className="accent">{accent}</span>
-      {line.slice(i + accent.length)}
-    </>
-  );
-}
+// Renders inline Markdown emphasis in hero and body copy: `*em*`, `**strong**`,
+// and `***both***`. Deliberately just those, hand-rolled — a real Markdown
+// renderer would wrap every string in a block-level <p> that an <h1> must not
+// contain, for three rules of syntax the site actually uses.
+//
+// This replaced a pair of "which substring is the accent?" content fields
+// (heroAccent / ledeEmphasis). Those matched by search, so the emphasis
+// silently vanished whenever the surrounding copy was reworded — the marker
+// now travels inside the sentence it belongs to.
+function renderCopy(text: string): React.ReactNode {
+  const nodes: React.ReactNode[] = [];
+  let cursor = 0;
 
-// Wraps emphasised terms (rendered as <em> accent) inside body copy.
-function renderEmphasis(
-  text: string,
-  terms: string[] = [],
-): React.ReactNode {
-  if (!terms.length) return text;
-  const re = new RegExp(`(${terms.map(escapeRegExp).join("|")})`, "g");
-  return text
-    .split(re)
-    .map((chunk: string, i: number) =>
-      terms.includes(chunk) ? (
-        <em key={i}>{chunk}</em>
-      ) : (
-        <Fragment key={i}>{chunk}</Fragment>
-      ),
-    );
+  for (const match of text.matchAll(INLINE_MARKDOWN)) {
+    const [raw, both, strong, em] = match;
+    const at = match.index;
+    if (at > cursor) {
+      nodes.push(<Fragment key={cursor}>{text.slice(cursor, at)}</Fragment>);
+    }
+    // Exactly one group participates per match; `undefined` distinguishes a
+    // group that did not participate from one that matched an empty body.
+    if (both !== undefined) {
+      nodes.push(
+        <strong key={at}>
+          <em>{both}</em>
+        </strong>,
+      );
+    } else if (strong !== undefined) {
+      nodes.push(<strong key={at}>{strong}</strong>);
+    } else {
+      nodes.push(<em key={at}>{em}</em>);
+    }
+    cursor = at + raw.length;
+  }
+
+  // Unmatched asterisks simply stay in the text, the same way they do in a
+  // Markdown renderer — nothing here can drop content.
+  if (cursor < text.length) {
+    nodes.push(<Fragment key={cursor}>{text.slice(cursor)}</Fragment>);
+  }
+  return nodes;
 }
 
 /* ── Page ─────────────────────────────────────────────────────────────── */
@@ -132,20 +148,18 @@ export default function Home({ projects }: { projects: Project[] }) {
           <div>
             <div className="greeting">
               <span className="dot" />
-              {data.headerTaglineOne}
+              {home.greeting}
               {home.availability ? ` · ${home.availability}` : ""}
             </div>
             <h1>
               {home.heroLines.map((line, i) => (
                 <Fragment key={i}>
-                  {renderAccent(line, home.heroAccent)}
+                  {renderCopy(line)}
                   {i < home.heroLines.length - 1 && <br />}
                 </Fragment>
               ))}
             </h1>
-            <p className="lede">
-              {renderEmphasis(home.lede, home.ledeEmphasis)}
-            </p>
+            <p className="lede">{renderCopy(home.lede)}</p>
           </div>
           <div className="hero-meta">
             <div className="meta-row">
