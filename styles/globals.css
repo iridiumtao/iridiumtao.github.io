@@ -221,16 +221,15 @@ body {
   padding: 0 48px;
 }
 /* Single-column pages (resume, project showcase). Their content blocks are
-   capped well below 1280px, so inside the full wrap they hugged the left
-   edge and left a third of a wide screen empty. Narrowing the wrap itself —
-   rather than centering each block — keeps the nav, the content, and the
-   footer on one shared left edge; centering the blocks alone would have slid
-   the text out from under the nav that sits above it.
+   capped well below 1280px, so inside the full wrap they hugged the left edge
+   and left a third of a wide screen empty.
 
-   The cap is the page's content column plus the wrap's own 48px gutters, so
-   every block inside lands on the same two edges. Below the 960px breakpoint
-   those gutters shrink to 24px and the viewport is narrower than either cap
-   anyway, so these rules are desktop-only in effect.
+   These classes centre the content column and leave .wrap itself at 1280px.
+   Narrowing the wrap was the obvious fix and is the wrong one: the nav and
+   the footer live in the same wrap, so it resized the header too and the
+   whole bar visibly jumped width when navigating between the home page and
+   the resume. The header is site chrome and must measure the same on every
+   page; only the column between them changes.
 
    Two widths because the two pages carry different content. The resume is a
    timeline of dates, headings, and short bullets, where 820px reads fine.
@@ -239,16 +238,27 @@ body {
    measure at 45–75 characters and WCAG 2.1 SC 1.4.8 (AAA) caps a text block
    at 80. Measured in the browser at this font and size, 720px yields ~78
    characters per line and 820px yields ~89 — so the prose column stays at
-   720 and everything around it comes in to meet it, rather than the reverse. */
-.we .wrap.wrap-narrow,
-.we .wrap.wrap-prose {
-  max-width: calc(var(--wrap-column) + 96px);
-}
-.we .wrap.wrap-narrow {
+   720 and everything around it comes in to meet it, rather than the reverse.
+
+   Every block listed is a direct child of the wrap; .proj-cover and
+   .proj-body sit inside .resume-body and inherit the column from it. The
+   selectors carry the page class specifically to outrank the base
+   ".we .resume-body" / ".we .proj-nav" caps of 820px, which the prose page
+   has to pull down to 720. */
+.we .col-narrow {
   --wrap-column: 820px;
 }
-.we .wrap.wrap-prose {
+.we .col-prose {
   --wrap-column: 720px;
+}
+.we .col-narrow .resume-head,
+.we .col-narrow .resume-body,
+.we .col-narrow .proj-nav,
+.we .col-prose .resume-head,
+.we .col-prose .resume-body,
+.we .col-prose .proj-nav {
+  max-width: var(--wrap-column);
+  margin-inline: auto;
 }
 
 /* Nav */

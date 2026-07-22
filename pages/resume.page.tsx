@@ -170,7 +170,7 @@ export default function Resume({ resumes }: { resumes: ResumeDownload[] }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div className="wrap wrap-narrow">
+      <div className="wrap col-narrow">
         <Nav back />
 
         {/* Header */}

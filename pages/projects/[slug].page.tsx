@@ -84,7 +84,7 @@ export default function ProjectPage({ project, prev, next }: Props) {
         <meta property="og:image" content={`${SITE_ORIGIN}${p.imageSrc}`} />
       </Head>
 
-      <div className="wrap wrap-prose">
+      <div className="wrap col-prose">
         <Nav />
 
         <header className="resume-head proj-head">
