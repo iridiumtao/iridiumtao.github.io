@@ -4,13 +4,15 @@ The personal portfolio site of Chun-Ju "Iridium" Tao (歐東 / iridiumtao). Next
 Router**, **statically exported** to GitHub Pages. A real, live shopfront for his work — not a
 toy project — meant to live and be iterated on for 5+ years.
 
-The "Wood Editorial" redesign shipped in milestone v1.0: the site moved off its legacy
-7-year-old template components onto the Wood component system, the old blog became clickable
-project showcase pages, and the legacy component tree was deleted outright. It was deliberately
-not deployed — the redesign lives on the `new-design` branch and the live site still serves the
-old design. The current milestone (v2.0) migrates the codebase to strict TypeScript and clears
-known outstanding defects and tooling gaps; still build-only — nothing merges to `master` or
-deploys. `.planning/ROADMAP.md` is the map (gitignored).
+The "Wood Editorial" redesign was built in milestone v1.0 (site moved off its legacy 7-year-old
+template components onto the Wood component system, the old blog became clickable project
+showcase pages, legacy component tree deleted outright), hardened in v2.0 (strict TypeScript,
+known defects and tooling gaps cleared), and polished in v2.1.0 (copy, résumé, layout, palette).
+
+**It went live on 2026-07-22.** PR #1 merged `new-design` into `master`, and the live site now
+serves the Wood design. v1.0 and v2.0 were both deliberately build-only; that constraint is
+over — **`master` is production now, and every push to it deploys.**
+`.planning/ROADMAP.md` is the map (gitignored).
 
 ## Who the owner is
 
@@ -109,8 +111,11 @@ live constraint on today's single-system codebase.
   dead (last commit 2025-09-18). The `yarn deploy` script and the `gh-pages` devDependency were
   removed in v2.0 (HYG-02) — that branch-based publish would have overwritten Pages with a
   `CNAME`-less `out/`. Do not reintroduce it.
-- **The live site is still the OLD design** (redesign lives on `new-design`), and old
-  `/blog/<slug>` showcase pages are **live at HTTP 200** — real URLs worth redirecting.
+- **The live site serves the Wood design as of 2026-07-22.** `master` is production: any push
+  to it triggers `deploy.yml` and replaces the live site within ~2 minutes. Treat a push to
+  `master` as a deploy, and confirm before making one.
+- The old `/blog/<slug>` URLs were live at HTTP 200 before the cutover, which is why
+  `pages/blog/[slug].page.tsx` exists as a redirect shim. Keep it.
 
 ## Gotchas
 
