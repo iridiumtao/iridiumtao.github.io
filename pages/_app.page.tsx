@@ -12,11 +12,39 @@ import type { AppProps } from "next/app";
 // this import exists solely to keep font preloading working now that the font
 // loaders are no longer called directly inside this file.
 import "../styles/fonts";
+import Script from "next/script";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { countPageview, goatcounterEndpoint } from "../lib/analytics";
 
 const App = ({ Component, pageProps }: AppProps) => {
+  const router = useRouter();
+
+  // count.js counts the FIRST page load by itself, but this site routes on the
+  // client — clicking a project card never reloads the document — so every
+  // navigation after the first would go uncounted. routeChangeComplete covers
+  // exactly those, with no overlap with the script's own onload count, so
+  // nothing is double-counted. Left as a no-op when analytics is unconfigured.
+  useEffect(() => {
+    if (!goatcounterEndpoint) return;
+    router.events.on("routeChangeComplete", countPageview);
+    return () => router.events.off("routeChangeComplete", countPageview);
+  }, [router.events]);
+
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
       <Component {...pageProps} />
+      {goatcounterEndpoint && (
+        // afterInteractive, not beforeInteractive: analytics must never sit on
+        // the critical path of a portfolio whose visitors are mostly on phones.
+        // count.js skips localhost on its own, so `yarn dev` never reaches the
+        // network and the stats stay clean without a NODE_ENV guard here.
+        <Script
+          strategy="afterInteractive"
+          src="https://gc.zgo.at/count.js"
+          data-goatcounter={goatcounterEndpoint}
+        />
+      )}
     </ThemeProvider>
   );
 };
