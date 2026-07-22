@@ -318,11 +318,17 @@ body {
   gap: 80px;
   align-items: end;
 }
+/* align-items: flex-start, not center: the greeting text wraps to two lines
+   on a phone, and centering floated the status dot into the gap between
+   them. The dot's calc() margin re-centers it on the first line box, so the
+   single-line desktop rendering is unchanged; line-height is stated
+   explicitly here because that calc depends on it. */
 .we .greeting {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   font-family: var(--font-mono);
+  line-height: 1.5;
   font-size: 13px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -334,6 +340,8 @@ body {
 .we .greeting .dot {
   width: 6px;
   height: 6px;
+  flex: none;
+  margin-top: calc((1.5em - 6px) / 2);
   border-radius: 50%;
   background: var(--color-accent-moss);
   animation: we-pulse 2.4s var(--ease-in-out) infinite;
@@ -909,6 +917,23 @@ body {
   }
   .we .nav-links a:not(.cta) {
     display: none;
+  }
+  /* Phone header fits on one line. At 375px the brand (223px) and the lone
+     Resume CTA (104px) exactly fill the 327px content row, so both wrapped:
+     the name broke after "(Iridium)" and the CTA broke between the word and
+     its arrow. Shrinking the name and forbidding the CTA's internal break
+     brings the pair to 305px, leaving real slack. */
+  .we .brand .name {
+    font-size: 15px;
+  }
+  .we .nav-links a.cta {
+    white-space: nowrap;
+  }
+  /* The 120px base gap above the footer is tuned for desktop; stacked on a
+     phone it reads as a dead screen between the prev/next links and the
+     footer rule. */
+  .we footer {
+    margin-top: 64px;
   }
   /* FIX-02/D-05: stack prev/next vertically so a long project title gets
      full width instead of crowding inside a 48%-capped row. The .proj-nav
