@@ -221,17 +221,34 @@ body {
   padding: 0 48px;
 }
 /* Single-column pages (resume, project showcase). Their content blocks are
-   capped at 820px, so inside the 1280px wrap they hugged the left edge and
-   left a third of a wide screen empty. Narrowing the wrap itself — rather
-   than centering each block — keeps the nav, the content, and the footer on
-   one shared left edge; centering the blocks alone would have slid the text
-   out from under the nav that sits above it.
+   capped well below 1280px, so inside the full wrap they hugged the left
+   edge and left a third of a wide screen empty. Narrowing the wrap itself —
+   rather than centering each block — keeps the nav, the content, and the
+   footer on one shared left edge; centering the blocks alone would have slid
+   the text out from under the nav that sits above it.
 
-   916px = the 820px content column plus the wrap's own 48px gutters. Below
-   the 960px breakpoint those gutters shrink to 24px and the viewport is
-   narrower than this cap anyway, so this rule is desktop-only in effect. */
+   The cap is the page's content column plus the wrap's own 48px gutters, so
+   every block inside lands on the same two edges. Below the 960px breakpoint
+   those gutters shrink to 24px and the viewport is narrower than either cap
+   anyway, so these rules are desktop-only in effect.
+
+   Two widths because the two pages carry different content. The resume is a
+   timeline of dates, headings, and short bullets, where 820px reads fine.
+   The project showcase is running prose, and line length there is a
+   readability constraint, not a taste call: Bringhurst puts a single-column
+   measure at 45–75 characters and WCAG 2.1 SC 1.4.8 (AAA) caps a text block
+   at 80. Measured in the browser at this font and size, 720px yields ~78
+   characters per line and 820px yields ~89 — so the prose column stays at
+   720 and everything around it comes in to meet it, rather than the reverse. */
+.we .wrap.wrap-narrow,
+.we .wrap.wrap-prose {
+  max-width: calc(var(--wrap-column) + 96px);
+}
 .we .wrap.wrap-narrow {
-  max-width: 916px;
+  --wrap-column: 820px;
+}
+.we .wrap.wrap-prose {
+  --wrap-column: 720px;
 }
 
 /* Nav */
