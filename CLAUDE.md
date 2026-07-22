@@ -14,7 +14,7 @@ deploys. `.planning/ROADMAP.md` is the map (gitignored).
 
 ## Who the owner is
 
-- **Chun-Ju "Iridium" Tao (歐東)** — M.S. Computer Engineering at NYU, graduating May 2026.
+- **Chun-Ju "Iridium" Tao (歐東)** — M.S. Computer Engineering at NYU, graduated May 2026.
   Based between **New York and Taipei**. A **Taiwanese person living in the US**.
 - Specializes in **MLOps, applied ML, and scalable cloud systems** (Python, Go, Docker,
   Terraform, AWS, PyTorch, MLflow). Interned at Micron, CARITY AI, MoBagel, Mindtronic AI.
