@@ -38,11 +38,13 @@
   --color-wood-700: #322b24;
   --color-wood-800: #1f1a15;
 
-  /* Liveliness accents — used sparingly, at most once per surface */
-  --color-accent-clay: #c97b5c; /* warm terracotta */
-  --color-accent-moss: #6b7f4e; /* Taiwanese tea-leaf green */
-  --color-accent-ink: #2b3a4a; /* deep ink-blue for links */
-  --color-accent-gold: #c9a24e; /* honoraria / awards */
+  /* Liveliness accents — used sparingly, at most once per surface.
+     All four are members of the warm-earth palette; contrast figures are
+     against --color-paper. */
+  --color-accent-clay: #9a6852; /* roasted brown, 4.4:1 — emphasis + hovers */
+  --color-accent-moss: #9d7553; /* mid wood, 3.9:1 — non-text marks only */
+  --color-accent-ink: #876d5a; /* dark taupe, 4.5:1 — prose links */
+  --color-accent-gold: #cda581; /* tan, 2.1:1 — decorative only */
 
   /* Warm paper surface (light) */
   --color-paper: #fbf7f2;
@@ -65,7 +67,16 @@
 
   /* Note: Tailwind v4 ships the `stone` neutral scale built-in
      (--color-stone-50 … --color-stone-900) — intentionally not redeclared
-     here to shrink the token surface; referenced below via var(--color-stone-*). */
+     here to shrink the token surface; referenced below via var(--color-stone-*).
+     The four steps below ARE redeclared, warmed onto the same earth palette as
+     the accents: they carry only muted meta text, hairline rules and chip
+     fills. The darker steps (600/700/900) stay neutral on purpose — they carry
+     real body prose, and no member of this palette reaches 7:1 on paper, so
+     warming them would trade legibility for tone. */
+  --color-stone-100: color-mix(in srgb, #dabea7 34%, var(--color-paper));
+  --color-stone-200: #dabea7; /* hairline rules */
+  --color-stone-400: #a98b73; /* faint indices */
+  --color-stone-500: #876d5a; /* muted meta text, 4.5:1 — holds AA */
 }
 
 :root {
