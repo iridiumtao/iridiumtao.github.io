@@ -1,11 +1,6 @@
 {
   "name": "Chun-Ju (Iridium)",
-  "headerTaglineOne": "Hi there (ﾉ´∀｀*)",
-  "headerTaglineTwo": "I'm Chun-Ju Tao,",
-  "headerTaglineThree": "Computer Engineering MS student at NYU",
-  "headerTaglineFour": "Passionate about creating innovative and scalable solutions with Software",
   "showCursor": false,
-  "showBlog": false,
   "darkMode": true,
   "showResume": true,
   "socials": [
@@ -29,83 +24,157 @@
   "projects": [
     {
       "id": "8",
+      "slug": "openhci25-oblivilight",
       "title": "Oblivilight - OpenHCI'25",
-      "subtitle": "HCI, LangChain",
+      "techStack": [
+        "HCI",
+        "LangChain"
+      ],
       "startDate": "July 2025",
       "endDate": "August 2025",
       "description": "A privacy-focused AI-powered smart lamp that transforms nightly voice conversations into tangible memories.",
-      "imageSrc": "https://raw.githubusercontent.com/iridiumtao/OpenHCI25-Oblivilight/refs/heads/main/docs/Cover.png?raw=true",
-      "url": "https://github.com/iridiumtao/OpenHCI25-Oblivilight"
+      "imageSrc": "/images/projects/openhci25-oblivilight.png",
+      "url": "https://github.com/iridiumtao/OpenHCI25-Oblivilight",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
     },
     {
       "id": "7",
+      "slug": "taigi-medical-advising-llm",
       "title": "Taigi (Taiwanese-Hokkien) Medical Advising LLM",
-      "subtitle": "AI, ML, LLM",
+      "techStack": [
+        "AI",
+        "ML",
+        "LLM"
+      ],
       "startDate": "March 2025",
       "endDate": "May 2025",
       "description": "Fine-tuned Taigi (Taiwanese-Hokkien) medical advising LLM with a full-stack MLOps pipeline.",
-      "imageSrc": "https://raw.githubusercontent.com/iridiumtao/Fine-Tuning-Taiwanese-Hokkien-LLM-for-Medical-Advising/refs/heads/main/docs/project_diagram.png",
-      "url": "https://github.com/iridiumtao/Fine-Tuning-Taiwanese-Hokkien-LLM-for-Medical-Advising"
+      "imageSrc": "/images/projects/taigi-medical-advising-llm.png",
+      "url": "https://github.com/iridiumtao/Fine-Tuning-Taiwanese-Hokkien-LLM-for-Medical-Advising",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
     },
     {
       "id": "1",
+      "slug": "loud-plants-in-your-area",
       "title": "Loud Plants in Your Area",
-      "subtitle": "HCI, AR, ML",
+      "techStack": [
+        "HCI",
+        "AR",
+        "ML"
+      ],
       "startDate": "February 2024",
       "endDate": "May 2024",
       "description": "An Augmented Reality (AR) application that helps combat 'plant blindness' by making plant activities visible and interactive through augmented overlays.",
-      "imageSrc": "https://raw.githubusercontent.com/iridiumtao/LoudPlantsInYourArea/refs/heads/main/docs/LoudPlantsInYourArea.jpeg",
-      "url": "https://github.com/iridiumtao/LoudPlantsInYourArea"
+      "imageSrc": "/images/projects/loud-plants-in-your-area.jpg",
+      "url": "https://github.com/iridiumtao/LoudPlantsInYourArea",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
     },
     {
       "id": "2",
+      "slug": "virtual-news-presenter",
       "title": "AI Editor-in-Chief and Virtual News Presenter",
       "subtitle": "An Artificial Intelligence-Based Pipeline for Automated News Production",
+      "techStack": [],
       "startDate": "September 2021",
       "endDate": "July 2023",
       "description": "A project aimed to catch teenagers’ attention and refocus on critical societal issues with AI-driven Natural Language Processing technologies in Taiwanese Mandarin.",
-      "imageSrc": "https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/image/AI%20Editor-in-Chief%20and%20Virtual%20News%20Presenter.png",
-      "url": "https://github.com/iridiumtao/Virtual-to-News-Public"
+      "imageSrc": "/images/projects/virtual-news-presenter.png",
+      "url": "https://github.com/iridiumtao/Virtual-to-News-Public",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
     },
     {
       "id": "3",
+      "slug": "risc-v-simulator",
       "title": "RISC-V-Simulator",
+      "techStack": [],
       "startDate": "October 2024",
       "endDate": "December 2024",
       "description": "A 5-stage pipelined RISC-V Simulator written in Python.",
-      "imageSrc": "https://raw.githubusercontent.com/iridiumtao/RISC-V-Simulator/refs/heads/master/docs/Schematic%20RISCV%20Project%20Five%20Stage.png",
-      "url": "https://github.com/iridiumtao/RISC-V-Simulator"
+      "imageSrc": "/images/projects/risc-v-simulator.png",
+      "url": "https://github.com/iridiumtao/RISC-V-Simulator",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
     },
     {
       "id": "4",
+      "slug": "retailpia",
       "title": "Retailpia",
       "subtitle": "Winner of Better Retail, Level-Up Society Hackathon, organized by ShowCode",
+      "techStack": [],
       "startDate": "July 2021",
       "endDate": "July 2021",
       "description": "Developed a city-building game that also included the additional feature of being an account book app and a points collector with students from four universities within 48 hours.",
-      "imageSrc": "https://github.com/iridiumtao/Retailpia/assets/43561001/8d1d5603-e090-4694-9eea-562258a6c361",
-      "url": "https://github.com/iridiumtao/Retailpia"
+      "imageSrc": "/images/projects/retailpia.png",
+      "url": "https://github.com/iridiumtao/Retailpia",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
     },
     {
       "id": "5",
+      "slug": "tw-covid-bot",
       "title": "TW-COVID-Bot (Telegram Bot)",
+      "techStack": [],
       "startDate": "August 2020",
       "endDate": "November 2022",
       "description": "During the COVID-19 pandemic in Taiwan, I assisted social media influencers in automatically posting daily outbreak information for easy access to up-to-date information.",
-      "imageSrc": "https://github.com/lhsueh1/TW-covid-Bot/blob/main/src/README/img1.png?raw=true",
-      "url": "https://github.com/lhsueh1/TW-covid-Bot"
+      "imageSrc": "/images/projects/tw-covid-bot.png",
+      "url": "https://github.com/lhsueh1/TW-covid-Bot",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
     },
     {
       "id": "6",
+      "slug": "swiftui-weather-app",
       "title": "iOS Development",
+      "techStack": [],
       "startDate": "June 2020",
       "endDate": "October 2020",
       "description": "During the summer vacation of my second year of University, I participated in the summer iOS development practical training, cultivating skills in mobile development through hands-on experience with UI components and design patterns in the Intelligent Mobile Application Club (I.M.A.C) laboratory on campus.",
-      "imageSrc": "https://raw.githubusercontent.com/iridiumtao/iridiumtao.github.io/refs/heads/master/docs/image/iOS%20Development.png",
-      "url": "https://github.com/jerry960331/iOS_practice_SwiftUIWeatherApp"
+      "imageSrc": "/images/projects/swiftui-weather-app.png",
+      "url": "https://github.com/jerry960331/iOS_practice_SwiftUIWeatherApp",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
     }
   ],
   "experiences": [
+    {
+      "id": "a-day-cofounder",
+      "title": "Co-Founder, A Day",
+      "description": "Architected a production-grade MVVM iOS app with SwiftData and SwiftUI across 7 interconnected data models and 60+ source files, backed by Xcode Cloud CI/CD and 700+ Swift Testing unit and integration tests."
+    },
+    {
+      "id": "nyu-course-assistant",
+      "title": "Course Assistant, NYU",
+      "description": "Built a 5-microservice ML safeguard lab with FastAPI and Docker Compose, and reviewed end-to-end MLOps systems from 30 teams on Chameleon Cloud against production criteria."
+    },
     {
       "id": "678d33ac-a854-4dce-9c0e-db5fae6cd91e",
       "title": "Data Science Intern, Micron",
@@ -118,7 +187,7 @@
     },
     {
       "id": "2",
-      "title": "Software Engineering Intern, MoBagel",
+      "title": "Software Engineer, MoBagel",
       "description": "Built a full-stack material management system automating budgeting and inventory for Taiwan Water Corporation. Led GitFlow and Agile adoption, boosting efficiency during a 300% team expansion."
     },
     {
@@ -127,11 +196,52 @@
       "description": "Developed a back-end server with Golang and PostgreSQL, handling 480k+ weekly entries. Added React-based dashboard features and built real-time ARM-device apps for fleet driving analytics."
     }
   ],
-  "aboutpara": "Chun-Ju Tao is a Computer Engineering master’s student at New York University (GPA: 3.83) specializing in MLOps, applied machine learning, and scalable cloud systems. With a strong foundation in both software development and data science, he is proficient in Python, Go, and JavaScript, and deeply skilled in the modern MLOps and cloud-native toolchain, including Docker, Terraform, AWS, PyTorch, and MLflow.\n\nNotable accomplishments include architecting a complete MLOps stack to fine-tune and deploy a custom LLM, featuring an automated, doctor-in-the-loop retraining pipeline with Airflow and MLflow. At Micron, he designed a production-scale Python pipeline and Streamlit web app to analyze terabytes of manufacturing data, enabling fast, reproducible studies across teams. At CARITY AI, he containerized microservices and automated CI/CD on AWS ECS, cutting infrastructure costs by 40% and deployment time by 70%.\n\nChun-Ju has demonstrated leadership by introducing Agile and GitFlow methodologies at MoBagel, stabilizing team management and improving efficiency during a 300% team expansion. An award-winning developer recognized at international conferences for technical innovation, his achievements reflect a commitment to driving operational excellence and delivering reliable, scalable, and data-driven solutions.",
+  "aboutpara": "Chun-Ju Tao is a Computer Engineering master’s student at New York University (GPA: 3.73) specializing in MLOps, applied machine learning, and scalable cloud systems. With a strong foundation in both software development and data science, he is proficient in Python, Go, and JavaScript, and deeply skilled in the modern MLOps and cloud-native toolchain, including Docker, Terraform, AWS, PyTorch, and MLflow.\n\nNotable accomplishments include architecting a complete MLOps stack to fine-tune and deploy a custom LLM, featuring an automated, doctor-in-the-loop retraining pipeline with Airflow and MLflow. At Micron, he designed a production-scale Python pipeline and Streamlit web app to analyze terabytes of manufacturing data, enabling fast, reproducible studies across teams. At CARITY AI, he containerized microservices and automated CI/CD on AWS ECS, cutting infrastructure costs by 40% and deployment time by 70%.\n\nChun-Ju has demonstrated leadership by introducing Agile and GitFlow methodologies at MoBagel, stabilizing team management and improving efficiency during a 300% team expansion. An award-winning developer recognized at international conferences for technical innovation, his achievements reflect a commitment to driving operational excellence and delivering reliable, scalable, and data-driven solutions.",
+  "home": {
+    "greeting": "Hi there (ﾉ´∀｀*)",
+    "availability": "Open to work",
+    "heroLines": [
+      "I build the",
+      "**infrastructure**",
+      "your code",
+      "runs on."
+    ],
+    "lede": "I'm Chun-Ju (Iridium) Tao — a Computer Engineering MS from NYU who works on **backend and infrastructure**. I've automated CI/CD on AWS, right-sized microservices to cut cloud cost, and built the first Taigi medical-advising LLM.",
+    "based": "Pittsburgh, PA",
+    "degree": "M.S. Computer Engineering, NYU",
+    "stack": "Python · Go · Docker · AWS · PyTorch · MLflow",
+    "honorsShort": "OpenHCI'25 1st · Fi-Award'23 · Level-Up'21",
+    "aboutPull": "Bringing the warmth of Taiwanese craft to the cold rigor of cloud systems.",
+    "contactEmail": "mailto:c.tao@nyu.edu",
+    "projectCount": 3
+  },
   "resume": {
     "tagline": "Chun-Ju Tao",
     "description": "Passive about creating innovative and scalable solutions in Software. Experienced in designing backend systems, automating CI/CD pipelines, and building cloud-native MLOps platforms. Seeking a backend or software infrastructure role to tackle complex engineering challenges.",
     "experiences": [
+      {
+        "id": "a-day-cofounder",
+        "dates": "May 2025 - Present",
+        "type": "",
+        "position": "Co-Founder at A Day",
+        "location": "New York, NY",
+        "bullets": [
+          "Architected a production-grade MVVM application with SwiftData and latest SwiftUI features, decoupling the service layer to ensure strict separation of concerns across 7 interconnected data models and 60+ source files.",
+          "Engineered an AI-augmented development workflow (Cursor/Claude) with custom MCPs and skills for context management, accelerating delivery velocity by 4x while strictly adhering to TDD cycles to eliminate regression risks.",
+          "Established a CI/CD Pipeline using Xcode Cloud with a rigorous QA framework using Swift Testing, implementing 700+ unit and integration tests to guarantee architectural integrity and regression prevention across ViewModels and data flows."
+        ]
+      },
+      {
+        "id": "nyu-course-assistant",
+        "dates": "January 2026 - May 2026",
+        "type": "Part-time",
+        "position": "Course Assistant at New York University",
+        "location": "Brooklyn, NY",
+        "bullets": [
+          "Built a 5-microservice ML safeguard lab (FastAPI, Docker Compose) routing requests through two custom MobileNetV2 guard models and a Food11 classifier via short-circuit logic; generated synthetic edge-case data and benchmarked median/p95/p99 inference latency to quantify the cost of each safety layer.",
+          "Reviewed end-to-end MLOps systems from 30 teams (110 students) on Chameleon Cloud across design, code, and live demos, assessing them against production criteria: experiment tracking, automated retraining, drift monitoring, secrets hygiene, and container reproducibility; delivered structured feedback that teams used to remediate issues such as data leakage and shortcut/proxy learning."
+        ]
+      },
       {
         "id": "dab034bf-1fa5-41ea-b336-64f66fbd76f9",
         "dates": "July 2025 - August 2025",
@@ -139,9 +249,8 @@
         "position": "Data Science Intern at Micron Technology",
         "location": "Taoyuan, Taiwan",
         "bullets": [
-          "Architected a production-scale Python pipeline and Streamlit web app for fab-dispatch analysis, processing 2 weeks' logs (33GB) and delivering a self-serve interface for parameter tuning and rich visuals, enabling fast, reproducible studies and broad cross-team adoption.",
-          "Developed an explainable LightGBM simulation proxy with SHAP analysis for lot-level decision tracing, enabling evidence-based simplification of scheduling parameters by quantifying which factors truly drive selection and reducing tuning overhead for production engineers.",
-          "Engineered repo-documentation tools for an enterprise application with over one million lines of code using Prompt Engineering with Roo Code Orchestrator, MCP, and Qdrant; produced modular docs and standardized class/method summaries; cut token usage 10x and projected ~3x developer efficiency."
+          "Architected a production-scale Python pipeline and self-serve Streamlit app over 33GB of bi-weekly fab-dispatch logs, surfacing key scheduling drivers via an explainable LightGBM/SHAP model for reproducible, evidence-based tuning adopted across teams.",
+          "Engineered repo-documentation tools for an enterprise application with over one million lines of code using Prompt Engineering and sub-task agents; cut token usage 10x and projected ~3x gain in developer efficiency."
         ]
       },
       {
@@ -151,20 +260,20 @@
         "position": "Software Developer at CARITY AI",
         "location": "Ontario, Canada",
         "bullets": [
-          "Automated CI/CD for an LLM-based product, containerizing 4 microservices on AWS ECS with GitHub Actions, reduced infrastructure costs by 40% and cut deployment time by 70%.",
-          "Delivered a Proof-of-Concept using Retrieval-Augmented Generation (RAG), demonstrating a potential 5x reduction in token usage and influencing the team's future technical roadmap for cost optimization."
+          "Automated CI/CD for an LLM-based product by containerizing 4 microservices on AWS ECS with GitHub Actions, reducing infrastructure costs by 40% and cutting deployment time by 70%.",
+          "Delivered a Retrieval-Augmented Generation (RAG) proof-of-concept showing a potential 5x token-usage reduction, shaping the team's cost-optimization roadmap."
         ]
       },
       {
         "id": "2",
         "dates": "January 2023 - July 2023",
         "type": "Internship",
-        "position": "Software Engineering Intern at MoBagel",
+        "position": "Software Engineer at MoBagel",
         "location": "Taichung, Taiwan",
         "bullets": [
-          "Engineered a critical full-stack system to automate inventory and budgeting for trillions in government assets for the Taiwan Water Corporation, migrating a legacy Java 4 application to a modern .NET stack (C#, MS SQL, Vue.js) to enhance performance, security, and scalability.",
-          "Proactively identified and reported critical security vulnerabilities across legacy and new systems, including SQL injection risks and an exposed database, preventing potential large-scale data breaches.",
-          "Established GitFlow and an Agile development model for a 10-person team, fostering a culture of collaboration that improved development efficiency and stabilized team management during a 300% expansion."
+          "Engineered a full-stack material management system for the Taiwan Water Corporation (national utility, 7M+ households), migrating its legacy Java application to automate inventory and budgeting over millions of historical records.",
+          "Introduced GitFlow and an Agile workflow that scaled the engineering process as the team tripled from 10 to 30, enabling a smooth transition recognized by the supervising manager.",
+          "Discovered and reported critical security flaws, including SQL-injection vectors and a publicly exposed, unauthenticated test database that risked a large-scale breach of decades of records."
         ]
       },
       {
@@ -174,9 +283,7 @@
         "position": "Software Engineering Intern at Mindtronic AI",
         "location": "Taipei, Taiwan",
         "bullets": [
-          "Spearheaded the backend migration from Node.js to Go, re-architecting and building the new system from the ground up to enhance processing efficiency and system security; Mastered the Go language independently to deliver a robust, production-ready backend.",
-          "Owned the full lifecycle of 53 RESTful APIs in Go, from design and implementation to documentation, proactively identified and eliminated critical SQL injection vulnerabilities across the entire API suite while ensuring the system could reliably process over 480,000 data entries weekly.",
-          "Developed key data-rich features for the React frontend to enable real-time fleet monitoring, delivering complex user-facing functionalities including interactive dashboards, live video streaming, and vehicle trajectory visualization on a map."
+          "Rebuilt the entire backend in Go from a legacy Node.js service, owning 53 RESTful APIs end to end (design, implementation, and SQL-injection hardening) while reliably processing 480K+ entries weekly."
         ]
       }
     ],
@@ -187,9 +294,9 @@
         "universityDate": "May 2026",
         "location": "New York, NY",
         "degree": "Computer Engineering, M.S.",
-        "gpa": "3.83",
+        "gpa": "3.73",
         "relevantCoursework": [
-          "Internet Architecture & Protocol",
+          "Practical Software Engineering",
           "Human Computer Interaction",
           "Machine Learning",
           "MLOps",
@@ -214,39 +321,58 @@
     "skills": {
       "languages": [
         "Python",
-        "JavaScript (React, Vue)",
         "Go",
         "Java",
         "C#",
         "Swift",
-        "MS SQL",
-        "PostgreSQL",
-        "C"
+        "JavaScript",
+        "SQL (PostgreSQL, MS SQL)",
+        "C/C++"
       ],
       "cloudAndDevOps": [
         "Docker",
-        "AWS ECS",
+        "AWS",
         "Terraform",
         "GitHub Actions",
         "Airflow",
         "Prometheus",
         "Grafana",
-        "MinIO",
-        "Git",
-        "Linux"
+        "Linux",
+        "Git/GitFlow"
+      ],
+      "frameworksAndBackend": [
+        "FastAPI",
+        "Flask",
+        "Django",
+        "Node.js",
+        "React",
+        "Vue",
+        "RESTful APIs",
+        "WebSocket"
       ],
       "dataAndML": [
         "PyTorch",
         "MLflow",
         "LlamaIndex",
-        "Lang Chain",
+        "LangChain",
         "LightGBM",
         "SHAP",
-        "Streamlit",
-        "FastAPI"
+        "Streamlit"
       ]
     },
     "projects": [
+      {
+        "id": "nyu-marketplace",
+        "title": "NYU Marketplace",
+        "organization": "Practical Software Engineering, NYU",
+        "location": "New York, NY",
+        "dates": "September 2025 - December 2025",
+        "details": [
+          "Architected a CI/CD pipeline on Travis CI and AWS Elastic Beanstalk with strict merge gates (linting, 85%+ test coverage), automating deployment on every approved PR.",
+          "Built scalable RESTful and real-time WebSocket APIs with Django 5 and Channels, serving as lead code reviewer to enforce system design and clean code standards across the team.",
+          "Advised by Professor Gennadiy Civil (Adjunct; Senior Engineering Manager at Google)."
+        ]
+      },
       {
         "id": "b2787423-bef6-463a-9e8c-7c973939e4eb",
         "title": "Privacy‑First AI Smart Lamp for Ephemeral Night Conversations - Oblivilight",
