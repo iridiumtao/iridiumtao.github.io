@@ -17,6 +17,15 @@ export default function Document() {
     <Html
       lang="en"
       suppressHydrationWarning
+      // globals.css sets `scroll-behavior: smooth` on <html> for in-page
+      // anchor jumps (#projects, #work, #about). Without this attribute that
+      // also animated Next's scroll-to-top on every route change, so clicking
+      // a project card visibly scrolled the OLD page to the top before the new
+      // one appeared. Next reads this marker in
+      // disableSmoothScrollDuringRouteTransition and flips scroll-behavior to
+      // `auto` around its own scrollTo — anchor smoothness is unaffected. The
+      // dev build warns on the console when it is missing.
+      data-scroll-behavior="smooth"
       className={`${huninn.variable} ${jbmono.variable}`}
     >
       <Head />

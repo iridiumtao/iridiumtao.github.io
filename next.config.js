@@ -4,6 +4,16 @@ const isDev = process.env.NODE_ENV === "development";
 
 const nextConfig = {
   reactStrictMode: true,
+  // Restore the previous scroll offset on back/forward. The Pages Router
+  // defaults this to false, which is why returning from a project showcase
+  // dropped the visitor at the top of the homepage instead of back at the
+  // card they clicked. It is a client-side sessionStorage mechanism, so it
+  // survives the static export. Still namespaced `experimental` in Next 16
+  // — if a future major moves or removes it, the fallback is today's
+  // behaviour (back goes to top), not a build failure.
+  experimental: {
+    scrollRestoration: true,
+  },
   output: isDev ? undefined : "export",
   images: {
     unoptimized: true,
