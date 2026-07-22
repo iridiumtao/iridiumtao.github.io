@@ -506,6 +506,13 @@ body {
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
+/* The subtitle sits under the title it belongs to. .proj's 14px column gap is
+   the spacing between the card's separate parts, so left alone the subtitle
+   would float exactly halfway between the title above and the description
+   below and read as neither's. Pull it up to sit close under the title. */
+.we .proj h3 + .proj-sub {
+  margin-top: -8px;
+}
 .we .proj h3 {
   font-weight: 400;
   font-size: 24px;

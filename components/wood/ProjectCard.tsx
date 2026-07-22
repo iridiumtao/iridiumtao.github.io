@@ -32,8 +32,8 @@ export default function ProjectCard({
           <span className="badge">{endYear(p.endDate)}</span>
         )}
       </div>
-      {p.subtitle && <span className="proj-sub">{p.subtitle}</span>}
       <h3>{p.title}</h3>
+      {p.subtitle && <span className="proj-sub">{p.subtitle}</span>}
       <p>{p.description}</p>
     </Link>
   );
