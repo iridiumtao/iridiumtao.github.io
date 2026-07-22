@@ -208,38 +208,11 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
-/* Paper ambience: warm radial glows + faint grain */
-.we::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image:
-    radial-gradient(
-      circle at 25% 15%,
-      rgb(from var(--color-wood-100) r g b / 0.65) 0%,
-      transparent 38%
-    ),
-    radial-gradient(
-      circle at 80% 85%,
-      rgb(from var(--color-wood-200) r g b / 0.45) 0%,
-      transparent 42%
-    );
-}
-.we::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.035;
-  background-image: repeating-linear-gradient(
-    45deg,
-    var(--color-wood-600) 0 1px,
-    transparent 1px 4px
-  );
-}
+/* The page background is a flat --color-paper. The two fixed overlays that
+   used to sit here — warm radial glows (::before) and a 45deg hairline
+   stripe texture (::after) — were removed deliberately. Both were purely
+   decorative and pointer-events: none, so nothing depends on them; .wrap's
+   z-index: 1 is now redundant but harmless. */
 .we .wrap {
   position: relative;
   z-index: 1;
@@ -419,52 +392,11 @@ body {
 }
 
 /* Skill marquee (homepage) */
-.we .strip {
-  margin-top: 60px;
-  padding: 18px 0;
-  border-top: 1px solid rgb(from var(--color-wood-600) r g b / 0.12);
-  border-bottom: 1px solid rgb(from var(--color-wood-600) r g b / 0.12);
-  display: flex;
-  overflow: hidden;
-  -webkit-mask: linear-gradient(
-    90deg,
-    transparent,
-    var(--color-black) 8%,
-    var(--color-black) 92%,
-    transparent
-  );
-  mask: linear-gradient(
-    90deg,
-    transparent,
-    var(--color-black) 8%,
-    var(--color-black) 92%,
-    transparent
-  );
-}
-.we .strip-track {
-  display: flex;
-  gap: 48px;
-  flex-shrink: 0;
-  animation: we-marquee 50s linear infinite;
-}
-.we .strip-track span {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--color-stone-600);
-  white-space: nowrap;
-  letter-spacing: 0.05em;
-}
-.we .strip-track .sep {
-  color: var(--color-accent-clay);
-}
-@keyframes we-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
+/* The scrolling skill marquee (.strip / .strip-track / @keyframes we-marquee)
+   was removed: one copy of the track measured 4428px against a 1184px
+   viewport, so only ~7 of 27 skills were ever readable at a glance and the
+   rest depended on waiting out the animation. The hero-meta "Stack" row
+   carries the curated short list instead. */
 
 /* Section headers */
 .we .sec-head {
@@ -512,15 +444,19 @@ body {
   position: relative;
   box-shadow: var(--shadow-sm);
   background: var(--color-wood-50);
+  transition: transform 600ms var(--ease-out);
 }
 /* Frame hugs each image's natural aspect ratio — no crop, no letterbox */
 .we .proj-img img {
   width: 100%;
   height: auto;
   display: block;
-  transition: transform 600ms var(--ease-out);
 }
-.we .proj:hover .proj-img img {
+/* Scale the frame, not the <img> inside it. Scaling the image alone shrank it
+   away from the frame edge, exposing a ring of the frame's own background and
+   the image's un-rounded square corners, since the 14px radius and the clip
+   both live on the frame. Transforming the frame keeps them in lockstep. */
+.we .proj:hover .proj-img {
   transform: scale(0.98);
 }
 .we .badge {
@@ -603,10 +539,15 @@ body {
   padding: 22px 0;
   border-bottom: 1px solid rgb(from var(--color-wood-600) r g b / 0.09);
   align-items: baseline;
-  transition: padding-left 300ms var(--ease-out);
+  transition: transform 300ms var(--ease-out);
 }
+/* translateX, not padding-left: padding shrinks the grid's content box, so
+   the 1fr / 1.1fr columns lost 10px and the role and blurb text re-wrapped
+   at certain widths on hover. A transform nudges the row without touching
+   layout, so column widths — and line breaks — stay put. The 10px overhang
+   lands inside .wrap's 48px padding, so nothing clips. */
 .we .exp-row:hover {
-  padding-left: 10px;
+  transform: translateX(10px);
 }
 .we .exp-idx {
   font-family: var(--font-mono);

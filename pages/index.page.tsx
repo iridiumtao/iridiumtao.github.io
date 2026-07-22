@@ -117,13 +117,6 @@ export default function Home({ projects }: { projects: Project[] }) {
   const [lead, ...rest] = featured;
   const [showAll, setShowAll] = useState(false);
 
-  // Skill marquee, flattened from the résumé skill groups.
-  const skills = [
-    ...data.resume.skills.languages,
-    ...data.resume.skills.cloudAndDevOps,
-    ...data.resume.skills.dataAndML,
-  ];
-
   return (
     <div className="we">
       <Head>
@@ -174,28 +167,12 @@ export default function Home({ projects }: { projects: Project[] }) {
           </div>
         </section>
 
-        {/* Skill marquee */}
-        <div className="strip" aria-hidden="true">
-          <div className="strip-track">
-            {[...skills, ...skills].map((s, i) => (
-              <Fragment key={i}>
-                <span>{s}</span>
-                <span className="sep">✦</span>
-              </Fragment>
-            ))}
-          </div>
-        </div>
-
         {/* Projects */}
         <section id="projects">
           <div className="sec-head">
             <h2>
               <span className="num">01 ／</span>Selected Projects
             </h2>
-            <span className="aside">
-              {showAll ? projects.length : featured.length} of{" "}
-              {projects.length}
-            </span>
           </div>
           <div className="projects">
             {lead && <ProjectCard p={lead} size="large" />}
@@ -227,9 +204,6 @@ export default function Home({ projects }: { projects: Project[] }) {
             <h2>
               <span className="num">02 ／</span>Professional Experience
             </h2>
-            <span className="aside">
-              {data.resume.experiences.length} internships
-            </span>
           </div>
           <div className="exp-list">
             {data.resume.experiences.map((exp, i) => {
@@ -258,7 +232,6 @@ export default function Home({ projects }: { projects: Project[] }) {
             <h2>
               <span className="num">03 ／</span>About
             </h2>
-            <span className="aside">A short note</span>
           </div>
           <div className="about">
             <div className="about-pull">&ldquo;{home.aboutPull}&rdquo;</div>
