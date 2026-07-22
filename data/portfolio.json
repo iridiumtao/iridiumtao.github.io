@@ -26,7 +26,6 @@
       "id": "8",
       "slug": "openhci25-oblivilight",
       "title": "Oblivilight - OpenHCI'25",
-      "subtitle": "HCI, LangChain",
       "techStack": [
         "HCI",
         "LangChain"
@@ -46,7 +45,6 @@
       "id": "7",
       "slug": "taigi-medical-advising-llm",
       "title": "Taigi (Taiwanese-Hokkien) Medical Advising LLM",
-      "subtitle": "AI, ML, LLM",
       "techStack": [
         "AI",
         "ML",
@@ -67,7 +65,6 @@
       "id": "1",
       "slug": "loud-plants-in-your-area",
       "title": "Loud Plants in Your Area",
-      "subtitle": "HCI, AR, ML",
       "techStack": [
         "HCI",
         "AR",

@@ -87,7 +87,7 @@ export default function ProjectPage({ project, prev, next }: Props) {
       <div className="wrap wrap-prose">
         <Nav />
 
-        <header className="resume-head">
+        <header className="resume-head proj-head">
           <span className="kicker">{dateRange}</span>
           <h1>{p.title}</h1>
           {p.subtitle && <p className="desc">{p.subtitle}</p>}

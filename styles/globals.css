@@ -947,6 +947,28 @@ body {
 }
 
 /* ── Project showcase page ───────────────────────────────────────────── */
+/* The showcase header reuses .resume-head, but the two pages set very
+   different titles: the resume's is the single word "Résumé", where the
+   shared clamp's 72px ceiling reads as a poster. A project title is a full
+   phrase ("Taigi (Taiwanese-Hokkien) Medical Advising LLM") and at 72px it
+   ran to three lines inside the 720px prose column, pushing the cover image
+   below the fold. Step the ceiling down so a long title takes two lines.
+
+   The .resume-head class is repeated in the selector, not stylistic: at a
+   plain ".we .proj-head h1" this would tie with ".we .resume-head h1" on
+   specificity and win only on source order, which a later edit could
+   silently flip. */
+.we .resume-head.proj-head h1 {
+  font-size: clamp(32px, 3.4vw, 48px);
+}
+/* The tech chips used to sit below the subtitle, which carried the gap in its
+   own margin-top. Most projects no longer have a subtitle, so without this
+   the chips butt straight against the title's descenders. Same 20px .desc
+   uses, so the spacing is identical whether a subtitle is there or not. */
+.we .proj-head .chip-row {
+  margin-top: 20px;
+}
+
 .we .proj-cover {
   margin: 40px 0;
   border-radius: 12px;
