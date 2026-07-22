@@ -10,7 +10,7 @@
 // or trailing slash. Leaving it empty disables analytics entirely: no script
 // tag is rendered and no request is made, which is the intended state until a
 // site code exists.
-export const GOATCOUNTER_CODE = "itidiumtao";
+export const GOATCOUNTER_CODE = "iridiumtao";
 
 export const goatcounterEndpoint = GOATCOUNTER_CODE
   ? `https://${GOATCOUNTER_CODE}.goatcounter.com/count`
