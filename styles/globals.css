@@ -220,6 +220,19 @@ body {
   margin: 0 auto;
   padding: 0 48px;
 }
+/* Single-column pages (resume, project showcase). Their content blocks are
+   capped at 820px, so inside the 1280px wrap they hugged the left edge and
+   left a third of a wide screen empty. Narrowing the wrap itself — rather
+   than centering each block — keeps the nav, the content, and the footer on
+   one shared left edge; centering the blocks alone would have slid the text
+   out from under the nav that sits above it.
+
+   916px = the 820px content column plus the wrap's own 48px gutters. Below
+   the 960px breakpoint those gutters shrink to 24px and the viewport is
+   narrower than this cap anyway, so this rule is desktop-only in effect. */
+.we .wrap.wrap-narrow {
+  max-width: 916px;
+}
 
 /* Nav */
 .we nav {
