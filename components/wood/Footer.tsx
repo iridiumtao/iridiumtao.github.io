@@ -16,7 +16,7 @@ export default function Footer() {
           </a>
         ))}
       </div>
-      <span className="footer-copy">© 2026 · NYC + TPE</span>
+      <span className="footer-copy">© 2026 · PIT + TPE</span>
     </footer>
   );
 }

@@ -73,8 +73,15 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
-      - name: Generate build artifacts (resumes + font subset)
-        run: node scripts/prepare-resumes.ts && node scripts/subset-font.ts
+      # Only the font subset. prepare-resumes.ts is deliberately NOT run here:
+      # it copies the newest PDF per purpose out of docs/, and docs/ is
+      # gitignored, so on a CI checkout it sees only the handful of older PDFs
+      # that predate the ignore rule -- and, because it clears the destination
+      # first, it would overwrite the committed public/resumes/*.pdf with those
+      # stale versions. Those four files are tracked and generated locally by
+      # the predev/prebuild hooks, so CI should ship them untouched.
+      - name: Generate build artifacts (font subset)
+        run: node scripts/subset-font.ts
 
       # Runs after artifact generation so scripts/subset-font.test.ts grades
       # the freshly built subset, not a stale committed woff2. Gates the build:
