@@ -12,12 +12,19 @@ import { getAllProjects } from "../lib/projects";
 import type { Project } from "../lib/projects";
 
 // Local data
-import data from "@/lib/portfolio";
+import { getPortfolioData } from "@/lib/portfolio";
+import type { Locale } from "@/lib/locale";
+
+// This page file IS the English home page, so its locale is a literal constant
+// — never computed, never detected. It travels to the shared chrome as
+// pageProps.locale, which pages/_app.page.tsx feeds to LocaleProvider.
+const LOCALE: Locale = "en";
+const data = getPortfolioData(LOCALE);
 
 export async function getStaticProps(): Promise<{
-  props: { projects: Project[] };
+  props: { projects: Project[]; locale: Locale };
 }> {
-  return { props: { projects: getAllProjects("en") } };
+  return { props: { projects: getAllProjects(LOCALE), locale: LOCALE } };
 }
 
 /* ── Helpers ──────────────────────────────────────────────────────────── */
@@ -125,7 +132,12 @@ function renderCopy(text: string): React.ReactNode {
 
 /* ── Page ─────────────────────────────────────────────────────────────── */
 
-export default function Home({ projects }: { projects: Project[] }) {
+export default function Home({
+  projects,
+}: {
+  projects: Project[];
+  locale: Locale;
+}) {
   const home = data.home;
 
   // getAllProjects() (via getStaticProps) already sorts most-recent first —

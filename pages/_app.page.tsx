@@ -16,6 +16,8 @@ import Script from "next/script";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { countPageview, goatcounterEndpoint } from "../lib/analytics";
+import { LocaleProvider } from "../components/wood/LocaleProvider";
+import { DEFAULT_LOCALE, isLocale } from "../lib/locale";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -31,9 +33,17 @@ const App = ({ Component, pageProps }: AppProps) => {
     return () => router.events.off("routeChangeComplete", countPageview);
   }, [router.events]);
 
+  // AppProps types pageProps as `any`, so narrow rather than cast: isLocale()
+  // turns an absent or malformed value into English. The dev-only editor route
+  // legitimately supplies no locale at all. Safe-fallback on framework-supplied
+  // input — never a content fallback (see components/wood/LocaleProvider.tsx).
+  const locale = isLocale(pageProps.locale) ? pageProps.locale : DEFAULT_LOCALE;
+
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
-      <Component {...pageProps} />
+      <LocaleProvider locale={locale}>
+        <Component {...pageProps} />
+      </LocaleProvider>
       {goatcounterEndpoint && (
         // afterInteractive, not beforeInteractive: analytics must never sit on
         // the critical path of a portfolio whose visitors are mostly on phones.

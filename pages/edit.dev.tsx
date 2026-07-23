@@ -17,7 +17,10 @@ import { v4 as uuidv4 } from "uuid";
 import { useTheme } from "next-themes";
 
 // Data
-import yourData from "../lib/portfolio";
+// The editor writes back to data/portfolio.json, the English content file, so
+// it reads English explicitly. It is dev-only and supplies no pageProps.locale;
+// LocaleProvider's DEFAULT_LOCALE keeps its Nav rendering English to match.
+import { getPortfolioData } from "../lib/portfolio";
 import type {
   PortfolioData,
   Home,
@@ -31,6 +34,8 @@ import type {
   Experience,
   Social,
 } from "../types/portfolio";
+
+const yourData = getPortfolioData("en");
 
 /* ── Editable shape ──────────────────────────────────────────────────────
  * The editor's working state is NOT PortfolioData. Several `string[]` fields

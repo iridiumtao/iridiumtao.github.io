@@ -12,7 +12,13 @@ import Footer from "../../components/wood/Footer";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import { getAllProjects, getProjectBySlug } from "../../lib/projects";
 import type { Project, ProjectWithBody } from "../../lib/projects";
+import type { Locale } from "../../lib/locale";
 import { SITE_ORIGIN } from "../../lib/site";
+
+// This page file IS the English showcase route, so its locale is a literal
+// constant — never computed, never detected. It travels to the shared chrome as
+// pageProps.locale, which pages/_app.page.tsx feeds to LocaleProvider.
+const LOCALE: Locale = "en";
 
 // The prev/next neighbour link — just enough of a project to render the label
 // and href. null at each end of the list (D-13, no wrap-around).
@@ -22,6 +28,7 @@ type Props = {
   project: ProjectWithBody;
   prev: NavEntry;
   next: NavEntry;
+  locale: Locale;
 };
 
 // The dynamic segment this route generates. Passed as GetStaticProps' second
@@ -30,7 +37,7 @@ type Params = { slug: string };
 
 export const getStaticPaths: GetStaticPaths<Params> = async () => {
   return {
-    paths: getAllProjects("en").map((p) => ({ params: { slug: p.slug } })),
+    paths: getAllProjects(LOCALE).map((p) => ({ params: { slug: p.slug } })),
     fallback: false,
   };
 };
@@ -43,7 +50,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({
   // practice. Throwing rather than rendering a null project keeps `project`
   // non-nullable for the component below and fails the build loudly if the
   // paths and the data source ever drift apart.
-  const project = params ? await getProjectBySlug(params.slug, "en") : null;
+  const project = params ? await getProjectBySlug(params.slug, LOCALE) : null;
   if (!project) {
     throw new Error(
       `No project found for slug "${params?.slug}". getStaticPaths and ` +
@@ -51,7 +58,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({
     );
   }
 
-  const all = getAllProjects("en"); // newest-first, same order as the home grid
+  const all = getAllProjects(LOCALE); // newest-first, same order as the home grid
   const i = all.findIndex((p) => p.slug === project.slug);
   const toNav = (p: Project | null): NavEntry =>
     p ? { slug: p.slug, title: p.title } : null;
@@ -60,6 +67,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({
       project,
       prev: toNav(all[i - 1] ?? null), // newer neighbour; null at the newest end
       next: toNav(all[i + 1] ?? null), // older neighbour; null at the oldest end
+      locale: LOCALE,
     },
   };
 };

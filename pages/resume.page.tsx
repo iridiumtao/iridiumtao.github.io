@@ -10,15 +10,22 @@ import path from "path";
 
 import Nav from "../components/wood/Nav";
 import Footer from "../components/wood/Footer";
-import data from "../lib/portfolio";
+import { getPortfolioData } from "../lib/portfolio";
+import type { Locale } from "../lib/locale";
 import type { ResumeSkills } from "../types/portfolio";
+
+// This page file IS the English résumé, so its locale is a literal constant —
+// never computed, never detected. It travels to the shared chrome as
+// pageProps.locale, which pages/_app.page.tsx feeds to LocaleProvider.
+const LOCALE: Locale = "en";
+const data = getPortfolioData(LOCALE);
 
 // Build-time-computed from the public/resumes/*.pdf filenames, so it is not part
 // of PortfolioData and deliberately does not live in types/portfolio.ts.
 type ResumeDownload = { url: string; name: string; purpose: string };
 
 export async function getStaticProps(): Promise<{
-  props: { resumes: ResumeDownload[] };
+  props: { resumes: ResumeDownload[]; locale: Locale };
 }> {
   const resumesDir = path.join(process.cwd(), "public", "resumes");
   let resumes: ResumeDownload[] = [];
@@ -53,7 +60,7 @@ export async function getStaticProps(): Promise<{
     }
   }
 
-  return { props: { resumes } };
+  return { props: { resumes, locale: LOCALE } };
 }
 
 /* ── Helpers ──────────────────────────────────────────────────────────── */
@@ -160,7 +167,12 @@ const SKILL_GROUPS: { label: string; key: keyof ResumeSkills }[] = [
   { label: "Data & ML", key: "dataAndML" },
 ];
 
-export default function Resume({ resumes }: { resumes: ResumeDownload[] }) {
+export default function Resume({
+  resumes,
+}: {
+  resumes: ResumeDownload[];
+  locale: Locale;
+}) {
   const r = data.resume;
 
   return (
