@@ -30,7 +30,7 @@ type Params = { slug: string };
 
 export const getStaticPaths: GetStaticPaths<Params> = async () => {
   return {
-    paths: getAllProjects().map((p) => ({ params: { slug: p.slug } })),
+    paths: getAllProjects("en").map((p) => ({ params: { slug: p.slug } })),
     fallback: false,
   };
 };
@@ -43,7 +43,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({
   // practice. Throwing rather than rendering a null project keeps `project`
   // non-nullable for the component below and fails the build loudly if the
   // paths and the data source ever drift apart.
-  const project = params ? await getProjectBySlug(params.slug) : null;
+  const project = params ? await getProjectBySlug(params.slug, "en") : null;
   if (!project) {
     throw new Error(
       `No project found for slug "${params?.slug}". getStaticPaths and ` +
@@ -51,7 +51,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({
     );
   }
 
-  const all = getAllProjects(); // newest-first, same order as the home grid
+  const all = getAllProjects("en"); // newest-first, same order as the home grid
   const i = all.findIndex((p) => p.slug === project.slug);
   const toNav = (p: Project | null): NavEntry =>
     p ? { slug: p.slug, title: p.title } : null;

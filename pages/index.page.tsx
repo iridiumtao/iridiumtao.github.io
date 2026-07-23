@@ -17,7 +17,7 @@ import data from "@/lib/portfolio";
 export async function getStaticProps(): Promise<{
   props: { projects: Project[] };
 }> {
-  return { props: { projects: getAllProjects() } };
+  return { props: { projects: getAllProjects("en") } };
 }
 
 /* ── Helpers ──────────────────────────────────────────────────────────── */
