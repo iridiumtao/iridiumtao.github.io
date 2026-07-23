@@ -9,13 +9,29 @@
 // depends on inheriting through any intermediate wrapper — next-themes only
 // ever classList.add/remove's the theme token here, never overwrites
 // className wholesale, so these classes are never clobbered at runtime.
-import { Html, Head, Main, NextScript } from "next/document";
+import Document, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  type DocumentContext,
+  type DocumentInitialProps,
+} from "next/document";
 import { huninn, jbmono } from "../styles/fonts";
+import { HTML_LANG, localeFromPathname, type Locale } from "../lib/locale";
 
-export default function Document() {
+type Props = DocumentInitialProps & { locale: Locale };
+
+export default function MyDocument({ locale }: Props) {
   return (
     <Html
-      lang="en"
+      // Per-route language tag (SEO-01, D-07). Derived from the route in
+      // getInitialProps below rather than hardcoded, so /zh/* serves the
+      // Traditional Chinese tag while everything else stays "en". HTML_LANG
+      // is a fixed lookup keyed by the closed Locale union — never string
+      // interpolation of a pathname — so no route shape can inject an
+      // arbitrary lang value here.
+      lang={HTML_LANG[locale]}
       suppressHydrationWarning
       // globals.css sets `scroll-behavior: smooth` on <html> for in-page
       // anchor jumps (#projects, #work, #about). Without this attribute that
@@ -36,3 +52,14 @@ export default function Document() {
     </Html>
   );
 }
+
+// _document renders once per exported page, each with its own DocumentContext,
+// so ctx.pathname is the file-route pattern for the page being built (e.g.
+// "/zh/projects/[slug]") — populated during static export, not only under SSR.
+// localeFromPathname's safe fallback to "en" covers the defensive case; it
+// never throws, because ctx is Next's own machinery rather than a repo
+// invariant.
+MyDocument.getInitialProps = async (ctx: DocumentContext): Promise<Props> => {
+  const initialProps = await Document.getInitialProps(ctx);
+  return { ...initialProps, locale: localeFromPathname(ctx.pathname) };
+};
