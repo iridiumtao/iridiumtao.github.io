@@ -76,6 +76,18 @@ const componentFiles = collectFiles(
 const projectFiles = collectFiles(path.join(rootDir, "_projects"), (name) =>
   name.endsWith(".md"),
 );
+// lib/ was outside the scan scope until phase 6 (LOC-06). It holds
+// lib/dictionary.ts -- the Traditional Chinese UI chrome strings (nav labels,
+// the language-switcher label, footer and 404 copy) that live outside
+// data/portfolio.json. Left unscanned, those strings render in a fallback
+// font with no error anywhere: the build passes, the glyphs are simply not in
+// the subset. *.test.ts is excluded the same way pages/api/ is -- test files
+// are never rendered, so their literals would inflate the subset for nothing.
+const libFiles = collectFiles(
+  path.join(rootDir, "lib"),
+  isSourceFile,
+  (fullPath) => fullPath.endsWith(".test.ts") || fullPath.endsWith(".test.tsx"),
+);
 
 // Fail loud instead of silently emitting an under-covered subset. An empty
 // branch here means the scan scope has drifted away from the real source
@@ -88,6 +100,7 @@ for (const [label, found] of [
   ["pages", pageFiles],
   ["components", componentFiles],
   ["_projects", projectFiles],
+  ["lib", libFiles],
 ] as const) {
   if (found.length === 0) {
     console.error(
@@ -101,11 +114,17 @@ if (scanScopeBroken) {
   process.exit(1);
 }
 
+// data/portfolio.zh.json is listed separately on purpose: the JSON content
+// sources are the only files named by explicit path here, so a sibling
+// .zh.json is NOT picked up by any collector. The existsSync filter below
+// keeps this run green before plan 06-04 creates that file.
 const filesToScan = [
   path.join(rootDir, "data/portfolio.json"),
+  path.join(rootDir, "data/portfolio.zh.json"),
   ...pageFiles,
   ...componentFiles,
   ...projectFiles,
+  ...libFiles,
 ].filter((filePath) => fs.existsSync(filePath));
 
 // Build the set of distinct characters actually used across the scanned
