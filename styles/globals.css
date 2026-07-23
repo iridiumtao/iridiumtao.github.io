@@ -1159,3 +1159,98 @@ html[lang="zh-Hant-TW"] .we {
    top of that would double the spacing on engines that support the property
    while leaving the rest unchanged — cross-browser divergence, not
    enhancement. Revisit only if the authored-spacing decision is reversed. */
+
+/* Letter-spacing resets (TYPE-02).
+
+   Every selector in this file that carries a `letter-spacing` declaration and
+   can render Chinese text is reset to `normal` below. The list was verified
+   against the file (`grep -n 'letter-spacing' styles/globals.css`), not
+   assumed — 18 declarations exist, 17 are reset here and one is excluded.
+
+   Both directions of Latin tracking are reset, and both reset to `normal`
+   rather than to some smaller em value:
+     - positive 0.02em–0.1em, used to open up mono kickers and small-caps-ish
+       labels. text-transform: uppercase is a no-op on Hanzi but the tracking
+       still applies, and over-spaced Chinese labels read as amateurish.
+     - negative -0.01em–-0.025em, used to tighten Latin display headings. Hanzi
+       are full-square advance-width forms with little side-bearing, so
+       tightening that merely closes Latin whitespace can visually collide
+       adjacent Chinese characters.
+   CJK typography convention is near-zero tracking, so `normal` is the target
+   in both cases.
+
+   THE ONE EXCLUSION IS `.we .badge` (0.06em, kept). Do not "fix" it: the badge
+   renders only `endYear(p.endDate)` from components/wood/ProjectCard.tsx, a
+   4-digit year matched by /\d{4}/, so it never carries CJK in any locale and
+   its Latin tracking stays correct on /zh/.
+
+   `.we .exp-when` and `.we .tl-date` ARE included, deliberately: CN-09 renders
+   Chinese dates in Chinese form (2025年7月), so those surfaces do carry CJK.
+
+   Visual confirmation of these values against real Chinese prose belongs to
+   plan 06-10's TYPE-03 browser pass — no Chinese copy exists to render yet. */
+
+/* Home — hero and meta */
+html[lang="zh-Hant-TW"] .we .greeting {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .hero h1 {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .meta-label {
+  letter-spacing: normal;
+}
+
+/* Home — section headings */
+html[lang="zh-Hant-TW"] .we .sec-head h2 {
+  letter-spacing: normal;
+}
+
+/* Home — project grid */
+html[lang="zh-Hant-TW"] .we .proj-sub {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .proj h3 {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .show-all button {
+  letter-spacing: normal;
+}
+
+/* Home — experience rows */
+html[lang="zh-Hant-TW"] .we .exp-role {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .exp-when {
+  letter-spacing: normal;
+}
+
+/* Résumé — head and downloads */
+html[lang="zh-Hant-TW"] .we .resume-head .kicker {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .resume-head h1 {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .resume-downloads a {
+  letter-spacing: normal;
+}
+
+/* Résumé — timeline entries and skill groups */
+html[lang="zh-Hant-TW"] .we .tl-title {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .tl-date {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .tl-meta {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .skill-label {
+  letter-spacing: normal;
+}
+
+/* Project showcase — prev/next navigation */
+html[lang="zh-Hant-TW"] .we .proj-nav-link {
+  letter-spacing: normal;
+}
