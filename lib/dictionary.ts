@@ -79,6 +79,14 @@ export type ChromeStrings = {
   /** `{n}` — the total number of projects. */
   showAllTemplate: string;
   showLess: string;
+  /**
+   * The open-ended endpoint of an experience date range ("May 2025 - Present").
+   * The stored `dates` strings stay English in BOTH content files because three
+   * helpers parse them by English month name (CN-09), so the word a visitor
+   * actually reads has to come from here rather than from the JSON. The English
+   * home page renders it upper-cased, matching its `JUL — AUG 2025` house form.
+   */
+  datePresent: string;
 
   // Résumé page
   resumeHeading: string;
@@ -142,6 +150,7 @@ export const DICTIONARY = {
     sectionAbout: "About",
     showAllTemplate: "Show All ({n})",
     showLess: "Show Less",
+    datePresent: "Present",
 
     resumeHeading: "Résumé",
     resumeSectionEducation: "Education",
@@ -204,6 +213,7 @@ export const DICTIONARY = {
     sectionAbout: "關於我",
     showAllTemplate: "看全部（{n}）",
     showLess: "收合",
+    datePresent: "至今",
 
     resumeHeading: "履歷",
     resumeSectionEducation: "學歷",
