@@ -134,6 +134,7 @@ function renderCopy(text: string): React.ReactNode {
 
 export default function Home({
   projects,
+  locale,
 }: {
   projects: Project[];
   locale: Locale;
@@ -204,17 +205,17 @@ export default function Home({
             </h2>
           </div>
           <div className="projects">
-            {lead && <ProjectCard p={lead} size="large" />}
+            {lead && <ProjectCard p={lead} locale={locale} size="large" />}
             <div className="right-col">
               {rest.map((p) => (
-                <ProjectCard key={p.id} p={p} size="small" />
+                <ProjectCard key={p.id} p={p} locale={locale} size="small" />
               ))}
             </div>
           </div>
           {showAll && remaining.length > 0 && (
             <div className="projects-all">
               {remaining.map((p) => (
-                <ProjectCard key={p.id} p={p} size="small" />
+                <ProjectCard key={p.id} p={p} locale={locale} size="small" />
               ))}
             </div>
           )}

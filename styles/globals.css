@@ -962,20 +962,46 @@ body {
   /* SW-01: the switcher is exempt from the nav-link cull above — on a phone it
      is the ONLY way to reach the other locale, and over half of this site's
      readers are on one. `a.lang-switch-link` carries one class more than
-     `a:not(.cta)`, so this wins on specificity rather than on source order.
-     Measured at 375px: brand 175px + switcher 71px + CTA 61px = 307px inside
-     the 327px content row, so the compaction below is what buys the fit, not
-     decoration. */
+     `a:not(.cta)`, so this wins on specificity rather than on source order. */
   .we .nav-links .lang-switch a.lang-switch-link {
     display: inline-block;
   }
+  /* Compacted, and the separator rule dropped: at this width the switcher sits
+     immediately beside the CTA pill, which already reads as a boundary. */
   .we .lang-switch {
-    margin-left: 2px;
-    padding-left: 6px;
+    margin-left: 4px;
+    padding-left: 0;
+    border-left: 0;
   }
   .we .lang-switch .lang-switch-current,
   .we .nav-links .lang-switch a.lang-switch-link {
+    font-size: 12px;
     padding: 5px 7px;
+  }
+  /* Overflow-proofing, deliberately structural rather than metric.
+     The one-line phone header tuned above was measured against brand + a lone
+     CTA; the switcher is a third item in that row, and the English wordmark and
+     "Resume →" are both longer than their Chinese counterparts. Rather than
+     re-deriving pixel budgets that would drift the next time the copy or the
+     font changes, the row is simply allowed to wrap: the CTA + switcher pair
+     drops to a second line when it must, and NOTHING truncates or overflows
+     horizontally at any width. `flex-shrink: 0` on both children is what makes
+     that the failure mode — without it flexbox would compress the wordmark
+     first and never wrap. TYPE-03's no-horizontal-overflow guarantee therefore
+     holds by construction here, not by arithmetic.
+     Not yet checked on a real handset: this milestone's pages do not pass a
+     counterpart URL until waves 4-5, so the two-control switcher has never been
+     rendered on a device. Worth a visual pass at 375px once they do. */
+  .we nav {
+    flex-wrap: wrap;
+    row-gap: 12px;
+  }
+  .we .brand {
+    flex-shrink: 0;
+  }
+  .we .nav-links {
+    flex-shrink: 0;
+    margin-left: auto;
   }
   /* The 120px base gap above the footer is tuned for desktop; stacked on a
      phone it reads as a dead screen between the prev/next links and the
