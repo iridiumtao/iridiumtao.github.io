@@ -334,6 +334,41 @@ body {
   background: var(--color-wood-600);
 }
 
+/* Language switcher (SW-01, D-06). Lives inside .nav-links, so the link half
+   already inherits the `.we .nav-links a` pill; the current-locale half is a
+   <span>, which that selector cannot reach, hence the shared rule below.
+   Both halves are sized identically so the pair reads as one control and the
+   active label does not shift when the locale changes. */
+.we .lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 4px;
+  padding-left: 10px;
+  border-left: 1px solid rgb(from var(--color-wood-600) r g b / 0.15);
+}
+.we .lang-switch .lang-switch-current,
+.we .nav-links .lang-switch a.lang-switch-link {
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  text-decoration: none;
+  line-height: 1;
+}
+/* The current locale is a non-link current-state element: filled, no hover
+   affordance, and no pointer cursor, so it never reads as clickable. */
+.we .lang-switch .lang-switch-current {
+  background: rgb(from var(--color-wood-200) r g b / 0.45);
+  color: var(--color-stone-900);
+}
+.we .nav-links .lang-switch a.lang-switch-link {
+  color: var(--color-stone-500);
+}
+.we .nav-links .lang-switch a.lang-switch-link:hover {
+  background: rgb(from var(--color-wood-200) r g b / 0.35);
+  color: var(--color-stone-900);
+}
+
 /* Hero (homepage) */
 .we .hero {
   padding: 80px 0 60px;
@@ -923,6 +958,24 @@ body {
   }
   .we .nav-links a.cta {
     white-space: nowrap;
+  }
+  /* SW-01: the switcher is exempt from the nav-link cull above — on a phone it
+     is the ONLY way to reach the other locale, and over half of this site's
+     readers are on one. `a.lang-switch-link` carries one class more than
+     `a:not(.cta)`, so this wins on specificity rather than on source order.
+     Measured at 375px: brand 175px + switcher 71px + CTA 61px = 307px inside
+     the 327px content row, so the compaction below is what buys the fit, not
+     decoration. */
+  .we .nav-links .lang-switch a.lang-switch-link {
+    display: inline-block;
+  }
+  .we .lang-switch {
+    margin-left: 2px;
+    padding-left: 6px;
+  }
+  .we .lang-switch .lang-switch-current,
+  .we .nav-links .lang-switch a.lang-switch-link {
+    padding: 5px 7px;
   }
   /* The 120px base gap above the footer is tuned for desktop; stacked on a
      phone it reads as a dead screen between the prev/next links and the
