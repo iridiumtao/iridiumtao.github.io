@@ -1099,3 +1099,63 @@ body {
 .we .proj-nav-link.proj-nav-next {
   margin-left: auto;
 }
+
+/* =========================================================================
+   CJK TYPOGRAPHY — Traditional Chinese locale scope (TYPE-01, TYPE-02)
+
+   Scoped by the document language tag alone. pages/_document.page.tsx sets
+   <html lang> per route from lib/locale.ts's HTML_LANG, so this selector is
+   already true in the raw prerendered HTML before any JavaScript runs — which
+   is the only mechanism that works under next.config.js's output: 'export',
+   where there is no server and no runtime locale negotiation to hook into.
+   No .zh body class, no data attribute, no JS-set hook.
+
+   The literal "zh-Hant-TW" below is the one place outside .ts/.tsx that
+   spells the language tag (a stylesheet cannot import HTML_LANG); lib/locale.ts
+   documents this as its single known exception. Keep the two in sync.
+
+   Why this section has to exist at all: D-08 puts one shared font subset in
+   front of both locales, so the locale difference lives in CSS rather than in
+   a swapped typeface. Without these rules a /zh/ page inherits the site's
+   Latin display typography wholesale — line-breaking heuristics tuned for
+   space-separated words, and tracking tuned either to open up Latin capitals
+   or to tighten Latin headlines. Neither suits Hanzi, whose glyphs are
+   full-square advance-width forms with little side-bearing.
+
+   Known scope limit: pages/cjk-specimen.page.tsx carries lang on its own .we
+   root (it lives outside /zh/, so <html lang> there resolves to "en"), and is
+   therefore NOT matched by these selectors. That page is a font-glyph
+   fixture — noindex and unlinked — not a typography surface, so it is left
+   as-is rather than widening the scope.
+   ========================================================================= */
+
+/* Line breaking (TYPE-01). All three properties are inherited, so declaring
+   them on the .we page root reaches every descendant. They act on rendered
+   text as a whole — nothing here inspects content for CJK code points, and
+   nothing is applied conditionally per character.
+
+   word-break: normal — a guard, not a correction. Nothing in this file or in
+     the markup sets break-all/break-word today, but Latin-tuned forced
+     breaking would be pointless here: CJK already wraps between characters by
+     default and never needs it forced.
+   line-break: strict — the most stringent UAX #14 line-breaking class set.
+     Closing punctuation (」 。 、) already refuses to begin a line at any
+     value; `strict` adds the restrictions on small kana and on the CJK
+     hyphen/iteration marks.
+   overflow-wrap: break-word — an unbreakable Latin run inside Chinese prose
+     (a URL, a long identifier) wraps instead of pushing the column sideways.
+     Horizontal overflow at 375px is exactly the TYPE-03 failure mode, and
+     over half of this site's visitors read it on a phone. */
+html[lang="zh-Hant-TW"] .we {
+  word-break: normal;
+  line-break: strict;
+  overflow-wrap: break-word;
+}
+
+/* text-autospace (CJK/Latin gap insertion) is deliberately NOT declared here,
+   though the plan allowed it as optional progressive enhancement. Per
+   research/PITFALLS.md the CJK-vs-Latin spacing in this site's Chinese copy is
+   authored into the text itself during the writing pass. A CSS-inserted gap on
+   top of that would double the spacing on engines that support the property
+   while leaving the rest unchanged — cross-browser divergence, not
+   enhancement. Revisit only if the authored-spacing decision is reversed. */
