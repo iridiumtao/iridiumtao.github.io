@@ -100,10 +100,7 @@ test("every mapped value is contained in data/", () => {
       !value.split("/").includes(".."),
       `"${value}" must contain no parent-directory segment`,
     );
-    assert.ok(
-      value.startsWith("data/"),
-      `"${value}" must live under data/`,
-    );
+    assert.ok(value.startsWith("data/"), `"${value}" must live under data/`);
   }
 });
 
