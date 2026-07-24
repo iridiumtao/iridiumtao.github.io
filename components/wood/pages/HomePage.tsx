@@ -59,13 +59,24 @@ type DateEndpoint = {
 // An unrecognised token keeps its upper-cased self for English and no ordinal
 // for Chinese, so drift in the content file degrades rather than fabricating a
 // month number.
+//
+// A BARE YEAR ("2025") is its own shape, not a degraded "Month YYYY". The
+// résumé's honors are stored that way, so without this branch the year lands in
+// `raw`, `year` stays undefined, and every honor row renders "undefined年" in
+// Chinese — which is exactly what shipped into the first zh build of the résumé
+// page. Recognised by the token being four digits with nothing after it, so a
+// real month name can never take this path.
 function parseEndpoint(value: string): DateEndpoint {
-  const [raw, year] = (value || "").trim().split(" ");
+  const [first, second] = (value || "").trim().split(" ");
+  const head = first || "";
+  const yearOnly = second === undefined && /^\d{4}$/.test(head);
+  const raw = yearOnly ? "" : head;
+  const year = yearOnly ? head : second;
   const month = MONTHS[raw];
   return {
-    raw: raw || "",
+    raw,
     year,
-    abbr: month ? month.abbr : (raw || "").toUpperCase(),
+    abbr: month ? month.abbr : raw.toUpperCase(),
     ordinal: month ? month.ordinal : undefined,
   };
 }
@@ -79,6 +90,13 @@ function zhFull(p: DateEndpoint): string {
 
 function zhMonthOnly(p: DateEndpoint): string {
   return p.ordinal === undefined ? zhFull(p) : `${p.ordinal}月`;
+}
+
+// "JUL 2025", or bare "2025" when the endpoint carries no month. Composing the
+// two fields directly would prefix a monthless endpoint with the empty
+// abbreviation and a space (" 2025").
+function enFull(p: DateEndpoint): string {
+  return p.abbr ? `${p.abbr} ${p.year}` : `${p.year}`;
 }
 
 /**
@@ -116,19 +134,25 @@ export function formatExpDate(
   if (locale === "zh") {
     if (b === null) return zhFull(a);
     if (ongoing) return `${zhFull(a)} — ${present}`;
-    return a.year === b.year
+    // The shared-year collapse drops the closing endpoint's year, so it is only
+    // valid when that endpoint still has a month to carry the range. Two bare
+    // years in the same year would otherwise collapse to a dangling "月"-less
+    // fragment.
+    return a.year === b.year && b.ordinal !== undefined
       ? `${zhFull(a)} — ${zhMonthOnly(b)}`
       : `${zhFull(a)} — ${zhFull(b)}`;
   }
 
-  if (b === null) return `${a.abbr} ${a.year}`;
+  if (b === null) return enFull(a);
   // Upper-cased to match the abbreviation house style around it; the word
   // itself comes from the dictionary so the zh branch is not the only caller
   // and the string has exactly one home.
-  if (ongoing) return `${a.abbr} ${a.year} — ${present.toUpperCase()}`;
-  return a.year === b.year
+  if (ongoing) return `${enFull(a)} — ${present.toUpperCase()}`;
+  // Same guard as the Chinese collapse: both endpoints need a month before the
+  // opening year can be dropped.
+  return a.year === b.year && a.abbr && b.abbr
     ? `${a.abbr} — ${b.abbr} ${b.year}`
-    : `${a.abbr} ${a.year} — ${b.abbr} ${b.year}`;
+    : `${enFull(a)} — ${enFull(b)}`;
 }
 
 // "Data Science Intern at Micron Technology" → { role, company }.
