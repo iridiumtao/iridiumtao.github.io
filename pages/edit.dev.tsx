@@ -1,16 +1,25 @@
 // Dev-only visual editor for the site's portfolio content, read through the
 // typed accessor in lib/portfolio.ts; excluded from production builds at the
 // routing level via the pageExtensions split in next.config.js.
-import React, { useState, useEffect } from "react";
+//
+// The edited locale is chosen at runtime (the EN / 中文 toggle), so this one
+// page edits both data/portfolio.json and data/portfolio.zh.json. The locale
+// travels to the API as a Locale value, never as a path: the write target is
+// whitelisted API-side in pages/api/portfolio.page.ts, which is the only module
+// allowed to turn a locale into a filename.
+import React, { useState, useEffect, useRef } from "react";
 import Nav from "../components/wood/Nav";
 import { v4 as uuidv4 } from "uuid";
 import { useTheme } from "next-themes";
 
 // Data
-// The editor writes back to data/portfolio.json, the English content file, so
-// it reads English explicitly. It is dev-only and supplies no pageProps.locale;
-// LocaleProvider's DEFAULT_LOCALE keeps its Nav rendering English to match.
+// Both content files are statically imported by lib/portfolio.ts, so reading a
+// locale inside an effect is a plain lookup — there is no fetch and no loading
+// state to manage. The toggle governs the EDITED CONTENT only: the surrounding
+// Wood chrome (Nav) still renders English, because this page is dev-only and
+// supplies no pageProps.locale, so LocaleProvider falls back to DEFAULT_LOCALE.
 import { getPortfolioData } from "../lib/portfolio";
+import { DEFAULT_LOCALE, type Locale } from "../lib/locale";
 import type {
   PortfolioData,
   Home,
@@ -25,7 +34,14 @@ import type {
   Social,
 } from "../types/portfolio";
 
-const yourData = getPortfolioData("en");
+// Display only — shown so the owner can always see which file a Save will
+// overwrite. It is NOT the write path: pages/api/portfolio.page.ts holds the
+// authoritative whitelist and resolves the real filename from the locale it
+// receives. Nothing here is ever sent to the API.
+const CONTENT_FILE_LABEL: Record<Locale, string> = {
+  en: "data/portfolio.json",
+  zh: "data/portfolio.zh.json",
+};
 
 /* ── Editable shape ──────────────────────────────────────────────────────
  * The editor's working state is NOT PortfolioData. Several `string[]` fields
@@ -259,15 +275,47 @@ const AreaField = ({
 const Edit = () => {
   // states
   const [data, setData] = useState<EditableData | null>(null);
+  const [locale, setLocale] = useState<Locale>(DEFAULT_LOCALE);
   const [currentTabs, setCurrentTabs] = useState<TabId>("HEADER");
   const { theme } = useTheme();
+
+  // The editable state exactly as it was last loaded or last saved. Comparing
+  // the live state against it is how a locale switch knows whether it is about
+  // to throw away work — a ref rather than state because nothing renders from
+  // it and it must not trigger a re-render when it is refreshed.
+  const pristine = useRef<string>("");
 
   useEffect(() => {
     // Deep-clone first: the editor mutates arrays in place, and the imported
     // module object must not be one of them.
-    const cloned = JSON.parse(JSON.stringify(yourData)) as PortfolioData;
-    setData(toEditable(cloned));
-  }, []);
+    const cloned = JSON.parse(
+      JSON.stringify(getPortfolioData(locale)),
+    ) as PortfolioData;
+    const editable = toEditable(cloned);
+    pristine.current = JSON.stringify(editable);
+    setData(editable);
+    // Keyed on locale: switching reloads every field from the other content
+    // file. currentTabs is deliberately NOT reset — the tabs are identical
+    // across locales, so staying put is what the owner expects.
+  }, [locale]);
+
+  // Guards the switch behind a confirmation whenever the live state has drifted
+  // from the last load or save. Without it one mis-click silently discards a
+  // session of hand-revised copy, with no undo anywhere.
+  const switchLocale = (next: Locale) => {
+    if (next === locale) return;
+    const dirty = data !== null && JSON.stringify(data) !== pristine.current;
+    if (
+      dirty &&
+      !window.confirm(
+        `Discard unsaved edits to ${CONTENT_FILE_LABEL[locale]} and load ` +
+          `${CONTENT_FILE_LABEL[next]}?`,
+      )
+    ) {
+      return;
+    }
+    setLocale(next);
+  };
 
   const saveData = async () => {
     if (!data) return;
@@ -281,9 +329,16 @@ const Edit = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(toSaved(data)),
+        // The two-field envelope the route expects. The locale rides ALONGSIDE
+        // the content, never inside it: PortfolioData has no locale field, so
+        // an embedded one would break lib/portfolio.ts's `satisfies` check on
+        // the next typecheck.
+        body: JSON.stringify({ locale, content: toSaved(data) }),
       });
       if (!res.ok) throw new Error(`save failed: ${res.status}`);
+      // The file on disk now matches this state, so a locale switch from here
+      // is clean and must not prompt.
+      pristine.current = JSON.stringify(data);
       alert("Saved.");
     } catch (err) {
       console.error(err);
@@ -587,8 +642,27 @@ const Edit = () => {
         <div className={`${theme === "dark" ? "bg-transparent" : "bg-white"}`}>
           <div className="flex items-center justify-between">
             <h1 className="text-4xl">Dashboard</h1>
-            <div className="flex items-center">
-              <EditButton onClick={saveData}>Save</EditButton>
+            <div className="flex flex-col items-end">
+              <div className="flex items-center">
+                <EditButton
+                  onClick={() => switchLocale("en")}
+                  active={locale === "en"}
+                >
+                  EN
+                </EditButton>
+                <EditButton
+                  onClick={() => switchLocale("zh")}
+                  active={locale === "zh"}
+                >
+                  中文
+                </EditButton>
+                <EditButton onClick={saveData}>Save</EditButton>
+              </div>
+              {/* Which file a Save overwrites, spelled out so the write target
+                  is never ambiguous while switching back and forth. */}
+              <p className="text-sm opacity-60">
+                Editing <code>{CONTENT_FILE_LABEL[locale]}</code>
+              </p>
             </div>
           </div>
 
