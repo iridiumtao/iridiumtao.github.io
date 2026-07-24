@@ -27,6 +27,13 @@ import { LOCALES } from "../../lib/locale";
 import type { Locale } from "../../lib/locale";
 import { t } from "../../lib/dictionary";
 
+// Temporary soft-launch gate. The /zh/ tree ships and stays reachable — its
+// routes, canonical links and hreflang pairs are unaffected — but the visible
+// EN / 中 control is withheld while the Chinese content is being proofread on
+// the live site. Flip this back to true to expose the switcher; nothing else
+// needs to change.
+const SHOW_LANGUAGE_SWITCHER = false;
+
 export default function LanguageSwitcher({
   locale,
   counterpartUrl,
@@ -34,6 +41,7 @@ export default function LanguageSwitcher({
   locale: Locale;
   counterpartUrl: string | null;
 }) {
+  if (!SHOW_LANGUAGE_SWITCHER) return null;
   // role="group" is what makes the aria-label announceable — an aria-label on
   // a bare <div> is ignored by assistive technology.
   return (
