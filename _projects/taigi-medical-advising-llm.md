@@ -28,7 +28,7 @@ We built an end-to-end pipeline that transforms an 8B-parameter Llama-3.1 model 
 ## Features
 
 - LoRA-based parameter-efficient fine-tuning (8-bit, fp16, gradient accumulation)
-- Multi-dataset preprocessing (medical QA ➜ instruction pairs; Hokkien corpora ➜ chat format)
+- Multi-dataset preprocessing (medical QA → instruction pairs; Hokkien corpora → chat format)
 - FastAPI REST API with GPU inference and confidence scoring
 - Gradio chat UI with feedback hooks and MinIO-backed conversation logs
 - Airflow-automated Label Studio review and feedback ingestion loop
@@ -42,7 +42,7 @@ The project closes a critical accessibility gap for the ~70 % of Taiwanese who s
 ## Key points
 
 - **Cut trainable parameters by ~99 %** using LoRA adapters (0.1 – 1 % of weights), enabling 8B model fine-tuning on A100 GPUs.
-- **Two-stage curriculum**: Stage 1 medical QA ➜ Stage 2 Hokkien domain, preserving domain expertise while adding dialect fluency.
+- **Two-stage curriculum**: Stage 1 medical QA → Stage 2 Hokkien domain, preserving domain expertise while adding dialect fluency.
 - **Full MLOps stack in Docker Compose** (FastAPI, Gradio, MinIO) deployable with one command; GPU auto-discovery for inference scaling.
 - **Human-approval workflow** with Airflow pipelines and Label Studio ensures clinician sign-off before answers reach users, satisfying Taiwan FDA AI/ML SaMD guidance.
 - **Observability-first design**: Prometheus metrics and Grafana dashboards track P50/P95 latency, throughput, and error budgets for continuous reliability checks.
