@@ -1,17 +1,27 @@
 // scripts/subset-font.test.ts
-// D-04 cmap regression guard: reads the CJK proof page's own source (the
-// single source of truth for the site's CJK glyph floor, see
-// pages/cjk-specimen.page.tsx) and asserts every non-ASCII code point it
-// contains is present in the committed subsetted font's cmap. This closes the
-// gap subset-font.ts's own zero-file hard-fail cannot see: if the scan scope
-// drifts but still matches other files, the buckets stay non-empty, the build
-// stays green, and the CJK glyphs silently disappear anyway -- the Phase 4
-// failure mode (15296 B -> 14804 B). Run via bare `yarn test` (`node --test`
-// discovery); never `node --test <dir>` (repo gotcha). `yarn test` runs a
-// `pretest` hook that regenerates the subset first, so the run always grades
-// fresh output rather than a stale committed woff2. Bare `node --test` bypasses
-// that hook, which is why the existence assertion below spells out the recovery
-// command instead of letting fs.readFileSync throw a bare ENOENT.
+// D-04 cmap regression guard: reads every real Traditional-Chinese content
+// source the site ships -- data/portfolio.zh.json, all eight _projects/*.zh.md
+// showcase bodies, lib/dictionary.ts's UI-chrome strings, and every file under
+// pages/zh/ -- plus pages/cjk-specimen.page.tsx (still the site's declared CJK
+// glyph floor, even though the site does not link it), and asserts every
+// non-ASCII code point any of them contains has a glyph in the committed
+// subsetted font's cmap.
+//
+// Until phase 6 this guard read ONLY pages/cjk-specimen.page.tsx, an unlinked
+// proof page, so it stayed green no matter what real /zh/ content shipped --
+// exactly the failure mode where the build passes while real Chinese glyphs are
+// missing from the subset. It now covers the real content, and additionally
+// asserts its own collected-file COUNT against an expected constant, so a
+// Chinese content file added under _projects/ or pages/zh/ changes the count
+// and fails this test rather than slipping past it -- the precise gap
+// PITFALLS.md flags as staying green while glyphs go missing.
+//
+// Run via bare `yarn test` (`node --test` discovery); never `node --test <dir>`
+// (repo gotcha). `yarn test` runs a `pretest` hook that regenerates the subset
+// first, so the run always grades fresh output rather than a stale committed
+// woff2. Bare `node --test` bypasses that hook, which is why the existence
+// assertion below spells out the recovery command instead of letting
+// fs.readFileSync throw a bare ENOENT.
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -35,37 +45,91 @@ function assertIsSingleFont(
 
 // This file contains `import` statements, so Node's default-CJS detection
 // reparses it as ESM at run time (see the MODULE_TYPELESS_PACKAGE_JSON
-// warning) -- `__dirname` is unavailable in ESM scope; `import.meta.dirname`
-// (Node >= 20.11) is the ESM-safe equivalent.
-const PROOF_PAGE = path.join(
-  import.meta.dirname,
-  "..",
-  "pages",
-  "cjk-specimen.page.tsx",
+// warning). ESM scope has no CommonJS dirname global; import.meta.dirname
+// (Node >= 20.11) is the ESM-safe path base used for every constant below.
+const ROOT = path.join(import.meta.dirname, "..");
+
+// Recursively collect files under `dir` whose basename passes `matches`. No
+// glob dependency exists in this project, mirroring scripts/subset-font.ts's
+// own manual walk.
+function collectFiles(
+  dir: string,
+  matches: (name: string) => boolean,
+): string[] {
+  const results: string[] = [];
+  if (!fs.existsSync(dir)) return results;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...collectFiles(full, matches));
+    } else if (entry.isFile() && matches(entry.name)) {
+      results.push(full);
+    }
+  }
+  return results;
+}
+
+// The named single-file sources: the specimen glyph floor plus the two content
+// sources that live at a fixed path (the Chinese JSON and the UI-chrome
+// dictionary). The per-directory content families are walked below.
+const SINGLE_SOURCES = [
+  path.join(ROOT, "pages", "cjk-specimen.page.tsx"),
+  path.join(ROOT, "data", "portfolio.zh.json"),
+  path.join(ROOT, "lib", "dictionary.ts"),
+];
+const PROJECT_BODIES = collectFiles(path.join(ROOT, "_projects"), (name) =>
+  name.endsWith(".zh.md"),
 );
+const ZH_PAGES = collectFiles(path.join(ROOT, "pages", "zh"), () => true);
+const SOURCES = [...SINGLE_SOURCES, ...PROJECT_BODIES, ...ZH_PAGES];
+
+// cjk-specimen + data/portfolio.zh.json + lib/dictionary.ts (3) +
+// 8 _projects/*.zh.md + 4 files under pages/zh/ (404, index, resume,
+// projects/[slug]) = 15. Pinned so a new Chinese content file under _projects/
+// or pages/zh/ trips the count assertion, forcing whoever adds it to update
+// this constant AND confirm the regenerated subset covers its glyphs.
+const EXPECTED_SOURCE_COUNT = 15;
+
 const FONT = path.join(
-  import.meta.dirname,
-  "..",
+  ROOT,
   "public",
   "fonts",
   "open-huninn-subset.woff2",
 );
 
-test("every non-ASCII glyph on the CJK proof page is present in the subset cmap", () => {
-  const src = fs.readFileSync(PROOF_PAGE, "utf8");
+test("the Chinese content source set has its expected file count", () => {
+  assert.equal(
+    SOURCES.length,
+    EXPECTED_SOURCE_COUNT,
+    `expected ${EXPECTED_SOURCE_COUNT} Chinese content source files, collected ${SOURCES.length}:\n  ${SOURCES.join(
+      "\n  ",
+    )}\nIf you added or removed a Chinese content file under _projects/ or pages/zh/, update EXPECTED_SOURCE_COUNT and re-run \`node scripts/subset-font.ts\` so the subset covers its glyphs.`,
+  );
+});
 
-  // > 0x7F isolates specimen glyphs from ASCII import/JSX syntax; mirrors
-  // subset-font.ts's own union semantics (it unions in printable ASCII
-  // 0x20-0x7E separately). NOT >= 0x3000 -- that gate would skip the U+2014
-  // em dash and U+2026 ellipsis the specimen deliberately includes.
+test("every non-ASCII glyph in real /zh/ content is present in the subset cmap", () => {
+  // > 0x7F isolates real content glyphs from ASCII import/JSX syntax; mirrors
+  // subset-font.ts's own union semantics (it unions printable ASCII 0x20-0x7E
+  // separately). NOT >= 0x3000 -- that gate would skip the U+2014 em dash and
+  // U+2026 ellipsis that both the content and the specimen deliberately use.
   const codepoints = new Set<number>();
-  for (const ch of src) {
-    const cp = ch.codePointAt(0)!;
-    if (cp > 0x7f) codepoints.add(cp);
+  for (const file of SOURCES) {
+    const src = fs.readFileSync(file, "utf8");
+    for (const ch of src) {
+      const cp = ch.codePointAt(0)!;
+      if (cp > 0x7f) codepoints.add(cp);
+    }
   }
+
+  // An emptied or mis-globbed source set must not pass vacuously: fail if no
+  // files were collected, and fail if the collected files yield no glyphs.
+  assert.ok(
+    SOURCES.length > 0,
+    "collected zero Chinese content source files -- the source set is empty or mis-globbed",
+  );
   assert.ok(
     codepoints.size > 0,
-    "proof page has no non-ASCII specimen text -- specimen must not be empty/ASCII-only",
+    "collected zero non-ASCII code points from the Chinese content set -- an emptied or mis-globbed source set must not pass vacuously",
   );
 
   assert.ok(
