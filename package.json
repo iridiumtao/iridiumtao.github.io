@@ -3,9 +3,9 @@
   "version": "1.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/prepare-resumes.ts && node scripts/subset-font.ts",
+    "predev": "node scripts/prepare-resumes.ts && node scripts/subset-font.ts && node scripts/generate-sitemap.ts",
     "dev": "next dev",
-    "prebuild": "node scripts/prepare-resumes.ts && node scripts/subset-font.ts",
+    "prebuild": "node scripts/prepare-resumes.ts && node scripts/subset-font.ts && node scripts/generate-sitemap.ts",
     "build": "next build",
     "start": "next start",
     "pretest": "node scripts/subset-font.ts",

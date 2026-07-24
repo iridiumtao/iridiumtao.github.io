@@ -1,0 +1,12 @@
+# public/robots.txt
+# Static robots file for the statically-exported site. GitHub Pages serves it
+# verbatim from public/; no build step generates or rewrites this file.
+#
+# The Sitemap origin below is written literally because a static .txt cannot
+# interpolate a value. It MUST be kept in sync with SITE_ORIGIN in lib/site.ts,
+# which is the single source of truth for the canonical origin
+# (chun-ju.irilia.app, NOT iridiumtao.github.io, which only 301s to it).
+User-agent: *
+Allow: /
+
+Sitemap: https://chun-ju.irilia.app/sitemap.xml
