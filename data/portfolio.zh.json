@@ -198,7 +198,7 @@
   ],
   "aboutpara": "我是紐約大學電腦工程碩士生（GPA 3.73），專注在 MLOps、應用機器學習，以及能長大的雲端系統。軟體開發和資料科學都是我的底子，慣用 Python、Go 和 JavaScript，也熟悉現代 MLOps 與雲端原生工具鏈，包括 Docker、Terraform、AWS、PyTorch 和 MLflow。\n\n比較拿得出手的成果，一個是從頭架起一整套 MLOps stack 來微調並部署客製化 LLM，裡面有一條用 Airflow 和 MLflow 串起、由醫師參與其中的自動化再訓練 pipeline。在 Micron，我設計了正式規模的 Python pipeline 和 Streamlit 網頁應用，分析以 TB 計的製程資料，讓各團隊都能快速、可重現地做研究。在 CARITY AI，我把微服務容器化、在 AWS ECS 上自動化 CI/CD，基礎設施成本降低 40%、部署時間縮短 70%。\n\n在 MoBagel，我導入敏捷開發與 GitFlow，讓團隊在擴編 300% 的過程中管理更穩、效率更好。我的技術創新也在國際研討會上得過獎。這些成果背後其實是同一件事：把維運做扎實，交付可靠、能擴展、以資料為依據的方案。",
   "home": {
-    "greeting": "你好呀 (ﾉ´∀｀*)",
+    "greeting": "安安 (ﾉ´∀｀*)",
     "availability": "求職中",
     "heroLines": [
       "我打造",
@@ -206,11 +206,11 @@
       "你的程式碼",
       "就跑在上面。"
     ],
-    "lede": "我是歐東（Chun-Ju Tao），紐約大學電腦工程碩士，做的是**後端與基礎設施**。我在 AWS 上自動化過 CI/CD，把微服務的規模調到剛好以壓低雲端成本，也做出了第一個台語醫療諮詢 LLM。",
+    "lede": "我是歐東，紐約大學電腦工程碩士畢業，興趣是**後端、infra 和 DevOps**。於先前的實習中自動化 CI/CD，部署 microservices 到 AWS，也做出了第一個台語醫療諮詢 LLM。",
     "based": "賓州匹茲堡",
-    "degree": "紐約大學電腦工程碩士",
+    "degree": "紐約大學電腦工程碩士 · 台中科大資訊工程學士",
     "stack": "Python · Go · Docker · AWS · PyTorch · MLflow",
-    "honorsShort": "OpenHCI'25 首獎 · Fi-Award'23 · Level-Up'21",
+    "honorsShort": "OpenHCI'25 · Fi-Award'23 · Level-Up'21",
     "aboutPull": "把台灣手作的溫度，帶進雲端系統的冷硬規矩裡。",
     "contactEmail": "mailto:c.tao@nyu.edu",
     "projectCount": 3
