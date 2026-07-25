@@ -19,6 +19,7 @@ import Nav from "../Nav";
 import Footer from "../Footer";
 import ProjectCard from "../ProjectCard";
 import LocaleHead from "../LocaleHead";
+import PersonJsonLd from "../PersonJsonLd";
 import { getPortfolioData } from "../../../lib/portfolio";
 import { t } from "../../../lib/dictionary";
 import type { Locale } from "../../../lib/locale";
@@ -277,6 +278,7 @@ export default function HomePage({
         description={s.homeDescriptionTemplate.replace("{name}", wordmark)}
         path={path}
       />
+      <PersonJsonLd locale={locale} />
 
       <div className="wrap">
         <Nav home counterpartUrl={counterpart} />
