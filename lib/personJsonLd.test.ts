@@ -150,7 +150,7 @@ test("the schema.org envelope is a Person", () => {
   }
 });
 
-test("no emitted value is null, undefined, empty, or the string \"undefined\"", () => {
+test('no emitted value is null, undefined, empty, or the string "undefined"', () => {
   for (const locale of LOCALES) {
     assertNoEmptyValues(buildPersonJsonLd(locale), `person(${locale})`);
   }
@@ -221,7 +221,10 @@ test("knowsAbout is home.stack split on the middle dot, trimmed, empties dropped
     );
     for (const item of person.knowsAbout) {
       assert.equal(item, item.trim(), `"${item}" carries surrounding space`);
-      assert.ok(!item.includes(MIDDLE_DOT), `"${item}" still holds a separator`);
+      assert.ok(
+        !item.includes(MIDDLE_DOT),
+        `"${item}" still holds a separator`,
+      );
     }
   }
 });
