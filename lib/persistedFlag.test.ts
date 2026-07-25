@@ -62,7 +62,17 @@ test("reading the exact expanded marker returns true", () => {
 });
 
 test("reading anything other than the exact marker returns false", () => {
-  for (const stored of ["", "0", "true", "yes", "11", " 1", "1 ", "{}", "null"]) {
+  for (const stored of [
+    "",
+    "0",
+    "true",
+    "yes",
+    "11",
+    " 1",
+    "1 ",
+    "{}",
+    "null",
+  ]) {
     assert.equal(
       readPersistedFlag(KEY, memoryStorage({ [KEY]: stored })),
       false,
