@@ -2,22 +2,24 @@
 // typed accessor in lib/portfolio.ts; excluded from production builds at the
 // routing level via the pageExtensions split in next.config.js.
 //
-// KNOWN GAP (Phase 5 / EDIT-02): the Skills tab is out of sync with the real
-// content model. It edits `resume.skills.softwareAndOS`, a field that no longer
-// exists in the committed content, and offers no control for the two fields
-// that do (`cloudAndDevOps`, `dataAndML`). Loading and saving without touching
-// that textarea is a no-op, but typing into it writes a `softwareAndOS` array
-// back to the content file, which then fails lib/portfolio.ts's `satisfies
-// PortfolioData` check on the next `yarn typecheck`. Loud, not silent — but
-// still wrong. Typing this file (Plan 04-08) deliberately did not redesign the
-// tab; see D-25.
-import React, { useState, useEffect } from "react";
+// The edited locale is chosen at runtime (the EN / 中文 toggle), so this one
+// page edits both data/portfolio.json and data/portfolio.zh.json. The locale
+// travels to the API as a Locale value, never as a path: the write target is
+// whitelisted API-side in pages/api/portfolio.page.ts, which is the only module
+// allowed to turn a locale into a filename.
+import React, { useState, useEffect, useRef } from "react";
 import Nav from "../components/wood/Nav";
 import { v4 as uuidv4 } from "uuid";
 import { useTheme } from "next-themes";
 
 // Data
-import yourData from "../lib/portfolio";
+// Both content files are statically imported by lib/portfolio.ts, so reading a
+// locale inside an effect is a plain lookup — there is no fetch and no loading
+// state to manage. The toggle governs the EDITED CONTENT only: the surrounding
+// Wood chrome (Nav) still renders English, because this page is dev-only and
+// supplies no pageProps.locale, so LocaleProvider falls back to DEFAULT_LOCALE.
+import { getPortfolioData } from "../lib/portfolio";
+import { DEFAULT_LOCALE, type Locale } from "../lib/locale";
 import type {
   PortfolioData,
   Home,
@@ -32,15 +34,25 @@ import type {
   Social,
 } from "../types/portfolio";
 
+// Display only — shown so the owner can always see which file a Save will
+// overwrite. It is NOT the write path: pages/api/portfolio.page.ts holds the
+// authoritative whitelist and resolves the real filename from the locale it
+// receives. Nothing here is ever sent to the API.
+const CONTENT_FILE_LABEL: Record<Locale, string> = {
+  en: "data/portfolio.json",
+  zh: "data/portfolio.zh.json",
+};
+
 /* ── Editable shape ──────────────────────────────────────────────────────
  * The editor's working state is NOT PortfolioData. Several `string[]` fields
  * are joined into newline-separated strings so a single <textarea> can edit
  * them, then split back on save. These types describe that transformed shape;
  * every other field keeps its canonical type.
  *
- * `softwareAndOS` is optional and lives ONLY here — it is absent from both the
- * committed JSON and types/portfolio.ts's ResumeSkills. Adding it to the shared
- * type would fabricate a content-model field that no real data carries.
+ * Every field named here must exist in types/portfolio.ts. The editor is not
+ * allowed to invent one: a field the content model does not carry would be
+ * written straight into the JSON on save and fail lib/portfolio.ts's
+ * `satisfies PortfolioData` check on the next `yarn typecheck`.
  */
 
 // The hero headline is one line of copy per array entry, and the line breaks
@@ -61,10 +73,11 @@ type EditableResumeEducation = Omit<
   relevantCoursework: string;
 };
 
-type EditableResumeSkills = Omit<ResumeSkills, "languages"> & {
-  languages: string;
-  softwareAndOS?: string;
-};
+// Every ResumeSkills field is a `string[]` edited as one newline-separated
+// textarea, so this maps the whole type instead of naming its members. A fifth
+// skills field added to types/portfolio.ts is then covered here automatically,
+// and the compiler — not a reviewer — flags the missing textarea.
+type EditableResumeSkills = { [K in keyof ResumeSkills]: string };
 
 type EditableResumeProject = Omit<ResumeProjectEntry, "details"> & {
   details: string;
@@ -109,8 +122,11 @@ const toEditable = (source: PortfolioData): EditableData => ({
       relevantCoursework: edu.relevantCoursework.join("\n"),
     })),
     skills: {
-      ...source.resume.skills,
       languages: source.resume.skills.languages.join("\n"),
+      cloudAndDevOps: source.resume.skills.cloudAndDevOps.join("\n"),
+      frameworksAndBackend:
+        source.resume.skills.frameworksAndBackend.join("\n"),
+      dataAndML: source.resume.skills.dataAndML.join("\n"),
     },
     projects: source.resume.projects.map((proj) => ({
       ...proj,
@@ -146,13 +162,12 @@ const toSaved = (edited: EditableData): PortfolioData => ({
       relevantCoursework: splitLines(edu.relevantCoursework),
     })),
     skills: {
-      ...edited.resume.skills,
       languages: splitLines(edited.resume.skills.languages),
-      // Preserved only to keep the legacy textarea's save path behaving exactly
-      // as it did before this file was typed. See the KNOWN GAP note above.
-      ...(typeof edited.resume.skills.softwareAndOS === "string"
-        ? { softwareAndOS: splitLines(edited.resume.skills.softwareAndOS) }
-        : {}),
+      cloudAndDevOps: splitLines(edited.resume.skills.cloudAndDevOps),
+      frameworksAndBackend: splitLines(
+        edited.resume.skills.frameworksAndBackend,
+      ),
+      dataAndML: splitLines(edited.resume.skills.dataAndML),
     },
     projects: edited.resume.projects.map((proj) => ({
       ...proj,
@@ -165,22 +180,45 @@ const toSaved = (edited: EditableData): PortfolioData => ({
 // its plain-button branch (children/onClick/classes), so this keeps the same
 // base utility classes without pulling in the dying legacy component tree.
 //
-// `classes` accepts `false` because two call sites pass `!data.darkMode &&
-// "..."`. The `?? ""` below is deliberately NOT `|| ""`: nullish coalescing lets
-// a `false` through and renders a literal "false" class. That is a pre-existing
-// cosmetic quirk, preserved here so typing this file changes no rendered markup.
-// Tracked for Phase 5 alongside the tab-highlight gap noted below.
+// `classes` is `string | undefined`, never `string | false`. The old spelling
+// accepted a `false` from call sites written as `cond && "..."` and then let it
+// through a `??` fallback, which renders a literal "false" class token —
+// nullish coalescing only catches null and undefined. Call sites now pass a
+// conditional yielding the class string or undefined, and the class list is
+// assembled by filtering, so nothing but a real class can reach className.
+//
+// `active` restores the highlight the legacy Button gave via its `type` prop:
+// the tab bar and the locale toggle both need to show which choice is live.
+const BASE_BUTTON_CLASSES =
+  "tablet:text-base laptop:p-2 laptop:m-2 m-1 rounded-lg p-1 text-sm transition-all duration-300 ease-out first:ml-0 hover:scale-105 active:scale-100";
+
+// The editor's one accent, already used by the Dark Mode / Show Resume toggles
+// below. Reused rather than introducing a second highlight colour.
+const ACTIVE_BUTTON_CLASSES = "bg-red-500 text-white hover:bg-red-600";
+
 type EditButtonProps = {
   children: React.ReactNode;
   onClick: () => void;
-  classes?: string | false;
+  classes?: string;
+  active?: boolean;
 };
 
-const EditButton = ({ children, onClick, classes }: EditButtonProps) => (
+const EditButton = ({
+  children,
+  onClick,
+  classes,
+  active = false,
+}: EditButtonProps) => (
   <button
     onClick={onClick}
     type="button"
-    className={`tablet:text-base laptop:p-2 laptop:m-2 m-1 rounded-lg p-1 text-sm transition-all duration-300 ease-out first:ml-0 hover:scale-105 active:scale-100 ${classes ?? ""}`}
+    className={[
+      BASE_BUTTON_CLASSES,
+      active ? ACTIVE_BUTTON_CLASSES : undefined,
+      classes,
+    ]
+      .filter((token): token is string => Boolean(token))
+      .join(" ")}
   >
     {children}
   </button>
@@ -237,15 +275,47 @@ const AreaField = ({
 const Edit = () => {
   // states
   const [data, setData] = useState<EditableData | null>(null);
+  const [locale, setLocale] = useState<Locale>(DEFAULT_LOCALE);
   const [currentTabs, setCurrentTabs] = useState<TabId>("HEADER");
   const { theme } = useTheme();
+
+  // The editable state exactly as it was last loaded or last saved. Comparing
+  // the live state against it is how a locale switch knows whether it is about
+  // to throw away work — a ref rather than state because nothing renders from
+  // it and it must not trigger a re-render when it is refreshed.
+  const pristine = useRef<string>("");
 
   useEffect(() => {
     // Deep-clone first: the editor mutates arrays in place, and the imported
     // module object must not be one of them.
-    const cloned = JSON.parse(JSON.stringify(yourData)) as PortfolioData;
-    setData(toEditable(cloned));
-  }, []);
+    const cloned = JSON.parse(
+      JSON.stringify(getPortfolioData(locale)),
+    ) as PortfolioData;
+    const editable = toEditable(cloned);
+    pristine.current = JSON.stringify(editable);
+    setData(editable);
+    // Keyed on locale: switching reloads every field from the other content
+    // file. currentTabs is deliberately NOT reset — the tabs are identical
+    // across locales, so staying put is what the owner expects.
+  }, [locale]);
+
+  // Guards the switch behind a confirmation whenever the live state has drifted
+  // from the last load or save. Without it one mis-click silently discards a
+  // session of hand-revised copy, with no undo anywhere.
+  const switchLocale = (next: Locale) => {
+    if (next === locale) return;
+    const dirty = data !== null && JSON.stringify(data) !== pristine.current;
+    if (
+      dirty &&
+      !window.confirm(
+        `Discard unsaved edits to ${CONTENT_FILE_LABEL[locale]} and load ` +
+          `${CONTENT_FILE_LABEL[next]}?`,
+      )
+    ) {
+      return;
+    }
+    setLocale(next);
+  };
 
   const saveData = async () => {
     if (!data) return;
@@ -259,9 +329,16 @@ const Edit = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(toSaved(data)),
+        // The two-field envelope the route expects. The locale rides ALONGSIDE
+        // the content, never inside it: PortfolioData has no locale field, so
+        // an embedded one would break lib/portfolio.ts's `satisfies` check on
+        // the next typecheck.
+        body: JSON.stringify({ locale, content: toSaved(data) }),
       });
       if (!res.ok) throw new Error(`save failed: ${res.status}`);
+      // The file on disk now matches this state, so a locale switch from here
+      // is clean and must not prompt.
+      pristine.current = JSON.stringify(data);
       alert("Saved.");
     } catch (err) {
       console.error(err);
@@ -456,6 +533,20 @@ const Edit = () => {
     });
   };
 
+  // Resume Skills. Keyed by `keyof EditableResumeSkills` rather than a plain
+  // string, so a typo'd group name is a compile error instead of a new field
+  // silently appearing in the saved JSON.
+  const editSkill = (group: keyof EditableResumeSkills, value: string) => {
+    if (!data) return;
+    setData({
+      ...data,
+      resume: {
+        ...data.resume,
+        skills: { ...data.resume.skills, [group]: value },
+      },
+    });
+  };
+
   // Resume Projects
   const handleAddResumeProject = () => {
     if (!data) return;
@@ -551,28 +642,65 @@ const Edit = () => {
         <div className={`${theme === "dark" ? "bg-transparent" : "bg-white"}`}>
           <div className="flex items-center justify-between">
             <h1 className="text-4xl">Dashboard</h1>
-            <div className="flex items-center">
-              <EditButton onClick={saveData}>Save</EditButton>
+            <div className="flex flex-col items-end">
+              <div className="flex items-center">
+                <EditButton
+                  onClick={() => switchLocale("en")}
+                  active={locale === "en"}
+                >
+                  EN
+                </EditButton>
+                <EditButton
+                  onClick={() => switchLocale("zh")}
+                  active={locale === "zh"}
+                >
+                  中文
+                </EditButton>
+                <EditButton onClick={saveData}>Save</EditButton>
+              </div>
+              {/* Which file a Save overwrites, spelled out so the write target
+                  is never ambiguous while switching back and forth. */}
+              <p className="text-sm opacity-60">
+                Editing <code>{CONTENT_FILE_LABEL[locale]}</code>
+              </p>
             </div>
           </div>
 
           <div className="flex items-center">
-            <EditButton onClick={() => setCurrentTabs("HEADER")}>
+            <EditButton
+              onClick={() => setCurrentTabs("HEADER")}
+              active={currentTabs === "HEADER"}
+            >
               Header
             </EditButton>
-            <EditButton onClick={() => setCurrentTabs("PROJECTS")}>
+            <EditButton
+              onClick={() => setCurrentTabs("PROJECTS")}
+              active={currentTabs === "PROJECTS"}
+            >
               Projects
             </EditButton>
-            <EditButton onClick={() => setCurrentTabs("EXPERIENCES")}>
+            <EditButton
+              onClick={() => setCurrentTabs("EXPERIENCES")}
+              active={currentTabs === "EXPERIENCES"}
+            >
               Experiences
             </EditButton>
-            <EditButton onClick={() => setCurrentTabs("ABOUT")}>
+            <EditButton
+              onClick={() => setCurrentTabs("ABOUT")}
+              active={currentTabs === "ABOUT"}
+            >
               About
             </EditButton>
-            <EditButton onClick={() => setCurrentTabs("SOCIAL")}>
+            <EditButton
+              onClick={() => setCurrentTabs("SOCIAL")}
+              active={currentTabs === "SOCIAL"}
+            >
               Social
             </EditButton>
-            <EditButton onClick={() => setCurrentTabs("RESUME")}>
+            <EditButton
+              onClick={() => setCurrentTabs("RESUME")}
+              active={currentTabs === "RESUME"}
+            >
               Resume
             </EditButton>
           </div>
@@ -703,9 +831,7 @@ const Edit = () => {
                 </EditButton>
                 <EditButton
                   onClick={() => setData({ ...data, darkMode: false })}
-                  classes={
-                    !data.darkMode && "bg-red-500 text-white hover:bg-red-600"
-                  }
+                  classes={!data.darkMode ? ACTIVE_BUTTON_CLASSES : undefined}
                 >
                   No
                 </EditButton>
@@ -721,9 +847,7 @@ const Edit = () => {
                 </EditButton>
                 <EditButton
                   onClick={() => setData({ ...data, showResume: false })}
-                  classes={
-                    !data.showResume && "bg-red-500 text-white hover:bg-red-600"
-                  }
+                  classes={!data.showResume ? ACTIVE_BUTTON_CLASSES : undefined}
                 >
                   No
                 </EditButton>
@@ -1231,46 +1355,30 @@ const Edit = () => {
             <hr className="my-10"></hr>
             <div className="mt-10">
               <h1>Skills</h1>
-              <div className="mt-5 flex">
-                <label className="w-1/5 text-lg opacity-50">Languages</label>
-                <div className="ml-10 flex w-4/5 flex-col">
-                  <textarea
-                    value={data.resume.skills.languages}
-                    onChange={(e) => {
-                      const newSkills = {
-                        ...data.resume.skills,
-                        languages: e.target.value,
-                      };
-                      setData({
-                        ...data,
-                        resume: { ...data.resume, skills: newSkills },
-                      });
-                    }}
-                    className="w-full rounded-md border-2 p-2 shadow-lg"
-                  ></textarea>
-                </div>
-              </div>
-              <div className="mt-5 flex">
-                <label className="w-1/5 text-lg opacity-50">
-                  Software & OS
-                </label>
-                <div className="ml-10 flex w-4/5 flex-col">
-                  <textarea
-                    value={data.resume.skills.softwareAndOS ?? ""}
-                    onChange={(e) => {
-                      const newSkills = {
-                        ...data.resume.skills,
-                        softwareAndOS: e.target.value,
-                      };
-                      setData({
-                        ...data,
-                        resume: { ...data.resume, skills: newSkills },
-                      });
-                    }}
-                    className="w-full rounded-md border-2 p-2 shadow-lg"
-                  ></textarea>
-                </div>
-              </div>
+              <p className="mt-2 text-sm opacity-60">
+                The four groups the résumé renders. One entry per line; blank
+                lines are dropped on save.
+              </p>
+              <AreaField
+                label="Languages"
+                value={data.resume.skills.languages}
+                onChange={(value) => editSkill("languages", value)}
+              />
+              <AreaField
+                label="Cloud & DevOps"
+                value={data.resume.skills.cloudAndDevOps}
+                onChange={(value) => editSkill("cloudAndDevOps", value)}
+              />
+              <AreaField
+                label="Frameworks & Backend"
+                value={data.resume.skills.frameworksAndBackend}
+                onChange={(value) => editSkill("frameworksAndBackend", value)}
+              />
+              <AreaField
+                label="Data & ML"
+                value={data.resume.skills.dataAndML}
+                onChange={(value) => editSkill("dataAndML", value)}
+              />
             </div>
             <hr className="my-10"></hr>
             <div className="mt-10">

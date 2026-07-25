@@ -1,0 +1,508 @@
+{
+  "name": "Chun-Ju (Iridium)",
+  "showCursor": false,
+  "darkMode": true,
+  "showResume": true,
+  "socials": [
+    {
+      "title": "Github",
+      "link": "https://github.com/iridiumtao"
+    },
+    {
+      "title": "LinkedIn",
+      "link": "https://linkedin.com/in/chun-ju-tao-3b1485254/"
+    },
+    {
+      "title": "電子郵件",
+      "link": "mailto:c.tao@nyu.edu"
+    },
+    {
+      "title": "履歷",
+      "link": "/resume"
+    }
+  ],
+  "projects": [
+    {
+      "id": "8",
+      "slug": "openhci25-oblivilight",
+      "title": "Oblivilight - OpenHCI'25",
+      "techStack": [
+        "HCI",
+        "LangChain"
+      ],
+      "startDate": "July 2025",
+      "endDate": "August 2025",
+      "description": "一盞以隱私為核心的 AI 智慧檯燈，把夜裡的語音對話變成摸得到的記憶。",
+      "imageSrc": "/images/projects/openhci25-oblivilight.png",
+      "url": "https://github.com/iridiumtao/OpenHCI25-Oblivilight",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
+    },
+    {
+      "id": "7",
+      "slug": "taigi-medical-advising-llm",
+      "title": "台語醫療諮詢 LLM",
+      "techStack": [
+        "AI",
+        "ML",
+        "LLM"
+      ],
+      "startDate": "March 2025",
+      "endDate": "May 2025",
+      "description": "以完整的全端 MLOps pipeline 微調出的台語醫療諮詢 LLM。",
+      "imageSrc": "/images/projects/taigi-medical-advising-llm.png",
+      "url": "https://github.com/iridiumtao/Fine-Tuning-Taiwanese-Hokkien-LLM-for-Medical-Advising",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
+    },
+    {
+      "id": "1",
+      "slug": "loud-plants-in-your-area",
+      "title": "Loud Plants in Your Area",
+      "techStack": [
+        "HCI",
+        "AR",
+        "ML"
+      ],
+      "startDate": "February 2024",
+      "endDate": "May 2024",
+      "description": "一款擴增實境（AR）應用程式，用疊在現實上的互動圖層把植物的動靜變得看得見，藉此對抗「植物盲」。",
+      "imageSrc": "/images/projects/loud-plants-in-your-area.jpg",
+      "url": "https://github.com/iridiumtao/LoudPlantsInYourArea",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
+    },
+    {
+      "id": "2",
+      "slug": "virtual-news-presenter",
+      "title": "AI 總編輯與虛擬新聞主播",
+      "subtitle": "以人工智慧為核心的新聞自動化生產 pipeline",
+      "techStack": [],
+      "startDate": "September 2021",
+      "endDate": "July 2023",
+      "description": "用 AI 自然語言處理技術產出台灣華語新聞，想把青少年的注意力拉回重要的社會議題。",
+      "imageSrc": "/images/projects/virtual-news-presenter.png",
+      "url": "https://github.com/iridiumtao/Virtual-to-News-Public",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
+    },
+    {
+      "id": "3",
+      "slug": "risc-v-simulator",
+      "title": "RISC-V-Simulator",
+      "techStack": [],
+      "startDate": "October 2024",
+      "endDate": "December 2024",
+      "description": "用 Python 寫的五階管線 RISC-V 模擬器。",
+      "imageSrc": "/images/projects/risc-v-simulator.png",
+      "url": "https://github.com/iridiumtao/RISC-V-Simulator",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
+    },
+    {
+      "id": "4",
+      "slug": "retailpia",
+      "title": "Retailpia",
+      "subtitle": "ShowCode 主辦的 Level-Up Society Hackathon，Better Retail 獎項首獎",
+      "techStack": [],
+      "startDate": "July 2021",
+      "endDate": "July 2021",
+      "description": "和來自四所大學的學生在 48 小時內做出的城市建設遊戲，同時也是記帳工具和點數收集器。",
+      "imageSrc": "/images/projects/retailpia.png",
+      "url": "https://github.com/iridiumtao/Retailpia",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
+    },
+    {
+      "id": "5",
+      "slug": "tw-covid-bot",
+      "title": "TW-COVID-Bot（Telegram 機器人）",
+      "techStack": [],
+      "startDate": "August 2020",
+      "endDate": "November 2022",
+      "description": "台灣 COVID-19 疫情期間，我幫社群網紅自動發布每日疫情資訊，讓大家能輕鬆拿到最新消息。",
+      "imageSrc": "/images/projects/tw-covid-bot.png",
+      "url": "https://github.com/lhsueh1/TW-covid-Bot",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
+    },
+    {
+      "id": "6",
+      "slug": "swiftui-weather-app",
+      "title": "iOS 開發",
+      "techStack": [],
+      "startDate": "June 2020",
+      "endDate": "October 2020",
+      "description": "大二暑假我參加了校內 Intelligent Mobile Application Club（I.M.A.C）實驗室的 iOS 開發暑期實訓，靠著實際動手做 UI 元件和設計模式，累積行動開發的底子。",
+      "imageSrc": "/images/projects/swiftui-weather-app.png",
+      "url": "https://github.com/jerry960331/iOS_practice_SwiftUIWeatherApp",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
+    }
+  ],
+  "experiences": [
+    {
+      "id": "a-day-cofounder",
+      "title": "A Day 共同創辦人",
+      "description": "以 SwiftData 和 SwiftUI 打造正式產品等級的 MVVM iOS App，涵蓋 7 個彼此相依的資料模型與 60 多個原始檔，背後由 Xcode Cloud CI/CD 和 700 多個 Swift Testing 單元與整合測試撐住。"
+    },
+    {
+      "id": "nyu-course-assistant",
+      "title": "紐約大學課程助教",
+      "description": "用 FastAPI 和 Docker Compose 建了一套 5 個微服務的 ML 安全防護實驗，並依正式環境標準審查 30 組團隊跑在 Chameleon Cloud 上的完整 MLOps 系統。"
+    },
+    {
+      "id": "678d33ac-a854-4dce-9c0e-db5fae6cd91e",
+      "title": "Micron 資料科學實習生",
+      "description": "打造正式規模的 pipeline 與 Streamlit 應用分析晶圓廠派工資料（兩週 33GB），用 LightGBM-SHAP 做出可解釋的模型來精簡參數，另外開發 repo 文件工具，把 token 用量壓到十分之一、開發效率提升 3 倍。"
+    },
+    {
+      "id": "1",
+      "title": "CARITY AI 軟體開發工程師",
+      "description": "以 Docker 和 AWS ECS 建立 DevOps 流程，讓部署更順、成本降低 40%。研究 Agentic RAG，把複雜問答的 token 效率拉高五倍。"
+    },
+    {
+      "id": "2",
+      "title": "MoBagel 軟體工程師",
+      "description": "為台灣自來水公司打造全端物料管理系統，把預算與庫存作業自動化。主導導入 GitFlow 與敏捷開發，在團隊擴編 300% 的過程中把效率拉起來。"
+    },
+    {
+      "id": "3",
+      "title": "Mindtronic AI 軟體工程實習生",
+      "description": "用 Golang 和 PostgreSQL 開發後端伺服器，每週處理 48 萬筆以上資料。加上以 React 寫的儀表板功能，也做了即時的 ARM 裝置應用，用於車隊駕駛行為分析。"
+    }
+  ],
+  "aboutpara": "我是紐約大學電腦工程碩士生（GPA 3.73），專注在 MLOps、應用機器學習，以及能長大的雲端系統。軟體開發和資料科學都是我的底子，慣用 Python、Go 和 JavaScript，也熟悉現代 MLOps 與雲端原生工具鏈，包括 Docker、Terraform、AWS、PyTorch 和 MLflow。\n\n比較拿得出手的成果，一個是從頭架起一整套 MLOps stack 來微調並部署客製化 LLM，裡面有一條用 Airflow 和 MLflow 串起、由醫師參與其中的自動化再訓練 pipeline。在 Micron，我設計了正式規模的 Python pipeline 和 Streamlit 網頁應用，分析以 TB 計的製程資料，讓各團隊都能快速、可重現地做研究。在 CARITY AI，我把微服務容器化、在 AWS ECS 上自動化 CI/CD，基礎設施成本降低 40%、部署時間縮短 70%。\n\n在 MoBagel，我導入敏捷開發與 GitFlow，讓團隊在擴編 300% 的過程中管理更穩、效率更好。我的技術創新也在國際研討會上得過獎。這些成果背後其實是同一件事：把維運做扎實，交付可靠、能擴展、以資料為依據的方案。",
+  "home": {
+    "greeting": "安安 (ﾉ´∀｀*)",
+    "availability": "求職中",
+    "heroLines": [
+      "我打造",
+      "**基礎設施**",
+      "你的程式碼",
+      "就跑在上面。"
+    ],
+    "lede": "我是歐東，紐約大學電腦工程碩士畢業，興趣是**後端、infra 和 DevOps**。於先前的實習中自動化 CI/CD，部署 microservices 到 AWS，也做出了第一個台語醫療諮詢 LLM。",
+    "based": "賓州匹茲堡",
+    "degree": "紐約大學電腦工程碩士 · 台中科大資訊工程學士",
+    "stack": "Python · Go · Docker · AWS · PyTorch · MLflow",
+    "honorsShort": "OpenHCI'25 · Fi-Award'23 · Level-Up'21",
+    "aboutPull": "把台灣手作的溫度，帶進雲端系統的冷硬規矩裡。",
+    "contactEmail": "mailto:c.tao@nyu.edu",
+    "projectCount": 3
+  },
+  "resume": {
+    "tagline": "歐東 Chun-Ju Tao",
+    "description": "我喜歡在軟體裡做出有新意、又能長大的東西。專長是設計後端系統、自動化 CI/CD pipeline，以及建置雲端原生的 MLOps 平台。目前在找後端或軟體基礎設施的職缺，想接更難的工程題目。",
+    "experiences": [
+      {
+        "id": "a-day-cofounder",
+        "dates": "May 2025 - Present",
+        "type": "",
+        "position": "A Day 共同創辦人",
+        "location": "紐約州紐約市",
+        "bullets": [
+          "以 SwiftData 與最新的 SwiftUI 功能設計出正式產品等級的 MVVM 應用程式，把服務層解耦，讓 7 個彼此相依的資料模型和 60 多個原始檔都維持嚴格的職責分離。",
+          "打造以 AI 輔助的開發流程（Cursor/Claude），搭配自訂的 MCP 與 skills 管理脈絡，把交付速度拉高 4 倍，同時嚴格遵守 TDD 循環，消除回歸風險。",
+          "以 Xcode Cloud 建立 CI/CD pipeline，並用 Swift Testing 搭起嚴謹的 QA 框架，寫下 700 多個單元與整合測試，確保 ViewModel 與資料流的架構完整，也擋住回歸。"
+        ]
+      },
+      {
+        "id": "nyu-course-assistant",
+        "dates": "January 2026 - May 2026",
+        "type": "兼職",
+        "position": "紐約大學課程助教",
+        "location": "紐約州布魯克林",
+        "bullets": [
+          "建置由 5 個微服務組成的 ML 安全防護實驗（FastAPI、Docker Compose），以短路邏輯把請求依序送過兩個自訂的 MobileNetV2 防護模型和一個 Food11 分類器；另外產生合成的邊界案例資料，量測中位數、p95、p99 推論延遲，把每一層防護的代價算清楚。",
+          "審查 30 組團隊（110 位學生）跑在 Chameleon Cloud 上的完整 MLOps 系統，從設計、程式碼到現場展示逐一檢視，依正式環境標準評估：實驗追蹤、自動化再訓練、飄移監控、機密資訊管理與容器可重現性；並給出有條理的回饋，讓各組據以修正資料洩漏、捷徑學習等問題。"
+        ]
+      },
+      {
+        "id": "dab034bf-1fa5-41ea-b336-64f66fbd76f9",
+        "dates": "July 2025 - August 2025",
+        "type": "實習",
+        "position": "Micron Technology 資料科學實習生",
+        "location": "台灣桃園",
+        "bullets": [
+          "針對每兩週 33GB 的晶圓廠派工紀錄，設計出正式規模的 Python pipeline 和可自助操作的 Streamlit 應用，以可解釋的 LightGBM/SHAP 模型找出影響排程的關鍵因子，讓各團隊都能依證據、可重現地調參數。",
+          "為一套超過百萬行程式碼的企業應用開發 repo 文件工具，運用 Prompt Engineering 與子任務 agent，把 token 用量壓到十分之一，預估開發效率可提升約 3 倍。"
+        ]
+      },
+      {
+        "id": "1",
+        "dates": "May 2024 - August 2024",
+        "type": "實習",
+        "position": "CARITY AI 軟體開發工程師",
+        "location": "加拿大安大略省",
+        "bullets": [
+          "以 GitHub Actions 把 4 個微服務容器化部署到 AWS ECS，為一項 LLM 產品自動化 CI/CD，基礎設施成本降低 40%、部署時間縮短 70%。",
+          "交付檢索增強生成（RAG）的概念驗證，顯示 token 用量有機會降到五分之一，也定調了團隊的成本最佳化路線。"
+        ]
+      },
+      {
+        "id": "2",
+        "dates": "January 2023 - July 2023",
+        "type": "實習",
+        "position": "MoBagel 軟體工程師",
+        "location": "台灣台中",
+        "bullets": [
+          "為台灣自來水公司（全國性公用事業，服務 700 萬戶以上）打造全端物料管理系統，把原有的 Java 舊系統遷移過來，讓數百萬筆歷史紀錄的庫存與預算作業自動化。",
+          "導入 GitFlow 與敏捷開發流程，讓工程流程跟上團隊從 10 人擴編到 30 人的節奏，順利完成轉換，也得到主管的肯定。",
+          "找出並回報重大資安漏洞，包括 SQL injection 的攻擊面，以及一座對外公開、不需驗證就能連上的測試資料庫，那可能讓數十年份的紀錄大規模外洩。"
+        ]
+      },
+      {
+        "id": "3",
+        "dates": "June 2022 - September 2022",
+        "type": "實習",
+        "position": "Mindtronic AI 軟體工程實習生",
+        "location": "台灣台北",
+        "bullets": [
+          "把原本的 Node.js 舊服務整個以 Go 重寫，一個人扛下 53 支 RESTful API 從設計、實作到 SQL injection 防護的全部環節，每週穩定處理 48 萬筆以上資料。"
+        ]
+      }
+    ],
+    "education": [
+      {
+        "id": "1",
+        "universityName": "紐約大學（NYU）",
+        "universityDate": "May 2026",
+        "location": "紐約州紐約市",
+        "degree": "電腦工程碩士",
+        "gpa": "3.73",
+        "relevantCoursework": [
+          "實務軟體工程",
+          "人機互動",
+          "機器學習",
+          "MLOps",
+          "強化學習"
+        ]
+      },
+      {
+        "id": "2",
+        "universityName": "國立臺中科技大學（NTCUST）",
+        "universityDate": "June 2023",
+        "location": "台灣台中",
+        "degree": "資訊工程學士",
+        "gpa": "3.79",
+        "relevantCoursework": [
+          "軟體工程",
+          "電子商務安全",
+          "演算法",
+          "資料結構"
+        ]
+      }
+    ],
+    "skills": {
+      "languages": [
+        "Python",
+        "Go",
+        "Java",
+        "C#",
+        "Swift",
+        "JavaScript",
+        "SQL (PostgreSQL, MS SQL)",
+        "C/C++"
+      ],
+      "cloudAndDevOps": [
+        "Docker",
+        "AWS",
+        "Terraform",
+        "GitHub Actions",
+        "Airflow",
+        "Prometheus",
+        "Grafana",
+        "Linux",
+        "Git/GitFlow"
+      ],
+      "frameworksAndBackend": [
+        "FastAPI",
+        "Flask",
+        "Django",
+        "Node.js",
+        "React",
+        "Vue",
+        "RESTful APIs",
+        "WebSocket"
+      ],
+      "dataAndML": [
+        "PyTorch",
+        "MLflow",
+        "LlamaIndex",
+        "LangChain",
+        "LightGBM",
+        "SHAP",
+        "Streamlit"
+      ]
+    },
+    "projects": [
+      {
+        "id": "nyu-marketplace",
+        "title": "NYU Marketplace",
+        "organization": "紐約大學實務軟體工程課程",
+        "location": "紐約州紐約市",
+        "dates": "September 2025 - December 2025",
+        "details": [
+          "以 Travis CI 和 AWS Elastic Beanstalk 建立 CI/CD pipeline，設下嚴格的合併門檻（linting、85% 以上測試覆蓋率），每一個通過審查的 PR 都自動部署。",
+          "用 Django 5 和 Channels 開發能擴展的 RESTful 與即時 WebSocket API，並擔任主要的程式碼審查者，在團隊裡把關系統設計與程式碼品質。",
+          "指導教授為 Gennadiy Civil（兼任教授，同時是 Google 資深工程經理）。"
+        ]
+      },
+      {
+        "id": "b2787423-bef6-463a-9e8c-7c973939e4eb",
+        "title": "隱私優先、承接夜裡短暫對話的 AI 智慧檯燈 - Oblivilight",
+        "organization": "OpenHCI'25",
+        "location": "台灣台北",
+        "dates": "July 2025 - August 2025",
+        "details": [
+          "主導從研究到原型的使用者中心設計流程，透過 11 場使用者訪談與次級資料研究，找出大家對 AI 陪伴者的一項關鍵需求：一套摸得到、又能保住隱私的「遺忘機制」。",
+          "設計全端的概念驗證，整合負責對話的 LLM、情緒分析，以及結合語音（Whisper/TTS）與手勢操作的多模態介面。",
+          "設計出新的互動模型：把情緒轉成有顏色的光，再用熱感應印表機把數位對話印成實體物件，直接回應大家對 AI 資料永久留存的焦慮。",
+          "拿下 OpenHCI'25 最佳 Demo 獎，也是唯一獲選在後續 TAICHI'25 研討會上發表的作品。"
+        ]
+      },
+      {
+        "id": "4391db8e-1b56-435e-a510-f929e328a871",
+        "title": "即時植物健康與情緒視覺化 - Loud Plants in Your Area",
+        "organization": "紐約大學（NYU）",
+        "location": "紐約州紐約市",
+        "dates": "February 2025 - May 2025",
+        "details": [
+          "發起並主導一款 iOS 應用程式從零到完成的開發，把植物的生物聲學訊號即時轉成 AR 視覺呈現，同時定下專案方向、規劃整套技術架構。",
+          "依據學術研究打造自訂的機器學習 pipeline 來判讀植物健康。一個人實作深度散射網路（採用 Morlet 小波的 ScatNet）、擷取梅爾頻率倒譜係數（MFCC），並訓練出表現優異的 SVM 分類器做訊號分析。",
+          "以 Swift、RealityKit 和 Reality Composer Pro 開發出功能完整的 AR 原型。獨力負責整個 iOS 應用開發，做出自訂的動畫 UI 疊層，依 ML pipeline 傳來的即時資料呈現植物的動態狀態。",
+          "以使用者評估研究驗證專案的核心假設，結果顯示 AR 介面明顯提升了人與植物的互動和情感連結（平均分數從 1.67 提升到 5.33，p=0.018）。"
+        ]
+      },
+      {
+        "id": "843a0605-bfc9-47e7-bccb-52d310723cfe",
+        "title": "台語醫療諮詢 LLM",
+        "organization": "紐約大學（NYU）",
+        "location": "紐約州紐約市",
+        "dates": "March 2025 - May 2025",
+        "details": [
+          "以 Terraform 做 IaC，為 LLM 打造雲端原生的 MLOps 平台，並把一組以 Docker 為基礎的微服務（FastAPI、Gradio、MinIO）部署上線。",
+          "用 Airflow 串起持續訓練（CT）pipeline，讓有人參與其中的再訓練得以運作，並以 Prometheus 和 Grafana 建立系統可觀測性。",
+          "在 A100 GPU 上以 LoRA 加混合精度，用 12 萬組雙語問答微調 8B 的 LLaMA-3.1，做出第一個台語醫療顧問；所有訓練都記在 MLflow 裡，確保完全可重現。"
+        ]
+      },
+      {
+        "id": "1",
+        "title": "RISC-V-Simulator",
+        "organization": "紐約大學（NYU）",
+        "location": "紐約州紐約市",
+        "dates": "October 2024 - December 2024",
+        "details": [
+          "用 Python 設計 RISC-V 處理器模擬器，同時實作單階與五階管線兩種設計，用來分析並比較架構上的效能取捨。",
+          "為五階管線打造完整的危障處理機制，包含專用的資料前遞單元、負責插入停頓的 load-use 危障偵測單元，以及在 ID 階段就提早解出分支結果的分支前遞單元，把控制危障降到最低。",
+          "開發平行模擬流程，讓同一支 RISC-V 程式同時在兩種管線上執行，確保輸出與效能指標能準確地並排比較。",
+          "建立自動化的效能分析模組，計算並輸出各處理器核心的關鍵指標，包括總週期數、每週期指令數（IPC）與每指令週期數（CPI）。"
+        ]
+      },
+      {
+        "id": "2",
+        "title": "AI 總編輯與虛擬新聞主播",
+        "organization": "國立臺中科技大學自然語言處理實驗室",
+        "location": "台灣台中",
+        "dates": "September 2021 - July 2023",
+        "details": [
+          "主導為期一年的畢業專題，從概念做到獲獎完成，設計出全自動的 AI pipeline，能從熱門話題自己產出動畫新聞片段。",
+          "打造核心系統的基礎設施，解掉 5 個異質開源微服務之間的相依與版本衝突；以 Docker Compose 和 Flask 設計並實作耐得住操的資料 pipeline，守住系統完整性，也讓後續開發能擴展。",
+          "把整套系統的部署流程從頭到尾自動化，做出一行指令就能重現的建置，手動設定與部署時間縮短超過 80%（從 2 小時降到 20 分鐘）。",
+          "率先在團隊裡導入 GitFlow，建立起有結構的版本控制流程，開發速度與協作都明顯變好，也成了我日後在職場導入敏捷開發的底子。"
+        ]
+      },
+      {
+        "id": "3",
+        "title": "TW-COVID-Bot（Telegram 機器人）",
+        "organization": "自發性專題",
+        "location": "台灣台北",
+        "dates": "August 2020 - November 2022",
+        "details": [
+          "台灣 COVID-19 疫情期間，我幫社群網紅自動發布每日疫情資訊，讓大家能輕鬆拿到最新消息。",
+          "自願號召開發者一起架設伺服器，做出結合網路爬蟲、圖片產生與資料分析的機器人。",
+          "自動繪製 200 個國家的每日 COVID-19 病例圖表，用來追蹤疫情擴散的程度。"
+        ]
+      },
+      {
+        "id": "4",
+        "title": "iOS 開發者",
+        "organization": "國立臺中科技大學 I.M.A.C. Lab",
+        "location": "台灣台中",
+        "dates": "June 2020 - October 2020",
+        "details": [
+          "以 MVVM 設計天氣 App，串接氣象 API、Realm 資料庫與 MapKit。",
+          "以 MVC 設計銀行 App，實作生物辨識驗證、通知推播與即時匯率顯示。",
+          "運用 Storyboards、SwiftUI 等 Swift 介面佈局系統，搭配 Swift5 開發。"
+        ]
+      },
+      {
+        "id": "5",
+        "title": "Retailpia",
+        "organization": "Level-Up Society Hackathon",
+        "location": "英國",
+        "dates": "September 2021",
+        "details": [
+          "帶領來自 4 所大學的 4 人團隊，在 48 小時內做出結合記帳與點數收集功能的城市建設遊戲。",
+          "ShowCode 主辦的 Level-Up Society Hackathon，Better Retail 獎項首獎。"
+        ]
+      }
+    ],
+    "honors": [
+      {
+        "id": "7c11e028-878a-4373-b445-9b6d792d3ef2",
+        "title": "首獎與最佳 Demo",
+        "event": "OpenHCI'25，並於第 11 屆 TAICHI 年會發表",
+        "location": "台灣台北",
+        "year": "2025"
+      },
+      {
+        "id": "1",
+        "title": "新興科技應用獎",
+        "event": "第 13 屆 International Conference on Frontier Computing 的 Fi-Award 2023",
+        "location": "日本東京",
+        "year": "2023"
+      },
+      {
+        "id": "2",
+        "title": "專題競賽首獎",
+        "organization": "國立臺中科技大學資訊與流通學院",
+        "location": "台灣台中",
+        "year": "2023"
+      },
+      {
+        "id": "3",
+        "title": "Better Retail 獎項首獎",
+        "event": "Level-Up Society Hackathon",
+        "organizer": "ShowCode",
+        "location": "英國",
+        "year": "2021"
+      }
+    ]
+  }
+}

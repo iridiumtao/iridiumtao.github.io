@@ -334,6 +334,41 @@ body {
   background: var(--color-wood-600);
 }
 
+/* Language switcher (SW-01, D-06). Lives inside .nav-links, so the link half
+   already inherits the `.we .nav-links a` pill; the current-locale half is a
+   <span>, which that selector cannot reach, hence the shared rule below.
+   Both halves are sized identically so the pair reads as one control and the
+   active label does not shift when the locale changes. */
+.we .lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 4px;
+  padding-left: 10px;
+  border-left: 1px solid rgb(from var(--color-wood-600) r g b / 0.15);
+}
+.we .lang-switch .lang-switch-current,
+.we .nav-links .lang-switch a.lang-switch-link {
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  text-decoration: none;
+  line-height: 1;
+}
+/* The current locale is a non-link current-state element: filled, no hover
+   affordance, and no pointer cursor, so it never reads as clickable. */
+.we .lang-switch .lang-switch-current {
+  background: rgb(from var(--color-wood-200) r g b / 0.45);
+  color: var(--color-stone-900);
+}
+.we .nav-links .lang-switch a.lang-switch-link {
+  color: var(--color-stone-500);
+}
+.we .nav-links .lang-switch a.lang-switch-link:hover {
+  background: rgb(from var(--color-wood-200) r g b / 0.35);
+  color: var(--color-stone-900);
+}
+
 /* Hero (homepage) */
 .we .hero {
   padding: 80px 0 60px;
@@ -924,6 +959,50 @@ body {
   .we .nav-links a.cta {
     white-space: nowrap;
   }
+  /* SW-01: the switcher is exempt from the nav-link cull above — on a phone it
+     is the ONLY way to reach the other locale, and over half of this site's
+     readers are on one. `a.lang-switch-link` carries one class more than
+     `a:not(.cta)`, so this wins on specificity rather than on source order. */
+  .we .nav-links .lang-switch a.lang-switch-link {
+    display: inline-block;
+  }
+  /* Compacted, and the separator rule dropped: at this width the switcher sits
+     immediately beside the CTA pill, which already reads as a boundary. */
+  .we .lang-switch {
+    margin-left: 4px;
+    padding-left: 0;
+    border-left: 0;
+  }
+  .we .lang-switch .lang-switch-current,
+  .we .nav-links .lang-switch a.lang-switch-link {
+    font-size: 12px;
+    padding: 5px 7px;
+  }
+  /* Overflow-proofing, deliberately structural rather than metric.
+     The one-line phone header tuned above was measured against brand + a lone
+     CTA; the switcher is a third item in that row, and the English wordmark and
+     "Resume →" are both longer than their Chinese counterparts. Rather than
+     re-deriving pixel budgets that would drift the next time the copy or the
+     font changes, the row is simply allowed to wrap: the CTA + switcher pair
+     drops to a second line when it must, and NOTHING truncates or overflows
+     horizontally at any width. `flex-shrink: 0` on both children is what makes
+     that the failure mode — without it flexbox would compress the wordmark
+     first and never wrap. TYPE-03's no-horizontal-overflow guarantee therefore
+     holds by construction here, not by arithmetic.
+     Not yet checked on a real handset: this milestone's pages do not pass a
+     counterpart URL until waves 4-5, so the two-control switcher has never been
+     rendered on a device. Worth a visual pass at 375px once they do. */
+  .we nav {
+    flex-wrap: wrap;
+    row-gap: 12px;
+  }
+  .we .brand {
+    flex-shrink: 0;
+  }
+  .we .nav-links {
+    flex-shrink: 0;
+    margin-left: auto;
+  }
   /* The 120px base gap above the footer is tuned for desktop; stacked on a
      phone it reads as a dead screen between the prev/next links and the
      footer rule. */
@@ -1098,4 +1177,159 @@ body {
    to land it in the same place. */
 .we .proj-nav-link.proj-nav-next {
   margin-left: auto;
+}
+
+/* =========================================================================
+   CJK TYPOGRAPHY — Traditional Chinese locale scope (TYPE-01, TYPE-02)
+
+   Scoped by the document language tag alone. pages/_document.page.tsx sets
+   <html lang> per route from lib/locale.ts's HTML_LANG, so this selector is
+   already true in the raw prerendered HTML before any JavaScript runs — which
+   is the only mechanism that works under next.config.js's output: 'export',
+   where there is no server and no runtime locale negotiation to hook into.
+   No .zh body class, no data attribute, no JS-set hook.
+
+   The literal "zh-Hant-TW" below is the one place outside .ts/.tsx that
+   spells the language tag (a stylesheet cannot import HTML_LANG); lib/locale.ts
+   documents this as its single known exception. Keep the two in sync.
+
+   Why this section has to exist at all: D-08 puts one shared font subset in
+   front of both locales, so the locale difference lives in CSS rather than in
+   a swapped typeface. Without these rules a /zh/ page inherits the site's
+   Latin display typography wholesale — line-breaking heuristics tuned for
+   space-separated words, and tracking tuned either to open up Latin capitals
+   or to tighten Latin headlines. Neither suits Hanzi, whose glyphs are
+   full-square advance-width forms with little side-bearing.
+
+   Known scope limit: pages/cjk-specimen.page.tsx carries lang on its own .we
+   root (it lives outside /zh/, so <html lang> there resolves to "en"), and is
+   therefore NOT matched by these selectors. That page is a font-glyph
+   fixture — noindex and unlinked — not a typography surface, so it is left
+   as-is rather than widening the scope.
+   ========================================================================= */
+
+/* Line breaking (TYPE-01). All three properties are inherited, so declaring
+   them on the .we page root reaches every descendant. They act on rendered
+   text as a whole — nothing here inspects content for CJK code points, and
+   nothing is applied conditionally per character.
+
+   word-break: normal — a guard, not a correction. Nothing in this file or in
+     the markup sets break-all/break-word today, but Latin-tuned forced
+     breaking would be pointless here: CJK already wraps between characters by
+     default and never needs it forced.
+   line-break: strict — the most stringent UAX #14 line-breaking class set.
+     Closing punctuation (」 。 、) already refuses to begin a line at any
+     value; `strict` adds the restrictions on small kana and on the CJK
+     hyphen/iteration marks.
+   overflow-wrap: break-word — an unbreakable Latin run inside Chinese prose
+     (a URL, a long identifier) wraps instead of pushing the column sideways.
+     Horizontal overflow at 375px is exactly the TYPE-03 failure mode, and
+     over half of this site's visitors read it on a phone. */
+html[lang="zh-Hant-TW"] .we {
+  word-break: normal;
+  line-break: strict;
+  overflow-wrap: break-word;
+}
+
+/* text-autospace (CJK/Latin gap insertion) is deliberately NOT declared here,
+   though the plan allowed it as optional progressive enhancement. Per
+   research/PITFALLS.md the CJK-vs-Latin spacing in this site's Chinese copy is
+   authored into the text itself during the writing pass. A CSS-inserted gap on
+   top of that would double the spacing on engines that support the property
+   while leaving the rest unchanged — cross-browser divergence, not
+   enhancement. Revisit only if the authored-spacing decision is reversed. */
+
+/* Letter-spacing resets (TYPE-02).
+
+   Every selector in this file that carries a `letter-spacing` declaration and
+   can render Chinese text is reset to `normal` below. The list was verified
+   against the file (`grep -n 'letter-spacing' styles/globals.css`), not
+   assumed — 18 declarations exist, 17 are reset here and one is excluded.
+
+   Both directions of Latin tracking are reset, and both reset to `normal`
+   rather than to some smaller em value:
+     - positive 0.02em–0.1em, used to open up mono kickers and small-caps-ish
+       labels. text-transform: uppercase is a no-op on Hanzi but the tracking
+       still applies, and over-spaced Chinese labels read as amateurish.
+     - negative -0.01em–-0.025em, used to tighten Latin display headings. Hanzi
+       are full-square advance-width forms with little side-bearing, so
+       tightening that merely closes Latin whitespace can visually collide
+       adjacent Chinese characters.
+   CJK typography convention is near-zero tracking, so `normal` is the target
+   in both cases.
+
+   THE ONE EXCLUSION IS `.we .badge` (0.06em, kept). Do not "fix" it: the badge
+   renders only `endYear(p.endDate)` from components/wood/ProjectCard.tsx, a
+   4-digit year matched by /\d{4}/, so it never carries CJK in any locale and
+   its Latin tracking stays correct on /zh/.
+
+   `.we .exp-when` and `.we .tl-date` ARE included, deliberately: CN-09 renders
+   Chinese dates in Chinese form (2025年7月), so those surfaces do carry CJK.
+
+   Visual confirmation of these values against real Chinese prose belongs to
+   plan 06-10's TYPE-03 browser pass — no Chinese copy exists to render yet. */
+
+/* Home — hero and meta */
+html[lang="zh-Hant-TW"] .we .greeting {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .hero h1 {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .meta-label {
+  letter-spacing: normal;
+}
+
+/* Home — section headings */
+html[lang="zh-Hant-TW"] .we .sec-head h2 {
+  letter-spacing: normal;
+}
+
+/* Home — project grid */
+html[lang="zh-Hant-TW"] .we .proj-sub {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .proj h3 {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .show-all button {
+  letter-spacing: normal;
+}
+
+/* Home — experience rows */
+html[lang="zh-Hant-TW"] .we .exp-role {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .exp-when {
+  letter-spacing: normal;
+}
+
+/* Résumé — head and downloads */
+html[lang="zh-Hant-TW"] .we .resume-head .kicker {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .resume-head h1 {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .resume-downloads a {
+  letter-spacing: normal;
+}
+
+/* Résumé — timeline entries and skill groups */
+html[lang="zh-Hant-TW"] .we .tl-title {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .tl-date {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .tl-meta {
+  letter-spacing: normal;
+}
+html[lang="zh-Hant-TW"] .we .skill-label {
+  letter-spacing: normal;
+}
+
+/* Project showcase — prev/next navigation */
+html[lang="zh-Hant-TW"] .we .proj-nav-link {
+  letter-spacing: normal;
 }

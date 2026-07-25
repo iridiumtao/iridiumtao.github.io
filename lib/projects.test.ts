@@ -13,7 +13,15 @@
 // - The relative import below must use the exact on-disk extension
 //   ("./projects" alone is rejected by Node's ESM resolver, unlike
 //   TypeScript's own "bundler" moduleResolution used by `next build`).
+//
+// Plan 06-05 made both accessors locale-aware. Every pre-existing case now
+// passes "en" explicitly and asserts exactly what it asserted before — the
+// English coverage is preserved unchanged, not rewritten — and a new block at
+// the bottom covers the "zh" locale: slug/order parity, a real rendered
+// Chinese body, and the traversal guard firing before any fs call in the
+// non-English path too.
 import test from "node:test";
+import fs from "node:fs";
 import assert from "node:assert/strict";
 import { getAllProjects, getProjectBySlug } from "./projects.ts";
 
@@ -21,7 +29,7 @@ const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const EXPECTED_PROJECT_COUNT = 8;
 
 test("getProjectBySlug resolves a fully-shaped project for real Oblivilight data", async () => {
-  const project = await getProjectBySlug("openhci25-oblivilight");
+  const project = await getProjectBySlug("openhci25-oblivilight", "en");
   assert.ok(project, "expected a non-null project");
   assert.equal(project.slug, "openhci25-oblivilight");
   assert.deepEqual(project.techStack, ["HCI", "LangChain"]);
@@ -38,17 +46,17 @@ test("getProjectBySlug resolves a fully-shaped project for real Oblivilight data
 });
 
 test("getProjectBySlug returns null for an unknown slug (DATA-03 no-Markdown path, D-08b)", async () => {
-  const project = await getProjectBySlug("__does_not_exist__");
+  const project = await getProjectBySlug("__does_not_exist__", "en");
   assert.equal(project, null);
 });
 
 test("getProjectBySlug returns null for a path-traversal-shaped slug (T-02-01)", async () => {
-  const project = await getProjectBySlug("../../etc/passwd");
+  const project = await getProjectBySlug("../../etc/passwd", "en");
   assert.equal(project, null);
 });
 
 test("getAllProjects includes a kebab-case Oblivilight slug", async () => {
-  const projects = getAllProjects();
+  const projects = getAllProjects("en");
   const oblivilight = projects.find(
     (p) => p.slug === "openhci25-oblivilight",
   );
@@ -57,7 +65,7 @@ test("getAllProjects includes a kebab-case Oblivilight slug", async () => {
 });
 
 test("getAllProjects returns exactly 8 fully-shaped projects with valid, unique, localized-image slugs (DATA-01/02/04, all 8)", () => {
-  const projects = getAllProjects();
+  const projects = getAllProjects("en");
   assert.equal(
     projects.length,
     EXPECTED_PROJECT_COUNT,
@@ -124,11 +132,11 @@ test("getAllProjects returns exactly 8 fully-shaped projects with valid, unique,
 });
 
 test("getProjectBySlug resolves a non-empty Markdown body for every one of the 8 real slugs (DATA-03, all 8)", async () => {
-  const projects = getAllProjects();
+  const projects = getAllProjects("en");
   assert.equal(projects.length, EXPECTED_PROJECT_COUNT);
 
   for (const { slug } of projects) {
-    const project = await getProjectBySlug(slug);
+    const project = await getProjectBySlug(slug, "en");
     assert.ok(project, `expected a non-null project for slug "${slug}"`);
     assert.equal(
       typeof project.body,
@@ -140,4 +148,78 @@ test("getProjectBySlug resolves a non-empty Markdown body for every one of the 8
       `body for "${slug}" must be non-empty`,
     );
   }
+});
+
+/* ── Locale awareness (plan 06-05, LOC-04) ────────────────────────────── */
+
+test('getAllProjects("zh") returns the same slugs in the same order as "en"', () => {
+  // Order parity is load-bearing, not incidental: the home grid's featured
+  // slice and every showcase page's prev/next derive from this order, so a
+  // locale-dependent sort would silently give the two sites different
+  // neighbours. It holds because startDate/endDate are pinned identical across
+  // both content files (plan 06-03) — this asserts the consequence, and
+  // lib/translations.test.ts asserts the cause.
+  const en = getAllProjects("en");
+  const zh = getAllProjects("zh");
+  assert.equal(zh.length, EXPECTED_PROJECT_COUNT);
+  assert.deepEqual(
+    zh.map((p) => p.slug),
+    en.map((p) => p.slug),
+    "zh and en project order must be identical",
+  );
+});
+
+test('getProjectBySlug resolves a rendered _projects/<slug>.zh.md body for "zh"', async () => {
+  const project = await getProjectBySlug("openhci25-oblivilight", "zh");
+  assert.ok(project, "expected a non-null project");
+  assert.equal(project.slug, "openhci25-oblivilight");
+  assert.ok(
+    typeof project.body === "string",
+    "expected a rendered Chinese Markdown body string",
+  );
+  // <p> proves it went through remark-html rather than being read raw, and the
+  // CJK range proves the .zh.md sibling was read rather than the English file.
+  assert.match(project.body, /<p>/);
+  assert.match(project.body, /[一-鿿]/);
+});
+
+test('getProjectBySlug rejects a traversal-shaped slug for "zh" before any fs call (T-06-11)', async (t) => {
+  // The locale suffix is appended to an already-validated slug, so adding
+  // locales must not have opened a second path into join(). Mocking
+  // fs.existsSync proves the SLUG_PATTERN guard returns first rather than
+  // merely proving the traversal happened to miss.
+  const existsSync = t.mock.method(fs, "existsSync");
+  const project = await getProjectBySlug("../../etc/passwd", "zh");
+  assert.equal(project, null);
+  assert.equal(
+    existsSync.mock.callCount(),
+    0,
+    "SLUG_PATTERN must reject before any filesystem access",
+  );
+});
+
+test('getProjectBySlug throws, naming both sides of the drift, when a .zh.md body is missing (LOC-04, D-04)', async (t) => {
+  // The invariant plan 06-09 depends on: a missing translation fails the build
+  // loudly instead of rendering the English body under a /zh/ URL. Mocking the
+  // existence check gives a permanent regression guard for it without having to
+  // delete a real content file.
+  t.mock.method(fs, "existsSync", () => false);
+  await assert.rejects(
+    () => getProjectBySlug("openhci25-oblivilight", "zh"),
+    (error: Error) => {
+      assert.match(error.message, /openhci25-oblivilight/);
+      assert.match(error.message, /_projects\/openhci25-oblivilight\.zh\.md/);
+      assert.match(error.message, /drifted apart/);
+      return true;
+    },
+  );
+});
+
+test('getProjectBySlug still returns body: null rather than throwing for a missing "en" body', async (t) => {
+  // The English posture is deliberately unchanged: an absent
+  // _projects/<slug>.md has always been a legitimate state and must stay one.
+  t.mock.method(fs, "existsSync", () => false);
+  const project = await getProjectBySlug("openhci25-oblivilight", "en");
+  assert.ok(project, "expected a non-null project");
+  assert.equal(project.body, null);
 });

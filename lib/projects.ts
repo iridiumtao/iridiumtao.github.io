@@ -22,7 +22,8 @@ import markdownToHtml from "../utils/markdownToHtml.ts";
 // (D-06). Importing the JSON directly here meant toProject() consumed the
 // inferred literal type and its RawProjectEntry parameter was never actually
 // enforced against the real file.
-import portfolioData from "./portfolio.ts";
+import { getPortfolioData } from "./portfolio.ts";
+import type { Locale } from "./locale.ts";
 // types/portfolio.ts is the single source of truth for the content model
 // (D-08). This module re-exports Project/ProjectWithBody so its existing
 // consumers keep importing them from here, but it no longer defines its own
@@ -36,7 +37,10 @@ import type {
 export type { Project, ProjectWithBody };
 
 // Kebab-case only — rejects path traversal sequences (e.g. "../../etc/passwd")
-// before any path.join() call using the raw slug (T-02-01).
+// before any path.join() call using the raw slug (T-02-01, T-06-11). The locale
+// suffix added in getProjectBySlug() below is appended to an ALREADY-VALIDATED
+// slug; it is never used to build a path out of an unvalidated one, so adding
+// locales did not open a second, unguarded route into path.join().
 const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 const projectsDirectory = join(process.cwd(), "_projects");
@@ -78,12 +82,22 @@ function toProject(raw: RawProjectEntry): Project {
 }
 
 /**
- * Returns every project from data/portfolio.json's `projects` array, sorted
- * newest-first by endDate — mirrors the exact comparator pages/index.js uses.
+ * Returns every project from the given locale's content file `projects` array,
+ * sorted newest-first by endDate — mirrors the exact comparator pages/index.js
+ * uses.
+ *
+ * `locale` is required (LOC-04): there is no default and no English fallback.
+ *
+ * The sort order is locale-independent by construction. startDate/endDate are
+ * pinned identical across both content files (plan 06-03), and
+ * lib/translations.test.ts asserts that parity — so getAllProjects("zh")
+ * returns the same slugs in the same order as getAllProjects("en"), which is
+ * what keeps the home grid and every showcase page's prev/next consistent
+ * between the two locales (D-13).
  */
-export function getAllProjects(): Project[] {
+export function getAllProjects(locale: Locale): Project[] {
   assertServerOnly();
-  const projects = portfolioData.projects.map(toProject);
+  const projects = getPortfolioData(locale).projects.map(toProject);
   // Returning 0 for any unparseable date (the previous behaviour) is not a
   // valid total order: it is non-transitive, so a single malformed endDate made
   // Array.prototype.sort produce an engine-dependent arrangement of the WHOLE
@@ -99,22 +113,54 @@ export function getAllProjects(): Project[] {
 }
 
 /**
- * Returns the project matching `slug` plus its rendered Markdown body from
- * _projects/{slug}.md, when present. Returns null for an unrecognized slug,
- * a malformed slug (defense-in-depth, T-02-01), or when no project matches.
+ * Returns the project matching `slug` plus its rendered Markdown body, read
+ * from _projects/{slug}.md for "en" and _projects/{slug}.{locale}.md for every
+ * other locale. Returns null for an unrecognized slug, a malformed slug
+ * (defense-in-depth, T-02-01/T-06-11), or when no project matches.
  * `body` is always `string | null`, never `undefined` (D-08b).
+ *
+ * Two deliberately DIFFERENT missing-file postures (Shared Pattern 4):
+ *
+ * - "en" keeps today's behaviour exactly: an absent _projects/{slug}.md yields
+ *   `body: null` and the page renders without a body section. That has always
+ *   been a legitimate state for an English project.
+ * - Any other locale THROWS (LOC-04, D-04). A missing translation is drift
+ *   between this repo's own two content sources, so it takes the throw-on-drift
+ *   posture of pages/projects/[slug].page.tsx rather than the safe-fallback
+ *   posture reserved for framework and filesystem input. tsc cannot see a
+ *   missing file, so a hard `next build` failure is the closest available
+ *   equivalent to the `satisfies` check that guards data/portfolio.zh.json.
+ *   Falling back to the English body is expressly forbidden: it would ship an
+ *   English showcase page under a /zh/ URL and look, to the reader, like a
+ *   finished translation.
  */
 export async function getProjectBySlug(
   slug: string,
+  locale: Locale,
 ): Promise<ProjectWithBody | null> {
   assertServerOnly();
 
   if (!SLUG_PATTERN.test(slug)) return null;
 
-  const project = getAllProjects().find((p) => p.slug === slug);
+  const project = getAllProjects(locale).find((p) => p.slug === slug);
   if (!project) return null;
 
-  const mdPath = join(projectsDirectory, `${slug}.md`);
+  // The suffix is appended to a slug SLUG_PATTERN has already accepted, so the
+  // filename below cannot escape projectsDirectory (T-06-11).
+  const filename = locale === "en" ? `${slug}.md` : `${slug}.${locale}.md`;
+  const mdPath = join(projectsDirectory, filename);
+
+  if (locale !== "en" && !fs.existsSync(mdPath)) {
+    throw new Error(
+      `No ${locale} showcase body for slug "${slug}". ` +
+        `data/portfolio.${locale}.json lists the project but ` +
+        `_projects/${filename} is missing — the two content sources have ` +
+        "drifted apart. Write that translation or drop the project from the " +
+        `${locale} content file; lib/projects.ts deliberately does not fall ` +
+        "back to the English body (D-04).",
+    );
+  }
+
   let body: string | null = null;
   if (fs.existsSync(mdPath)) {
     const fileContents = fs.readFileSync(mdPath, "utf8");

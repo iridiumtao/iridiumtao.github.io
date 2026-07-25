@@ -6,14 +6,18 @@
 // here DEFINES the site's CJK glyph floor. Never delete; regenerate the font
 // subset (node scripts/subset-font.ts) whenever this text changes.
 import Head from "next/head";
+import { HTML_LANG } from "../lib/locale";
 
 export default function CjkSpecimen() {
   return (
-    // lang tags the CJK subtree: _document.page.tsx sets <Html lang="en">, and
-    // an untagged specimen would get Latin line-breaking/font heuristics and the
-    // wrong screen-reader voice. For a page whose whole job is proving CJK
-    // rendering, the language tag is part of what is being proven.
-    <div className="we" lang="zh-Hant-TW">
+    // lang tags the CJK subtree: this route lives outside /zh/, so
+    // _document.page.tsx resolves <Html lang> to "en", and an untagged
+    // specimen would get Latin line-breaking/font heuristics and the wrong
+    // screen-reader voice. For a page whose whole job is proving CJK
+    // rendering, the language tag is part of what is being proven. The tag
+    // itself comes from lib/locale.ts (D-01) so it can never drift from the
+    // one the /zh/ tree serves.
+    <div className="we" lang={HTML_LANG.zh}>
       <Head>
         <title>{"CJK Font Specimen — chun-ju"}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
