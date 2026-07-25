@@ -13,7 +13,7 @@
 // the same discipline LocaleProvider.tsx and ProjectCard.tsx use. `projects`
 // therefore arrives as a prop from the page file's getStaticProps, and the
 // `Project` type comes from the types-only module.
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import Link from "next/link";
 import Nav from "../Nav";
 import Footer from "../Footer";
@@ -24,6 +24,11 @@ import { t } from "../../../lib/dictionary";
 import type { Locale } from "../../../lib/locale";
 import { STATIC_ROUTES, counterpartPath } from "../../../lib/routeMap";
 import type { Project } from "../../../types/portfolio";
+import {
+  HOME_SHOW_ALL_KEY,
+  readPersistedFlag,
+  writePersistedFlag,
+} from "../../../lib/persistedFlag";
 
 /* ── Helpers ──────────────────────────────────────────────────────────── */
 
@@ -237,6 +242,13 @@ function renderCopy(text: string): React.ReactNode {
   return nodes;
 }
 
+// The hook function is selected once, at module scope, rather than branched at
+// the call site — that keeps it a plain hook call as far as the rules-of-hooks
+// lint is concerned. A layout effect on the server warns during the static
+// export even though its body never runs there, so the server gets useEffect.
+const useIsomorphicLayoutEffect =
+  typeof window === "undefined" ? useEffect : useLayoutEffect;
+
 /* ── Page ─────────────────────────────────────────────────────────────── */
 
 export default function HomePage({
@@ -266,6 +278,30 @@ export default function HomePage({
   const remaining = projects.slice(featuredCount);
   const [lead, ...rest] = featured;
   const [showAll, setShowAll] = useState(false);
+
+  // Collapsed is the only initial value allowed here: this page is statically
+  // prerendered, so the server HTML and the first client render have to agree.
+  // Storage is therefore read below, in an effect, and never during render.
+  //
+  // It has to be a LAYOUT effect. The browser restores its scroll offset on a
+  // Back navigation (experimental.scrollRestoration), and a plain useEffect
+  // would run after paint — applying that offset to the collapsed, much shorter
+  // page. React flushes this state update before paint, so the expanded list
+  // and its full height exist by the time the offset lands. Idempotent, which
+  // is why StrictMode's double-invoke in development is harmless.
+  useIsomorphicLayoutEffect(() => {
+    if (readPersistedFlag(HOME_SHOW_ALL_KEY)) setShowAll(true);
+  }, []);
+
+  // Persisted on the toggle, not in an effect keyed on `showAll` — such an
+  // effect would also fire on mount and write the initial collapsed value back
+  // over a stored expanded one, racing the restore above. The write stays out
+  // of the state updater for the same reason updaters stay pure.
+  const toggleShowAll = () => {
+    const next = !showAll;
+    setShowAll(next);
+    writePersistedFlag(HOME_SHOW_ALL_KEY, next);
+  };
 
   const quote = PULL_QUOTE[locale];
 
@@ -347,7 +383,7 @@ export default function HomePage({
           )}
           {remaining.length > 0 && (
             <div className="show-all">
-              <button type="button" onClick={() => setShowAll((v) => !v)}>
+              <button type="button" onClick={toggleShowAll}>
                 {showAll
                   ? s.showLess
                   : s.showAllTemplate.replace("{n}", String(projects.length))}
