@@ -27,6 +27,12 @@
 import rawPortfolioDataEn from "../data/portfolio.json" with { type: "json" };
 import rawPortfolioDataZh from "../data/portfolio.zh.json" with { type: "json" };
 import type { PortfolioData } from "../types/portfolio";
+// Extension-exact, and it MUST stay that way: this is the module's first
+// runtime (non-type-only) relative import, so it is the first one Node's native
+// ESM loader has to resolve when `node --test` pulls this file in through
+// lib/projects.ts. A bare "./dictionary" typechecks and builds fine and fails
+// only under `yarn test` — matching lib/projects.ts and lib/routeMap.ts.
+import { t } from "./dictionary.ts";
 import type { Locale } from "./locale";
 
 // Compile-time checks only — no runtime validation by design (D-05: no new
@@ -50,4 +56,27 @@ const BY_LOCALE: Record<Locale, PortfolioData> = {
  */
 export function getPortfolioData(locale: Locale): PortfolioData {
   return BY_LOCALE[locale];
+}
+
+/**
+ * The site's wordmark in one locale — the content file's `name`, a space, then
+ * the dictionary's `brandSuffix`. Renders "Chun-Ju (Iridium) Tao" in English
+ * and "Chun-Ju (Iridium) 歐東" in Chinese.
+ *
+ * This is the extraction of a composition that today appears VERBATIM in five
+ * places: Nav.tsx, Footer.tsx, HomePage.tsx, ResumePage.tsx and
+ * ProjectPage.tsx. Only LocaleHead and ProjectPage adopt the helper in this
+ * pass — the other four are a deliberate follow-up, held back because sibling
+ * tasks are editing those files concurrently and a rename collision there would
+ * cost more than the duplication does. The partial adoption is a scheduling
+ * decision, not an oversight; finish it when those files are free.
+ *
+ * No new dictionary key is involved: `brandSuffix` already carries the
+ * localized half of the wordmark, so this adds no string and therefore no new
+ * glyph to the font subset.
+ *
+ * Importing `t` here is cycle-free: dictionary.ts imports only ./locale.
+ */
+export function wordmark(locale: Locale): string {
+  return `${BY_LOCALE[locale].name} ${t(locale).brandSuffix}`;
 }
