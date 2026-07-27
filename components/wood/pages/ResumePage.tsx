@@ -49,7 +49,15 @@ function getSortableDate(dateString: string | undefined): Date {
   const lower = dateString.toString().toLowerCase();
   if (lower.includes("present") || lower.includes("current")) return new Date();
   const parts = lower.split(" - ");
-  const end = parts.length > 1 ? parts[1] : parts[0];
+  // Which endpoint is selected is load-bearing — it drives résumé sort order, so
+  // a range must keep resolving to its SECOND part and a bare date to its first.
+  // The trailing `?? ""` changes neither: `dateString` is proven non-empty by the
+  // guard above, so `parts[0]` always exists and `parts[1]` exists exactly when
+  // the length check already passed. It is there only because
+  // noUncheckedIndexedAccess types every array index as possibly-missing. An
+  // empty string would fall through to the new Date(0) return below, matching how
+  // this function already treats an unparseable value.
+  const end = (parts.length > 1 ? parts[1] : parts[0]) ?? "";
   const date = new Date(end);
   if (!isNaN(date.getTime())) return date;
   const year = end.match(/\d{4}/);

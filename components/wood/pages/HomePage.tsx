@@ -131,7 +131,13 @@ export function formatExpDate(
 ): string {
   if (!dates) return "";
   const [rawA, rawB] = dates.split(" - ");
-  const a = parseEndpoint(rawA);
+  // `?? ""` is a type-level formality, not a runtime branch: `dates` is already
+  // proven non-empty by the guard above, and String.split always yields at least
+  // one element, so `rawA` is never actually undefined. Only
+  // noUncheckedIndexedAccess (which types every array index as possibly-missing)
+  // requires it stated. The MISSING SECOND endpoint below IS a real case — a
+  // stored single date like "2025" — and keeps its explicit undefined check.
+  const a = parseEndpoint(rawA ?? "");
   const b = rawB === undefined ? null : parseEndpoint(rawB);
   const ongoing = b !== null && !b.year;
   const present = t(locale).datePresent;
