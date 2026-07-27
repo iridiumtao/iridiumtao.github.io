@@ -1,13 +1,14 @@
 /* 2026 brand typeface: jf open-huninn 2.1 (justfont) — single rounded humanist
    sans for body + display; JetBrains Mono for code, metadata, timestamps.
    See colors_and_type design system. Replaces the original Hind webfont.
-   Both fonts are now self-hosted via next/font (styles/fonts.js, applied to
-   <html> in pages/_document.js) — zero runtime external font requests;
+   Both fonts are now self-hosted via next/font (styles/fonts.ts, applied to
+   <html> in pages/_document.page.tsx) — zero runtime external font requests;
    --font-huninn / --font-jbmono are exposed there. */
 @import "tailwindcss";
 
 /* v4 ignores the old JS `darkMode:"class"` key — must be declared explicitly,
-   aligned with next-themes ThemeProvider attribute="class" (pages/_app.js). */
+   aligned with next-themes ThemeProvider attribute="class"
+   (pages/_app.page.tsx). */
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* =========================================================================
@@ -55,9 +56,9 @@
   --color-glow-pink: #ff1b6b;
 
   /* Typography — leads with the self-hosted next/font variables, now declared
-     directly on <html> (pages/_document.js via styles/fonts.js) rather than a
-     display:contents wrapper. Because <html> is the true document root, these
-     custom properties always resolve for every descendant — no literal
+     directly on <html> (pages/_document.page.tsx via styles/fonts.ts) rather
+     than a display:contents wrapper. Because <html> is the true document root,
+     these custom properties always resolve for every descendant — no literal
      @font-face-name fallback is needed to guard against invalid-at-computed-
      value-time collapse to the UA default. */
   --font-sans:
@@ -208,7 +209,8 @@ body {
 
 /* =========================================================================
    WOOD EDITORIAL — shared layout for the 2026 redesign (scoped under .we)
-   Used by pages/index.js and pages/resume.js.
+   Used by pages/index.page.tsx and pages/resume.page.tsx (and their /zh/
+   counterparts, via the shared components/wood/pages/* bodies).
    ========================================================================= */
 .we {
   position: relative;
