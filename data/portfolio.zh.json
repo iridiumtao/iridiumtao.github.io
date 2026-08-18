@@ -211,6 +211,7 @@
     "degree": "紐約大學電腦工程碩士 · 台中科大資訊工程學士",
     "stack": "Python · Go · Docker · AWS · PyTorch · MLflow",
     "honorsShort": "OpenHCI'25 · Fi-Award'23 · Level-Up'21",
+    "from": "",
     "aboutPull": "把台灣手作的溫度，帶進雲端系統的冷硬規矩裡。",
     "contactEmail": "mailto:c.tao@nyu.edu",
     "projectCount": 3
@@ -256,7 +257,7 @@
       {
         "id": "1",
         "dates": "May 2024 - August 2024",
-        "type": "實習",
+        "type": "全職",
         "position": "CARITY AI 軟體開發工程師",
         "location": "加拿大安大略省",
         "bullets": [
@@ -267,7 +268,7 @@
       {
         "id": "2",
         "dates": "January 2023 - July 2023",
-        "type": "實習",
+        "type": "全職",
         "position": "MoBagel 軟體工程師",
         "location": "台灣台中",
         "bullets": [

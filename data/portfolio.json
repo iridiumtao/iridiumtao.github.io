@@ -211,6 +211,7 @@
     "degree": "M.S. Computer Engineering, NYU",
     "stack": "Python · Go · Docker · AWS · PyTorch · MLflow",
     "honorsShort": "OpenHCI'25 1st · Fi-Award'23 · Level-Up'21",
+    "from": "Taipei, Taiwan 🧋",
     "aboutPull": "Bringing the warmth of Taiwanese craft to the cold rigor of cloud systems.",
     "contactEmail": "mailto:c.tao@nyu.edu",
     "projectCount": 3
@@ -256,7 +257,7 @@
       {
         "id": "1",
         "dates": "May 2024 - August 2024",
-        "type": "Internship",
+        "type": "Full-time",
         "position": "Software Developer at CARITY AI",
         "location": "Ontario, Canada",
         "bullets": [
@@ -267,7 +268,7 @@
       {
         "id": "2",
         "dates": "January 2023 - July 2023",
-        "type": "Internship",
+        "type": "Full-time",
         "position": "Software Engineer at MoBagel",
         "location": "Taichung, Taiwan",
         "bullets": [

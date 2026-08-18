@@ -73,6 +73,7 @@ export type ChromeStrings = {
   metaDegree: string;
   metaStack: string;
   metaHonors: string;
+  metaFrom: string;
   sectionProjects: string;
   sectionExperience: string;
   sectionAbout: string;
@@ -145,6 +146,7 @@ export const DICTIONARY = {
     metaDegree: "Degree",
     metaStack: "Stack",
     metaHonors: "Honors",
+    metaFrom: "From",
     sectionProjects: "Selected Projects",
     sectionExperience: "Professional Experience",
     sectionAbout: "About",
@@ -206,6 +208,7 @@ export const DICTIONARY = {
     metaDegree: "學歷",
     metaStack: "常用技術",
     metaHonors: "獲獎",
+    metaFrom: "來自",
     sectionProjects: "精選專案",
     sectionExperience: "工作經歷",
     sectionAbout: "關於我",

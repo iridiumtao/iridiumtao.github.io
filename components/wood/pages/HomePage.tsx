@@ -355,6 +355,12 @@ export default function HomePage({
               <span className="meta-label">{s.metaHonors}</span>
               <span className="meta-value">{home.honorsShort}</span>
             </div>
+            {home.from && (
+              <div className="meta-row">
+                <span className="meta-label">{s.metaFrom}</span>
+                <span className="meta-value">{home.from}</span>
+              </div>
+            )}
           </div>
         </section>
 
