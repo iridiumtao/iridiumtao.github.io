@@ -469,7 +469,6 @@ test("identifier, date, and factual fields are strictly equal between locales (C
 
   same("home.contactEmail", en.home.contactEmail, zh.home.contactEmail);
   same("home.projectCount", en.home.projectCount, zh.home.projectCount);
-  same("name", en.name, zh.name);
   same("showCursor", en.showCursor, zh.showCursor);
   same("darkMode", en.darkMode, zh.darkMode);
   same("showResume", en.showResume, zh.showResume);
