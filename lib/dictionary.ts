@@ -73,6 +73,7 @@ export type ChromeStrings = {
   metaDegree: string;
   metaStack: string;
   metaHonors: string;
+  metaFrom: string;
   sectionProjects: string;
   sectionExperience: string;
   sectionAbout: string;
@@ -115,11 +116,11 @@ export type ChromeStrings = {
   notFoundBody: string;
   notFoundBackLink: string;
 
-  // <title> and meta-description templates. `{name}` is the composed wordmark.
-  homeTitleTemplate: string;
-  homeDescriptionTemplate: string;
-  resumeTitleTemplate: string;
-  resumeDescriptionTemplate: string;
+  // <title> and meta-description — plain strings, no interpolation.
+  homeTitle: string;
+  homeDescription: string;
+  resumeTitle: string;
+  resumeDescription: string;
   notFoundTitle: string;
   notFoundDescription: string;
 };
@@ -145,6 +146,7 @@ export const DICTIONARY = {
     metaDegree: "Degree",
     metaStack: "Stack",
     metaHonors: "Honors",
+    metaFrom: "From",
     sectionProjects: "Selected Projects",
     sectionExperience: "Professional Experience",
     sectionAbout: "About",
@@ -174,12 +176,10 @@ export const DICTIONARY = {
     notFoundBody: "The page you’re looking for doesn’t exist or has moved.",
     notFoundBackLink: "← Back to home",
 
-    homeTitleTemplate: "{name} — Engineer",
-    homeDescriptionTemplate:
-      "{name} — engineer working on MLOps, backend systems and scalable cloud infrastructure. Selected projects, experience and résumé.",
-    resumeTitleTemplate: "Resume — {name}",
-    resumeDescriptionTemplate:
-      "The full résumé of {name} — education, technical skills, professional experience, projects and awards.",
+    homeTitle: "Chun-Ju Tao",
+    homeDescription: "Developer in Backend and DevOps.",
+    resumeTitle: "Resume • Chun-Ju Tao",
+    resumeDescription: "Developer in Backend and DevOps.",
     notFoundTitle: "404 — Page Not Found",
     notFoundDescription: "This page doesn’t exist or has moved.",
   },
@@ -208,6 +208,7 @@ export const DICTIONARY = {
     metaDegree: "學歷",
     metaStack: "常用技術",
     metaHonors: "獲獎",
+    metaFrom: "來自",
     sectionProjects: "精選專案",
     sectionExperience: "工作經歷",
     sectionAbout: "關於我",
@@ -237,12 +238,10 @@ export const DICTIONARY = {
     notFoundBody: "你要找的頁面不存在，或是已經搬家了。",
     notFoundBackLink: "← 回首頁",
 
-    homeTitleTemplate: "{name} — 工程師",
-    homeDescriptionTemplate:
-      "{name} — 做 MLOps、後端系統與雲端基礎設施的工程師。這裡有精選專案、工作經歷與履歷。",
-    resumeTitleTemplate: "履歷 — {name}",
-    resumeDescriptionTemplate:
-      "{name} 的完整履歷：學歷、技術能力、工作經歷、專案與獲獎紀錄。",
+    homeTitle: "歐東",
+    homeDescription: "專注於 DevOps 和後端軟體平台的軟體工程師",
+    resumeTitle: "履歷 • 歐東",
+    resumeDescription: "專注於 DevOps 和後端軟體平台的軟體工程師",
     notFoundTitle: "404 — 找不到頁面",
     notFoundDescription: "這個頁面不存在，或是已經搬家了。",
   },

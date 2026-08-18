@@ -131,7 +131,13 @@ export function formatExpDate(
 ): string {
   if (!dates) return "";
   const [rawA, rawB] = dates.split(" - ");
-  const a = parseEndpoint(rawA);
+  // `?? ""` is a type-level formality, not a runtime branch: `dates` is already
+  // proven non-empty by the guard above, and String.split always yields at least
+  // one element, so `rawA` is never actually undefined. Only
+  // noUncheckedIndexedAccess (which types every array index as possibly-missing)
+  // requires it stated. The MISSING SECOND endpoint below IS a real case — a
+  // stored single date like "2025" — and keeps its explicit undefined check.
+  const a = parseEndpoint(rawA ?? "");
   const b = rawB === undefined ? null : parseEndpoint(rawB);
   const ongoing = b !== null && !b.year;
   const present = t(locale).datePresent;
@@ -262,9 +268,6 @@ export default function HomePage({
   const s = t(locale);
   const home = data.home;
 
-  // The wordmark exactly as Nav and Footer compose it, so the browser tab and
-  // the page header never disagree about the owner's name.
-  const wordmark = `${data.name} ${s.brandSuffix}`;
   // Resolved ONCE and threaded to both consumers below. The switcher href and
   // the hreflang pair are the same value by construction, which is why they
   // cannot drift apart (D-06, D-07).
@@ -309,8 +312,8 @@ export default function HomePage({
     <div className="we">
       <LocaleHead
         locale={locale}
-        title={s.homeTitleTemplate.replace("{name}", wordmark)}
-        description={s.homeDescriptionTemplate.replace("{name}", wordmark)}
+        title={s.homeTitle}
+        description={s.homeDescription}
         path={path}
       />
 
@@ -352,6 +355,12 @@ export default function HomePage({
               <span className="meta-label">{s.metaHonors}</span>
               <span className="meta-value">{home.honorsShort}</span>
             </div>
+            {home.from && (
+              <div className="meta-row">
+                <span className="meta-label">{s.metaFrom}</span>
+                <span className="meta-value">{home.from}</span>
+              </div>
+            )}
           </div>
         </section>
 

@@ -49,7 +49,15 @@ function getSortableDate(dateString: string | undefined): Date {
   const lower = dateString.toString().toLowerCase();
   if (lower.includes("present") || lower.includes("current")) return new Date();
   const parts = lower.split(" - ");
-  const end = parts.length > 1 ? parts[1] : parts[0];
+  // Which endpoint is selected is load-bearing — it drives résumé sort order, so
+  // a range must keep resolving to its SECOND part and a bare date to its first.
+  // The trailing `?? ""` changes neither: `dateString` is proven non-empty by the
+  // guard above, so `parts[0]` always exists and `parts[1]` exists exactly when
+  // the length check already passed. It is there only because
+  // noUncheckedIndexedAccess types every array index as possibly-missing. An
+  // empty string would fall through to the new Date(0) return below, matching how
+  // this function already treats an unparseable value.
+  const end = (parts.length > 1 ? parts[1] : parts[0]) ?? "";
   const date = new Date(end);
   if (!isNaN(date.getTime())) return date;
   const year = end.match(/\d{4}/);
@@ -187,9 +195,6 @@ export default function ResumePage({
   const s = t(locale);
   const r = data.resume;
 
-  // The wordmark exactly as Nav and Footer compose it, so the browser tab and
-  // the page header never disagree about the owner's name.
-  const wordmark = `${data.name} ${s.brandSuffix}`;
   // Resolved ONCE and threaded to both consumers below. The switcher href and
   // the hreflang pair are the same value by construction, which is why they
   // cannot drift apart (D-06, D-07).
@@ -200,8 +205,8 @@ export default function ResumePage({
     <div className="we">
       <LocaleHead
         locale={locale}
-        title={s.resumeTitleTemplate.replace("{name}", wordmark)}
-        description={s.resumeDescriptionTemplate.replace("{name}", wordmark)}
+        title={s.resumeTitle}
+        description={s.resumeDescription}
         path={path}
       />
 

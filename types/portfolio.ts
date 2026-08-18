@@ -30,6 +30,7 @@ export type Home = {
   degree: string;
   stack: string;
   honorsShort: string;
+  from: string;
   aboutPull: string;
   contactEmail: string;
   projectCount: number;

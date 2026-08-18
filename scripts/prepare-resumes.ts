@@ -38,16 +38,26 @@ const yearInfoOrder: Record<string, number> = {
 
 function parseYearInfo(yearInfoStr: string): { year: number; rank: number } {
   const parts = yearInfoStr.split(" ");
+  // noUncheckedIndexedAccess types every array index as possibly-missing. The
+  // two locals below restate what split() already guarantees rather than
+  // changing behavior: split never returns a hole, so `prefix` is "" at worst,
+  // and `tail` is genuinely absent only on a single-token input -- which is
+  // exactly the branch that never reads it. Both fallbacks are therefore
+  // unreachable, and each was chosen to match what the old code did at runtime
+  // (Number("") and parseInt("") already produced 0 and NaN respectively).
+  const prefix = parts[0] ?? "";
+  const tail = parts[1] ?? "";
   let year: number, rank: number;
-  if (parts.length === 1 && !isNaN(Number(parts[0]))) {
-    year = parseInt(parts[0], 10);
+  if (parts.length === 1 && !isNaN(Number(prefix))) {
+    year = parseInt(prefix, 10);
     rank = 1;
   } else {
-    year = parseInt(parts[1], 10);
-    // noUncheckedIndexedAccess is off, so this lookup is typed `number` while
-    // an unknown prefix yields undefined at runtime -- that NaN would poison
-    // the sort comparator below and make "latest résumé" arbitrary.
-    rank = yearInfoOrder[parts[0]] ?? 0;
+    year = parseInt(tail, 10);
+    // The lookup is now correctly typed as possibly-undefined, which is what an
+    // unknown season prefix really produces. The `?? 0` is what keeps that miss
+    // from becoming a NaN that would poison the sort comparator below and make
+    // "latest résumé" arbitrary -- the whole point of this fallback.
+    rank = yearInfoOrder[prefix] ?? 0;
   }
   return { year, rank };
 }
@@ -87,12 +97,17 @@ for (const pdf of pdfs) {
   const match = pdf.match(filenameRegex);
   if (!match) continue;
 
-  let details = match[1];
+  // `match[0]` is declared `string` by RegExpMatchArray, but capture groups come
+  // through the array index signature and so read as possibly-missing under
+  // noUncheckedIndexedAccess. Group 1 is non-optional in both patterns here --
+  // a successful match always has it -- so these fallbacks are unreachable and
+  // preserve the previous values exactly.
+  let details = match[1] ?? "";
   let version = "0";
 
   const versionMatch = details.match(/ v([\d\.]+)$/);
   if (versionMatch) {
-    version = versionMatch[1];
+    version = versionMatch[1] ?? "0";
     details = details.replace(versionMatch[0], "");
   }
 
@@ -110,10 +125,12 @@ for (const pdf of pdfs) {
 
   const resumeData: ResumeEntry = { filename: pdf, year, rank, version, purpose };
 
-  if (!resumes[purpose]) {
-    resumes[purpose] = [];
-  }
-  resumes[purpose].push(resumeData);
+  // The `if (!resumes[p]) resumes[p] = []` idiom does NOT narrow the subsequent
+  // re-index under noUncheckedIndexedAccess -- a Record lookup stays
+  // possibly-undefined however many times it is guarded. Obtain the bucket once
+  // as a definite local and push through that instead.
+  const bucket = (resumes[purpose] ??= []);
+  bucket.push(resumeData);
 }
 
 // Only now is it safe to clear the destination: at least one purpose resolved,
@@ -140,13 +157,22 @@ fs.readdirSync(publicResumesDir).forEach((f) => {
 });
 
 for (const purpose in resumes) {
-  resumes[purpose].sort((a, b) => {
+  // Same Record-narrowing limitation as the push site above: bind the array once
+  // rather than re-indexing. `for...in` only ever yields keys that exist, so the
+  // guard is unreachable -- it exists to give `entries` a definite type, not to
+  // handle a real case. The comparator below is untouched: year descending, then
+  // rank descending, then version descending. Reordering it would silently ship
+  // the wrong résumé, and nothing downstream would fail loudly.
+  const entries = resumes[purpose];
+  if (!entries) continue;
+
+  entries.sort((a, b) => {
     if (a.year !== b.year) return b.year - a.year;
     if (a.rank !== b.rank) return b.rank - a.rank;
     return compareVersions(b.version, a.version);
   });
 
-  const latest = resumes[purpose][0];
+  const latest = entries[0];
   if (latest) {
     const sourcePath = path.join(docsDir, latest.filename);
     const destPath = path.join(
