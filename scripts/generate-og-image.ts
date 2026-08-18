@@ -32,60 +32,46 @@ import path from "node:path";
 import sharp from "sharp";
 import { SITE_ORIGIN } from "../lib/site.ts";
 
+// macOS + Homebrew: sharp's Pango text renderer needs fontconfig to locate
+// fonts, but Homebrew's fontconfig config file is not on the default search
+// path. Without this, Pango silently falls back to a system sans-serif.
+if (!process.env.FONTCONFIG_FILE) {
+  const brewConf = "/opt/homebrew/etc/fonts/fonts.conf";
+  if (fs.existsSync(brewConf)) process.env.FONTCONFIG_FILE = brewConf;
+}
+
 /* ── Composition constants ────────────────────────────────────────────── */
 
 const WIDTH = 1200;
 const HEIGHT = 630;
 
-// Verified against styles/globals.css, not copied from memory:
-// --color-paper (L50), --color-wood-800 (L39), --color-wood-500 (L36) and
-// --color-stone-200 (L77, annotated "hairline rules" in the source, which is
-// exactly the role it plays here).
+// Verified against styles/globals.css, not copied from memory.
 const PAPER = "#fbf7f2";
 const INK = "#1f1a15";
 const MUTED = "#6b5b4e";
 const RULE = "#dabea7";
 
-// No font file is embedded. librsvg resolves font-family through the SYSTEM, so
-// the stack has to be generic and every glyph has to be one a system serif
-// actually carries. That is also why all of this text is Latin: a CJK glyph
-// here would be a fallback lottery on whatever machine runs the script. Do NOT
-// try to embed public/fonts/open-huninn-subset.woff2 — it is CJK-scoped build
-// output and loading it through sharp is unverified.
-const SERIF = "Georgia, 'Times New Roman', serif";
-
-// The wordmark EXACTLY as the site's own chrome composes it (data.name +
-// dictionary brandSuffix — Nav.tsx, Footer.tsx, ProjectPage.tsx and now
-// lib/portfolio.ts's wordmark()). Parentheses, not quotes: the rendered site
-// says "Chun-Ju (Iridium) Tao", and a share card that disagreed with the page
-// it links to would be its own small lie. English-only by design (D-1): one
-// locale-invariant card, matching LocaleHead's English-only alt text.
 const WORDMARK = "Chun-Ju (Iridium) Tao";
-
-// The three public specialisms, as stated on the live site. U+00B7 MIDDLE DOT
-// separators; present in Georgia, and visually confirmed in the generated PNG
-// rather than assumed.
-const SPECIALISMS = "MLOps · Applied ML · Scalable Cloud Systems";
-
-// Bare host, derived from the ONE place the domain is spelled (lib/site.ts).
-// Never typed a second time.
+const SPECIALISMS = "Backend, DevOps, Cloud System";
 const HOST = new URL(SITE_ORIGIN).host;
 
-// Every line is its own absolutely-positioned <text>: librsvg does not wrap.
-// Content stays inside ~100px margins because LINE and Telegram each crop this
-// image differently — the safe area is real, not decorative.
 const MARGIN_X = 100;
+
+// Absolute path required by sharp's fontfile option.
+const FONT_FILE = path.resolve(
+  import.meta.dirname,
+  "..",
+  "assets/fonts/jf-openhuninn-2.1.ttf",
+);
 
 /* ── Render ───────────────────────────────────────────────────────────── */
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${HEIGHT}" viewBox="0 0 ${WIDTH} ${HEIGHT}">
-  <rect x="0" y="0" width="${WIDTH}" height="${HEIGHT}" fill="${PAPER}"/>
-  <text x="${MARGIN_X}" y="258" fill="${INK}" font-family="${SERIF}" font-size="84">${WORDMARK}</text>
-  <text x="${MARGIN_X}" y="328" fill="${MUTED}" font-family="${SERIF}" font-size="34">${SPECIALISMS}</text>
-  <rect x="${MARGIN_X}" y="378" width="${WIDTH - MARGIN_X * 2}" height="2" fill="${RULE}"/>
-  <text x="${MARGIN_X}" y="430" fill="${MUTED}" font-family="${SERIF}" font-size="26">${HOST}</text>
-</svg>
-`;
+// Hairline rule as a minimal SVG.
+const ruleSvg = Buffer.from(
+  `<svg width="${WIDTH - MARGIN_X * 2}" height="2">` +
+    `<rect width="${WIDTH - MARGIN_X * 2}" height="2" fill="${RULE}"/>` +
+    `</svg>`,
+);
 
 const outputPath = path.join(
   import.meta.dirname,
@@ -95,7 +81,62 @@ const outputPath = path.join(
   "og-default.png",
 );
 
-await sharp(Buffer.from(svg)).png({ compressionLevel: 9 }).toFile(outputPath);
+await sharp({
+  create: {
+    width: WIDTH,
+    height: HEIGHT,
+    channels: 4,
+    background: PAPER,
+  },
+})
+  .composite([
+    {
+      input: {
+        text: {
+          text: `<span foreground="${INK}" size="${84 * 1024}">${WORDMARK}</span>`,
+          font: "jf-openhuninn-2.1",
+          fontfile: FONT_FILE,
+          rgba: true,
+          dpi: 72,
+        },
+      },
+      left: MARGIN_X,
+      top: 190,
+    },
+    {
+      input: {
+        text: {
+          text: `<span foreground="${MUTED}" size="${34 * 1024}">${SPECIALISMS}</span>`,
+          font: "jf-openhuninn-2.1",
+          fontfile: FONT_FILE,
+          rgba: true,
+          dpi: 72,
+        },
+      },
+      left: MARGIN_X,
+      top: 310,
+    },
+    {
+      input: ruleSvg,
+      left: MARGIN_X,
+      top: 380,
+    },
+    {
+      input: {
+        text: {
+          text: `<span foreground="${MUTED}" size="${26 * 1024}">${HOST}</span>`,
+          font: "jf-openhuninn-2.1",
+          fontfile: FONT_FILE,
+          rgba: true,
+          dpi: 72,
+        },
+      },
+      left: MARGIN_X,
+      top: 410,
+    },
+  ])
+  .png({ compressionLevel: 9 })
+  .toFile(outputPath);
 
 const bytes = fs.statSync(outputPath).size;
 

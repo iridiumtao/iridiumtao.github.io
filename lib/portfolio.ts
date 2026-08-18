@@ -59,24 +59,13 @@ export function getPortfolioData(locale: Locale): PortfolioData {
 }
 
 /**
- * The site's wordmark in one locale — the content file's `name`, a space, then
- * the dictionary's `brandSuffix`. Renders "Chun-Ju (Iridium) Tao" in English
- * and "Chun-Ju (Iridium) 歐東" in Chinese.
- *
- * This is the extraction of a composition that today appears VERBATIM in five
- * places: Nav.tsx, Footer.tsx, HomePage.tsx, ResumePage.tsx and
- * ProjectPage.tsx. Only LocaleHead and ProjectPage adopt the helper in this
- * pass — the other four are a deliberate follow-up, held back because sibling
- * tasks are editing those files concurrently and a rename collision there would
- * cost more than the duplication does. The partial adoption is a scheduling
- * decision, not an oversight; finish it when those files are free.
- *
- * No new dictionary key is involved: `brandSuffix` already carries the
- * localized half of the wordmark, so this adds no string and therefore no new
- * glyph to the font subset.
+ * The site's wordmark in one locale. English renders the full romanized name
+ * plus surname ("Chun-Ju (Iridium) Tao"); Chinese renders just the Chinese
+ * name ("歐東") — the romanization is noise for a Chinese-reading audience.
  *
  * Importing `t` here is cycle-free: dictionary.ts imports only ./locale.
  */
 export function wordmark(locale: Locale): string {
+  if (locale === "zh") return t(locale).brandSuffix;
   return `${BY_LOCALE[locale].name} ${t(locale).brandSuffix}`;
 }
