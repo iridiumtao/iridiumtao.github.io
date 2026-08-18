@@ -8,6 +8,7 @@
     "prebuild": "node scripts/prepare-resumes.ts && node scripts/subset-font.ts && node scripts/generate-sitemap.ts",
     "build": "next build",
     "start": "next start",
+    "og-image": "node scripts/generate-og-image.ts",
     "pretest": "node scripts/subset-font.ts",
     "test": "node --test",
     "typecheck": "tsc --noEmit",
@@ -36,6 +37,7 @@
     "fontkit": "2.0.4",
     "prettier": "3.9.5",
     "prettier-plugin-tailwindcss": "0.8.0",
+    "sharp": "0.34.5",
     "subset-font": "2.5.0",
     "typescript": "5.9.3"
   },

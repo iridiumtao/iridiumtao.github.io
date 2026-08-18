@@ -27,6 +27,12 @@
 import rawPortfolioDataEn from "../data/portfolio.json" with { type: "json" };
 import rawPortfolioDataZh from "../data/portfolio.zh.json" with { type: "json" };
 import type { PortfolioData } from "../types/portfolio";
+// Extension-exact, and it MUST stay that way: this is the module's first
+// runtime (non-type-only) relative import, so it is the first one Node's native
+// ESM loader has to resolve when `node --test` pulls this file in through
+// lib/projects.ts. A bare "./dictionary" typechecks and builds fine and fails
+// only under `yarn test` — matching lib/projects.ts and lib/routeMap.ts.
+import { t } from "./dictionary.ts";
 import type { Locale } from "./locale";
 
 // Compile-time checks only — no runtime validation by design (D-05: no new
@@ -50,4 +56,16 @@ const BY_LOCALE: Record<Locale, PortfolioData> = {
  */
 export function getPortfolioData(locale: Locale): PortfolioData {
   return BY_LOCALE[locale];
+}
+
+/**
+ * The site's wordmark in one locale. English renders the full romanized name
+ * plus surname ("Chun-Ju (Iridium) Tao"); Chinese renders just the Chinese
+ * name ("歐東") — the romanization is noise for a Chinese-reading audience.
+ *
+ * Importing `t` here is cycle-free: dictionary.ts imports only ./locale.
+ */
+export function wordmark(locale: Locale): string {
+  if (locale === "zh") return t(locale).brandSuffix;
+  return `${BY_LOCALE[locale].name} ${t(locale).brandSuffix}`;
 }

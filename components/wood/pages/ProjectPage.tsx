@@ -25,7 +25,6 @@ import Nav from "../Nav";
 import Footer from "../Footer";
 import LocaleHead from "../LocaleHead";
 import { formatExpDate } from "./HomePage";
-import { getPortfolioData } from "../../../lib/portfolio";
 import { t } from "../../../lib/dictionary";
 import type { Locale } from "../../../lib/locale";
 import { projectPath, counterpartPath } from "../../../lib/routeMap";
@@ -80,15 +79,8 @@ export default function ProjectPage({
   next: NavEntry;
 }) {
   const p = project;
-  const data = getPortfolioData(locale);
   const s = t(locale);
 
-  // The wordmark exactly as Nav and Footer compose it, so the browser tab and
-  // the page header never disagree about the owner's name. Before this plan the
-  // showcase <title> hardcoded "Chun-Ju Tao", which is both a third spelling of
-  // the wordmark and untranslatable — a Chinese showcase page would have worn an
-  // English surname the rest of that page does not use.
-  const wordmark = `${data.name} ${s.brandSuffix}`;
   // Resolved ONCE and threaded to both consumers below. The switcher href and
   // the hreflang pair are the same value by construction, which is why they
   // cannot drift apart (D-06, D-07). projectPath() also re-validates the slug,
@@ -100,13 +92,17 @@ export default function ProjectPage({
     <div className="we">
       <LocaleHead
         locale={locale}
-        title={`${p.title} — ${wordmark}`}
+        title={`${p.title} • ${s.homeTitle}`}
         description={p.description}
         path={path}
         ogType="article"
         // Site-root-relative; LocaleHead prefixes SITE_ORIGIN itself. Prefixing
         // here too would produce a doubled origin.
         ogImage={p.imageSrc}
+        // The project's own title is the only alt we actually know for its own
+        // cover image. Supplying it is also what stops LocaleHead falling back
+        // to the default card's alt, which would describe a different picture.
+        ogImageAlt={p.title}
       />
 
       <div className="wrap col-prose">

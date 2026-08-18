@@ -268,9 +268,6 @@ export default function HomePage({
   const s = t(locale);
   const home = data.home;
 
-  // The wordmark exactly as Nav and Footer compose it, so the browser tab and
-  // the page header never disagree about the owner's name.
-  const wordmark = `${data.name} ${s.brandSuffix}`;
   // Resolved ONCE and threaded to both consumers below. The switcher href and
   // the hreflang pair are the same value by construction, which is why they
   // cannot drift apart (D-06, D-07).
@@ -315,8 +312,8 @@ export default function HomePage({
     <div className="we">
       <LocaleHead
         locale={locale}
-        title={s.homeTitleTemplate.replace("{name}", wordmark)}
-        description={s.homeDescriptionTemplate.replace("{name}", wordmark)}
+        title={s.homeTitle}
+        description={s.homeDescription}
         path={path}
       />
 
@@ -358,6 +355,12 @@ export default function HomePage({
               <span className="meta-label">{s.metaHonors}</span>
               <span className="meta-value">{home.honorsShort}</span>
             </div>
+            {home.from && (
+              <div className="meta-row">
+                <span className="meta-label">{s.metaFrom}</span>
+                <span className="meta-value">{home.from}</span>
+              </div>
+            )}
           </div>
         </section>
 
