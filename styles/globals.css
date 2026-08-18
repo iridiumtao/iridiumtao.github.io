@@ -214,7 +214,13 @@ body {
    ========================================================================= */
 .we {
   position: relative;
-  min-height: 100vh;
+  /* dvh, not vh: on Mobile Safari 100vh resolves to the LARGE viewport (address
+     bar hidden), so a page whose content is near one screen tall grows taller
+     than the visible area and the layout shifts as the bar collapses and
+     expands. 100dvh tracks the live viewport instead. Baseline across Safari,
+     Chrome and Firefox since 2022; over half of this site's readers are on a
+     phone, which is what makes this the correct default rather than a nicety. */
+  min-height: 100dvh;
   font-family: var(--font-sans);
   background: var(--color-paper);
   color: var(--color-stone-900);
