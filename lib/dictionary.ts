@@ -237,7 +237,7 @@ export const DICTIONARY = {
 
     homeTitle: "歐東",
     homeDescription: "專注於 DevOps 和後端軟體平台的軟體工程師",
-    resumeTitle: "履歷",
+    resumeTitle: "履歷 • 歐東",
     resumeDescription: "專注於 DevOps 和後端軟體平台的軟體工程師",
     notFoundTitle: "404 — 找不到頁面",
     notFoundDescription: "這個頁面不存在，或是已經搬家了。",
