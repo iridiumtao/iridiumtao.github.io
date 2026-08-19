@@ -33,27 +33,18 @@
   --color-wood-100: #e8e4de;
   --color-wood-200: #d4c5b9;
   --color-wood-300: #b8a491;
-  --color-wood-400: #8c7560;
   --color-wood-500: #6b5b4e;
   --color-wood-600: #4a4036;
-  --color-wood-700: #322b24;
-  --color-wood-800: #1f1a15;
 
   /* Liveliness accents — used sparingly, at most once per surface.
-     All four are members of the warm-earth palette; contrast figures are
+     All three are members of the warm-earth palette; contrast figures are
      against --color-paper. */
   --color-accent-clay: #9a6852; /* roasted brown, 4.4:1 — emphasis + hovers */
   --color-accent-moss: #9d7553; /* mid wood, 3.9:1 — non-text marks only */
   --color-accent-ink: #876d5a; /* dark taupe, 4.5:1 — prose links */
-  --color-accent-gold: #cda581; /* tan, 2.1:1 — decorative only */
 
   /* Warm paper surface (light) */
   --color-paper: #fbf7f2;
-
-  /* Legacy decorative glow — unrelated to the brand palette, feeds the
-     unused-in-JSX `.gradient-shadow` hover effect kept for parity. */
-  --color-glow-cyan: #45caff;
-  --color-glow-pink: #ff1b6b;
 
   /* Typography — leads with the self-hosted next/font variables, now declared
      directly on <html> (pages/_document.page.tsx via styles/fonts.ts) rather
@@ -104,107 +95,6 @@ html {
 
 body {
   @apply dark:bg-black dark:text-white;
-}
-
-.gradient-circle {
-  position: absolute;
-  pointer-events: none;
-  z-index: 100;
-  top: -60px;
-  height: 80px;
-  width: 100vw;
-  opacity: 0.8;
-  filter: blur(40px);
-  background: radial-gradient(
-    circle,
-    var(--color-wood-100) 0%,
-    var(--color-wood-200) 100%
-  );
-}
-
-.gradient-circle-dark {
-  position: absolute;
-  pointer-events: none;
-  z-index: 100;
-  top: -60px;
-  height: 80px;
-  width: 100vw;
-  opacity: 0.8;
-  filter: blur(40px);
-  background: radial-gradient(
-    circle,
-    var(--color-wood-100) 0%,
-    var(--color-wood-200) 100%
-  );
-}
-
-.gradient-circle-bottom {
-  position: absolute;
-  pointer-events: none;
-  z-index: 100;
-  bottom: -40px;
-  height: 60px;
-  width: 100vw;
-  opacity: 0.8;
-  filter: blur(40px);
-  background: radial-gradient(
-    circle,
-    var(--color-wood-100) 0%,
-    var(--color-wood-200) 100%
-  );
-}
-
-.gradient-circle-bottom-dark {
-  position: absolute;
-  pointer-events: none;
-  z-index: 100;
-  bottom: -40px;
-  height: 60px;
-  width: 100vw;
-  opacity: 0.8;
-  filter: blur(40px);
-  background: radial-gradient(
-    circle,
-    var(--color-wood-100) 0%,
-    var(--color-wood-200) 100%
-  );
-}
-
-.gradient-shadow:hover::before {
-  content: "";
-  z-index: -1;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: linear-gradient(
-    -45deg,
-    var(--color-glow-cyan) 0%,
-    var(--color-glow-pink) 100%
-  );
-  transform: translate3d(0px, 20px, 0) scale(0.95);
-  filter: blur(20px);
-  opacity: 0.7;
-  transition: opacity 0.3s;
-  border-radius: inherit;
-}
-
-/*
-* Prevents issues when the parent creates a
-* stacking context. (For example, using the transform
-* property )
-*/
-.gradient-shadow:hover::after {
-  content: "";
-  z-index: -1;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: inherit;
-  border-radius: inherit;
 }
 
 /* =========================================================================
