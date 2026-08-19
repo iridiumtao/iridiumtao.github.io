@@ -215,7 +215,6 @@ export default function ResumePage({
 
         {/* Header */}
         <header className="resume-head">
-          <span className="kicker">{r.tagline}</span>
           <h1>{s.resumeHeading}</h1>
           <p className="desc">{r.description}</p>
           {resumes.length > 0 && (
