@@ -1231,3 +1231,48 @@ html[lang="zh-Hant-TW"] .we .skill-label {
 html[lang="zh-Hant-TW"] .we .proj-nav-link {
   letter-spacing: normal;
 }
+
+/* =========================================================================
+   REDUCED MOTION — honours the OS "reduce motion" accessibility setting
+   Last block in the file on purpose: it is an override layer, so equal-
+   specificity rules declared above lose to it on source order alone.
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  /* Jump instead of gliding. Anchor and route-change scrolling is the most
+     common vestibular trigger on this site because several pages are long. */
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Blanket neutralisation rather than an enumerated list of the transitions
+     that happen to exist today. This file is hand-edited often and the site has
+     a multi-year horizon, so anything added later is covered by default — the
+     failure mode of an enumerated list is silent, and it fails open (motion
+     still plays) for exactly the users who asked for none.
+
+     Near-zero durations rather than `none`: a transition that is cancelled
+     outright can strand an element mid-interpolation, whereas one that
+     completes in 0.01ms lands on its final declared state and still fires
+     transitionend, so any JS awaiting that event is not left hanging. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* The "Open to work" dot is a status indicator, not decoration — it reports a
+     real fact about the owner's availability, so it must stay legible when the
+     pulse stops. It cannot inherit the blanket rule above: @keyframes we-pulse
+     rests at opacity 0.4 at both 0% and 100%, so collapsing the animation to
+     0.01ms would settle the dot at 40% opacity and read as disabled. Kill the
+     animation outright and pin it fully opaque instead. */
+  .we .greeting .dot {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
