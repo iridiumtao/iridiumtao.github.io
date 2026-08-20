@@ -1,0 +1,62 @@
+<meta charset="utf-8"><title>Palette tuner</title>
+<style>@font-face{font-family:Huninn;src:url("__FONT__") format("woff2");font-display:swap}
+__CSS__</style>
+<div class="panel">
+  <h1>Palette tuner</h1>
+  <p class="sub">slider 空間 = OKLCH（感知均勻）· 輸出 = hex<br>文字深度自動求解，任何位置都保證過 AA</p>
+  <div class="holdwrap"><button id="hold" type="button">按住比較現況配色</button>
+    <div class="hint" id="holdlabel">按住比較現況配色</div></div>
+  <div id="zone" class="zone out"></div>
+  <fieldset><legend>AI 色 比對</legend><div id="ai"></div>
+    <div class="hint" style="margin-top:8px">區間 = 那些被點名色票在 OKLCH 裡的實測包絡，不是估的。<br>判定看的是「有沒有落在區間裡」，dE 只是輔助：AI 味是一整塊區域的問題，不是撞到某一個 hex。<br><b style="color:#e8b04b">注意</b>：木頭／奶茶系 accent 的色相本來就在 18-79° 內，所以要靠彩度壓在 0.086 以下才脫離。這是你這個方向唯一的逃生軸。</div></fieldset>
+
+  <fieldset><legend>底色 ground</legend>
+    <div class="row"><label><b>明度 lightness</b><span id="vgl"></span></label>
+      <input type="range" id="gl" min="0.86" max="1" step="0.002"></div>
+    <div class="row"><label><b>暖度 chroma</b><span id="vgc"></span></label>
+      <input type="range" id="gc" min="0" max="0.032" step="0.0005">
+      <div class="hint">這條就是「土」的來源。拉到 0 = 中性紙白；往右 = 奶茶底。<br>土感 = 中明度 + 高彩度，所以左邊那條拉低時這條要跟著降。</div></div>
+    <div class="row"><label><b>色相 hue</b><span id="vgh"></span></label>
+      <input type="range" id="gh" min="20" max="110" step="1">
+      <div class="hint">40° 附近偏紅（現況）· 70-80° 偏黃（檜木）· 100°+ 開始轉綠</div></div>
+    <div class="presets">
+      <button data-p="1.0000,0.0000,89.9">純白</button>
+      <button data-p="0.9950,0.0034,67.8">紙白</button>
+      <button data-p="0.9865,0.0090,78.3">微暖</button>
+      <button data-p="0.9641,0.0181,78.2">淡奶茶</button>
+      <button data-p="0.9778,0.0079,73.7">現況 #fbf7f2</button>
+      <button data-p="0.9285,0.0239,79.7">上一版 A</button>
+    </div>
+  </fieldset>
+
+  <fieldset><legend>奶茶濃度 surfaces</legend>
+    <div class="row"><label><b>卡片 / chip / 邊框</b><span id="vsc"></span></label>
+      <input type="range" id="sc" min="0" max="0.075" step="0.001">
+      <div class="hint">底色留白之後，奶茶色改由這些色塊承擔。<br>白底截圖會不會浮，主要看這裡跟上面的明度差。</div></div>
+    <div class="row"><label><b>白底圖表加內框</b><span id="vfr"></span></label>
+      <input type="range" id="fr" min="0" max="1" step="1"></div>
+  </fieldset>
+
+  <fieldset><legend>accent</legend>
+    <div class="fam" id="fam">
+      <button data-f="55,0.075">木頭 wood</button>
+      <button data-f="42,0.090">深焙奶茶</button>
+      <button data-f="245,0.085">藍染 indigo</button>
+      <button data-f="158,0.055">烏龍 oolong</button>
+    </div>
+    <div class="row" style="margin-top:12px"><label><b>彩度 chroma</b><span id="vac"></span></label>
+      <input type="range" id="ac" min="0.02" max="0.16" step="0.002"></div>
+    <div class="row"><label><b>色相 hue</b><span id="vah"></span></label>
+      <input type="range" id="ah" min="0" max="360" step="1"></div>
+  </fieldset>
+
+  <fieldset><legend>tokens · measured</legend><table class="tok" id="tok"></table></fieldset>
+  <fieldset><legend>@theme output</legend><pre class="out" id="out"></pre></fieldset>
+</div>
+
+<div class="stage">
+  <div><div class="cap">390px · 你的真實文案、字型與專案圖</div><div class="phone" id="phone"></div></div>
+  <div style="min-width:230px"><div class="cap">色塊</div><div id="swatch"></div></div>
+</div>
+<script>__COLOR__
+__APP__</script>
