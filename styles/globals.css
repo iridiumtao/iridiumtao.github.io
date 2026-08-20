@@ -28,32 +28,37 @@
   --breakpoint-desktop: 1280px;
   --breakpoint-laptopl: 1440px;
 
-  /* Wood / brand accents (warm Taiwanese wood tones) */
-  --color-wood-50: #f5f0eb;
+  /* Wood / brand accents (warm Taiwanese wood tones).
+     wood-50 is the raised surface behind project imagery; wood-300 carries the
+     timeline dots, list markers and the pull-quote rule; wood-500 is the "at"
+     in a role line. wood-600 is deliberately NOT on the new ramp — it is the
+     tint base for every hairline and shadow below (always at 4-25% alpha, so
+     only its hue reads) and it doubles as the CTA hover fill, where it has to
+     stay clearly lighter than --color-stone-900 to register as a hover. */
+  --color-wood-50: #f5e9dd;
   --color-wood-100: #e8e4de;
   --color-wood-200: #d4c5b9;
-  --color-wood-300: #b8a491;
-  --color-wood-400: #8c7560;
-  --color-wood-500: #6b5b4e;
+  --color-wood-300: #b6a89a;
+  --color-wood-500: #866c5b;
   --color-wood-600: #4a4036;
-  --color-wood-700: #322b24;
-  --color-wood-800: #1f1a15;
 
   /* Liveliness accents — used sparingly, at most once per surface.
-     All four are members of the warm-earth palette; contrast figures are
-     against --color-paper. */
-  --color-accent-clay: #9a6852; /* roasted brown, 4.4:1 — emphasis + hovers */
-  --color-accent-moss: #9d7553; /* mid wood, 3.9:1 — non-text marks only */
-  --color-accent-ink: #876d5a; /* dark taupe, 4.5:1 — prose links */
-  --color-accent-gold: #cda581; /* tan, 2.1:1 — decorative only */
+     All three are members of the warm-earth palette; contrast figures are
+     against --color-paper and are measured, not estimated.
 
-  /* Warm paper surface (light) */
-  --color-paper: #fbf7f2;
+     KNOWN GAP: accent-clay is 4.15:1. That clears AA for the hero h1 (44px+
+     counts as large text, 3:1) but MISSES the 4.5:1 floor for `.lede strong`,
+     which renders at 17px. Recorded rather than silently corrected because the
+     value was chosen deliberately; see the note above `.lede strong` below. */
+  --color-accent-clay: #a86e47; /* wood, 4.15:1 — emphasis + hovers */
+  --color-accent-moss: #b58464; /* light wood, 3.2:1 — non-text marks only */
+  --color-accent-ink: #774f34; /* deep wood, 7.0:1 — prose links */
 
-  /* Legacy decorative glow — unrelated to the brand palette, feeds the
-     unused-in-JSX `.gradient-shadow` hover effect kept for parity. */
-  --color-glow-cyan: #45caff;
-  --color-glow-pink: #ff1b6b;
+  /* Near-white paper surface (light). Carries a trace of warmth rather than a
+     cream tint: the milk-tea colour now lives in the raised surfaces and chip
+     fills instead of in the page ground, which is also what stops white-
+     background project screenshots reading as holes in the page. */
+  --color-paper: #fffdfb;
 
   /* Typography — leads with the self-hosted next/font variables, now declared
      directly on <html> (pages/_document.page.tsx via styles/fonts.ts) rather
@@ -66,18 +71,27 @@
     system-ui, sans-serif;
   --font-mono: var(--font-jbmono), ui-monospace, monospace;
 
-  /* Note: Tailwind v4 ships the `stone` neutral scale built-in
-     (--color-stone-50 … --color-stone-900) — intentionally not redeclared
-     here to shrink the token surface; referenced below via var(--color-stone-*).
-     The four steps below ARE redeclared, warmed onto the same earth palette as
-     the accents: they carry only muted meta text, hairline rules and chip
-     fills. The darker steps (600/700/900) stay neutral on purpose — they carry
-     real body prose, and no member of this palette reaches 7:1 on paper, so
-     warming them would trade legibility for tone. */
-  --color-stone-100: color-mix(in srgb, #dabea7 34%, var(--color-paper));
-  --color-stone-200: #dabea7; /* hairline rules */
-  --color-stone-400: #a98b73; /* faint indices */
-  --color-stone-500: #876d5a; /* muted meta text, 4.5:1 — holds AA */
+  /* Tailwind v4 ships the `stone` neutral scale built-in
+     (--color-stone-50 … --color-stone-900). Every step this site actually uses
+     is now redeclared onto one warm ramp, so the text no longer mixes a warm
+     palette with Tailwind's cooler neutrals.
+
+     This REVERSES the previous note here, which said 600/700/900 stay neutral
+     on purpose because warming them would cost legibility. That trade no
+     longer applies: the ground moved from a cream #fbf7f2 to a near-white
+     #fffdfb, which buys back enough contrast for the whole ramp to be warmed
+     and still clear AAA. Every figure below is measured against --color-paper.
+
+     stone-800 is the one step left on Tailwind's own value — it carries only
+     `.meta-value`, sits between prose and stone-900, and reads as neutral at
+     that size. Redeclare it if the hero meta ever starts looking cold. */
+  --color-stone-100: #efe2d5; /* chip + code fills */
+  --color-stone-200: #ccbeb1; /* timeline rule */
+  --color-stone-400: #79736d; /* faint indices, 4.6:1 — now holds AA */
+  --color-stone-500: #716a64; /* muted meta text, 5.2:1 */
+  --color-stone-600: #5b5550; /* card + row body copy, 7.2:1 */
+  --color-stone-700: #4a443f; /* running prose, 9.5:1 */
+  --color-stone-900: #2c241d; /* headings, CTA fill, 15.0:1 */
 }
 
 :root {
@@ -106,107 +120,6 @@ body {
   @apply dark:bg-black dark:text-white;
 }
 
-.gradient-circle {
-  position: absolute;
-  pointer-events: none;
-  z-index: 100;
-  top: -60px;
-  height: 80px;
-  width: 100vw;
-  opacity: 0.8;
-  filter: blur(40px);
-  background: radial-gradient(
-    circle,
-    var(--color-wood-100) 0%,
-    var(--color-wood-200) 100%
-  );
-}
-
-.gradient-circle-dark {
-  position: absolute;
-  pointer-events: none;
-  z-index: 100;
-  top: -60px;
-  height: 80px;
-  width: 100vw;
-  opacity: 0.8;
-  filter: blur(40px);
-  background: radial-gradient(
-    circle,
-    var(--color-wood-100) 0%,
-    var(--color-wood-200) 100%
-  );
-}
-
-.gradient-circle-bottom {
-  position: absolute;
-  pointer-events: none;
-  z-index: 100;
-  bottom: -40px;
-  height: 60px;
-  width: 100vw;
-  opacity: 0.8;
-  filter: blur(40px);
-  background: radial-gradient(
-    circle,
-    var(--color-wood-100) 0%,
-    var(--color-wood-200) 100%
-  );
-}
-
-.gradient-circle-bottom-dark {
-  position: absolute;
-  pointer-events: none;
-  z-index: 100;
-  bottom: -40px;
-  height: 60px;
-  width: 100vw;
-  opacity: 0.8;
-  filter: blur(40px);
-  background: radial-gradient(
-    circle,
-    var(--color-wood-100) 0%,
-    var(--color-wood-200) 100%
-  );
-}
-
-.gradient-shadow:hover::before {
-  content: "";
-  z-index: -1;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: linear-gradient(
-    -45deg,
-    var(--color-glow-cyan) 0%,
-    var(--color-glow-pink) 100%
-  );
-  transform: translate3d(0px, 20px, 0) scale(0.95);
-  filter: blur(20px);
-  opacity: 0.7;
-  transition: opacity 0.3s;
-  border-radius: inherit;
-}
-
-/*
-* Prevents issues when the parent creates a
-* stacking context. (For example, using the transform
-* property )
-*/
-.gradient-shadow:hover::after {
-  content: "";
-  z-index: -1;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: inherit;
-  border-radius: inherit;
-}
-
 /* =========================================================================
    WOOD EDITORIAL — shared layout for the 2026 redesign (scoped under .we)
    Used by pages/index.page.tsx and pages/resume.page.tsx (and their /zh/
@@ -214,7 +127,13 @@ body {
    ========================================================================= */
 .we {
   position: relative;
-  min-height: 100vh;
+  /* dvh, not vh: on Mobile Safari 100vh resolves to the LARGE viewport (address
+     bar hidden), so a page whose content is near one screen tall grows taller
+     than the visible area and the layout shifts as the bar collapses and
+     expands. 100dvh tracks the live viewport instead. Baseline across Safari,
+     Chrome and Firefox since 2022; over half of this site's readers are on a
+     phone, which is what makes this the correct default rather than a nicety. */
+  min-height: 100dvh;
   font-family: var(--font-sans);
   background: var(--color-paper);
   color: var(--color-stone-900);
@@ -428,13 +347,38 @@ body {
 /* Inline Markdown emphasis in the hero and lede, rendered by renderCopy() in
    pages/index.page.tsx: `*em*`, `**strong**`, `***both***`.
 
-   Bold alone carries the clay accent — one rule for both surfaces, so a phrase
-   moved between the headline and the lede keeps its look. Italic stays in the
+   Bold carries the clay accent on both surfaces. Italic stays in the
    surrounding colour: it is the quieter of the two by design, and colouring it
-   as well would leave the page with no un-accented emphasis at all. */
-.we .hero h1 strong,
+   as well would leave the page with no un-accented emphasis at all.
+
+   THE TWO `strong` RULES BELOW ARE SPLIT ON PURPOSE, and carry the same value
+   today. They used to share one selector list, which was the neater spelling
+   but tied together two surfaces whose contrast requirements differ: WCAG's
+   large-text exemption (18.66px bold and up) applies to the headline and not
+   to the lede, so one value cannot be judged once for both. Keep them
+   separate even while the values match — re-merging them silently recouples
+   the two bars.
+
+   OUTSTANDING, tracked in .planning/: `.lede strong` renders at 17px where the
+   bar is 4.5:1, and clay measures 4.15:1, so it misses. Deferred to the next
+   pass by an explicit decision rather than left unnoticed; the accent value was
+   hand-picked and the owner chose to keep it for now. The agreed fix is to
+   point THIS rule (not the token, and not the headline) at
+   --color-accent-ink — already in the palette, already measured at 7.0:1
+   against --color-paper. That is a one-word edit precisely because the rules
+   are split.
+
+   Do not "fix" it by nudging the lede's font-size: 17px is set by the reading
+   measure, not by the palette. */
+.we .hero h1 strong {
+  font-weight: 600;
+  /* 4.15:1 at 44px+. Clears the 3:1 large-text bar with room to spare. */
+  color: var(--color-accent-clay);
+}
 .we .lede strong {
   font-weight: 600;
+  /* 4.15:1 at 17px against a 4.5:1 bar — see the note above. Swap to
+     --color-accent-ink to close it. */
   color: var(--color-accent-clay);
 }
 .we .hero h1 em,
@@ -1334,4 +1278,49 @@ html[lang="zh-Hant-TW"] .we .skill-label {
 /* Project showcase — prev/next navigation */
 html[lang="zh-Hant-TW"] .we .proj-nav-link {
   letter-spacing: normal;
+}
+
+/* =========================================================================
+   REDUCED MOTION — honours the OS "reduce motion" accessibility setting
+   Last block in the file on purpose: it is an override layer, so equal-
+   specificity rules declared above lose to it on source order alone.
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  /* Jump instead of gliding. Anchor and route-change scrolling is the most
+     common vestibular trigger on this site because several pages are long. */
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Blanket neutralisation rather than an enumerated list of the transitions
+     that happen to exist today. This file is hand-edited often and the site has
+     a multi-year horizon, so anything added later is covered by default — the
+     failure mode of an enumerated list is silent, and it fails open (motion
+     still plays) for exactly the users who asked for none.
+
+     Near-zero durations rather than `none`: a transition that is cancelled
+     outright can strand an element mid-interpolation, whereas one that
+     completes in 0.01ms lands on its final declared state and still fires
+     transitionend, so any JS awaiting that event is not left hanging. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* The "Open to work" dot is a status indicator, not decoration — it reports a
+     real fact about the owner's availability, so it must stay legible when the
+     pulse stops. It cannot inherit the blanket rule above: @keyframes we-pulse
+     rests at opacity 0.4 at both 0% and 100%, so collapsing the animation to
+     0.01ms would settle the dot at 40% opacity and read as disabled. Kill the
+     animation outright and pin it fully opaque instead. */
+  .we .greeting .dot {
+    animation: none !important;
+    opacity: 1 !important;
+  }
 }
