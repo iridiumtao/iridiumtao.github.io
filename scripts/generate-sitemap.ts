@@ -52,13 +52,48 @@ const slugs = portfolio.projects.map((project) => project.slug);
 const notFoundEn = STATIC_ROUTES.notFound.en;
 const pairs = allRoutePairs(slugs).filter((pair) => pair.en !== notFoundEn);
 
-// One <url> per route (both locales of every non-404 pair), each declaring the
-// reciprocal en/zh alternates -- the same shape components/wood/LocaleHead.tsx
-// emits per page, sourced from the same route table. The x-default alternate
-// (English, the root/default locale) is declared once per pair, on the English
-// url, so search engines resolve every unpublished language to the English URL.
+// THE ONE SWITCH FOR THE CHINESE ROUTES. Flip to `true` and re-run this script
+// (or `yarn dev` / `yarn build`) to start advertising /zh/ again -- nothing else
+// needs editing.
+//
+// It is `false` because the Chinese tree is soft-launched: it ships and is
+// reachable, but the EN/中 switcher is deliberately hidden
+// (SHOW_LANGUAGE_SWITCHER in components/wood/LanguageSwitcher.tsx), so the site
+// is not yet inviting anyone into it. A sitemap that lists those URLs is
+// precisely such an invitation, so the sitemap must stay quiet about them until
+// the owner says otherwise.
+//
+// When closed, this drops the hreflang <xhtml:link> alternates ENTIRELY, not
+// just the Chinese one. A lone self-referential English alternate plus an
+// x-default with no other language to default away from says nothing, and any
+// alternate naming a /zh URL would hand a crawler that URL just as effectively
+// as a <loc> would -- which is the whole thing being switched off here.
+//
+// Scope: this gate governs public/sitemap.xml and nothing else. lib/routeMap.ts
+// still enumerates both locales (it is the route table, not the index policy,
+// exactly as with the 404 pair above) and components/wood/LocaleHead.tsx still
+// emits per-page hreflang alternates. Silencing those is a separate decision.
+//
+// The `: boolean` annotation is load-bearing: without it TypeScript infers the
+// literal type `false`, narrows the enabled branch to dead code, and flipping
+// the value would then be a type change rather than a one-word edit.
+const PUBLISH_ZH_ROUTES: boolean = false;
+
+// With PUBLISH_ZH_ROUTES open: one <url> per route (both locales of every
+// non-404 pair), each declaring the reciprocal en/zh alternates -- the same
+// shape components/wood/LocaleHead.tsx emits per page, sourced from the same
+// route table. The x-default alternate (English, the root/default locale) is
+// declared once per pair, on the English url, so search engines resolve every
+// unpublished language to the English URL.
+//
+// With it closed: the English <loc> alone, no alternates. See the flag above.
 const urlEntries = pairs.flatMap((pair) => {
   const enAbs = absolute(pair.en);
+
+  if (!PUBLISH_ZH_ROUTES) {
+    return [["  <url>", `    <loc>${enAbs}</loc>`, "  </url>"].join("\n")];
+  }
+
   const zhAbs = absolute(pair.zh);
   const alternates = [
     `    <xhtml:link rel="alternate" hreflang="${HTML_LANG.en}" href="${enAbs}"/>`,
