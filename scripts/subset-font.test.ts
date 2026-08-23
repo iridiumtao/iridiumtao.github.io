@@ -1,6 +1,6 @@
 // scripts/subset-font.test.ts
 // D-04 cmap regression guard: reads every real Traditional-Chinese content
-// source the site ships -- data/portfolio.zh.json, all eight _projects/*.zh.md
+// source the site ships -- data/portfolio.zh.json, all nine _projects/*.zh.md
 // showcase bodies, lib/dictionary.ts's UI-chrome strings, and every file under
 // pages/zh/ -- plus pages/cjk-specimen.page.tsx (still the site's declared CJK
 // glyph floor, even though the site does not link it), and asserts every
@@ -84,11 +84,11 @@ const ZH_PAGES = collectFiles(path.join(ROOT, "pages", "zh"), () => true);
 const SOURCES = [...SINGLE_SOURCES, ...PROJECT_BODIES, ...ZH_PAGES];
 
 // cjk-specimen + data/portfolio.zh.json + lib/dictionary.ts (3) +
-// 8 _projects/*.zh.md + 4 files under pages/zh/ (404, index, resume,
-// projects/[slug]) = 15. Pinned so a new Chinese content file under _projects/
+// 9 _projects/*.zh.md + 4 files under pages/zh/ (404, index, resume,
+// projects/[slug]) = 16. Pinned so a new Chinese content file under _projects/
 // or pages/zh/ trips the count assertion, forcing whoever adds it to update
 // this constant AND confirm the regenerated subset covers its glyphs.
-const EXPECTED_SOURCE_COUNT = 15;
+const EXPECTED_SOURCE_COUNT = 16;
 
 const FONT = path.join(
   ROOT,

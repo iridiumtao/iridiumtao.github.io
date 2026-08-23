@@ -23,6 +23,27 @@
   ],
   "projects": [
     {
+      "id": "9",
+      "slug": "nyu-marketplace",
+      "title": "NYU Marketplace",
+      "techStack": [
+        "Django",
+        "WebSocket",
+        "Travis CI",
+        "AWS"
+      ],
+      "startDate": "September 2025",
+      "endDate": "December 2025",
+      "description": "一個校園二手市集，通過驗證的 NYU 學生在這裡買賣教科書、家具與 3C 用品。",
+      "imageSrc": "/images/projects/nyu-marketplace.png",
+      "url": "https://github.com/iridiumtao/NYU-Marketplace",
+      "demoUrl": null,
+      "role": null,
+      "problem": null,
+      "process": null,
+      "outcome": null
+    },
+    {
       "id": "8",
       "slug": "openhci25-oblivilight",
       "title": "Oblivilight - OpenHCI'25",
