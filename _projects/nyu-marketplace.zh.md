@@ -13,11 +13,11 @@ links: []
 
 ## 概覽
 
-NYU Marketplace 是紐約大學實務軟體工程（Practical Software Engineering）課程的專案，由 Gennadiy Civil 教授（兼任教授，同時是 Google 資深工程經理）指導。這門課的評分標準比照真實工程團隊，不是一般課堂作業。整個學期下來，正式環境只出過一次問題，原因是一個上線前沒抓到的 credential 問題。
+NYU Marketplace 是紐約大學實務軟體工程（Practical Software Engineering）課程的專案，由 Gennadiy Civil 教授（兼任教授，同時是 Google 資深工程經理）指導。這門課的評分標準比照真實工程團隊，不是一般課堂作業。
 
 ## 我的角色
 
-我在團隊中同時擔任基礎架構設計者、後端開發者、首席 code reviewer 與 scrum master。這個專案不同於其他專案的地方在於端到端的掌控：Django 後端功能、驗證機制、OTP、即時通訊、REST API、Travis CI pipeline、開發與正式 AWS 環境、secret 管理、以及團隊的 pull request，每一層我都碰過。東西壞了的時候，沒有別的 layer 可以推。
+我在團隊中同時擔任基礎架構設計者、後端開發者、code reviewer 與 scrum master。這個專案不同於其他專案的地方在於端到端的掌控：Django 後端功能、驗證機制、OTP、即時通訊、REST API、Travis CI pipeline、開發與正式 AWS 環境、secret 管理、以及團隊的 pull request，每一層我都碰過。東西壞了的時候，沒有別的 layer 可以推。
 
 ## 重點
 

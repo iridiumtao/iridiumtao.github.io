@@ -13,11 +13,11 @@ A full-stack marketplace web application built to industry standards under the g
 
 ## Overview
 
-NYU Marketplace is a course project from Practical Software Engineering at New York University, advised by Professor Gennadiy Civil — an Adjunct Professor and Senior Engineering Manager at Google. The project was graded like a real engineering team, not a class assignment. Across the entire semester, production went down only once, caused by a credential issue that slipped past our pre-publish checks.
+NYU Marketplace is a course project from Practical Software Engineering at New York University, advised by Professor Gennadiy Civil — an Adjunct Professor and Senior Engineering Manager at Google. The project was graded like a real engineering team, not a class assignment.
 
 ## My Role
 
-I served as the infrastructure architect, backend developer, lead code reviewer, and scrum master for the team. What sets this project apart is end-to-end ownership: I touched every layer — Django backend features, authentication, OTP, real-time messaging, REST APIs, the Travis CI pipeline, the develop and production AWS environments, secret handling, and the team's pull requests. When something broke, there was no other layer to point at.
+I served as the infrastructure architect, backend developer, code reviewer, and scrum master for the team. What sets this project apart is end-to-end ownership: I touched every layer — Django backend features, authentication, OTP, real-time messaging, REST APIs, the Travis CI pipeline, the develop and production AWS environments, secret handling, and the team's pull requests. When something broke, there was no other layer to point at.
 
 ## Key Points
 
