@@ -1,36 +1,28 @@
 ---
-date: "2025-09-02T00:00:00.000Z"
+date: "2025-12-15T11:50:54.000Z"
 title: NYU Marketplace
 tagline: >-
-  一個校園二手市集，通過驗證的 NYU 學生在這裡買賣教科書、家具與 3C 用品。
+  以業界標準 CI/CD、85% 以上測試覆蓋率門檻與自動化 AWS 部署打造的全端網頁應用
 preview: >-
-  一個只開放給 NYU 學生的校園二手市集，以 Django 和 Channels 打造，並透過 Travis CI 的流程把每一個通過審查的 PR 自動部署到 AWS Elastic Beanstalk。
+  以業界標準 CI/CD、85% 以上測試覆蓋率門檻與自動化 AWS 部署打造的全端網頁應用
 image: /images/projects/nyu-marketplace.png
-links:
-  [{ name: GitHub, url: https://github.com/iridiumtao/NYU-Marketplace }]
+links: []
 ---
 
-<!-- SCAFFOLD — the owner writes the real copy. Sourced from the résumé entry
-     and the product's own landing page; nothing invented, nothing final.
-     Replace it, then delete this comment. -->
-
-NYU Marketplace 是一個只給 NYU 學生用的校園買賣平台：教科書、家具、3C，還有每學期末總會換手的那些東西。所有刊登只有通過驗證的校內成員看得到，所以每一筆交易的起點，都是一個和你共享同一座校園的人。
-
-這是為紐約大學實務軟體工程課程做的專案，指導教授為 Gennadiy Civil（兼任教授，同時是 Google 資深工程經理）。
+在 Google 資深工程經理指導下，以業界標準打造的全端 Marketplace 網頁應用程式，強調 CI/CD 嚴謹度、自動化測試與正式環境的穩定性。
 
 ## 概覽
 
-TODO — 團隊當初想解決的問題，以及為什麼「校園限定」是對的形狀。
+NYU Marketplace 是紐約大學實務軟體工程（Practical Software Engineering）課程的專案，由 Gennadiy Civil 教授（兼任教授，同時是 Google 資深工程經理）指導。這門課的評分標準比照真實工程團隊，不是一般課堂作業。整個學期下來，正式環境只出過一次問題，原因是一個上線前沒抓到的 credential 問題。
 
-## 功能
+## 我的角色
 
-- **瀏覽與搜尋刊登：** 一路篩到真正想要的那一件。
-- **刊登與管理：** 貼出物品，在 My Listings 裡追蹤，一路走到 My Orders。
-- **即時訊息：** 買賣雙方直接在 WebSocket 通道上談，不必先交換聯絡方式。
-- **學生身分驗證：** 只有確認過的 NYU 帳號才能刊登或購買。
-- **收藏與通知：** 先盯著一件商品，不必急著決定。
+我在團隊中同時擔任基礎架構設計者、後端開發者、首席 code reviewer 與 scrum master。這個專案不同於其他專案的地方在於端到端的掌控：Django 後端功能、驗證機制、OTP、即時通訊、REST API、Travis CI pipeline、開發與正式 AWS 環境、secret 管理、以及團隊的 pull request，每一層我都碰過。東西壞了的時候，沒有別的 layer 可以推。
 
 ## 重點
 
-- 以 Travis CI 和 AWS Elastic Beanstalk 建立 CI/CD pipeline，設下嚴格的合併門檻（linting、85% 以上測試覆蓋率），每一個通過審查的 PR 都自動部署。
-- 用 Django 5 和 Channels 開發能擴展的 RESTful 與即時 WebSocket API，並擔任主要的程式碼審查者，在團隊裡把關系統設計與程式碼品質。
+- 在 Travis CI 與 AWS Elastic Beanstalk 上**設計了整條 CI/CD pipeline**，設有嚴格的合併門檻（linting 與 85% 以上測試覆蓋率），每一個通過審核的 PR 都自動部署。
+- 以 Django 5 和 Channels **建構了可擴展的 RESTful 與即時 WebSocket API**，涵蓋身份驗證、OTP 驗證、路由與即時通訊功能。
+- 加入 pytest 與 Vitest 來**落實品質標準**，設定 pipeline 在任何 check 失敗時自動擋下 PR，並維持開發與正式環境的一致性與妥善的 secret 管理。
+- **主導 code review**，確保團隊遵循系統設計原則與 clean code 標準。
+- **正式環境穩定性：** 整個學期的正式環境只掛過一次——一個上線後才發現的 credential 問題。

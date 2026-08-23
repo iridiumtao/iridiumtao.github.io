@@ -34,7 +34,7 @@
       ],
       "startDate": "September 2025",
       "endDate": "December 2025",
-      "description": "A campus marketplace where verified NYU students buy and sell textbooks, furniture, and electronics.",
+      "description": "Full-stack web app with industry-grade CI/CD, 85%+ test coverage gates, and automated AWS deployment",
       "imageSrc": "/images/projects/nyu-marketplace.png",
       "url": "https://github.com/iridiumtao/NYU-Marketplace",
       "demoUrl": null,

@@ -34,7 +34,7 @@
       ],
       "startDate": "September 2025",
       "endDate": "December 2025",
-      "description": "一個校園二手市集，通過驗證的 NYU 學生在這裡買賣教科書、家具與 3C 用品。",
+      "description": "以業界標準 CI/CD、85% 以上測試覆蓋率門檻與自動化 AWS 部署打造的全端網頁應用",
       "imageSrc": "/images/projects/nyu-marketplace.png",
       "url": "https://github.com/iridiumtao/NYU-Marketplace",
       "demoUrl": null,

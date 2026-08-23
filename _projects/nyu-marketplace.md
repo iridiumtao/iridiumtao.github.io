@@ -1,37 +1,28 @@
 ---
-date: "2025-09-02T00:00:00.000Z"
+date: "2025-12-15T11:50:54.000Z"
 title: NYU Marketplace
 tagline: >-
-  A campus marketplace where verified NYU students buy and sell textbooks, furniture, and electronics.
+  Full-stack web app with industry-grade CI/CD, 85%+ test coverage gates, and automated AWS deployment
 preview: >-
-  A student-only marketplace for the NYU campus, built with Django and Channels and shipped through a Travis CI pipeline that deploys every approved PR to AWS Elastic Beanstalk.
+  Full-stack web app with industry-grade CI/CD, 85%+ test coverage gates, and automated AWS deployment
 image: /images/projects/nyu-marketplace.png
-links:
-  [{ name: GitHub, url: https://github.com/iridiumtao/NYU-Marketplace }]
+links: []
 ---
 
-<!-- SCAFFOLD — the owner writes the real copy. Everything below is drawn from
-     the existing résumé entry (data/portfolio.json → resume.projects) and the
-     product's own landing page. Nothing here is invented; nothing here is
-     final. Replace it, then delete this comment. -->
-
-NYU Marketplace is a campus-only buy-and-sell platform for NYU students: textbooks, furniture, electronics, and everything else that changes hands at the end of a semester. Listings are visible only to verified members of the university, so a transaction starts with someone you already share a campus with.
-
-It was built for Practical Software Engineering at NYU, advised by Professor Gennadiy Civil (Adjunct; Senior Engineering Manager at Google).
+A full-stack marketplace web application built to industry standards under the guidance of a Senior Engineering Manager at Google, emphasizing CI/CD rigor, automated testing, and production reliability.
 
 ## Overview
 
-TODO — the problem the team set out to solve, and why a campus-scoped marketplace was the right shape for it.
+NYU Marketplace is a course project from Practical Software Engineering at New York University, advised by Professor Gennadiy Civil — an Adjunct Professor and Senior Engineering Manager at Google. The project was graded like a real engineering team, not a class assignment. Across the entire semester, production went down only once, caused by a credential issue that slipped past our pre-publish checks.
 
-## Features
+## My Role
 
-- **Browse and search listings** — filter down to the item you actually want.
-- **Create and manage listings** — post an item, track it under My Listings, and follow it through to My Orders.
-- **Real-time messaging** — buyers and sellers talk over a WebSocket channel rather than trading contact details.
-- **Verified-student access** — only confirmed NYU accounts can list or buy.
-- **Saved items and notifications** — keep an eye on a listing without committing to it.
+I served as the infrastructure architect, backend developer, lead code reviewer, and scrum master for the team. What sets this project apart is end-to-end ownership: I touched every layer — Django backend features, authentication, OTP, real-time messaging, REST APIs, the Travis CI pipeline, the develop and production AWS environments, secret handling, and the team's pull requests. When something broke, there was no other layer to point at.
 
 ## Key Points
 
-- Architected a CI/CD pipeline on Travis CI and AWS Elastic Beanstalk with strict merge gates (linting, 85%+ test coverage), automating deployment on every approved PR.
-- Built scalable RESTful and real-time WebSocket APIs with Django 5 and Channels, serving as lead code reviewer to enforce system design and clean code standards across the team.
+- **Architected the CI/CD pipeline** on Travis CI and AWS Elastic Beanstalk with strict merge gates (linting and 85%+ test coverage), automating deployment on every approved PR.
+- **Built scalable RESTful and real-time WebSocket APIs** with Django 5 and Channels, handling authentication, OTP verification, routing, and real-time messaging.
+- **Enforced quality standards** by adding pytest and Vitest, configuring the pipeline to automatically block any PR when a check failed, and maintaining dev/production environment parity with proper secret management.
+- **Led code reviews** across the entire codebase, ensuring the team's adherence to system design principles and clean code standards.
+- **Production reliability:** across the full semester, the production environment went down only once — a credential issue caught after publishing.
