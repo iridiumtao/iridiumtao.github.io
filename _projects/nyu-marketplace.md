@@ -5,7 +5,7 @@ tagline: >-
   Full-stack web app with industry-grade CI/CD, 85%+ test coverage gates, and automated AWS deployment
 preview: >-
   Full-stack web app with industry-grade CI/CD, 85%+ test coverage gates, and automated AWS deployment
-image: /images/projects/nyu-marketplace.png
+image: /images/projects/nyu-marketplace.jpg
 links: []
 ---
 

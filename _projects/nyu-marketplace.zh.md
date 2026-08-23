@@ -5,7 +5,7 @@ tagline: >-
   以業界標準 CI/CD、85% 以上測試覆蓋率門檻與自動化 AWS 部署打造的全端網頁應用
 preview: >-
   以業界標準 CI/CD、85% 以上測試覆蓋率門檻與自動化 AWS 部署打造的全端網頁應用
-image: /images/projects/nyu-marketplace.png
+image: /images/projects/nyu-marketplace.jpg
 links: []
 ---
 
