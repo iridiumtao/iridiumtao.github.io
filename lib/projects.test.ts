@@ -26,7 +26,7 @@ import assert from "node:assert/strict";
 import { getAllProjects, getProjectBySlug } from "./projects.ts";
 
 const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
-const EXPECTED_PROJECT_COUNT = 8;
+const EXPECTED_PROJECT_COUNT = 9;
 
 test("getProjectBySlug resolves a fully-shaped project for real Oblivilight data", async () => {
   const project = await getProjectBySlug("openhci25-oblivilight", "en");
@@ -64,7 +64,7 @@ test("getAllProjects includes a kebab-case Oblivilight slug", async () => {
   assert.match(oblivilight.slug, SLUG_PATTERN);
 });
 
-test("getAllProjects returns exactly 8 fully-shaped projects with valid, unique, localized-image slugs (DATA-01/02/04, all 8)", () => {
+test("getAllProjects returns exactly 9 fully-shaped projects with valid, unique, localized-image slugs (DATA-01/02/04, all 9)", () => {
   const projects = getAllProjects("en");
   assert.equal(
     projects.length,
@@ -111,7 +111,7 @@ test("getAllProjects returns exactly 8 fully-shaped projects with valid, unique,
       `imageSrc for "${project.slug}" must not hot-link github.com`,
     );
 
-    // Closes RESEARCH.md Pitfall 5 exhaustively across all 8 projects, not
+    // Closes RESEARCH.md Pitfall 5 exhaustively across all 9 projects, not
     // just id 8: these fields must be explicit null or string, never
     // undefined (D-08b — "optional at the code level" must stay testable).
     for (const field of [
@@ -131,7 +131,7 @@ test("getAllProjects returns exactly 8 fully-shaped projects with valid, unique,
   assert.equal(seenSlugs.size, EXPECTED_PROJECT_COUNT, "slugs must be unique");
 });
 
-test("getProjectBySlug resolves a non-empty Markdown body for every one of the 8 real slugs (DATA-03, all 8)", async () => {
+test("getProjectBySlug resolves a non-empty Markdown body for every one of the 9 real slugs (DATA-03, all 9)", async () => {
   const projects = getAllProjects("en");
   assert.equal(projects.length, EXPECTED_PROJECT_COUNT);
 

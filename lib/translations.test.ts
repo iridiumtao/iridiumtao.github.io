@@ -40,7 +40,7 @@ const en: PortfolioData = enData;
 const zh: PortfolioData = zhData;
 
 const PROJECTS_DIR = path.join(import.meta.dirname, "..", "_projects");
-const EXPECTED_PROJECT_COUNT = 8;
+const EXPECTED_PROJECT_COUNT = 9;
 
 /* ── Shared constants (re-used by plan 06-04's lib/dictionary.test.ts) ──── */
 
@@ -219,10 +219,11 @@ const PROPER_NOUN_IDENTICAL: Record<string, string> = {
   "socials[0].title": "Github -- platform brand name",
   "socials[1].title": "LinkedIn -- platform brand name",
   "home.stack": "a list of technology names only, all leave-in-English",
-  "projects[0].title": "Oblivilight - OpenHCI'25 -- project + event name",
-  "projects[2].title": "Loud Plants in Your Area -- the project's own name",
-  "projects[4].title": "RISC-V-Simulator -- repository name",
-  "projects[5].title": "Retailpia -- the project's own name",
+  "projects[0].title": "NYU Marketplace -- the project's own name",
+  "projects[1].title": "Oblivilight - OpenHCI'25 -- project + event name",
+  "projects[3].title": "Loud Plants in Your Area -- the project's own name",
+  "projects[5].title": "RISC-V-Simulator -- repository name",
+  "projects[6].title": "Retailpia -- the project's own name",
   "resume.education[0].relevantCoursework[3]": "MLOps -- leave-in-English term",
   "resume.projects[0].title": "NYU Marketplace -- the project's own name",
   "resume.projects[1].organization": "OpenHCI'25 -- event brand name",
@@ -729,7 +730,7 @@ test("every leave-in-English glossary token survives the translation pass (CN-06
 
 /* ── 8. Slug-set equality ─────────────────────────────────────────────── */
 
-test("both locales carry the same 8 project slugs, in the same order", () => {
+test("both locales carry the same 9 project slugs, in the same order", () => {
   const enSlugs = en.projects.map((p) => p.slug);
   const zhSlugs = zh.projects.map((p) => p.slug);
   assert.equal(enSlugs.length, EXPECTED_PROJECT_COUNT);
