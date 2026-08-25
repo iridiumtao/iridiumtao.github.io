@@ -37,7 +37,7 @@ We built an end-to-end pipeline that transforms an 8B-parameter Llama-3.1 model 
 
 ## Description
 
-The project closes a critical accessibility gap for the ~70 % of Taiwanese who speak Hokkien by providing preliminary, dialect-specific medical advice online. A two-stage pipeline first specializes an 8 B Llama-3.1-TAIDE model on multiple-choice medical QA, then adapts it to Hokkien conversational patterns using ICorpus-100 and TAIDE-14 datasets. Parameter-efficient LoRA (r = 8, α = 16) trains < 1 % of weights under 8-bit quantization, dramatically shrinking compute needs. The service ships as a GPU-accelerated Docker compose stack (FastAPI inference, Gradio UI, MinIO storage) running on Chameleon Cloud, with Prometheus/Grafana dashboards and an Airflow-driven Label-Studio review loop that lets clinicians vet every answer for safety and Taiwan FDA SaMD compliance before release.
+The project closes a critical accessibility gap for the ~70 % of Taiwanese who speak Hokkien by providing preliminary, dialect-specific medical advice online. A two-stage pipeline first specializes an 8 B Llama-3.1-TAIDE model on multiple-choice medical QA, then adapts it to Hokkien conversational patterns using ICorpus-100 and TAIDE-14 datasets. Parameter-efficient LoRA (r = 8, α = 16) trains < 1 % of weights under 8-bit quantization, cutting compute needs to a fraction of a full fine-tune. The service ships as a GPU-accelerated Docker compose stack (FastAPI inference, Gradio UI, MinIO storage) running on Chameleon Cloud, with Prometheus/Grafana dashboards and an Airflow-driven Label-Studio review loop that lets clinicians vet every answer for safety and Taiwan FDA SaMD compliance before release.
 
 ## Key points
 

@@ -34,7 +34,7 @@ links:
 - **管線執行**：五階核心實作了經典的 IF、ID、EX、MEM、WB 五個階段，並以管線暫存器管理狀態。
 - **危障偵測與前遞**：內含 `ForwardingUnit`、`HazardDetectionUnit`、`BranchForwardingUnit` 等單元，用來化解資料危障與控制危障。
 - **記憶體系統**：兩顆核心共用指令記憶體，但各自持有獨立的資料記憶體實例，好分別驗證各自的執行結果。
-- **完整輸出**：產生詳細的輸出檔供驗證與分析，包括管線狀態（`StateResult.txt`）、暫存器檔內容（`RFResult.txt`）、最終資料記憶體（`DMEMResult.txt`）與效能指標（`PerformanceMetrics_Result.txt`）。
+- **詳細輸出**：產生詳細的輸出檔供驗證與分析，包括管線狀態（`StateResult.txt`）、暫存器檔內容（`RFResult.txt`）、最終資料記憶體（`DMEMResult.txt`）與效能指標（`PerformanceMetrics_Result.txt`）。
 - **可設定的 I/O**：從使用者指定目錄下的標準二進位檔（`imem.txt`、`dmem.txt`）讀取指令與資料記憶體。
 
 ## 電路圖

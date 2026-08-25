@@ -17,8 +17,8 @@ links:
 
 ### Key Points
 
-- Leveraged Google Trends and natural language processing (CKIP Transformers, TextRank, TF-IDF, BERT) to find the trending topic for the week and researched and designed the approach for compiling news articles
-- Developed the system infrastructure and designed a pipeline with Docker and Flask for integrating five open-sourced repos into work for project integrity, data transferring efficiency, and future development possibilities
+- Used Google Trends and natural language processing (CKIP Transformers, TextRank, TF-IDF, BERT) to find the trending topic for the week and designed the approach for compiling news articles
+- Developed the system infrastructure and designed a pipeline with Docker and Flask to integrate five open-source repos, keeping the system stable and data flowing between them
 
 ### Contribution
 

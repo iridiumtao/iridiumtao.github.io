@@ -19,7 +19,7 @@ This project is part of the NYU Master of Science in Computer Engineering (MSCE)
 
 ## Overview
 
-I developed the RISC-V Processor Simulator in Python to implement and compare fundamental computer architecture designs. The simulator simultaneously executes RISC-V assembly programs on both a non-pipelined, single-stage processor and a five-stage pipelined processor, enabling direct performance analysis. The five-stage core features a full hazard management system I engineered, including dedicated forwarding units for data hazards, a hazard detection unit for load-use stalls, and an early branch resolution mechanism to mitigate control hazards. The simulator reads binary instruction and data files, and upon completion, generates detailed reports on register states, final memory contents, and key performance metrics like CPI and IPC, serving as a hands-on project for understanding processor efficiency and design trade-offs.
+I developed the RISC-V Processor Simulator in Python to implement and compare fundamental computer architecture designs. The simulator simultaneously executes RISC-V assembly programs on both a non-pipelined, single-stage processor and a five-stage pipelined processor, enabling direct performance analysis. The five-stage core has a full hazard management system I built, including forwarding units for data hazards, a hazard detection unit for load-use stalls, and an early branch resolution mechanism to handle control hazards. The simulator reads binary instruction and data files, and upon completion, generates reports on register states, final memory contents, and performance metrics like CPI and IPC.
 
 ## Key Points
 
@@ -32,9 +32,9 @@ I developed the RISC-V Processor Simulator in Python to implement and compare fu
 
 - **Dual Architecture Simulation**: Simultaneously runs and compares a `SingleStageCore` (non-pipelined) and a `FiveStageCore` (pipelined).
 - **Pipelined Execution**: The five-stage core implements the classic IF, ID, EX, MEM, and WB stages with pipeline registers for state management.
-- **Hazard Detection & Forwarding**: Includes sophisticated units for mitigating data and control hazards, such as a `ForwardingUnit`, `HazardDetectionUnit`, and `BranchForwardingUnit`.
-- **Memory System**: Utilizes shared instruction memory and separate data memory instances for independent validation of each core's execution results.
-- **Comprehensive Output**: Generates detailed output files for validation and analysis, including pipeline states (`StateResult.txt`), register file contents (`RFResult.txt`), final data memory (`DMEMResult.txt`), and performance metrics (`PerformanceMetrics_Result.txt`).
+- **Hazard Detection & Forwarding**: Includes units for mitigating data and control hazards: `ForwardingUnit`, `HazardDetectionUnit`, and `BranchForwardingUnit`.
+- **Memory System**: Uses shared instruction memory and separate data memory instances for independent validation of each core's execution results.
+- **Detailed Output**: Generates output files for validation and analysis: pipeline states (`StateResult.txt`), register file contents (`RFResult.txt`), final data memory (`DMEMResult.txt`), and performance metrics (`PerformanceMetrics_Result.txt`).
 - **Configurable I/O**: Reads instruction and data memory from standard binary files (`imem.txt`, `dmem.txt`) located in a user-specified directory.
 
 ## Schematic
