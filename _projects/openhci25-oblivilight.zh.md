@@ -2,9 +2,9 @@
 date: "2025-7-12T11:50:54.000Z"
 title: Oblivilight - OpenHCI'25
 tagline: >-
-  一盞以隱私為核心的 AI 智慧檯燈，把夜裡的語音對話變成摸得到的記憶。
+  一盞以隱私為核心的 AI 智慧夜燈，讓「遺忘」變成一種儀式，而不只是刪除。
 preview: >-
-  一盞 AI 智慧檯燈，把夜裡的語音對話變成摸得到的記憶，你可以選擇留著，也可以親手丟掉，數位隱私因此握在自己手上。
+  一款結合語音辨識、情緒分析、LLM 技術與手勢控制的 AI 夜燈，在睡前安全釋放情緒，並主動決定哪些記憶保留、哪些遺忘。讓「遺忘」變成一種儀式，而不只是刪除。
 image: /images/projects/openhci25-oblivilight.png
 links:
   [{ name: GitHub, url: https://github.com/iridiumtao/OpenHCI25-Oblivilight }]
