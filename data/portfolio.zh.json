@@ -175,7 +175,7 @@
       "techStack": [],
       "startDate": "June 2020",
       "endDate": "October 2020",
-      "description": "大二暑假我參加了校內 Intelligent Mobile Application Club（I.M.A.C）實驗室的 iOS 開發暑期實訓，靠著實際動手做 UI 元件和設計模式，累積行動開發的底子。",
+      "description": "大二暑假在校內 I.M.A.C. 實驗室參加 iOS 開發暑期實訓，透過實作 UI 元件和設計模式來學行動開發。",
       "imageSrc": "/images/projects/swiftui-weather-app.png",
       "url": "https://github.com/jerry960331/iOS_practice_SwiftUIWeatherApp",
       "demoUrl": null,
@@ -204,7 +204,7 @@
     {
       "id": "1",
       "title": "CARITY AI 軟體開發工程師",
-      "description": "以 Docker 和 AWS ECS 建立 DevOps 流程，讓部署更順、成本降低 40%。研究 Agentic RAG，把複雜問答的 token 效率拉高五倍。"
+      "description": "以 Docker 和 AWS ECS 建立 DevOps 流程，成本降低 40%。研究 Agentic RAG，問答場景的 token 效率提升 5 倍。"
     },
     {
       "id": "2",
@@ -217,7 +217,7 @@
       "description": "用 Golang 和 PostgreSQL 開發後端伺服器，每週處理 48 萬筆以上資料。加上以 React 寫的儀表板功能，也做了即時的 ARM 裝置應用，用於車隊駕駛行為分析。"
     }
   ],
-  "aboutpara": "我是紐約大學電腦工程碩士生（GPA 3.73），專注在 MLOps、應用機器學習，以及能長大的雲端系統。軟體開發和資料科學都是我的底子，慣用 Python、Go 和 JavaScript，也熟悉現代 MLOps 與雲端原生工具鏈，包括 Docker、Terraform、AWS、PyTorch 和 MLflow。\n\n比較拿得出手的成果，一個是從頭架起一整套 MLOps stack 來微調並部署客製化 LLM，裡面有一條用 Airflow 和 MLflow 串起、由醫師參與其中的自動化再訓練 pipeline。在 Micron，我設計了正式規模的 Python pipeline 和 Streamlit 網頁應用，分析以 TB 計的製程資料，讓各團隊都能快速、可重現地做研究。在 CARITY AI，我把微服務容器化、在 AWS ECS 上自動化 CI/CD，基礎設施成本降低 40%、部署時間縮短 70%。\n\n在 MoBagel，我導入敏捷開發與 GitFlow，讓團隊在擴編 300% 的過程中管理更穩、效率更好。我的技術創新也在國際研討會上得過獎。這些成果背後其實是同一件事：把維運做扎實，交付可靠、能擴展、以資料為依據的方案。",
+  "aboutpara": "我是紐約大學電腦工程碩士（GPA 3.73），專注在 MLOps、應用機器學習，以及可擴展的雲端系統。慣用 Python、Go 和 JavaScript，在 Docker、Terraform、AWS、PyTorch 和 MLflow 上有比較深的經驗。\n\n我從頭架起一整套 MLOps stack 來微調並部署台語醫療諮詢 LLM，裡面有一條用 Airflow 和 MLflow 串起、由醫師參與其中的自動化再訓練 pipeline。在 Micron，我設計了正式規模的 Python pipeline 和 Streamlit 網頁應用，每兩週分析 33 GB 的製程資料，讓各團隊都能快速、可重現地做研究。在 CARITY AI，我把微服務容器化、在 AWS ECS 上自動化 CI/CD，基礎設施成本降低 40%、部署時間縮短 70%。\n\n在 MoBagel，團隊從 10 人擴編到 30 人的過程中，我導入敏捷開發與 GitFlow，讓版本發布維持穩定。作品曾在第 13 屆 International Conference on Frontier Computing（東京）和 OpenHCI'25（台北）獲獎。",
   "home": {
     "greeting": "安安 (ﾉ´∀｀*)",
     "availability": "求職中",
@@ -239,7 +239,7 @@
   },
   "resume": {
     "tagline": "歐東 Chun-Ju Tao",
-    "description": "我喜歡在軟體裡做出有新意、又能長大的東西。專長是設計後端系統、自動化 CI/CD pipeline，以及建置雲端原生的 MLOps 平台。目前在找後端或軟體基礎設施的職缺，想接更難的工程題目。",
+    "description": "後端與基礎設施工程師，專長是 CI/CD 自動化、容器化微服務與雲端原生 MLOps。在找一個能端到端掌控系統的角色。",
     "experiences": [
       {
         "id": "a-day-cofounder",
@@ -249,8 +249,8 @@
         "location": "紐約州紐約市",
         "bullets": [
           "以 SwiftData 與最新的 SwiftUI 功能設計出正式產品等級的 MVVM 應用程式，把服務層解耦，讓 7 個彼此相依的資料模型和 60 多個原始檔都維持嚴格的職責分離。",
-          "打造以 AI 輔助的開發流程（Cursor/Claude），搭配自訂的 MCP 與 skills 管理脈絡，把交付速度拉高 4 倍，同時嚴格遵守 TDD 循環，消除回歸風險。",
-          "以 Xcode Cloud 建立 CI/CD pipeline，並用 Swift Testing 搭起嚴謹的 QA 框架，寫下 700 多個單元與整合測試，確保 ViewModel 與資料流的架構完整，也擋住回歸。"
+          "打造以 AI 輔助的開發流程（Cursor/Claude），搭配自訂的 MCP 與 skills 管理脈絡，交付速度提升 4 倍，同時維持 TDD 循環來擋住回歸。",
+          "以 Xcode Cloud 建立 CI/CD pipeline，搭配 Swift Testing 建起 QA 框架，寫下 700 多個單元與整合測試，覆蓋 ViewModel 與資料流。"
         ]
       },
       {
@@ -391,7 +391,7 @@
         "dates": "September 2025 - December 2025",
         "details": [
           "以 Travis CI 和 AWS Elastic Beanstalk 建立 CI/CD pipeline，設下嚴格的合併門檻（linting、85% 以上測試覆蓋率），每一個通過審查的 PR 都自動部署。",
-          "用 Django 5 和 Channels 開發能擴展的 RESTful 與即時 WebSocket API，並擔任主要的程式碼審查者，在團隊裡把關系統設計與程式碼品質。",
+          "用 Django 5 和 Channels 開發 RESTful 與即時 WebSocket API，並審查所有團隊 PR 的系統設計與程式碼品質。",
           "指導教授為 Gennadiy Civil（兼任教授，同時是 Google 資深工程經理）。"
         ]
       },
@@ -415,7 +415,7 @@
         "location": "紐約州紐約市",
         "dates": "February 2025 - May 2025",
         "details": [
-          "發起並主導一款 iOS 應用程式從零到完成的開發，把植物的生物聲學訊號即時轉成 AR 視覺呈現，同時定下專案方向、規劃整套技術架構。",
+          "主導一款 iOS 應用程式的開發，把植物的生物聲學訊號即時轉成 AR 視覺呈現，同時定下專案方向、規劃整套技術架構。",
           "依據學術研究打造自訂的機器學習 pipeline 來判讀植物健康。一個人實作深度散射網路（採用 Morlet 小波的 ScatNet）、擷取梅爾頻率倒譜係數（MFCC），並訓練出表現優異的 SVM 分類器做訊號分析。",
           "以 Swift、RealityKit 和 Reality Composer Pro 開發出功能完整的 AR 原型。獨力負責整個 iOS 應用開發，做出自訂的動畫 UI 疊層，依 ML pipeline 傳來的即時資料呈現植物的動態狀態。",
           "以使用者評估研究驗證專案的核心假設，結果顯示 AR 介面明顯提升了人與植物的互動和情感連結（平均分數從 1.67 提升到 5.33，p=0.018）。"
@@ -441,7 +441,7 @@
         "dates": "October 2024 - December 2024",
         "details": [
           "用 Python 設計 RISC-V 處理器模擬器，同時實作單階與五階管線兩種設計，用來分析並比較架構上的效能取捨。",
-          "為五階管線打造完整的危障處理機制，包含專用的資料前遞單元、負責插入停頓的 load-use 危障偵測單元，以及在 ID 階段就提早解出分支結果的分支前遞單元，把控制危障降到最低。",
+          "為五階管線打造危障處理機制，包含資料前遞單元、負責插入停頓的 load-use 危障偵測單元，以及在 ID 階段就提早解出分支結果的分支前遞單元，把控制危障降到最低。",
           "開發平行模擬流程，讓同一支 RISC-V 程式同時在兩種管線上執行，確保輸出與效能指標能準確地並排比較。",
           "建立自動化的效能分析模組，計算並輸出各處理器核心的關鍵指標，包括總週期數、每週期指令數（IPC）與每指令週期數（CPI）。"
         ]
@@ -454,9 +454,9 @@
         "dates": "September 2021 - July 2023",
         "details": [
           "主導為期一年的畢業專題，從概念做到獲獎完成，設計出全自動的 AI pipeline，能從熱門話題自己產出動畫新聞片段。",
-          "打造核心系統的基礎設施，解掉 5 個異質開源微服務之間的相依與版本衝突；以 Docker Compose 和 Flask 設計並實作耐得住操的資料 pipeline，守住系統完整性，也讓後續開發能擴展。",
+          "打造核心系統的基礎設施，解掉 5 個開源微服務之間的相依與版本衝突；以 Docker Compose 和 Flask 設計資料 pipeline，讓整合跑得穩。",
           "把整套系統的部署流程從頭到尾自動化，做出一行指令就能重現的建置，手動設定與部署時間縮短超過 80%（從 2 小時降到 20 分鐘）。",
-          "率先在團隊裡導入 GitFlow，建立起有結構的版本控制流程，開發速度與協作都明顯變好，也成了我日後在職場導入敏捷開發的底子。"
+          "在團隊裡導入 GitFlow，建立有結構的版本控制流程，加快開發速度與協作，後來在 MoBagel 團隊 3 倍擴編時也用上了同一套做法。"
         ]
       },
       {
