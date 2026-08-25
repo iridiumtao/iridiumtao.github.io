@@ -175,7 +175,7 @@
       "techStack": [],
       "startDate": "June 2020",
       "endDate": "October 2020",
-      "description": "During the summer vacation of my second year of University, I participated in the summer iOS development practical training, cultivating skills in mobile development through hands-on experience with UI components and design patterns in the Intelligent Mobile Application Club (I.M.A.C) laboratory on campus.",
+      "description": "During the summer of my second year, I joined a practical iOS development training in the I.M.A.C. laboratory on campus, learning mobile development by building apps with UI components and design patterns.",
       "imageSrc": "/images/projects/swiftui-weather-app.png",
       "url": "https://github.com/jerry960331/iOS_practice_SwiftUIWeatherApp",
       "demoUrl": null,
@@ -204,7 +204,7 @@
     {
       "id": "1",
       "title": "Software Developer, CARITY AI",
-      "description": "Developed a DevOps workflow with Docker and AWS ECS, optimizing deployment and reducing costs by 40%. Researched Agentic RAG, improving token efficiency fivefold for complex question-answering capabilities."
+      "description": "Developed a DevOps workflow with Docker and AWS ECS, cutting costs by 40%. Researched Agentic RAG, improving token efficiency 5× for question answering."
     },
     {
       "id": "2",
@@ -217,7 +217,7 @@
       "description": "Developed a back-end server with Golang and PostgreSQL, handling 480k+ weekly entries. Added React-based dashboard features and built real-time ARM-device apps for fleet driving analytics."
     }
   ],
-  "aboutpara": "Chun-Ju Tao is a Computer Engineering master’s student at New York University (GPA: 3.73) specializing in MLOps, applied machine learning, and scalable cloud systems. With a strong foundation in both software development and data science, he is proficient in Python, Go, and JavaScript, and deeply skilled in the modern MLOps and cloud-native toolchain, including Docker, Terraform, AWS, PyTorch, and MLflow.\n\nNotable accomplishments include architecting a complete MLOps stack to fine-tune and deploy a custom LLM, featuring an automated, doctor-in-the-loop retraining pipeline with Airflow and MLflow. At Micron, he designed a production-scale Python pipeline and Streamlit web app to analyze terabytes of manufacturing data, enabling fast, reproducible studies across teams. At CARITY AI, he containerized microservices and automated CI/CD on AWS ECS, cutting infrastructure costs by 40% and deployment time by 70%.\n\nChun-Ju has demonstrated leadership by introducing Agile and GitFlow methodologies at MoBagel, stabilizing team management and improving efficiency during a 300% team expansion. An award-winning developer recognized at international conferences for technical innovation, his achievements reflect a commitment to driving operational excellence and delivering reliable, scalable, and data-driven solutions.",
+  "aboutpara": "Chun-Ju Tao is a Computer Engineering master’s graduate from New York University (GPA: 3.73) specializing in MLOps, applied machine learning, and scalable cloud systems. He works across the stack in Python, Go, and JavaScript, with particular depth in Docker, Terraform, AWS, PyTorch, and MLflow.\n\nHe built a complete MLOps stack to fine-tune and deploy a Taigi medical-advising LLM, with an automated, doctor-in-the-loop retraining pipeline on Airflow and MLflow. At Micron, he designed a production-scale Python pipeline and Streamlit web app to analyze 33 GB of manufacturing data per bi-weekly cycle, giving teams fast, reproducible studies. At CARITY AI, he containerized microservices and automated CI/CD on AWS ECS, cutting infrastructure costs by 40% and deployment time by 70%.\n\nAt MoBagel, he introduced Agile and GitFlow as the team tripled from 10 to 30 engineers, keeping releases stable through the growth. His work has been recognized at the 13th International Conference on Frontier Computing (Tokyo) and OpenHCI’25 (Taipei).",
   "home": {
     "greeting": "Hi there (ﾉ´∀｀*)",
     "availability": "Open to work",
@@ -239,7 +239,7 @@
   },
   "resume": {
     "tagline": "Chun-Ju Tao",
-    "description": "Passionate about creating innovative and scalable solutions in Software. Experienced in designing backend systems, automating CI/CD pipelines, and building cloud-native MLOps platforms. Seeking a backend or software infrastructure role to tackle complex engineering challenges.",
+    "description": "Backend and infrastructure engineer experienced in CI/CD automation, containerized microservices, and cloud-native MLOps. Looking for a role where I can own systems end to end.",
     "experiences": [
       {
         "id": "a-day-cofounder",
@@ -249,8 +249,8 @@
         "location": "New York, NY",
         "bullets": [
           "Architected a production-grade MVVM application with SwiftData and latest SwiftUI features, decoupling the service layer to ensure strict separation of concerns across 7 interconnected data models and 60+ source files.",
-          "Engineered an AI-augmented development workflow (Cursor/Claude) with custom MCPs and skills for context management, accelerating delivery velocity by 4x while strictly adhering to TDD cycles to eliminate regression risks.",
-          "Established a CI/CD Pipeline using Xcode Cloud with a rigorous QA framework using Swift Testing, implementing 700+ unit and integration tests to guarantee architectural integrity and regression prevention across ViewModels and data flows."
+          "Engineered an AI-augmented development workflow (Cursor/Claude) with custom MCPs and skills for context management, accelerating delivery 4× while maintaining TDD cycles to catch regressions.",
+          "Established a CI/CD pipeline on Xcode Cloud with Swift Testing, implementing 700+ unit and integration tests across ViewModels and data flows."
         ]
       },
       {
@@ -391,7 +391,7 @@
         "dates": "September 2025 - December 2025",
         "details": [
           "Architected a CI/CD pipeline on Travis CI and AWS Elastic Beanstalk with strict merge gates (linting, 85%+ test coverage), automating deployment on every approved PR.",
-          "Built scalable RESTful and real-time WebSocket APIs with Django 5 and Channels, serving as lead code reviewer to enforce system design and clean code standards across the team.",
+          "Built RESTful and real-time WebSocket APIs with Django 5 and Channels, and reviewed all team PRs for system design and code quality.",
           "Advised by Professor Gennadiy Civil (Adjunct; Senior Engineering Manager at Google)."
         ]
       },
@@ -404,7 +404,7 @@
         "details": [
           "Led a user-centric design process from research to prototype, identifying key user needs for tangible, privacy-preserving \"forgetting mechanisms\" in AI companions through 11 user interviews and secondary research.",
           "Architected a full-stack proof-of-concept integrating an LLM for conversation, emotion analysis, and a multi-modal interface with voice (Whisper/TTS) and gesture controls.",
-          "Designed a novel interaction model that visualizes emotional sentiment as colored light and externalizes digital conversations into physical artifacts via a thermal printer, directly addressing AI data permanence anxiety.",
+          "Designed an interaction model that visualizes emotional sentiment as colored light and externalizes digital conversations into physical artifacts via a thermal printer, addressing AI data permanence anxiety.",
           "Won the Best Demo Award at OpenHCI'25 and was the sole project selected for presentation at the subsequent TAICHI'25 conference."
         ]
       },
@@ -415,7 +415,7 @@
         "location": "New York, NY",
         "dates": "February 2025 - May 2025",
         "details": [
-          "Initiated and led the end-to-end development of a novel iOS application that translates plant bio-acoustic signals into real-time, AR visualizations, defining the project vision and architecting the full technology stack.",
+          "Led the development of an iOS application that translates plant bio-acoustic signals into real-time AR visualizations, defining the project vision and architecting the full stack.",
           "Engineered a custom machine learning pipeline based on academic research to classify plant health. Independently implemented a deep scattering network (ScatNet with Morlet wavelets), extracted Mel-frequency cepstral coefficients (MFCCs), and trained a high-performing SVM classifier for signal analysis.",
           "Developed a fully functional AR prototype using Swift, RealityKit, and Reality Composer Pro. Owned the entire iOS application development, building custom animated UI overlays that rendered dynamic plant statuses based on live data from the ML pipeline.",
           "Validated the project's core hypothesis through a user evaluation study that demonstrated the AR interface significantly increased user-plant interaction and emotional connection (mean score increase from 1.67 to 5.33, p=0.018)."
@@ -441,7 +441,7 @@
         "dates": "October 2024 - December 2024",
         "details": [
           "Architected a RISC-V processor simulator in Python, implementing both single-stage and five-stage pipelined designs to analyze and compare architectural performance trade-offs.",
-          "Engineered a comprehensive hazard management system for the five-stage pipeline, featuring dedicated data forwarding units, a load-use hazard detection unit for stall insertion, and a branch forwarding unit with early resolution in the ID stage to minimize control hazards.",
+          "Engineered the hazard management system for the five-stage pipeline, with data forwarding units, a load-use hazard detection unit for stall insertion, and a branch forwarding unit with early resolution in the ID stage to minimize control hazards.",
           "Developed a parallel simulation workflow to execute identical RISC-V programs on both pipelines simultaneously, ensuring accurate, side-by-side comparison of outputs and performance metrics.",
           "Built an automated performance analysis module that calculates and reports key metrics, including total cycle count, instructions per cycle (IPC), and cycles per instruction (CPI) for each processor core."
         ]
@@ -454,9 +454,9 @@
         "dates": "September 2021 - July 2023",
         "details": [
           "Led a year-long capstone project from concept to award-winning completion, architecting a fully automated AI pipeline that autonomously generated animated news segments from trending topics.",
-          "Engineered the core system infrastructure to resolve critical dependency and versioning conflicts across 5 disparate open-source microservices; designed and implemented a resilient data pipeline using Docker Compose and Flask to ensure system integrity and enable scalable future development.",
+          "Engineered the core system infrastructure to resolve dependency and versioning conflicts across 5 open-source microservices; designed a data pipeline using Docker Compose and Flask for reliable integration.",
           "Automated the end-to-end deployment process for the entire stack, creating a reproducible, one-command build that slashed manual setup and deployment time by over 80% (from 2 hours to 20 minutes).",
-          "Pioneered the team's adoption of GitFlow, establishing a structured version control workflow that significantly improved development velocity and collaboration, and served as a foundational experience for implementing Agile methodologies in subsequent professional roles."
+          "Introduced GitFlow to the team, establishing a structured version control workflow that sped up development and collaboration, which I later applied at MoBagel during a 3× team expansion."
         ]
       },
       {
