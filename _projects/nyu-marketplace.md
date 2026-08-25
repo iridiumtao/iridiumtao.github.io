@@ -17,7 +17,7 @@ NYU Marketplace is a course project from Practical Software Engineering at New Y
 
 ## My Role
 
-I was the infrastructure architect, backend developer, code reviewer, and scrum master. What sets this project apart is end-to-end ownership: I touched every layer — Django backend features, authentication, OTP, real-time messaging, REST APIs, the Travis CI pipeline, the develop and production AWS environments, secret handling, and the team's pull requests. When something broke, there was no other layer to point at.
+I was the infrastructure architect, backend developer, code reviewer, and scrum master. What sets this project apart is end-to-end ownership. I touched every layer: Django backend features, authentication, OTP, real-time messaging, REST APIs, the Travis CI pipeline, the develop and production AWS environments, secret handling, and the team's pull requests.
 
 ## Key Points
 
@@ -25,4 +25,3 @@ I was the infrastructure architect, backend developer, code reviewer, and scrum 
 - **Built scalable RESTful and real-time WebSocket APIs** with Django 5 and Channels, handling authentication, OTP verification, routing, and real-time messaging.
 - **Enforced quality standards** by adding pytest and Vitest, configuring the pipeline to automatically block any PR when a check failed, and maintaining dev/production environment parity with proper secret management.
 - **Led code reviews** across the entire codebase, checking for system design and code quality on every PR.
-- **Production reliability:** across the full semester, the production environment went down only once — a credential issue caught after publishing.
