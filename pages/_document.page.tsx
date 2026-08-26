@@ -17,7 +17,7 @@ import Document, {
   type DocumentContext,
   type DocumentInitialProps,
 } from "next/document";
-import { huninn, jbmono } from "../styles/fonts";
+import { huninn, meslo } from "../styles/fonts";
 import { HTML_LANG, localeFromPathname, type Locale } from "../lib/locale";
 
 type Props = DocumentInitialProps & { locale: Locale };
@@ -42,7 +42,7 @@ export default function MyDocument({ locale }: Props) {
       // `auto` around its own scrollTo — anchor smoothness is unaffected. The
       // dev build warns on the console when it is missing.
       data-scroll-behavior="smooth"
-      className={`${huninn.variable} ${jbmono.variable}`}
+      className={`${huninn.variable} ${meslo.variable}`}
     >
       <Head />
       <body>

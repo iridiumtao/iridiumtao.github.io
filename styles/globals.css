@@ -1,9 +1,10 @@
 /* 2026 brand typeface: jf open-huninn 2.1 (justfont) — single rounded humanist
-   sans for body + display; JetBrains Mono for code, metadata, timestamps.
+   sans for body + display; Meslo LG M for code, metadata, timestamps.
    See colors_and_type design system. Replaces the original Hind webfont.
-   Both fonts are now self-hosted via next/font (styles/fonts.ts, applied to
-   <html> in pages/_document.page.tsx) — zero runtime external font requests;
-   --font-huninn / --font-jbmono are exposed there. */
+   Both fonts are self-hosted via next/font/local over committed woff2 subsets
+   (styles/fonts.ts, applied to <html> in pages/_document.page.tsx) — zero
+   runtime external font requests and no build-time Google Fonts fetch either;
+   --font-huninn / --font-meslo are exposed there. */
 @import "tailwindcss";
 
 /* v4 ignores the old JS `darkMode:"class"` key — must be declared explicitly,
@@ -69,7 +70,11 @@
   --font-sans:
     var(--font-huninn), "Varela Round", "PingFang TC", "Microsoft JhengHei",
     system-ui, sans-serif;
-  --font-mono: var(--font-jbmono), ui-monospace, monospace;
+  /* Meslo LG *M* is the deliberate LG variant: its 1.359 default line box is
+     the closest of the three to the JetBrains Mono this replaced (1.320), so
+     the mono chips and metadata rows that leave line-height at `normal` keep
+     their old height. See the note in scripts/subset-font.ts. */
+  --font-mono: var(--font-meslo), ui-monospace, monospace;
 
   /* Tailwind v4 ships the `stone` neutral scale built-in
      (--color-stone-50 … --color-stone-900). Every step this site actually uses
