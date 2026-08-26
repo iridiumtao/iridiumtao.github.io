@@ -1,11 +1,18 @@
 // scripts/subset-font.ts
-// Regenerates public/fonts/open-huninn-subset.woff2 on every predev/prebuild
-// by scanning the site's actual rendered content (site-wide, not just the
-// Wood pages) for distinct characters and re-subsetting the committed
-// hermetic source font (assets/fonts/jf-openhuninn-2.1.ttf) with a pure
-// Node/WASM subsetter (subset-font, backed by harfbuzzjs) -- no Python, no
-// manual re-subsetting step. Mirrors scripts/prepare-resumes.ts's style:
-// plain CommonJS, fs/path only, console.log progress lines.
+// Regenerates every self-hosted webfont under public/fonts/ on each
+// predev/prebuild by scanning the site's actual rendered content (site-wide,
+// not just the Wood pages) for distinct characters and re-subsetting the
+// committed hermetic source fonts under assets/fonts/ with a pure Node/WASM
+// subsetter (subset-font, backed by harfbuzzjs) -- no Python, no manual
+// re-subsetting step. Mirrors scripts/prepare-resumes.ts's style: plain
+// CommonJS, fs/path only, console.log progress lines.
+//
+// Three faces are emitted from one scan: the CJK display face (Open Huninn)
+// and the two mono faces (Meslo LG M regular + bold, which replaced the
+// Google-hosted JetBrains Mono). One shared character set is correct for all
+// three -- harfbuzz simply drops any requested code point a given source font
+// has no glyph for, so Meslo yields its Latin coverage and Open Huninn its
+// CJK coverage without the scan needing to know which face renders what.
 //
 // Deliberately CommonJS (require/__dirname, no import/export): Node runs this
 // file directly from the lifecycle hooks and strips its type annotations at
@@ -15,11 +22,37 @@ const fs: typeof import("fs") = require("fs");
 const path: typeof import("path") = require("path");
 
 const rootDir = path.join(__dirname, "..");
-const sourceFontPath = path.join(rootDir, "assets/fonts/jf-openhuninn-2.1.ttf");
-const outputFontPath = path.join(
-  rootDir,
-  "public/fonts/open-huninn-subset.woff2",
-);
+
+// Every face this script emits, as (hermetic source under assets/fonts/) ->
+// (subsetted woff2 under public/fonts/). styles/fonts.ts loads each output by
+// exactly these paths, so renaming an output here means renaming it there too.
+//
+// Mono is Meslo LG *M* specifically, not S or L: the three LG variants differ
+// only in vertical metrics, and M's ascent/descent (2101/-683 per 2048 upem,
+// a 1.359 default line box) is the closest of the three to the JetBrains Mono
+// it replaced (1020/-300 per 1000 upem, 1.320). S at 1.262 and L at 1.555
+// would both visibly re-flow the mono chips and metadata rows whose line
+// height globals.css leaves at `normal`.
+const FONT_TARGETS = [
+  {
+    label: "open-huninn-subset.woff2",
+    sourcePath: path.join(rootDir, "assets/fonts/jf-openhuninn-2.1.ttf"),
+    outputPath: path.join(rootDir, "public/fonts/open-huninn-subset.woff2"),
+  },
+  {
+    label: "meslo-lgm-regular-subset.woff2",
+    sourcePath: path.join(rootDir, "assets/fonts/meslo-lgm-regular-1.2.1.ttf"),
+    outputPath: path.join(
+      rootDir,
+      "public/fonts/meslo-lgm-regular-subset.woff2",
+    ),
+  },
+  {
+    label: "meslo-lgm-bold-subset.woff2",
+    sourcePath: path.join(rootDir, "assets/fonts/meslo-lgm-bold-1.2.1.ttf"),
+    outputPath: path.join(rootDir, "public/fonts/meslo-lgm-bold-subset.woff2"),
+  },
+] as const;
 
 // Recursively collect files under `dir` whose name passes `matches(name)`.
 // No glob dependency exists in this project, so we walk manually.
@@ -156,17 +189,19 @@ console.log(
     options: { targetFormat: "woff2" | "woff" | "truetype" | "sfnt" },
   ) => Promise<Buffer> = require("subset-font");
 
-  const sourceBuffer = fs.readFileSync(sourceFontPath);
-  const subsetBuffer = await subsetFont(sourceBuffer, subsetText, {
-    targetFormat: "woff2",
-  });
+  for (const { label, sourcePath, outputPath } of FONT_TARGETS) {
+    const sourceBuffer = fs.readFileSync(sourcePath);
+    const subsetBuffer = await subsetFont(sourceBuffer, subsetText, {
+      targetFormat: "woff2",
+    });
 
-  fs.writeFileSync(outputFontPath, subsetBuffer);
+    fs.writeFileSync(outputPath, subsetBuffer);
 
-  console.log(
-    `Subsetted open-huninn-subset.woff2: ${sourceBuffer.length} bytes -> ${subsetBuffer.length} bytes ` +
-      `(${usedChars.size} distinct characters).`,
-  );
+    console.log(
+      `Subsetted ${label}: ${sourceBuffer.length} bytes -> ${subsetBuffer.length} bytes ` +
+        `(${usedChars.size} distinct characters requested).`,
+    );
+  }
 })().catch((err) => {
   console.error("subset-font failed:", err);
   process.exit(1);

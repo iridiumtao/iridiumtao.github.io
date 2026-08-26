@@ -34,9 +34,7 @@ import type { Font, FontCollection } from "fontkit";
 // produces -- is a Font, never a FontCollection; assert that shape via a
 // proper type-predicate assertion function (rather than an unchecked cast)
 // so the test fails loudly if that assumption is ever wrong.
-function assertIsSingleFont(
-  font: Font | FontCollection,
-): asserts font is Font {
+function assertIsSingleFont(font: Font | FontCollection): asserts font is Font {
   assert.ok(
     font.type !== "TTC" && font.type !== "DFont",
     `expected a single Font, got a FontCollection (type "${font.type}") -- subset-font.ts should never produce one`,
@@ -90,12 +88,17 @@ const SOURCES = [...SINGLE_SOURCES, ...PROJECT_BODIES, ...ZH_PAGES];
 // this constant AND confirm the regenerated subset covers its glyphs.
 const EXPECTED_SOURCE_COUNT = 16;
 
-const FONT = path.join(
-  ROOT,
-  "public",
-  "fonts",
-  "open-huninn-subset.woff2",
-);
+const FONT = path.join(ROOT, "public", "fonts", "open-huninn-subset.woff2");
+
+// The mono faces subset-font.ts emits alongside the CJK one. They come out of
+// the same scan, which is dominated by Chinese content Meslo has no glyphs
+// for -- so the guard that matters for them is the opposite of the one above:
+// printable ASCII, the range every mono chip, timestamp and metadata row on
+// the site is actually drawn from, must survive the subset intact.
+const MONO_FONTS = [
+  path.join(ROOT, "public", "fonts", "meslo-lgm-regular-subset.woff2"),
+  path.join(ROOT, "public", "fonts", "meslo-lgm-bold-subset.woff2"),
+];
 
 test("the Chinese content source set has its expected file count", () => {
   assert.equal(
@@ -149,4 +152,28 @@ test("every non-ASCII glyph in real /zh/ content is present in the subset cmap",
       .map((cp) => `U+${cp.toString(16).toUpperCase()}`)
       .join(", ")}`,
   );
+});
+
+test("each Meslo mono subset covers the full printable-ASCII range", () => {
+  for (const fontPath of MONO_FONTS) {
+    assert.ok(
+      fs.existsSync(fontPath),
+      `${fontPath} missing -- run \`node scripts/subset-font.ts\` first (or \`yarn test\`, whose pretest hook does it for you)`,
+    );
+
+    const font = create(fs.readFileSync(fontPath));
+    assertIsSingleFont(font);
+
+    const missing: string[] = [];
+    for (let cp = 0x20; cp <= 0x7e; cp++) {
+      if (!font.hasGlyphForCodePoint(cp)) {
+        missing.push(`U+${cp.toString(16).toUpperCase()}`);
+      }
+    }
+    assert.deepEqual(
+      missing,
+      [],
+      `${path.basename(fontPath)} is missing glyphs for: ${missing.join(", ")}`,
+    );
+  }
 });

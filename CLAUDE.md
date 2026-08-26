@@ -119,7 +119,8 @@ live constraint on today's single-system codebase.
 
 ## Gotchas
 
-- **Never hand-edit build output:** `public/resumes/*.pdf` and the font subset are regenerated
+- **Never hand-edit build output:** `public/resumes/*.pdf` and the three
+  `public/fonts/*.woff2` subsets (Open Huninn + Meslo LG M regular/bold) are regenerated
   every `predev`/`prebuild` by `scripts/prepare-resumes.ts` and `scripts/subset-font.ts`.
 - **Résumé PDFs are generated locally only.** CI (`.github/workflows/deploy.yml`) invokes the
   `next` binary directly, so it bypasses the `prebuild` hook and runs the build scripts as an

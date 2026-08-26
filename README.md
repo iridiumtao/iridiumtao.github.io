@@ -15,8 +15,9 @@ repository's **GitHub Pages settings**; there is deliberately no `CNAME` file in
   page at `/projects/<slug>`, rendered from Markdown.
 - **Single content source.** All copy lives in `data/portfolio.json`, typed end to end.
 - **Résumé page** with the timeline and per-role PDF downloads, generated at build time.
-- **Self-hosted, subsetted fonts.** No external font requests; the CJK face is subsetted on
-  every build from the glyphs actually used.
+- **Self-hosted, subsetted fonts.** jf open 粉圓 for the sans, Meslo LG M for the mono. No
+  external font requests and no build-time Google Fonts fetch either; every face is
+  re-subsetted on each build from the glyphs the site actually uses.
 - **Dev-only content editor** at `/edit`, structurally excluded from production builds.
 - **Strict TypeScript** across the whole codebase, with a test suite on `node --test`.
 
@@ -44,7 +45,7 @@ yarn dev
 Then open <http://localhost:3000>. The dev-only editor is available at `/edit` in this mode.
 
 `predev` runs `scripts/prepare-resumes.ts` and `scripts/subset-font.ts` first, so the résumé
-PDFs and the font subset are regenerated before the server starts.
+PDFs and the three font subsets are regenerated before the server starts.
 
 ## Scripts
 
@@ -150,6 +151,7 @@ with the handful of stale PDFs that predate the ignore rule.
 ```text
 iridium-portfolio/
 ├── _projects/              # Markdown bodies for the showcase pages (8)
+├── assets/fonts/           # Hermetic font sources (.ttf) + their licenses
 ├── components/wood/        # The only components: Nav, Footer, ProjectCard (.tsx)
 ├── data/portfolio.json     # Single content source
 ├── docs/                   # Résumé PDF drop box (gitignored)
@@ -172,9 +174,9 @@ iridium-portfolio/
 │   └── _document.page.tsx
 ├── scripts/
 │   ├── prepare-resumes.ts  # docs/*.pdf → public/resumes/ (local only)
-│   └── subset-font.ts      # CJK font subsetting (+ .test.ts)
+│   └── subset-font.ts      # Font subsetting, all three faces (+ .test.ts)
 ├── styles/
-│   ├── fonts.ts            # next/font declarations
+│   ├── fonts.ts            # next/font/local declarations for both faces
 │   └── globals.css         # The entire Wood design system
 ├── types/portfolio.ts
 ├── utils/markdownToHtml.ts
@@ -202,6 +204,46 @@ There is no `tailwind.config.js` — Tailwind v4 is configured entirely in CSS. 
 live in the `@theme` block at the top of `styles/globals.css`, and the whole editorial design
 is hand-written CSS scoped under `.we` in the same file. That single file is the place to
 change how the site looks.
+
+## Fonts
+
+Two typefaces, shipped as three `.woff2` files — the mono carries regular and bold. Both are
+self-hosted; nothing is fetched from Google Fonts, not at runtime and not at build time
+either.
+
+|              | Sans (body + display)                    | Mono (code, metadata, timestamps)                     |
+| ------------ | ---------------------------------------- | ----------------------------------------------------- |
+| Face         | **jf open 粉圓 2.1** (jf open huninn)    | **Meslo LG M 1.2.1**                                  |
+| By           | [justfont](https://justfont.com/huninn/) | [André Berg](https://github.com/andreberg/Meslo-Font) |
+| License      | SIL OFL 1.1                              | Apache 2.0                                            |
+| Source       | `assets/fonts/jf-openhuninn-2.1.ttf`     | `assets/fonts/meslo-lgm-{regular,bold}-1.2.1.ttf`     |
+| Shipped as   | `public/fonts/open-huninn-subset.woff2`  | `public/fonts/meslo-lgm-{regular,bold}-subset.woff2`  |
+| CSS variable | `--font-huninn`, read by `--font-sans`   | `--font-meslo`, read by `--font-mono`                 |
+
+Full license texts are committed next to the sources, as `assets/fonts/OpenHuninn-LICENSE.txt`
+and `assets/fonts/Meslo-LICENSE.txt`. Both are redistribution requirements, not courtesies —
+keep them with the font files.
+
+**`public/fonts/*.woff2` is build output — never hand-edit it.** `scripts/subset-font.ts`
+scans the site's real content (the JSON sources, every page, the Wood components, the
+Markdown project bodies and `lib/`), collects the distinct characters, unions in printable
+ASCII, and re-subsets all three faces from the `.ttf` sources on every `predev` / `prebuild`
+and in CI. Each file carries only the glyphs the site uses: the CJK subset lands around
+190 KB, each mono weight around 10 KB.
+
+`scripts/subset-font.test.ts` guards both directions — every non-ASCII code point in the
+Traditional Chinese content must survive into the sans subset, and the full printable-ASCII
+range must survive into each mono subset.
+
+`styles/fonts.ts` is the single font-definitions module. Both faces are declared there with
+`next/font/local`, exactly once, and only their `.variable` class names are imported by
+`pages/_document.page.tsx`, which puts them on `<html>`. Do not call a `next/font` loader
+anywhere else.
+
+Mono is Meslo LG **M** on purpose. The three LG variants differ only in vertical metrics, and
+M's default line box (1.359) is the closest of the three to the JetBrains Mono it replaced
+(1.320); S (1.262) and L (1.555) would both re-flow the mono chips and metadata rows whose
+`line-height` `globals.css` leaves at `normal`.
 
 ## Stack
 
