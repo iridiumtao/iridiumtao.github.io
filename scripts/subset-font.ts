@@ -195,6 +195,11 @@ console.log(
       targetFormat: "woff2",
     });
 
+    // public/fonts/ holds nothing but this script's own output, and those
+    // woff2 files are gitignored -- so git carries no empty directory for
+    // them and a fresh checkout (CI, or a clone) has no public/fonts/ at all.
+    // Create it before the first write or every clean build dies on ENOENT.
+    fs.mkdirSync(path.dirname(outputPath), { recursive: true });
     fs.writeFileSync(outputPath, subsetBuffer);
 
     console.log(

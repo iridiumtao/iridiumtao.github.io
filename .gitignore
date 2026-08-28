@@ -47,3 +47,9 @@ yarn-error.log*
 # generated self-contained build of the palette tuner (760 KB); rebuild with
 # `node design/palette-tuner/build.mjs --inline` when you need one file to share
 design/palette-tuner/index.inline.html
+
+# Font subsets: regenerated from assets/fonts/*.ttf by scripts/subset-font.ts on
+# every predev/prebuild/pretest, and by an explicit step in deploy.yml before
+# `next build`. The committed copies were never served -- they only produced a
+# binary diff every time the Chinese copy changed.
+public/fonts/*.woff2

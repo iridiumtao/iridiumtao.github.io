@@ -122,6 +122,15 @@ live constraint on today's single-system codebase.
 - **Never hand-edit build output:** `public/resumes/*.pdf` and the three
   `public/fonts/*.woff2` subsets (Open Huninn + Meslo LG M regular/bold) are regenerated
   every `predev`/`prebuild` by `scripts/prepare-resumes.ts` and `scripts/subset-font.ts`.
+- **The two build outputs have opposite version-control rules — don't unify them.**
+  `public/fonts/*.woff2` is **gitignored**: `assets/fonts/*.ttf` is tracked, `deploy.yml` runs
+  `subset-font.ts` as an explicit step *before* `next build`, and the `predev`/`prebuild`/
+  `pretest` hooks rebuild it locally, so the committed copies were never served — they only
+  produced a binary diff on every Chinese copy edit and blocked `git checkout` between
+  branches. `public/resumes/*.pdf` is the reverse and **must stay tracked** for the reason in
+  the next bullet. Because nothing else lives under `public/fonts/`, git carries no directory
+  for it and a fresh clone has none — `subset-font.ts` therefore `mkdirSync`s the output
+  directory before its first write. Don't remove that.
 - **Résumé PDFs are generated locally only.** CI (`.github/workflows/deploy.yml`) invokes the
   `next` binary directly, so it bypasses the `prebuild` hook and runs the build scripts as an
   explicit step — but that step runs **only `subset-font.ts`**. `prepare-resumes.ts` is
