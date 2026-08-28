@@ -227,7 +227,7 @@
       "your code",
       "runs on."
     ],
-    "lede": "I'm Chun-Ju (Iridium) Tao — a Computer Engineering MS from NYU who works on **backend and infrastructure**. I've automated CI/CD on AWS, right-sized microservices to cut cloud cost, and built the first Taigi medical-advising LLM.",
+    "lede": "I'm Chun-Ju (Iridium) Tao, a Computer Engineering MS from NYU who works on **backend and infrastructure**. I've automated CI/CD on AWS, right-sized microservices to cut cloud cost, and built the first Taigi medical-advising LLM.",
     "based": "Pittsburgh, PA",
     "degree": "M.S. Computer Engineering, NYU",
     "stack": "Python · Go · Docker · AWS · PyTorch · MLflow",

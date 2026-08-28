@@ -18,7 +18,7 @@ A full-stack marketplace web application built under the guidance of a Senior En
 
 ## Overview
 
-NYU Marketplace is a course project from Practical Software Engineering at New York University, advised by Professor Gennadiy Civil — an Adjunct Professor and Senior Engineering Manager at Google. The project was graded like a real engineering team, not a class assignment.
+NYU Marketplace is a course project from Practical Software Engineering at New York University, advised by Professor Gennadiy Civil, an Adjunct Professor and Senior Engineering Manager at Google. The project was graded like a real engineering team, not a class assignment.
 
 ## My Role
 

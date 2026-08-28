@@ -22,7 +22,7 @@ links:
 
 ## Key Points
 
-- **Loud Plants in Your Area** is an Augmented Reality (AR) application that helps combat "plant blindness" – the tendency to overlook plants as mere background décor.
+- **Loud Plants in Your Area** is an Augmented Reality (AR) application that helps combat "plant blindness," the tendency to overlook plants as mere background décor.
 - It is designed for urban residents with limited exposure to nature, allowing them to perceive plants as living beings with feelings.
 - The app uses AR visualizations to reveal a plant’s **mood** or status in real time.
 - By capturing subtle signals or “sounds” from plants and interpreting them with AI, the app overlays engaging indicators and information on each plant through an AR view.

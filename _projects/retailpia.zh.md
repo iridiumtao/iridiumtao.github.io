@@ -4,7 +4,7 @@ title: Retailpia
 tagline: >-
   Level-Up Society Hackathon Better Retail 獎項首獎
 preview: >-
-  這座島是一款城市建設遊戲，是一個記帳工具，也是一台點數收集器。
+  一款建設島嶼的城市建設遊戲，也是一個記帳程式和集點卡。
 image: /images/projects/retailpia.png
 links:
   [
@@ -16,13 +16,13 @@ links:
 
 **[Level-Up Society Hackathon](https://devpost.com/software/retailpia) Better Retail 獎項首獎**
 
-##### 這個專案由 [@devilhyt](https://github.com/devilhyt)、[@WooL1208](https://github.com/WooL1208)、[@vhan9999](https://github.com/vhan9999)、[@lhsueh1](https://github.com/lhsueh1) 共同完成
+##### 由 [@devilhyt](https://github.com/devilhyt)、[@WooL1208](https://github.com/WooL1208)、[@vhan9999](https://github.com/vhan9999)、[@lhsueh1](https://github.com/lhsueh1) 共同完成
 
-這座島是一款城市建設遊戲，是一個記帳工具，也是一台點數收集器。
+一款建設島嶼的城市建設遊戲，也是一個記帳程式和集點卡。
 
 我們想讓這個社會變得更好。\
 我們想給這個社會一種新的可能：換一種方式管理支出，也換一種方式和零售商往來。\
-我們是 OvOb，一支來自台灣的隊伍，這就是 Retailpia 的全部。 <be>
+我們是 OvOb，一支來自台灣的隊伍，這就是 Retailpia。 <be>
 
 ## 概念
 
