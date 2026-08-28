@@ -38,12 +38,19 @@ import { SITE_ORIGIN } from "../../lib/site";
  * this is not a translation gap to be filled later. Localized share images —
  * and with them a localized alt — are out of scope this milestone, which is
  * also why `ogImage` below is not locale-branched.
+ *
+ * The alt must repeat, verbatim, the two lines the card actually rasterizes:
+ * WORDMARK and SPECIALISMS in scripts/generate-og-image.ts. Nothing enforces
+ * that, and it has already drifted once — the alt kept an older "MLOps,
+ * Applied ML, Scalable Cloud Systems" positioning long after the card itself
+ * said "Backend, DevOps, Cloud System", so screen-reader users were given a
+ * description of an image that no longer existed. Change one, change both.
  */
 export const DEFAULT_OG_IMAGE = {
   path: "/images/og-default.png",
   width: 1200,
   height: 630,
-  alt: "Chun-Ju (Iridium) Tao — MLOps, Applied ML, Scalable Cloud Systems",
+  alt: "Chun-Ju (Iridium) Tao — Backend, DevOps, Cloud System",
 } as const;
 
 // The other member of the two-locale union. A lookup rather than a ternary so
