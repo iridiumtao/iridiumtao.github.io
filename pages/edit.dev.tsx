@@ -771,8 +771,10 @@ const Edit = () => {
                 setData({ ...data, home: { ...data.home, based } })
               }
             />
-            <Field
+            <AreaField
               label="Degree"
+              hint="One line per school; newlines render as line breaks"
+              rows={2}
               value={data.home.degree}
               onChange={(degree) =>
                 setData({ ...data, home: { ...data.home, degree } })

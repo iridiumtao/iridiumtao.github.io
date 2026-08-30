@@ -361,7 +361,16 @@ export default function HomePage({
             </div>
             <div className="meta-row">
               <span className="meta-label">{s.metaDegree}</span>
-              <span className="meta-value">{home.degree}</span>
+              <span className="meta-value">
+                {/* degree may carry explicit "\n" line breaks (e.g. one line
+                    per school) — render each on its own line. */}
+                {home.degree.split("\n").map((line, i, arr) => (
+                  <Fragment key={i}>
+                    {line}
+                    {i < arr.length - 1 && <br />}
+                  </Fragment>
+                ))}
+              </span>
             </div>
             <div className="meta-row">
               <span className="meta-label">{s.metaStack}</span>
