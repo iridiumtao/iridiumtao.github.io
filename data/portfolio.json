@@ -217,7 +217,7 @@
       "description": "Developed a back-end server with Golang and PostgreSQL, handling 480k+ weekly entries. Added React-based dashboard features and built real-time ARM-device apps for fleet driving analytics."
     }
   ],
-  "aboutpara": "Chun-Ju Tao is a Computer Engineering master’s graduate from New York University (GPA: 3.73) specializing in MLOps, applied machine learning, and scalable cloud systems. He works across the stack in Python, Go, and JavaScript, with particular depth in Docker, Terraform, AWS, PyTorch, and MLflow.\n\nHe built a complete MLOps stack to fine-tune and deploy a Taigi medical-advising LLM, with an automated, doctor-in-the-loop retraining pipeline on Airflow and MLflow. At Micron, he designed a production-scale Python pipeline and Streamlit web app to analyze 33 GB of manufacturing data per bi-weekly cycle, giving teams fast, reproducible studies. At CARITY AI, he containerized microservices and automated CI/CD on AWS ECS, cutting infrastructure costs by 40% and deployment time by 70%.\n\nAt MoBagel, he introduced Agile and GitFlow as the team tripled from 10 to 30 engineers, keeping releases stable through the growth. His work has been recognized at the 13th International Conference on Frontier Computing (Tokyo) and OpenHCI’25 (Taipei).",
+  "aboutpara": "I'm Chun-Ju Tao, an NYU Computer Engineering grad working on backend and infrastructure, specializing in MLOps, applied machine learning, and scalable cloud systems. He works across the stack in Python, Go, and JavaScript, with particular depth in Docker, Terraform, AWS, PyTorch, and MLflow.\n\nHe built a complete MLOps stack to fine-tune and deploy a Taigi medical-advising LLM, with an automated, doctor-in-the-loop retraining pipeline on Airflow and MLflow. At Micron, he designed a production-scale Python pipeline and Streamlit web app to analyze 33 GB of manufacturing data per bi-weekly cycle, giving teams fast, reproducible studies. At CARITY AI, he containerized microservices and automated CI/CD on AWS ECS, cutting infrastructure costs by 40% and deployment time by 70%.\n\nAt MoBagel, he introduced Agile and GitFlow as the team tripled from 10 to 30 engineers, keeping releases stable through the growth. His work has been recognized at the 13th International Conference on Frontier Computing (Tokyo) and OpenHCI’25 (Taipei).",
   "home": {
     "greeting": "Hi there (ﾉ´∀｀*)",
     "availability": "Open to work",
@@ -227,19 +227,19 @@
       "your code",
       "runs on."
     ],
-    "lede": "I'm Chun-Ju (Iridium) Tao, a Computer Engineering MS from NYU who works on **backend and infrastructure**. I've automated CI/CD on AWS, right-sized microservices to cut cloud cost, and built the first Taigi medical-advising LLM.",
+    "lede": "I'm Chun-Ju (Iridium) Tao, a Computer Engineering MS from NYU who works on **backend and infrastructure**. I've automated CI/CD on AWS, right-sized microservices to cut cloud costs, and built a Taigi (Taiwanese language) medical-advising LLM platform.",
     "based": "Pittsburgh, PA",
     "degree": "M.S. Computer Engineering, NYU",
     "stack": "Python · Go · Docker · AWS · PyTorch · MLflow",
     "honorsShort": "OpenHCI'25 1st · Fi-Award'23 · Level-Up'21",
     "from": "Taipei, Taiwan 🧋",
-    "aboutPull": "Bringing the warmth of Taiwanese craft to the cold rigor of cloud systems.",
+    "aboutPull": "Finding the thread in complexity, carving order into systems at scale",
     "contactEmail": "mailto:c.tao@nyu.edu",
     "projectCount": 3
   },
   "resume": {
     "tagline": "Chun-Ju Tao",
-    "description": "Backend and infrastructure engineer experienced in CI/CD automation, containerized microservices, and cloud-native MLOps. Looking for a role where I can own systems end to end.",
+    "description": "I build and operate CI/CD pipelines, containerized microservices, and cloud-native MLOps systems. Looking for a role where I can own systems end-to-end.",
     "experiences": [
       {
         "id": "a-day-cofounder",

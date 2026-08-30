@@ -767,7 +767,10 @@ test("every content array is the same length in both locales (CN-02, CN-07)", ()
   sameLength("socials", en.socials, zh.socials);
   sameLength("experiences", en.experiences, zh.experiences);
   sameLength("projects", en.projects, zh.projects);
-  sameLength("home.heroLines", en.home.heroLines, zh.home.heroLines);
+  // home.heroLines is deliberately NOT length-checked: it is a stylistic hero
+  // stack, not a factual record, and HomePage renders each locale's lines
+  // independently (map + <br/>). The owner has chosen to let the en/zh line
+  // counts diverge so each language can phrase the hero the way it reads best.
   sameLength(
     "resume.experiences",
     en.resume.experiences,

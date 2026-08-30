@@ -217,29 +217,29 @@
       "description": "用 Golang 和 PostgreSQL 開發後端伺服器，每週處理 48 萬筆以上資料。加上以 React 寫的儀表板功能，也做了即時的 ARM 裝置應用，用於車隊駕駛行為分析。"
     }
   ],
-  "aboutpara": "我是紐約大學電腦工程碩士（GPA 3.73），專注在 MLOps、應用機器學習，以及可擴展的雲端系統。慣用 Python、Go 和 JavaScript，在 Docker、Terraform、AWS、PyTorch 和 MLflow 上有比較深的經驗。\n\n我從頭架起一整套 MLOps stack 來微調並部署台語醫療諮詢 LLM，裡面有一條用 Airflow 和 MLflow 串起、由醫師參與其中的自動化再訓練 pipeline。在 Micron，我設計了正式規模的 Python pipeline 和 Streamlit 網頁應用，每兩週分析 33 GB 的製程資料，讓各團隊都能快速、可重現地做研究。在 CARITY AI，我把微服務容器化、在 AWS ECS 上自動化 CI/CD，基礎設施成本降低 40%、部署時間縮短 70%。\n\n在 MoBagel，團隊從 10 人擴編到 30 人的過程中，我導入敏捷開發與 GitFlow，讓版本發布維持穩定。作品曾在第 13 屆 International Conference on Frontier Computing（東京）和 OpenHCI'25（台北）獲獎。",
+  "aboutpara": "畢業於紐約大學電腦工程碩士，軟體經驗包含前後端、DevOps、MLOps、平台以及iOS開發。使用 Python、Go 和 Java，並熟悉 Docker、Terraform、AWS、PyTorch 和 MLflow 等工具。\n\n在 NYU 的 MLOps 專題，我負責 MLOps 平台來微調並部署台語醫療諮詢 LLM，使用 Airflow 和 MLflow 等工具引入自動化 retraining pipeline，並設計 human-in-the-loop pipeline。在美光的實習，我設計了一款運用機器學習的 Fab 排程決策解釋系統與 pipeline，每兩週分析 33 GB 的製程 log，讓團隊能快速、可重現地做研究。在 CARITY AI，我把 microservice 容器化，接入 AWS ECS 並部署自動化 CI/CD，讓基礎設施成本降低 40%、部署時間縮短 70%。\n\n在 MoBagel 的台水材料管理系統專案中，我除了開發軟體前後端，也導入敏捷開發與 GitFlow，讓團隊規模 3x 擴展時仍保持良好的管理架構。作品曾在第 13 屆 International Conference on Frontier Computing（東京）和 OpenHCI'25（台北）獲獎。",
   "home": {
     "greeting": "安安 (ﾉ´∀｀*)",
     "availability": "求職中",
     "heroLines": [
-      "我打造",
-      "**基礎設施**",
-      "你的程式碼",
-      "就跑在上面。"
+      "以**軟體**",
+      "理解世界，",
+      "以軟體",
+      "回應**社會**"
     ],
-    "lede": "我是歐東，紐約大學電腦工程碩士畢業，興趣是**後端、infra 和 DevOps**。於先前的實習中自動化 CI/CD，部署 microservices 到 AWS，也做出了第一個台語醫療諮詢 LLM。",
+    "lede": "我是歐東，紐約大學電腦工程碩士畢業，興趣是**後端、infra 和 DevOps**。熱衷於讓複雜的系統穩定運轉，讓高效的方法成為團隊的日常。於先前的實習中自動化 CI/CD，部署 microservices 到 AWS，也為十人開發團隊導入 GitFlow 與敏捷開發模式。",
     "based": "賓州匹茲堡",
     "degree": "紐約大學電腦工程碩士 · 台中科大資訊工程學士",
     "stack": "Python · Go · Docker · AWS · PyTorch · MLflow",
     "honorsShort": "OpenHCI'25 · Fi-Award'23 · Level-Up'21",
     "from": "",
-    "aboutPull": "把台灣手作的溫度，帶進雲端系統的冷硬規矩裡。",
+    "aboutPull": "在錯綜複雜的事物裡尋找脈絡，在龐大的系統中刻畫秩序。",
     "contactEmail": "mailto:c.tao@nyu.edu",
     "projectCount": 3
   },
   "resume": {
     "tagline": "歐東 Chun-Ju Tao",
-    "description": "後端與基礎設施工程師，專長是 CI/CD 自動化、容器化微服務與雲端原生 MLOps。在找一個能端到端掌控系統的角色。",
+    "description": "軟體工程師，專注於後端、DevOps 與平台工程。曾重構後端系統，並帶領團隊轉型開發流程。相信好的軟體平台能讓好的開發自然發生，也致力於打造長期穩定並持續茁壯的系統。",
     "experiences": [
       {
         "id": "a-day-cofounder",
