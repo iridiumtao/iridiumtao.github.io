@@ -153,6 +153,7 @@ body {
 .we .wrap {
   position: relative;
   z-index: 1;
+  container: page-wrap / inline-size;
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 48px;
@@ -203,12 +204,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 8px;
   padding: 28px 0;
   border-bottom: 1px solid rgb(from var(--color-wood-600) r g b / 0.12);
 }
 .we .brand {
   display: flex;
   align-items: center;
+  min-width: 0;
   gap: 12px;
   text-decoration: none;
   color: inherit;
@@ -233,7 +237,8 @@ body {
   box-shadow: var(--shadow-sm);
 }
 .we .brand .name {
-  font-size: 18px;
+  font-size: clamp(15px, 1.55cqi, 18px);
+  white-space: nowrap;
 }
 .we .brand-name-compact,
 .we .brand-name-short {
@@ -241,8 +246,10 @@ body {
 }
 .we .nav-links {
   display: flex;
+  flex-shrink: 0;
   gap: 6px;
   align-items: center;
+  margin-left: auto;
 }
 .we .nav-links a {
   font-size: 14px;
@@ -273,15 +280,18 @@ body {
 .we .lang-switch {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 0;
   margin-left: 4px;
-  padding-left: 10px;
-  border-left: 1px solid rgb(from var(--color-wood-600) r g b / 0.15);
 }
 .we .lang-switch .lang-switch-current,
 .we .nav-links .lang-switch a.lang-switch-link {
-  font-size: 13px;
-  padding: 6px 10px;
+  display: inline-grid;
+  place-items: center;
+  box-sizing: border-box;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  font-size: 14px;
   border-radius: 999px;
   text-decoration: none;
   line-height: 1;
@@ -904,57 +914,21 @@ body {
     order: -1;
   }
 }
-@media (max-width: 600px) {
-  .we .sec-head h2 {
-    font-size: 28px;
-  }
+/* The header responds to its own available width, not to a device category.
+   A narrow desktop window, split view, tablet and phone therefore follow the
+   same rules. Secondary anchors disappear before they can force a second row;
+   the route CTA and both 44px language targets remain. */
+@container page-wrap (max-width: 760px) {
   .we .nav-links a:not(.cta) {
     display: none;
-  }
-  /* Keep the header on one line without shrinking its action controls: English
-     wordmark variants step down as the available phone width narrows. */
-  .we .brand .name {
-    font-size: 15px;
-    white-space: nowrap;
-  }
-  .we .brand {
-    min-width: 0;
   }
   .we .nav-links a.cta {
     white-space: nowrap;
   }
-  /* SW-01: the switcher is exempt from the nav-link cull above — on a phone it
-     is the ONLY way to reach the other locale, and over half of this site's
-     readers are on one. `a.lang-switch-link` carries one class more than
-     `a:not(.cta)`, so this wins on specificity rather than on source order. */
-  .we .nav-links .lang-switch a.lang-switch-link {
-    display: inline-block;
-  }
-  /* The CTA already separates the controls; each language label keeps a 44px
-     touch target for phone use. */
-  .we .lang-switch {
-    margin-left: 4px;
-    padding-left: 0;
-    border-left: 0;
-    gap: 0;
-  }
-  .we .lang-switch .lang-switch-current,
-  .we .nav-links .lang-switch a.lang-switch-link {
-    display: inline-grid;
-    place-items: center;
-    box-sizing: border-box;
-    min-width: 44px;
-    min-height: 44px;
-    padding: 0;
-    font-size: 14px;
-  }
-  .we nav {
-    flex-wrap: nowrap;
-    gap: 8px;
-  }
-  .we .nav-links {
-    flex-shrink: 0;
-    margin-left: auto;
+}
+@media (max-width: 600px) {
+  .we .sec-head h2 {
+    font-size: 28px;
   }
   /* The 120px base gap above the footer is tuned for desktop; stacked on a
      phone it reads as a dead screen between the prev/next links and the
@@ -1005,7 +979,9 @@ body {
     margin-left: 0;
   }
 }
-@media (max-width: 479px) {
+/* Wordmark compaction uses that same container. The cutoffs are the measured
+   rendered widths of the mark, label, CTA, and fixed language targets. */
+@container page-wrap (max-width: 412px) {
   .we .brand-name-full {
     display: none;
   }
@@ -1013,7 +989,7 @@ body {
     display: inline;
   }
 }
-@media (max-width: 389px) {
+@container page-wrap (max-width: 349px) {
   .we .brand-name-compact {
     display: none;
   }
@@ -1021,29 +997,13 @@ body {
     display: inline;
   }
 }
-@media (max-width: 359px) {
+@container page-wrap (max-width: 320px) {
   .we .brand .name {
     display: none;
   }
   .we .brand {
     gap: 0;
   }
-}
-.we nav[data-wordmark] .brand-name-full,
-.we nav[data-wordmark] .brand-name-compact,
-.we nav[data-wordmark] .brand-name-short {
-  display: none;
-}
-.we nav[data-wordmark="full"] .brand-name-full,
-.we nav[data-wordmark="compact"] .brand-name-compact,
-.we nav[data-wordmark="short"] .brand-name-short {
-  display: inline;
-}
-.we nav[data-wordmark="icon"] .brand .name {
-  display: none;
-}
-.we nav[data-wordmark="icon"] .brand {
-  gap: 0;
 }
 
 /* ── Project showcase page ───────────────────────────────────────────── */
