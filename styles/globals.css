@@ -349,6 +349,13 @@ body {
   color: var(--color-stone-900);
   max-width: 18ch;
 }
+/* Half-height blank line inside the hero headline, emitted by HomePage for an
+   empty heroLines entry. A bare <br> would leave a full line-height gap; this
+   makes the intentional pause about half that. */
+.we .hero h1 .hero-break {
+  display: block;
+  height: 0.5em;
+}
 /* Inline Markdown emphasis in the hero and lede, rendered by renderCopy() in
    pages/index.page.tsx: `*em*`, `**strong**`, `***both***`.
 

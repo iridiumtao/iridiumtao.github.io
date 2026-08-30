@@ -329,12 +329,28 @@ export default function HomePage({
               {home.availability ? ` · ${home.availability}` : ""}
             </div>
             <h1>
-              {home.heroLines.map((line, i) => (
-                <Fragment key={i}>
-                  {renderCopy(line)}
-                  {i < home.heroLines.length - 1 && <br />}
-                </Fragment>
-              ))}
+              {home.heroLines.map((line, i) => {
+                // An empty heroLines entry is a deliberate blank line in the
+                // stack. Render it as a half-height block spacer rather than a
+                // full bare <br>, so the gap reads as a pause, not a dropped
+                // line.
+                if (line === "") {
+                  return (
+                    <span key={i} className="hero-break" aria-hidden="true" />
+                  );
+                }
+                // Break before this line unless it is the first, or the
+                // previous entry was the block spacer above (which already
+                // breaks the flow on its own).
+                const needsBreak =
+                  i > 0 && home.heroLines[i - 1] !== "";
+                return (
+                  <Fragment key={i}>
+                    {needsBreak && <br />}
+                    {renderCopy(line)}
+                  </Fragment>
+                );
+              })}
             </h1>
             <p className="lede">{renderCopy(home.lede)}</p>
           </div>
