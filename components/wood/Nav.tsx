@@ -54,7 +54,15 @@ export default function Nav({
     if (!nav) return;
 
     const variants = ["full", "compact", "short", "icon"] as const;
+    const mobileViewport = window.matchMedia("(max-width: 600px)");
     const chooseWordmark = () => {
+      // Desktop has room for the canonical wordmark. Keep the adaptive
+      // measurement exclusive to the one-line mobile layout it protects.
+      if (!mobileViewport.matches) {
+        delete nav.dataset.wordmark;
+        return;
+      }
+
       for (const variant of variants) {
         nav.dataset.wordmark = variant;
         const navRect = nav.getBoundingClientRect();
@@ -80,13 +88,15 @@ export default function Nav({
     const observer = new ResizeObserver(chooseWordmark);
     observer.observe(nav);
     window.addEventListener("resize", chooseWordmark);
+    mobileViewport.addEventListener("change", chooseWordmark);
     void document.fonts.ready.then(chooseWordmark);
     chooseWordmark();
     return () => {
       observer.disconnect();
       window.removeEventListener("resize", chooseWordmark);
+      mobileViewport.removeEventListener("change", chooseWordmark);
     };
-  }, []);
+  }, [locale]);
   // Empty on the homepage so the section links stay in-page anchors; elsewhere
   // it is this locale's home path, so they jump to the right tree's homepage.
   const base = home ? "" : withLocale(locale, "/");
