@@ -219,7 +219,7 @@
   ],
   "aboutpara": "畢業於紐約大學電腦工程碩士，軟體經驗包含前後端、DevOps、MLOps、平台以及iOS開發。使用 Python、Go 和 Java，並熟悉 Docker、Terraform、AWS、PyTorch 和 MLflow 等工具。\n\n在 NYU 的 MLOps 專題，我負責 MLOps 平台來微調並部署台語醫療諮詢 LLM，使用 Airflow 和 MLflow 等工具引入自動化 retraining pipeline，並設計 human-in-the-loop pipeline。在美光的實習，我設計了一款運用機器學習的 Fab 排程決策解釋系統與 pipeline，每兩週分析 33 GB 的製程 log，讓團隊能快速、可重現地做研究。在 CARITY AI，我把 microservice 容器化，接入 AWS ECS 並部署自動化 CI/CD，讓基礎設施成本降低 40%、部署時間縮短 70%。\n\n在 MoBagel 的台水材料管理系統專案中，我除了開發軟體前後端，也導入敏捷開發與 GitFlow，讓團隊規模 3x 擴展時仍保持良好的管理架構。作品曾在第 13 屆 International Conference on Frontier Computing（東京）和 OpenHCI'25（台北）獲獎。",
   "home": {
-    "greeting": "安安 (ﾉ´∀｀*)",
+    "greeting": "安安",
     "availability": "求職中",
     "heroLines": [
       "以**軟體**",
