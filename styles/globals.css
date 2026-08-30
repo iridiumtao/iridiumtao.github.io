@@ -234,6 +234,10 @@ body {
 .we .brand .name {
   font-size: 18px;
 }
+.we .brand-name-compact,
+.we .brand-name-short {
+  display: none;
+}
 .we .nav-links {
   display: flex;
   gap: 6px;
@@ -906,14 +910,14 @@ body {
   .we .nav-links a:not(.cta) {
     display: none;
   }
-  /* The brand takes its own line so the CTA and locale controls have a stable,
-     right-aligned action row instead of competing for a single phone-width row. */
+  /* Keep the header on one line without shrinking its action controls: English
+     wordmark variants step down as the available phone width narrows. */
   .we .brand .name {
     font-size: 15px;
+    white-space: nowrap;
   }
   .we .brand {
-    flex: 0 0 100%;
-    white-space: nowrap;
+    min-width: 0;
   }
   .we .nav-links a.cta {
     white-space: nowrap;
@@ -944,8 +948,8 @@ body {
     font-size: 14px;
   }
   .we nav {
-    flex-wrap: wrap;
-    row-gap: 12px;
+    flex-wrap: nowrap;
+    gap: 8px;
   }
   .we .nav-links {
     flex-shrink: 0;
@@ -998,6 +1002,30 @@ body {
      above: this block precedes the base rule in the file. */
   .we .proj-nav .proj-nav-link.proj-nav-next {
     margin-left: 0;
+  }
+}
+@media (max-width: 479px) {
+  .we .brand-name-full {
+    display: none;
+  }
+  .we .brand-name-compact {
+    display: inline;
+  }
+}
+@media (max-width: 389px) {
+  .we .brand-name-compact {
+    display: none;
+  }
+  .we .brand-name-short {
+    display: inline;
+  }
+}
+@media (max-width: 359px) {
+  .we .brand .name {
+    display: none;
+  }
+  .we .brand {
+    gap: 0;
   }
 }
 

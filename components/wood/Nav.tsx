@@ -39,6 +39,15 @@ export default function Nav({
   const locale = useLocale();
   const data = getPortfolioData(locale);
   const s = t(locale);
+  const fullName = `${data.name} ${s.brandSuffix}`;
+  // Chinese is already the compact, owner-approved "Iridium 歐東" wordmark.
+  // English alone sheds its parenthetical name at narrower breakpoints.
+  const compactName =
+    locale === "en"
+      ? `${data.name.replace(/\s+\([^)]*\)/, "")} ${s.brandSuffix}`
+      : fullName;
+  const shortName =
+    locale === "en" ? data.name.replace(/\s+\([^)]*\)/, "") : fullName;
   // Empty on the homepage so the section links stay in-page anchors; elsewhere
   // it is this locale's home path, so they jump to the right tree's homepage.
   const base = home ? "" : withLocale(locale, "/");
@@ -47,7 +56,9 @@ export default function Nav({
       <Link href={withLocale(locale, "/")} className="brand">
         <span className="mark">T</span>
         <span className="name">
-          {data.name} {s.brandSuffix}
+          <span className="brand-name-full">{fullName}</span>
+          <span className="brand-name-compact">{compactName}</span>
+          <span className="brand-name-short">{shortName}</span>
         </span>
       </Link>
       <div className="nav-links">
