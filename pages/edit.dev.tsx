@@ -141,15 +141,25 @@ const splitLines = (value: string): string[] =>
     .map((s) => s.trim())
     .filter(Boolean);
 
+// Like splitLines, but keeps interior blank lines — an empty entry in
+// home.heroLines is intentional, rendering as a bare <br> to space the hero
+// stack. Only trailing blank lines (a textarea's stray final newline) are
+// dropped; a leading or in-between blank line is preserved as the owner typed it.
+const splitHeroLines = (value: string): string[] => {
+  const lines = value.split("\n").map((s) => s.trim());
+  while (lines.length > 0 && lines[lines.length - 1] === "") lines.pop();
+  return lines;
+};
+
 // EditableData -> PortfolioData, the inverse of toEditable. Builds a new object
 // rather than mutating a clone, so the live editor state is never touched.
 const toSaved = (edited: EditableData): PortfolioData => ({
   ...edited,
   home: {
     ...edited.home,
-    // splitLines drops blank lines, so a stray trailing newline in the textarea
-    // cannot save an empty headline line that would render as a bare <br>.
-    heroLines: splitLines(edited.home.heroLines),
+    // splitHeroLines keeps interior blank lines (an intentional bare <br> in the
+    // hero stack) and drops only a stray trailing newline from the textarea.
+    heroLines: splitHeroLines(edited.home.heroLines),
   },
   resume: {
     ...edited.resume,
