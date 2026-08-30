@@ -77,7 +77,7 @@ const pairs = allRoutePairs(slugs).filter((pair) => pair.en !== notFoundEn);
 // The `: boolean` annotation is load-bearing: without it TypeScript infers the
 // literal type `false`, narrows the enabled branch to dead code, and flipping
 // the value would then be a type change rather than a one-word edit.
-const PUBLISH_ZH_ROUTES: boolean = false;
+const PUBLISH_ZH_ROUTES: boolean = true;
 
 // With PUBLISH_ZH_ROUTES open: one <url> per route (both locales of every
 // non-404 pair), each declaring the reciprocal en/zh alternates -- the same

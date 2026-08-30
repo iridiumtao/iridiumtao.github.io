@@ -32,7 +32,7 @@ import { t } from "../../lib/dictionary";
 // EN / 中 control is withheld while the Chinese content is being proofread on
 // the live site. Flip this back to true to expose the switcher; nothing else
 // needs to change.
-const SHOW_LANGUAGE_SWITCHER = false;
+const SHOW_LANGUAGE_SWITCHER = true;
 
 export default function LanguageSwitcher({
   locale,
