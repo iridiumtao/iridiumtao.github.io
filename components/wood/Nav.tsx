@@ -36,6 +36,7 @@ export default function Nav({
   back?: boolean;
   counterpartUrl?: string | null;
 }) {
+  const navRef = React.useRef<HTMLElement>(null);
   const locale = useLocale();
   const data = getPortfolioData(locale);
   const s = t(locale);
@@ -48,12 +49,54 @@ export default function Nav({
       : fullName;
   const shortName =
     locale === "en" ? data.name.replace(/\s+\([^)]*\)/, "") : fullName;
+  React.useLayoutEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+
+    const variants = ["full", "compact", "short", "icon"] as const;
+    const chooseWordmark = () => {
+      for (const variant of variants) {
+        nav.dataset.wordmark = variant;
+        const navRect = nav.getBoundingClientRect();
+        const brand = nav.querySelector<HTMLElement>(".brand");
+        const actions = nav.querySelector<HTMLElement>(".nav-links");
+        const name = nav.querySelector<HTMLElement>(`.brand-name-${variant}`);
+        if (!brand || !actions) return;
+
+        const brandRight =
+          variant === "icon" || !name
+            ? brand.getBoundingClientRect().right
+            : name.getBoundingClientRect().right;
+        const actionsRect = actions.getBoundingClientRect();
+        if (
+          brandRight + 8 <= actionsRect.left &&
+          actionsRect.right <= navRect.right
+        ) {
+          return;
+        }
+      }
+    };
+
+    const observer = new ResizeObserver(chooseWordmark);
+    observer.observe(nav);
+    window.addEventListener("resize", chooseWordmark);
+    void document.fonts.ready.then(chooseWordmark);
+    chooseWordmark();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", chooseWordmark);
+    };
+  }, []);
   // Empty on the homepage so the section links stay in-page anchors; elsewhere
   // it is this locale's home path, so they jump to the right tree's homepage.
   const base = home ? "" : withLocale(locale, "/");
   return (
-    <nav>
-      <Link href={withLocale(locale, "/")} className="brand">
+    <nav ref={navRef}>
+      <Link
+        href={withLocale(locale, "/")}
+        className="brand"
+        aria-label={fullName}
+      >
         <span className="mark">T</span>
         <span className="name">
           <span className="brand-name-full">{fullName}</span>

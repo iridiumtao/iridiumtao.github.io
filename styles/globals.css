@@ -1029,6 +1029,22 @@ body {
     gap: 0;
   }
 }
+.we nav[data-wordmark] .brand-name-full,
+.we nav[data-wordmark] .brand-name-compact,
+.we nav[data-wordmark] .brand-name-short {
+  display: none;
+}
+.we nav[data-wordmark="full"] .brand-name-full,
+.we nav[data-wordmark="compact"] .brand-name-compact,
+.we nav[data-wordmark="short"] .brand-name-short {
+  display: inline;
+}
+.we nav[data-wordmark="icon"] .brand .name {
+  display: none;
+}
+.we nav[data-wordmark="icon"] .brand {
+  gap: 0;
+}
 
 /* ── Project showcase page ───────────────────────────────────────────── */
 /* The showcase header reuses .resume-head, but the two pages set very
